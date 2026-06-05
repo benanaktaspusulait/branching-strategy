@@ -1,0 +1,192 @@
+I-generated content may be incorrect
+
+Rose Garratt started transcription
+
+Stephen Craine
+0 minutes 4 seconds0:04
+Stephen Craine 0 minutes 4 seconds
+Yeah, thanks everyone for joining. Here to discuss changes to our sort of git strategy, branching strategy that will help us automate our release process so we're not having to continue with the tactical solution, which is very, very manual heavy. So there's been lots of people involved.
+Stephen Craine 0 minutes 23 seconds
+helping out each week to get our releases created or the artifacts created. But yeah, it's a lot of work. So Gareth and team have been doing some work in the background to try and do some automation around the release so that we can do end to end, click a button hopefully, and then get some reporting out of it as well.
+Stephen Craine 0 minutes 45 seconds
+Cross reference with JIRA, make sure we're releasing what we're meant to be releasing as well. So lots of benefits to be brought by this. So I'll hand over to you, Gareth, if you want to talk through it.
+
+Gareth Andrews
+0 minutes 56 seconds0:56
+Gareth Andrews 0 minutes 56 seconds
+Yeah. Hi all. As Steve said, I'm part of the Achilles team working to hopefully streamline our lease process. If anyone has any questions at any point, please use the raise hand feature. I will keep glancing off to the screen on my side just to pick them up as soon as possible.
+Gareth Andrews 1 minute 15 seconds
+hopefully without losing my flow too much.
+Gareth Andrews 1 minute 19 seconds
+So yeah, so the main caveat of this is obviously we're trying to improve what's currently working and basically free up time, free up time, free up people and stabilise what's being done.
+Gareth Andrews 1 minute 35 seconds
+So at the moment, when it comes to deploying to environments, environments are a bit of a mismatch. There's work in this area to improve things. Obviously, any production, any feature, any change which is being done normally involves an application being changed, but it can also involve secrets or a change to the database through Liquid Base.
+Gareth Andrews 1 minute 56 seconds
+That should be Liquibase. Apologies for typo. Yeah, no, apologies for that. That's probably going to be everywhere. I was meant to correct it, but...
+
+Stephen Craine
+1 minute 59 seconds1:59
+Stephen Craine 1 minute 59 seconds
+Yeah, I was going to say, there's no D in it.
+
+Gareth Andrews
+2 minutes 8 seconds2:08
+Gareth Andrews 2 minutes 8 seconds
+So everything's kind of deployed to the low environments ad hoc. And then when it comes to active releases, we update server charts and those deployed to the higher environments. What this means is there's a lot of, as Steve said, changes which we're currently trying to deal with as we're deploying on a
+Gareth Andrews 42 minutes 35 seconds
+change to multiple APIs based on new data coming in and new services on a new system. You can generate all of this automated tooling as well to point at those branches. So it could be destined for release 5 release versions forward, and we could still generate a weekly report to detail what's changed, what needs to be.
+Gareth Andrews 42 minutes 54 seconds
+Change what chance to deploy is part of that testing into an environment.
+BM
+Brian Manganaro
+43 minutes 2 seconds43:02
+Brian Manganaro 43 minutes 2 seconds
+Sorry, I meant to say the feature branches, the commits on the feature branches. Those get deleted, right? The feature branches, or are they going to hang around after they've been merged in?
+
+Gareth Andrews
+43 minutes 7 seconds43:07
+Gareth Andrews 43 minutes 7 seconds
+Yeah, so.
+Gareth Andrews 43 minutes 13 seconds
+They'll be deleted as part of the mergers. Nothing worse than having 1000 feature branches, which will be merged previously. Ideally, all of those commits will also need to follow the same pattern. Firstly, generally good practice. And secondly, it will make us
+Gareth Andrews 43 minutes 32 seconds
+be able to report on those feature branches as well. So if there are any issues, we can pull the reports and report based on those commit histories in those branches.
+BM
+Brian Manganaro
+43 minutes 43 seconds43:43
+Brian Manganaro 43 minutes 43 seconds
+How is the report going to be generated on a deleted branch?
+
+Gareth Andrews
+43 minutes 48 seconds43:48
+Gareth Andrews 43 minutes 48 seconds
+Hopefully before it's deleted. I'm thinking more along the lines of if a feature branch lives for a long period of time and we need to report based on that. Once it's been merged, obviously, yeah, history doesn't exist anymore, essentially.
+BM
+Brian Manganaro
+44 minutes 2 seconds44:02
+Brian Manganaro 44 minutes 2 seconds
+Yes.
+Brian Manganaro 44 minutes 9 seconds
+OK, thanks.
+
+Gareth Andrews
+44 minutes 16 seconds44:16
+Gareth Andrews 44 minutes 16 seconds
+Are there any other questions, concerns?
+Gareth Andrews 44 minutes 20 seconds
+Thoughts in general.
+
+Stephen Craine
+44 minutes 23 seconds44:23
+Stephen Craine 44 minutes 23 seconds
+Is any hands up?
+Stephen Craine 44 minutes 29 seconds
+So I think it's been really useful. Thanks Gareth. When do we plan to make changes in terms of like the branching? So creating the release branch and get rid of development branch and master and replace it with main.
+
+Gareth Andrews
+44 minutes 42 seconds44:42
+Gareth Andrews 44 minutes 42 seconds
+So at the moment, I'm testing the automation code itself on, strangely enough, the new configuration service. So once that pipeline is successfully running, the scripts will work locally. I can see the changes for service charts, for versions, for tags and everything being generated.
+
+Stephen Craine
+44 minutes 50 seconds44:50
+Stephen Craine 44 minutes 50 seconds
+Mhm.
+
+Gareth Andrews
+45 minutes 1 second45:01
+Gareth Andrews 45 minutes 1 second
+Same for the report. So it's literally just getting it to run in drone.
+Gareth Andrews 45 minutes 6 seconds
+Once that is done, it will essentially be ready to go. Nice to have such things like the Git pre-commit hook to avoid people accidentally submitting without the MMA tickets inside the commits. That's another area that's being worked on in tandem at the moment. So the hope would
+
+Stephen Craine
+45 minutes 6 seconds45:06
+Stephen Craine 45 minutes 6 seconds
+Mm.
+Stephen Craine 45 minutes 22 seconds
+But...
+
+Gareth Andrews
+45 minutes 25 seconds45:25
+Gareth Andrews 45 minutes 25 seconds
+be within the next release or two would be able to get this rolled out. There's nothing, at least from an automation side, from a process point of view, I see no reason why the next release we couldn't start using release branches.
+
+Stephen Craine
+45 minutes 30 seconds45:30
+Stephen Craine 45 minutes 30 seconds
+Yeah.
+
+Gareth Andrews
+45 minutes 42 seconds45:42
+Gareth Andrews 45 minutes 42 seconds
+It would be probably just, again, it would just require manual work for the server charts and stuff like that at the moment until such time as we can update the drawing pipelines. But I'm optimistic that that automation should be ready to be moved into pipelines soon.
+
+Stephen Craine
+45 minutes 42 seconds45:42
+Stephen Craine 45 minutes 42 seconds
+Cool.
+Stephen Craine 45 minutes 49 seconds
+Mm.
+Stephen Craine 45 minutes 54 seconds
+Okay.
+Stephen Craine 46 minutes 4 seconds
+Okay, well, thanks everyone. Um, sure everyone's itching to get some lunch, so yeah, thanks for attending. Um, yeah, if anyone from your squads wasn't on the call, please.
+Stephen Craine 46 minutes 16 seconds
+Let them know about this change and ask them to watch this back if we get time, Rose.
+
+Rose Garratt
+46 minutes 23 seconds46:23
+Rose Garratt 46 minutes 23 seconds
+Hi, yeah, thanks everyone. Same things you said, Steve. Thanks all for joining. Thanks Gareth for presenting. Thanks for the questions. I just wanted to put something on everyone's radar while we're on a call as well. We're looking to put in a community of practice process going forward where we get engagement between squads, sharing hints and tips, sharing ideas, improvement opportunities. So
+Rose Garratt 46 minutes 42 seconds
+I just want to put that on everyone's radar and we can pick it up next week, get more detail, get those sessions scheduled.
+Rose Garratt 46 minutes 50 seconds
+But that's all for me, and if nothing from anyone else, we can close, Steve, if you're happy.
+JW
+Jonathan Winters
+46 minutes 54 seconds46:54
+Jonathan Winters 46 minutes 54 seconds
+Can we go? Can we go for lunch now?
+
+Stephen Craine
+46 minutes 56 seconds46:56
+Stephen Craine 46 minutes 56 seconds
+Yeah, yeah.
+
+Rose Garratt
+46 minutes 57 seconds46:57
+Rose Garratt 46 minutes 57 seconds
+Please do. Yeah. Thanks all. Bye.
+JW
+Jonathan Winters
+46 minutes 58 seconds46:58
+Jonathan Winters 46 minutes 58 seconds
+Thank you.
+
+Stephen Craine
+47 minutes 1 second47:01
+Stephen Craine 47 minutes 1 second
+That's all, bye.
+
+Bulent Kucuk
+47 minutes 1 second47:01
+Bulent Kucuk 47 minutes 1 second
+Thank you. Bye.
+JP
+Jason Pang
+47 minutes 2 seconds47:02
+Jason Pang 47 minutes 2 seconds
+Bye.
+
+Deepesh Rathore
+47 minutes 2 seconds47:02
+Deepesh Rathore 47 minutes 2 seconds
+Yeah, thanks, great.
+SP
+Susanta Patnaik
+47 minutes 3 seconds47:03
+Susanta Patnaik 47 minutes 3 seconds
+What?
+
+Rose Garratt stopped transcrip
