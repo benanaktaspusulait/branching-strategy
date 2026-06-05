@@ -49,7 +49,7 @@ The KT sessions suggest the current automation status is:
 - Release reports should help show what changed and what needs to be deployed.
 - JIRA cross-reference is expected so the team can confirm that the release content matches the intended tickets.
 - Changed-chart detection is being explored so the deployment logic can deploy only charts changed in the release.
-- A Git pre-commit hook is being considered or worked on to reduce commits without MMA ticket references.
+- A Git pre-commit hook is in progress to reduce commits without MMA ticket references.
 - Rollout may be possible within the next release or two, subject to confirmation.
 
 For the end-to-end proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).

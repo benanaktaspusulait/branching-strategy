@@ -8,49 +8,74 @@ Rollback and hotfix handling need to be clear because they affect the branching 
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
 
-Current baseline expectation to confirm:
+There are two distinct hotfix scenarios that must be supported:
+
+### Production Hotfix (Critical Live Issue)
+
+When a critical issue is found in production and no active release branch covers it:
 
 ```text
-production state / master
-  -> hotfix branch
+main / production state
+  -> hotfix branch (from main)
   -> test and release hotfix
   -> update production
-  -> merge hotfix back into development
-  -> merge hotfix into any active release branches if needed
+  -> merge hotfix back into main
+  -> forward-merge hotfix into any active release branches
 ```
 
-The KT sessions described a more release-branch-centred automation flow:
+This is for urgent production fixes that cannot wait for the next release cycle.
 
-- Feature and hotfix branches are treated similarly.
-- Hotfix branches can be created from the active release branch.
+### Release-Phase Hotfix (Issue Found During Release Preparation)
+
+When an issue is found during release preparation or testing:
+
+```text
+active release branch
+  -> hotfix branch (from release branch)
+  -> test hotfix
+  -> merge back into release branch
+  -> release version incremented as normal
+```
+
+This is for fixes discovered during SIT, QAT or pre-production validation.
+
+### Shared Behaviour
+
+Both hotfix types share the following automation behaviour as described in the KT sessions:
+
+- Feature and hotfix branches are treated similarly by the automation.
 - Commits on a hotfix branch should generate a deployable candidate and update the matching Cerberus chart branch.
-- When merged into the release branch, the hotfix should increment the release version/tag like any other merged change.
+- When merged into the target branch, the hotfix should increment the release version/tag like any other merged change.
 - CVE and Renovate-style changes are expected to raise hotfix/MR work targeting the active release branch.
 
 ```mermaid
 flowchart LR
-  M["master / production state"] --> HF["Hotfix branch"]
-  HF --> TEST["Test hotfix"]
-  TEST --> TAG["Tag hotfix"]
-  TAG --> PROD["Update production"]
-  PROD --> BACKDEV["Back-merge to development"]
-  PROD --> BACKREL["Merge to active release branches if needed"]
-  BACKDEV --> ALIGNED["Branches aligned"]
-  BACKREL --> ALIGNED
+  subgraph PROD_HF["Production Hotfix"]
+    M["main / production state"] --> HF["Hotfix branch"]
+    HF --> TEST["Test hotfix"]
+    TEST --> TAG["Tag hotfix"]
+    TAG --> DEPLOY["Deploy to production"]
+    DEPLOY --> BACK_MAIN["Merge back to main"]
+    BACK_MAIN --> FWD["Forward-merge to active release branches"]
+  end
+
+  subgraph REL_HF["Release-Phase Hotfix"]
+    REL["Active release branch"] --> RHF["Hotfix branch"]
+    RHF --> RTEST["Test hotfix"]
+    RTEST --> RMERGE["Merge back to release branch"]
+    RMERGE --> RVER["Release version incremented"]
+  end
 ```
 
 ## Hotfix Questions To Answer
 
-- Should hotfixes always be made from `master`?
-- In the proposed model, should release-phase hotfixes target the active release branch instead?
 - Who approves a hotfix merge?
-- Does a hotfix create a release branch or a hotfix branch?
 - When is the hotfix tagged?
 - How is the manifest updated?
-- How is the hotfix merged back into `development`?
-- How is the hotfix merged into any active release branches?
-- How do we prevent hotfix drift between production and development?
+- How is the hotfix forward-merged into active release branches?
+- How do we prevent hotfix drift between production and `main`?
 - How do CVE/Renovate hotfix branches get reviewed and prioritised during release work?
+- What is the maximum acceptable time from hotfix decision to production deployment?
 
 ## Rollback Current Understanding
 
@@ -103,6 +128,39 @@ The rollback process should say whether rollback includes:
 - Database or data changes, where relevant.
 
 If some items are not rolled back, the process should say so explicitly.
+
+## Database And Liquibase Rollback
+
+Database changes require special consideration because they are often forward-only.
+
+### Current Understanding
+
+- Liquibase is used for database schema and data changes.
+- One Liquibase update may affect multiple projects.
+- Liquibase changesets are typically applied once and tracked by checksum.
+- There is no standard rollback block requirement documented.
+
+### Proposed Rollback Rules
+
+| Scenario | Action |
+| --- | --- |
+| Schema change with rollback block | Execute Liquibase rollback as part of the release rollback. |
+| Schema change without rollback block | Fix-forward is likely the only safe option. Document why rollback is not possible. |
+| Destructive data change (DROP, DELETE) | Cannot be rolled back. Fix-forward or restore from backup. Incident process applies. |
+| Additive-only change (ADD COLUMN, new table) | May not need rollback if application code handles both states. |
+
+### Recommended Practice
+
+```text
+Every production Liquibase changeset should include a rollback block or a documented justification for why rollback is not supported.
+```
+
+Release readiness for changes that include Liquibase should confirm:
+
+1. Rollback block exists, or explicit documentation explains why not.
+2. The change has been tested in a lower environment with the same rollback path.
+3. The team understands whether fix-forward or rollback is the plan if the release fails.
+4. If rollback is not possible, this is flagged in the release report.
 
 ## Branch And Manifest Reconciliation
 

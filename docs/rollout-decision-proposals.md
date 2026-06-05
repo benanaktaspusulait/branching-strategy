@@ -21,6 +21,8 @@ They are written as defaults the team can approve or amend. They should not be t
 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed |
 | New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Proposed |
 | Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Proposed |
+| Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Proposed |
+| Tag jump checker | Retire after the new validation is confirmed green for two consecutive releases. | Proposed |
 
 ## 1. `development` To `main`
 
@@ -31,13 +33,26 @@ Adopt `main` as the production/live baseline branch.
 Treat the current `development` model as transitional until the release automation pilot is ready.
 ```
 
+### Technical Cutover Steps
+
+The transition means:
+
+1. `master` currently represents production/live (even if drift has occurred).
+2. After the agreed cutover release, `master` is renamed to `main` (or a new `main` is created from the confirmed production state).
+3. `development` is not renamed to `main`. Instead, `main` starts from the confirmed production release state.
+4. `development` is frozen and eventually archived/deleted after confirming no open work depends on it.
+5. Existing `master` is archived or deleted after `main` is confirmed.
+
+This is not a rename of `development` to `main`. It is a fresh start where `main` represents the actual production release state at cutover time.
+
 Recommended rollout:
 
 1. Confirm the cutover release.
 2. Freeze new process changes on `development`.
-3. Create or rename to `main` after the agreed cutover.
+3. Create `main` from the confirmed production release state (or rename `master` to `main`).
 4. Confirm branch protections on `main`.
 5. Update automation, documentation and team guidance to use `main`.
+6. Archive `development` and old `master` after transition is stable.
 
 Minimum approval needed:
 
@@ -256,6 +271,76 @@ Recommended retention:
 - Keep reports at least through production release, post-release validation and any incident review window.
 - Prefer keeping release reports with the release record permanently if storage is cheap and access-controlled.
 
+## 11. Rollback Reconciliation
+
+Proposed decision:
+
+```text
+Rollback is an operational path that must leave source control, manifests and release records in a consistent state.
+```
+
+### After A Rollback
+
+| Item | Action |
+| --- | --- |
+| `main` | Must still reflect production state. If rollback reverts production to an earlier release, `main` should be updated to match that state (revert commit or reset to earlier release tag). |
+| Manifest | Revert manifest to the version that matches the rolled-back production state. |
+| Failed release branch | Keep open for investigation. Close only after the fix-forward or abandonment decision is made. |
+| Active future release branches | Forward-merge the rollback state if they depended on the failed release. |
+| Release report/notes | Record the rollback event, reason, who decided and what was rolled back. |
+| JIRA tickets | Update ticket status to reflect that the release was rolled back. |
+
+### Rollback vs Fix-Forward Decision Guide
+
+| Factor | Prefer Rollback | Prefer Fix-Forward |
+| --- | --- | --- |
+| User impact severity | High / data risk | Low / cosmetic |
+| Fix complexity | Unknown or high | Simple and well-understood |
+| Time to fix | Hours or unknown | Minutes |
+| Database changes involved | No / reversible | Irreversible DB changes already applied |
+| Confidence in rollback | High (tested, no data impact) | Low (untested, data risk) |
+
+### Database/Liquibase Rollback
+
+```text
+Database rollback requires special handling because Liquibase changes may be forward-only.
+```
+
+Rules:
+
+- If the release included Liquibase changes that have already been applied, assess whether a rollback script exists.
+- If no rollback script exists and the DB change is not destructive, fix-forward may be the only safe option.
+- If the DB change is destructive or causes data corruption, the incident process takes over.
+- Liquibase rollback scripts should be written proactively for any release that includes schema changes to production.
+
+Recommended practice:
+
+```text
+Every production Liquibase changeset should have a corresponding rollback block or a documented reason why rollback is not possible.
+```
+
+## 12. Tag Jump Checker Future
+
+Proposed decision:
+
+```text
+Retire the tag jump checker in its current form once the new release branch model is active.
+Replace its validation responsibilities with the new manifest/tag validation rules built into the release automation pipeline.
+```
+
+Rationale:
+
+- The tag jump checker assumes linear version/tag ordering, which does not hold in the proposed non-linear release branch model.
+- Its core responsibilities (detecting missing tags, wrong tags, blocked tickets, do-not-deploy cases) are being absorbed into the new automation validation rules.
+- Rollback version comparisons in the old script are awkward because it prefers higher versions.
+
+Recommended transition:
+
+1. Keep the tag jump checker active during the transition period alongside the new validation.
+2. Once the new automation validation is confirmed green for two consecutive releases, retire the tag jump checker.
+3. Archive the script for reference but do not maintain it.
+4. Ensure the new validation covers: wrong tag, missing tag, manifest/tag mismatch, invalid ticket status, do-not-deploy markers and `NA` entries.
+
 ## Approval Checklist
 
 Before rollout, approve or amend:
@@ -272,3 +357,5 @@ Before rollout, approve or amend:
 10. Shared dev rollout phase.
 11. New environment readiness checklist.
 12. Auto manifest/tag validation strictness.
+13. Rollback reconciliation procedure.
+14. Tag jump checker retirement plan.

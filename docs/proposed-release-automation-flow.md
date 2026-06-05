@@ -154,6 +154,18 @@ The KT session suggested CVE and Renovate-style updates should follow the same p
 - These MRs should look similar to team-raised MRs.
 - Teams/release owners must watch, review and merge them as part of release work.
 
+### Ownership And SLA
+
+| Item | Owner | SLA |
+| --- | --- | --- |
+| CVE scanning tool output | Security/DevOps tooling (automated) | Continuous |
+| CVE hotfix branch creation | Owning squad or release owner | Within 1 working day of critical CVE |
+| CVE MR review and merge | Owning squad lead | Within 2 working days for critical, sprint boundary for others |
+| Renovate MR review | Owning squad | Within sprint, before release branch closure |
+| Priority conflict resolution | Release owner | On demand |
+
+If a CVE fix conflicts with release timing, the release owner decides whether to include it in the current release or defer to the next.
+
 ## Failure Handling And Quality Gates
 
 The automation is expected to run defensively:

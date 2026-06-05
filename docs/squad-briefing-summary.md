@@ -50,7 +50,7 @@ Current recommendation:
 ## What Squads Should Know
 
 - Release branches may start being used soon.
-- The active release branch may be deployed regularly to a shared dev environment for cross-team integration testing.
+- The active release branch may be deployed regularly to a shared dev environment for cross-team integration testing. The initial rollout phase will use a manual trigger only; automatic deployment to shared dev will come in later phases.
 - Squad dev test environments remain separate.
 - Feature branches are expected to be deleted after merge, once any required reporting has been generated.
 - Merge commits into release branches need MMA/JIRA ticket references and meaningful messages because release branch history becomes the changelog.

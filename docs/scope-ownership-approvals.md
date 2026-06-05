@@ -142,16 +142,19 @@ flowchart LR
 
 | Activity | Owner | Approver | Backup | Evidence |
 | --- | --- | --- | --- | --- |
-| Merge to `development` | TBD | TBD | TBD | Merge request |
-| Create release branch | TBD | TBD | TBD | Pipeline/job link |
-| Create service tag | TBD | TBD | TBD | Tag + pipeline link |
-| Update manifest | TBD | TBD | TBD | Manifest MR |
-| Deploy to environment | TBD | TBD | TBD | Deployment job |
-| QAT approval | TBD | TBD | TBD | Approval record |
-| Production release | TBD | TBD | TBD | Release record |
-| Hotfix | TBD | TBD | TBD | Hotfix MR/tag |
-| Rollback | TBD | TBD | TBD | Rollback record |
-| Post-release reconciliation | TBD | TBD | TBD | Merge records |
+| Merge to `development` | Squad developer | Squad lead / peer reviewer | Another squad member | Merge request |
+| Create release branch | Automation (Gareth/Achilles) | Release owner | TBD | Pipeline/job link |
+| Create service tag | Automation or release management | Release owner | TBD | Tag + pipeline link |
+| Update manifest | Automation (Gareth/Achilles) | Release owner | TBD | Manifest MR |
+| Deploy to lower environment | Squad developer | Squad lead | Another squad member | Deployment job |
+| Deploy to SIT and above | Release management | Release owner | TBD | Deployment job |
+| QAT approval | QAT team | QAT lead | TBD | Approval record |
+| Production release | Release management | Release owner | TBD | Release record |
+| Hotfix | Squad developer + release mgmt | Release owner | TBD | Hotfix MR/tag |
+| Rollback | Release management | Release owner + incident lead | TBD | Rollback record |
+| Post-release reconciliation | Automation + release owner | Release owner | TBD | Merge records |
+
+Note: Names marked TBD still need to be confirmed with team leads. Known automation ownership sits with Gareth/Achilles for the pilot phase.
 
 ## Access And Operational Constraints
 

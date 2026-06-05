@@ -4,6 +4,15 @@ This page compares the branching options discussed so far.
 
 The key point: the branching model should be chosen based on what the release operating model can safely support.
 
+Terminology note:
+
+```text
+In this documentation set:
+- `master` refers to the current production baseline branch (existing state).
+- `main` refers to the proposed production baseline branch (target state after cutover).
+Where both are mentioned together, the context should make clear whether the current or target state is being discussed.
+```
+
 ## Decision Lens
 
 Before choosing a model, confirm whether the team has:
@@ -42,6 +51,16 @@ Proposed target model from the KT sessions:
 main represents production/live.
 release branches are auto-created from main at the start of each sprint/release.
 feature and hotfix branches are created from the relevant release branch.
+```
+
+Transition note:
+
+```text
+Until the agreed cutover release, the current model remains active:
+  feature branches → development → release branch → master.
+After cutover:
+  feature branches → release branch → main.
+Both models should not run simultaneously. The cutover date marks the switch.
 ```
 
 For more detail, see [proposed release automation flow](proposed-release-automation-flow.md).
