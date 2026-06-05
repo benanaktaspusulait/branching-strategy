@@ -16,9 +16,15 @@ This would improve:
 - Consistency around tags, manifests and release metadata.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  LOCAL["Local/manual scripts"] --> PIPE["Audited release pipeline"]
-  PIPE --> OUT["Audit trail<br/>repeatable execution<br/>changed-service detection<br/>consistent validation"]
+  LOCAL["🖥️ Local / manual scripts"]:::before --> PIPE["⚙️ Audited release pipeline"]:::after
+  PIPE --> OUT["📊 Audit trail\n🔁 Repeatable execution\n🔍 Changed-service detection\n✅ Consistent validation"]:::benefit
+
+  classDef before fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
+  classDef after fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef benefit fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 ## Automation Work Mentioned
@@ -161,14 +167,27 @@ For the full proposed policy, see [rollout decision proposals](rollout-decision-
 Tags are critical because they trigger releasable artefact creation.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  START["Release request"] --> DIFF["Detect changed services"]
-  DIFF --> TAG["Check expected tags"]
-  TAG --> MAN["Compare manifest versions"]
-  MAN --> TICKET["Check tickets and release metadata"]
-  TICKET --> GATE{"Validation passed?"}
-  GATE -->|Yes| MR["Create/update manifest MR"]
-  GATE -->|No| STOP["Stop and require fix or approved override"]
+  START["📋 Release request"]:::start
+  DIFF["🔍 Detect changed\nservices"]:::check
+  TAG["🏷️ Check expected\ntags"]:::check
+  MAN["📦 Compare manifest\nversions"]:::check
+  TICKET["🎫 Check tickets &\nrelease metadata"]:::check
+  GATE{"✅ Validation\npassed?"}:::decision
+  MR["📝 Create / update\nmanifest MR"]:::pass
+  STOP["🛑 Stop: fix or\napproved override"]:::fail
+
+  START --> DIFF --> TAG --> MAN --> TICKET --> GATE
+  GATE -->|Yes| MR
+  GATE -->|No| STOP
+
+  classDef start fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef check fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef decision fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
+  classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
+  classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
 Validation should make sure:

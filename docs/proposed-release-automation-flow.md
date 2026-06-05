@@ -38,13 +38,26 @@ Keep `development` as transitional until the automation pilot and branch protect
 ## Feature And Hotfix Branch Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  REL["Release branch"] --> FH["Feature or hotfix branch"]
-  FH --> COMMIT["Commit to branch"]
-  COMMIT --> TAG["Generate temporary deployable tag"]
-  TAG --> BUILD["Build image / artefact"]
-  BUILD --> CHART["Update matching Cerberus chart branch"]
-  CHART --> DEPLOY["Deploy by specifying branch or ticket"]
+  REL["📋 Release branch"]:::rel
+  FH["🌱 Feature / hotfix branch"]:::feat
+  COMMIT["💾 Commit"]:::action
+  TAG["🏷️ Temporary tag"]:::tag
+  BUILD["🔨 Build image / artefact"]:::build
+  CHART["📦 Update Cerberus chart branch"]:::chart
+  DEPLOY["🚀 Deploy by branch or ticket"]:::deploy
+
+  REL --> FH --> COMMIT --> TAG --> BUILD --> CHART --> DEPLOY
+
+  classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef feat fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef action fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef tag fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef build fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef chart fill:#00838f,stroke:#006064,color:#fff,font-weight:bold
+  classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 Important details:
@@ -73,14 +86,28 @@ This is intended to remove most manual chart updates for multi-service changes.
 ## Release Branch Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  MAIN["main / production baseline"] --> REL["Auto-created release branch"]
-  REL --> FEATURE["Feature/hotfix branches"]
-  FEATURE --> MR["Merge into release branch"]
-  MR --> RTAG["Generate full release tag/version"]
-  RTAG --> RCHART["Update release branch on Cerberus charts"]
-  RCHART --> DEV["Auto-deploy active release to shared dev environment"]
-  DEV --> SIT["Promote/deploy to SIT and higher environments"]
+  MAIN["🏁 main"]:::prod
+  REL["📋 Auto-created\nrelease branch"]:::rel
+  FEATURE["🌱 Feature / hotfix\nbranches"]:::feat
+  MR["🔀 Merge into\nrelease branch"]:::merge
+  RTAG["🏷️ Full release\ntag / version"]:::tag
+  RCHART["📦 Update Cerberus\nchart branch"]:::chart
+  DEV["🧪 Auto-deploy to\nshared dev"]:::deploy
+  SIT["🚀 Promote to\nSIT and above"]:::promote
+
+  MAIN --> REL --> FEATURE --> MR --> RTAG --> RCHART --> DEV --> SIT
+
+  classDef prod fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef feat fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef merge fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef tag fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef chart fill:#00838f,stroke:#006064,color:#fff,font-weight:bold
+  classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef promote fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 Important details:
