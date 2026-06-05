@@ -1,6 +1,6 @@
 # KT Session Todo List
 
-This todo list is based on the latest KT session notes in [notes.txt](../notes.txt).
+This todo list is based on the KT session notes in [notes.txt](../notes.txt).
 
 The transcript appears to be incomplete in the middle, so this list only captures actions that can be reasonably inferred from the available notes.
 
@@ -17,10 +17,10 @@ The transcript appears to be incomplete in the middle, so this list only capture
 
 | Status | Todo | Where |
 | --- | --- | --- |
-| Done | Capture the KT decision summary in the documentation. | [Current release operating model](current-release-operating-model.md#latest-kt-session-updates) |
+| Done | Capture the KT decision summary in the documentation. | [Current release operating model](current-release-operating-model.md#kt-session-updates) |
 | Done | Prepare a short summary for squad leads. | [Squad briefing summary](squad-briefing-summary.md) |
 | Done | Capture the proposed release automation flow. | [Proposed release automation flow](proposed-release-automation-flow.md) |
-| Done | Include application, secrets and Liquibase/database changes in release scope discussions. | [Scope, ownership and approvals](scope-ownership-approvals.md#change-types-to-track) |
+| Done | Include application, secrets and Liquibase/database changes in release scope analysis. | [Scope, ownership and approvals](scope-ownership-approvals.md#change-types-to-track) |
 | Done | Document the temporary manual work still needed for server charts. | [Current release operating model](current-release-operating-model.md#deployment-repository-and-helm-scripts) |
 | Done | Document an expected branch naming convention as a proposal. | [Branching strategy options](branching-options.md#branch-and-commit-hygiene-to-confirm) |
 | Done | Document commit metadata expectations as a proposal. | [Automation and validation](automation-and-validation.md#commit-metadata) |
@@ -29,7 +29,7 @@ The transcript appears to be incomplete in the middle, so this list only capture
 | Done | Document changed-chart deployment expectation. | [Proposed release automation flow](proposed-release-automation-flow.md#changed-chart-deployment) |
 | Done | Document CVE/Renovate handling expectation. | [Proposed release automation flow](proposed-release-automation-flow.md#cve-and-renovate-flow) |
 | Done | Draft proposed decisions for the remaining rollout questions. | [Rollout decision proposals](rollout-decision-proposals.md) |
-| Done | Capture older KT findings for deployment scripts, secrets and auto manifest tooling. | [Historical KT session findings](historical-kt-session-findings.md) |
+| Done | Capture consolidated KT findings for deployment scripts, secrets and auto manifest tooling. | [KT session findings](kt-session-findings.md) |
 | Done | Add new environment readiness checks. | [Scope, ownership and approvals](scope-ownership-approvals.md#new-environment-readiness) |
 | Done | Add auto manifest/tag validation follow-up. | [Automation and validation](automation-and-validation.md#auto-manifest-and-tag-jump-follow-up) |
 
@@ -56,7 +56,7 @@ The transcript appears to be incomplete in the middle, so this list only capture
 | Proposed | Confirm new environment readiness criteria. | Require values files, setup script entries, Drone secrets/tokens and ACU/token ownership before release use. |
 | Proposed | Confirm auto manifest/tag validation strictness. | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. |
 | Proposed | Confirm how `NA` GitLab tag entries appear in reports. | Show them explicitly as no-version-update entries rather than omitting them silently. |
-| Proposed | Confirm whether tag jump logic is retired, replaced or adapted. | Treat existing tag jump checker as historical unless the new non-linear branch model needs a replacement. |
+| Proposed | Confirm whether tag jump logic is retired, replaced or adapted. | Reassess the existing tag jump checker against the new non-linear branch model, then explicitly keep, adapt or replace it. |
 
 ## Automation Rollout
 
@@ -83,12 +83,12 @@ The transcript appears to be incomplete in the middle, so this list only capture
 
 | Status | Todo | Owner |
 | --- | --- | --- |
-| Blocked | Share the KT recording with squads who missed the session. | Squad reps |
+| Blocked | Share the KT recording or source material with squads that need context. | Squad reps |
 | Blocked | Collect squad questions or concerns before rollout. | Squad reps |
 | Blocked | Schedule the community of practice sessions. | Rose / TBD |
 | Blocked | Confirm who owns rollout communication to each squad. | TBD |
 
-## Suggested Next Meeting Checklist
+## Implementation Follow-Up Checklist
 
 1. Approve or amend [rollout decision proposals](rollout-decision-proposals.md).
 2. Confirm the `development -> main` cutover release.

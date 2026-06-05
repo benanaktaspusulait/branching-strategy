@@ -18,7 +18,7 @@ Before choosing a model, confirm whether the team has:
 
 ## Branch And Commit Hygiene To Confirm
 
-The latest KT session raised several branch hygiene points that should be agreed before rollout.
+The KT sessions raised several branch hygiene points that should be agreed before rollout.
 
 Proposed branch naming examples:
 
@@ -36,7 +36,7 @@ Proposed cleanup rule:
 Feature branches should be deleted after merge, once any required release report has been generated.
 ```
 
-Proposed future model from the latest KT session:
+Proposed target model from the KT sessions:
 
 ```text
 main represents production/live.

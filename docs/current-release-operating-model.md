@@ -4,9 +4,9 @@ This page captures the current understanding of how branching, release and deplo
 
 It is a current-state summary, not a final process definition.
 
-## Latest KT Session Updates
+## KT Session Updates
 
-The latest KT session added several useful clarifications and a more detailed proposed target flow.
+The KT sessions added several useful clarifications and a more detailed proposed target flow.
 
 - The release process is currently too manual-heavy, especially around creating releases and artefacts.
 - The target direction is to automate the release flow so it can be triggered centrally, update Cerberus charts and produce reporting.
@@ -18,7 +18,7 @@ The latest KT session added several useful clarifications and a more detailed pr
 - Some manual server chart work may remain until the relevant Drone pipelines are updated.
 - Lower environments are currently more ad hoc, while higher-environment releases rely on server chart updates.
 - Changes may include application code, secrets and Liquibase/database changes, not only service code.
-- The proposed future model has `main` representing production/live state, with release branches auto-created at the start of each sprint/release.
+- The proposed target model has `main` representing production/live state, with release branches auto-created at the start of each sprint/release.
 - Feature and hotfix branches are expected to update matching Cerberus chart branches automatically.
 - A shared dev environment is expected to receive the active release branch for cross-team integration testing.
 
@@ -26,7 +26,7 @@ These points do not finalise the operating model, but they sharpen the immediate
 
 For the detailed proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).
 
-For older KT context around Helm scripts, secrets and auto manifest tooling, see [historical KT session findings](historical-kt-session-findings.md).
+For detailed KT findings around Helm scripts, secrets and auto manifest tooling, see [KT session findings](kt-session-findings.md).
 
 ## Current Branching Model
 
@@ -47,9 +47,9 @@ Current understanding:
 - After a release, the release branch should be reconciled back into `master` and `development`.
 - Hotfixes should be possible from production state, but the exact hotfix and back-merge process needs to be documented.
 
-The previous approach was closer to using `main/master` and release tags only. That reportedly contributed to long release gaps, fix-forward pressure and defect accumulation. The `development` branch was introduced to separate active development from production state.
+The KT context says using `main/master` and release tags only contributed to long release gaps, fix-forward pressure and defect accumulation. The `development` branch was introduced to separate active development from production state.
 
-The latest KT session described a proposed future direction where `development` effectively becomes `main`, and `main` represents production/live state. That needs explicit confirmation before this document treats it as the agreed model.
+The KT sessions described a proposed target direction where `development` effectively becomes `main`, and `main` represents production/live state. That needs explicit confirmation before this document treats it as the agreed model.
 
 ## End-To-End Flow
 
@@ -72,7 +72,7 @@ Feature branch
   -> post-release reconciliation
 ```
 
-Visual version:
+Current-state visual:
 
 ```mermaid
 flowchart LR
@@ -110,8 +110,7 @@ The deployment KT sessions suggest the current deployment focus is on the servic
 
 Key points:
 
-- Historically, individual service charts had their own Drone pipelines.
-- That was part of the previous way of working, where the dev environment deployed individual services as Helm charts.
+- Individual service charts have had their own Drone pipelines around dev-environment Helm chart deployment.
 - The current approach appears to deploy through the service repo instead.
 - The MMA Helm repo contains deployment scripts used for Helm packaging, linting, templating, diffing, uploading and deployment-related tasks.
 - The MMA Helm repo is separate from the MMA Helm library repo.
@@ -128,7 +127,7 @@ Deployment script stages mentioned:
 - Uploading.
 - Deployment.
 
-Deployment parameters mentioned in older KT sessions:
+Deployment parameters captured in KT sessions:
 
 - Target environment.
 - Deployment scope, such as live, historical or both.
@@ -253,7 +252,7 @@ Current understanding:
 - Some people have limited or no direct production deployment experience.
 - Production access is restricted.
 - B.Val/pre-production may contain more data than production in some cases.
-- The exact environment differences are not clearly documented from the discussion.
+- The exact environment differences are not clearly documented from the available KT notes.
 
 Areas to document:
 

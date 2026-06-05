@@ -1,6 +1,6 @@
 # Squad Briefing Summary
 
-This is a short summary squad leads can share with people who missed the latest KT session.
+This is a short CI/CD and deployment summary for squad leads.
 
 ## What Is Changing
 
@@ -8,7 +8,7 @@ The team is working to reduce the current manual-heavy release process.
 
 The target direction is to automate more of the release flow so that release branches, versions, tags, Cerberus chart changes and reporting can be generated through a repeatable pipeline.
 
-The proposed model described in the KT session is:
+The proposed model described in the KT sessions is:
 
 - `development` effectively becomes `main`.
 - `main` represents production/live state.
@@ -57,7 +57,7 @@ Current recommendation:
 - Long-running feature branches may need to merge in previous and next release branches to avoid missing hotfixes or conflicts.
 - Squads should raise concerns about branch naming, ticket references, server chart handling, release reporting, shared dev deployment or quality gates before rollout.
 
-## Questions For Squads
+## Input Needed From Squads
 
 1. Are there services in your squad that need special handling during release?
 2. Do your changes commonly include secrets, config or Liquibase/database updates?

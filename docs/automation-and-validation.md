@@ -29,7 +29,7 @@ flowchart TD
 Existing scripts or automation steps appear to cover parts of the release process, including:
 
 - Merging release branches into `master`.
-- Cleaning up old release branches.
+- Cleaning up inactive release branches.
 - Creating new release branches from `development`.
 - Tagging release branches.
 - Updating manifest merge requests with tags.
@@ -38,9 +38,9 @@ Existing scripts or automation steps appear to cover parts of the release proces
 
 Some of these steps currently require tweaking or are not fully automated yet.
 
-## Latest KT Automation Status
+## KT Automation Status
 
-The latest KT session suggests the current automation status is:
+The KT sessions suggest the current automation status is:
 
 - Automation is being tested on the new configuration service.
 - The scripts work locally.
@@ -54,7 +54,7 @@ The latest KT session suggests the current automation status is:
 
 For the end-to-end proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).
 
-For older KT context around current Helm scripts and auto manifest tooling, see [historical KT session findings](historical-kt-session-findings.md).
+For detailed KT findings around current Helm scripts and auto manifest tooling, see [KT session findings](kt-session-findings.md).
 
 ## Intended Direction
 
@@ -129,7 +129,7 @@ The pre-commit hook should prevent obvious missing ticket references, but it sho
 
 ## Merge Strategy
 
-The latest KT session leaned towards a squash-style pattern to keep release branch history readable.
+The KT sessions leaned towards a squash-style pattern to keep release branch history readable.
 
 The important requirement is not the exact Git button by itself. The important requirement is that the merge commit into the release branch contains:
 
@@ -234,7 +234,7 @@ Overrides may still be necessary, but they should be visible, approved and audit
 
 ## Auto Manifest And Tag Jump Follow-Up
 
-Older KT sessions described auto manifest and tag jump tooling that may be partly historical.
+The KT sessions described auto manifest and tag jump tooling that must be reassessed against the proposed non-linear release branch model.
 
 Follow-up needed:
 

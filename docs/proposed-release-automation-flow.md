@@ -1,6 +1,6 @@
 # Proposed Release Automation Flow
 
-This page summarises the proposed release automation flow described in the latest KT session.
+This page summarises the proposed release automation flow described in the KT sessions.
 
 It is still a proposal until the team confirms rollout timing, branch naming, quality gates and ownership.
 

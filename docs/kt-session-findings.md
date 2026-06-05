@@ -1,8 +1,14 @@
-# Historical KT Session Findings
+# KT Session Findings
 
-This page summarises the older KT sessions now captured in [notes.txt](../notes.txt).
+This page summarises the KT sessions captured in [notes.txt](../notes.txt).
 
-These notes provide background context for the release automation discussion. They should not override the latest proposed flow, but they explain why some of the proposed changes matter.
+These notes are current-state knowledge transfer input for the release automation analysis. They explain the deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
+
+Read this page together with:
+
+- [Current release operating model](current-release-operating-model.md) for the current end-to-end flow.
+- [Proposed release automation flow](proposed-release-automation-flow.md) for the target solution.
+- [Rollout decision proposals](rollout-decision-proposals.md) for decisions that still need team sign-off.
 
 ## 1. Deployment Scripts And Helm Flow
 
@@ -11,7 +17,7 @@ The deployment KT focused on the service repo and the MMA Helm repo.
 Key points:
 
 - The current deployment path focuses on the service repo.
-- Individual service chart Drone pipelines existed in the previous way of working, when the dev environment deployed individual services as Helm charts.
+- Individual service chart Drone pipelines have existed around dev-environment Helm chart deployment.
 - The MMA Helm repo contains the deployment scripts for Helm packaging, linting, templating, mass diff, uploading and deployment.
 - The MMA Helm repo is different from the MMA Helm library repo, which contains Helm templates/library content.
 - Future Drone pipeline deployment changes are likely to touch the MMA Helm repo and possibly service repo environment setup scripts.
@@ -41,7 +47,7 @@ Important details:
 
 ## 2. Current Environment And Release Responsibilities
 
-The older KT sessions clarified the current split of responsibilities:
+The KT sessions clarified the current split of responsibilities:
 
 - Developers/squads handle lower/squad environments.
 - Release management handles SIT and higher environments.
@@ -73,7 +79,7 @@ The release process must track both deployed version and activation/config state
 
 ## 4. Rollback Current State
 
-The older KT confirmed:
+The KT sessions confirmed:
 
 - Automatic rollback is not built into the deployment scripts.
 - If deployment fails, the pipeline does not automatically rollback.
@@ -149,7 +155,7 @@ This matters for changed-chart deployment because the automation needs to reason
 
 ## 9. Auto Manifest And Tag Jump Scripts
 
-The auto manifest KT described older supporting scripts.
+The auto manifest KT described supporting scripts that still matter for release metadata, manifest generation and validation decisions.
 
 Auto manifest has two main stages:
 
@@ -171,7 +177,7 @@ Supporting details:
 
 ## 10. Tag Jump Checker
 
-The tag jump checker appears more historical, but it explains an important release risk.
+The tag jump checker may be less central in the proposed non-linear release branch model, but it explains an important release risk.
 
 It was used when the team could not safely release only a selected ticket because other merged changes might be pulled in as well.
 
@@ -188,7 +194,7 @@ The script:
 
 Known caveats:
 
-- It may be less relevant with the newer branching structure because version/tag order is not always linear.
+- It may be less relevant with the proposed branching structure because version/tag order is not always linear.
 - Rollback comparisons can be awkward because the script tends to prefer the higher/current version.
 - Incorrect ticket numbers in commits can produce false positives.
 - Some validation may currently be looser than expected, such as incorrect tags or no tags found passing when they should fail.
@@ -199,7 +205,7 @@ Implication:
 The new release automation must explicitly define strict validation rules for ticket status, missing tags, incorrect tags and do-not-deploy markers.
 ```
 
-## Follow-Up Items From Older KT Sessions
+## Follow-Up Items From KT Sessions
 
 1. Confirm which scripts/repos must be updated for new dev/test environments.
 2. Confirm Drone secret/token ownership for new environments.

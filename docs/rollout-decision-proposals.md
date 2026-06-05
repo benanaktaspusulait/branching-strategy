@@ -1,6 +1,6 @@
 # Rollout Decision Proposals
 
-These are proposed decisions for the open items from the latest KT session.
+These are proposed decisions for the open items from the KT sessions.
 
 They are written as defaults the team can approve or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 

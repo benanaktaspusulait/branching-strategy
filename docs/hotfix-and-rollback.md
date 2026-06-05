@@ -8,7 +8,7 @@ Rollback and hotfix handling need to be clear because they affect the branching 
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
 
-The earlier likely expectation was:
+Current baseline expectation to confirm:
 
 ```text
 production state / master
@@ -19,7 +19,7 @@ production state / master
   -> merge hotfix into any active release branches if needed
 ```
 
-The latest KT session described a more release-branch-centred automation flow:
+The KT sessions described a more release-branch-centred automation flow:
 
 - Feature and hotfix branches are treated similarly.
 - Hotfix branches can be created from the active release branch.
