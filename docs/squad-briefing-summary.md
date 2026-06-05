@@ -68,6 +68,41 @@ Current recommendation:
 7. Do any squad-owned changes use `NA` tag entries, secrets/config or Liquibase exceptions?
 8. Who should be the squad contact for rollout questions?
 
+## How This Rollout Will Be Communicated
+
+### Feedback Loop
+
+The rollout follows a "show, don't tell" approach:
+
+```text
+1. Pilot runs → results shared with squads.
+2. Squads review results → raise concerns or questions.
+3. Concerns addressed → next phase starts.
+4. Repeat until all squads are on the new process.
+```
+
+No squad will be switched to the new process without seeing it work first on a real release.
+
+### What Squads Should Do Now
+
+| Action | When | Who |
+| --- | --- | --- |
+| Answer the input questions above | Before rollout review meeting | Squad lead or nominated rep |
+| Ensure commit messages reference MMA tickets | Immediately (good practice regardless) | All developers |
+| Review current manual release steps for your service | Before pilot completion | Squad lead |
+| Identify long-running branches that span releases | Before first release branch auto-creation | Feature owners |
+| Nominate a squad contact for rollout questions | Before Phase 2 expansion | Squad lead |
+
+### What Will NOT Change Immediately
+
+- **Squad dev/test environments**: remain yours, deployed by you, no change.
+- **Feature development workflow**: still branch → develop → MR → review → merge.
+- **QAT approval**: still required for SIT and above.
+- **Production release timing**: still Thursday (or as agreed).
+- **Release owner approval**: still human, still required.
+
+The automation handles the plumbing between your merge and the deployment. Your day-to-day development workflow stays the same.
+
 ---
 
 ← [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md) | → [README](../README.md)
