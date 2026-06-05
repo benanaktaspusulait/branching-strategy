@@ -1,9 +1,5 @@
-I-generated content may be incorrect
-
-Rose Garratt started transcription
-
 Stephen Craine
-0 minutes 4 seconds0:04
+0 40:04
 Stephen Craine 0 minutes 4 seconds
 Yeah, thanks everyone for joining. Here to discuss changes to our sort of git strategy, branching strategy that will help us automate our release process so we're not having to continue with the tactical solution, which is very, very manual heavy. So there's been lots of people involved.
 Stephen Craine 0 minutes 23 seconds
@@ -12,7 +8,7 @@ Stephen Craine 0 minutes 45 seconds
 Cross reference with JIRA, make sure we're releasing what we're meant to be releasing as well. So lots of benefits to be brought by this. So I'll hand over to you, Gareth, if you want to talk through it.
 
 Gareth Andrews
-0 minutes 56 seconds0:56
+0 560:56
 Gareth Andrews 0 minutes 56 seconds
 Yeah. Hi all. As Steve said, I'm part of the Achilles team working to hopefully streamline our lease process. If anyone has any questions at any point, please use the raise hand feature. I will keep glancing off to the screen on my side just to pick them up as soon as possible.
 Gareth Andrews 1 minute 15 seconds
@@ -25,7 +21,7 @@ Gareth Andrews 1 minute 56 seconds
 That should be Liquibase. Apologies for typo. Yeah, no, apologies for that. That's probably going to be everywhere. I was meant to correct it, but...
 
 Stephen Craine
-1 minute 59 seconds1:59
+1 591:59
 Stephen Craine 1 minute 59 seconds
 Yeah, I was going to say, there's no D in it.
 
@@ -33,6 +29,738 @@ Gareth Andrews
 2 minutes 8 seconds2:08
 Gareth Andrews 2 minutes 8 seconds
 So everything's kind of deployed to the low environments ad hoc. And then when it comes to active releases, we update server charts and those deployed to the higher environments. What this means is there's a lot of, as Steve said, changes which we're currently trying to deal with as we're deploying on a
+Gareth Andrews 2 minutes 27 seconds
+very regular basis. It's a lot of work for people to keep track of all those changes, to make sure they're all being documented and to make sure they all work together and that one environment looks like the next.
+Gareth Andrews 2 minutes 40 seconds
+How about changing overtime?
+Gareth Andrews 2 minutes 43 seconds
+Well, the main caveat is we're looking to update everything so they're all in charts. So all environments will be a mirror of a chart. So once you deploy a version of a chart, that is what the environment should look like. There will be caveats to that. Obviously, there's probably be manual steps until we're into a fully infrastructure as code kind of environment.
+Gareth Andrews 3 minutes 4 seconds
+But the main focus will be getting everything into that code and then managing it all through Cerberus Helm charts.
+Gareth Andrews 3 minutes 12 seconds
+So that's not just the applications, that's all the runbooks we're currently managing will be versioned as well. Liquid Base will be Liquid Base. I will get rid of the D eventually, I promise. Bad habits. Configuration and even the secrets. There's work currently to get configuration and secrets managed via.
+Gareth Andrews 3 minutes 32 seconds
+a chart entry. So the idea is if you're making any changes, you make a corresponding change in those repositories. Everything will then feed into your Helm charts. That's then what's deployed, be that to dev test environments, sit, be val or production. Everything
+
+Stephen Craine
+3 minutes 50 seconds3:50
+Stephen Craine 3 minutes 50 seconds
+And by app. Sorry, Gareth, but by app, you basically mean a service.
+
+Gareth Andrews
+3 minutes 51 seconds3:51
+Gareth Andrews 3 minutes 51 seconds
+Cool.
+Gareth Andrews 3 minutes 55 seconds
+Yeah, and any of our services or any corresponding tooling.
+Gareth Andrews 4 minutes 1 second
+So the big question that everyone always asks when you start doing grandiose big designs like this is how does it actually impact what we do on a day to day basis?
+Gareth Andrews 4 minutes 12 seconds
+So quick kind of summary of that is what's currently done. So you create your feature branch, you make changes, keep making changes. When you want to deploy, you create a manual tag. And then what would have to happen is someone who has access to the server's charts,
+Gareth Andrews 4 minutes 31 seconds
+So that is typically a team lead or a senior within the team. Someone who has access to the MMA DM project within GitLab would have to create a branch, update the tag of whichever image, whichever service you're changing, and then click the deployment to deploy to dev test to any other environment.
+Gareth Andrews 4 minutes 52 seconds
+Obviously, if you are talking to a senior on a team, that is a lot of manual work straight off the gate for any change that needs to be deployed.
+Gareth Andrews 5 minutes 3 seconds
+Once all those changes are done, it's merged into the development branch. End of Sprint, we create release branches and tags. We then go through that release branch, doing hot fixes, removing code which needs to be unpicked due to any kind of issues with it found during testing.
+Gareth Andrews 5 minutes 22 seconds
+And one of the big time sinks that we currently have is fixing any CVEs that are detected on the release branches as well. So that means that from creating that release branch to when that release branch is ready to go into actually an environment can be several days.
+Gareth Andrews 5 minutes 41 seconds
+The next step then, as Steve mentioned before, is we then update the service charts to all of those different versions. So we have to go in, tag those release branches again every time we update them with fixes, and update the service chart images to pick which version we want to deploy as part of that release.
+Gareth Andrews 5 minutes 59 seconds
+At that point, we then get to do the deployment and get ready for the next release. Normally, hopefully, with a day or two downtime, but obviously, depending on the hot fixes, CVEs, any kind of last minute feature changes we need to make, that can very quickly get close to the next release.
+Gareth Andrews 6 minutes 17 seconds
+which means at the moment we are losing a lot of developers' time.
+Gareth Andrews 6 minutes 23 seconds
+How we plan to fix that is a diagram which I'm going to apologise for because it looks like, as someone mentioned yesterday, the London Underground.
+Gareth Andrews 6 minutes 33 seconds
+So the general premise is we will have a main branch. So what is essentially development will become main.
+Gareth Andrews 6 minutes 44 seconds
+that will always be representative of live. So when something is deployed into live or production, apologies, I use the two interchangeably.
+Gareth Andrews 6 minutes 55 seconds
+When something is deployed in production, it will be merged into main. So at any given point, anything we have to do off of what is in production could be taken from main.
+Gareth Andrews 7 minutes 6 seconds
+At the start of each sprint, so the start of each release, a release branch will be created. In this example, I'm saying release 9. I believe we're currently up to release 12, probably be closer to 13, 14, or, well, I suspect 14 or 15 by the time we're ready to roll this automation out.
+Gareth Andrews 7 minutes 25 seconds
+Um, so...
+
+Stephen Craine
+7 minutes 25 seconds7:25
+Stephen Craine 7 minutes 25 seconds
+Yeah, I mean, we're our major version is still 5, so it's 5.12, so let's get that's gonna go live.
+
+Gareth Andrews
+7 minutes 31 seconds7:31
+Gareth Andrews 7 minutes 31 seconds
+Okay.
+Gareth Andrews 7 minutes 34 seconds
+Okay, that might end up changing to six then, which is good. The reason for that. So, ideas, whenever you do a feature for your release, you'll take it off of your release branch.
+Gareth Andrews 7 minutes 47 seconds
+You do your commits. Whenever you do a commit on your branch, it will automatically generate a tag and build a deployable candidate for your release branch. Well, for your feature branch, sorry. That is true for feature branches and hotfix branches as well. So they are essentially interchangeable in this process.
+Gareth Andrews 8 minutes 8 seconds
+You will get a tag which will essentially be, I say app name here, that's not correct. I've just checked the logic. It is the last version of your application. So in this case, say 9.0 dash MMA with your ticket number.
+Gareth Andrews 8 minutes 25 seconds
+Why that matters is that is the following tag. So whenever you do a commit, it will always use the latest. It will always build off of the latest commit on your branch with all your changes, and it will always be that same tag.
+Gareth Andrews 8 minutes 40 seconds
+So as you are working on it, it will always use the same. We are not going to be generating 60,000 images for every feature branch.
+Gareth Andrews 8 minutes 49 seconds
+The main benefit of that, and what isn't demonstrated here, is at the exact same time as that image is successfully built.
+
+It will also update a branch on the Cerberus chart.
+Gareth Andrews 9 minutes
+So all of those manual work which your team leads would have to do will be done automatically as part of the build pipeline. So the second risk commit is made on MMA XXX1 on this repository, Cerberus repository will have a branch with the same name created.
+Gareth Andrews 9 minutes 19 seconds
+and the image for your particular service will automatically be updated to point to your developing your development tag.
+Gareth Andrews 9 minutes 29 seconds
+What that means is when you need to request your application be deployed to an environment.
+Gareth Andrews 9 minutes 36 seconds
+All you have to do is give a deployer the ticket. Once they are aware of your branch name, they can deploy the chart with all of your changes.
+Gareth Andrews 9 minutes 48 seconds
+How this is done, quite simple. When it updates the image, it goes off and makes a corresponding change on the server shot. The benefit of that,
+Gareth Andrews 9 minutes 58 seconds
+is that it doesn't matter if you're training one service or five. You can add secrets, you can add runbook changes, you can add changes to three or four services all under the same ticket. If they are using the same feature ticket and have the same branch name on any repository, it will update the same branch and Cerberus.
+Gareth Andrews 10 minutes 21 seconds
+Meaning that at any given time, if you are changing secrets, the database, multiple services to talk to one another, if they are all being done under the same ticket name,
+Gareth Andrews 10 minutes 32 seconds
+They will always update the same chart, which means any environment deployed to will have a collection of all of your changes.
+Gareth Andrews 10 minutes 41 seconds
+Have I lost anyone yet?
+Gareth Andrews 10 minutes 48 seconds
+Don't see any hands up, so that's probably a good sign.
+Gareth Andrews 10 minutes 54 seconds
+The main benefit of this.
+Gareth Andrews 10 minutes 56 seconds
+is the release branch is what will be deployed to environments.
+Gareth Andrews 11 minutes 1 second
+So it is what will be every time a feature branch is merged in, it will create a new tag.
+Gareth Andrews 11 minutes 9 seconds
+And it will also update on this release branch. It will create a corresponding serverless branch as well and automatically update the image based on the full version number. So not the dash *** MMA *** 1 number, but the next feature number to go in.
+Gareth Andrews 11 minutes 29 seconds
+So, for example, if this is for the full service.
+Gareth Andrews 11 minutes 34 seconds
+The point of it being merged into the Release branch.
+Gareth Andrews 11 minutes 38 seconds
+It stopped, it basically will lose this tag number, this temporary tag number, and it will increment accordingly.
+
+Stephen Craine
+11 minutes 47 seconds11:47
+Stephen Craine 11 minutes 47 seconds
+Yeah, I think Brian's got a question.
+
+Gareth Andrews
+11 minutes 49 seconds11:49
+Gareth Andrews 11 minutes 49 seconds
+Oh, go for it.
+Gareth Andrews 11 minutes 53 seconds
+Uh, yep, let me just check, uh...
+
+Stephen Craine
+11 minutes 55 seconds11:55
+Stephen Craine 11 minutes 55 seconds
+Facebook chat, but...
+Stephen Craine 11 minutes 58 seconds
+So, if you wanna come on off like...
+BM
+
+Brian Manganaro
+12 minutes 2 seconds12:02
+Brian Manganaro 12 minutes 2 seconds
+Yeah, I can explain it. I was just wondering, I didn't want to interrupt the flow, sorry. I was just wondering, you mentioned that all the tickets or all the changes related to that ticket would be merged in as long as they're using the same ticket number, but does that mean that they, because the tag uses...
+
+Stephen Craine
+12 minutes 2 seconds12:02
+Stephen Craine 12 minutes 2 seconds
+On on might say.
+BM
+
+Brian Manganaro
+12 minutes 21 seconds12:21
+Brian Manganaro 12 minutes 21 seconds
+the base release that you've branched off of, does that mean that all of those changes to be sort of bundled together need to be off of the same base release?
+
+Gareth Andrews
+12 minutes 33 seconds12:33
+Gareth Andrews 12 minutes 33 seconds
+Technically, no. How the logic will work is it will only, it will update the version numbers based on purely the ticket name, the branch name, sorry. So it will not, it basically is completely ambiguous to the lease branch where it comes from or where it's going.
+Gareth Andrews 12 minutes 52 seconds
+So the idea is if you are working across multiple releases, there's no reason why a branch can't exist. So if, for example, a feature is delayed and can't be merged into Release 9, I think I've got an example here courtesy of a conversation I had earlier with Madhu. XXX5, for example, it started on Release 9.
+Gareth Andrews 13 minutes 13 seconds
+It does not matter because it will stay.
+
+
+Gareth Andrews 13 minutes 16 seconds
+basically active and it won't change or affect the Cerberus charts until such time as it merged into a release.
+Gareth Andrews 13 minutes 24 seconds
+The tag on those branches, the tag on the branches essentially is a temp holder just to kind of be completely separate from release as a whole. And the only point where it ever will become noticeable essentially to a release is when it is merged into that release.
+Gareth Andrews 13 minutes 47 seconds
+Does that answer your question?
+BM
+
+Brian Manganaro
+13 minutes 50 seconds13:50
+Brian Manganaro 13 minutes 50 seconds
+Are you?
+
+Gareth Andrews
+13 minutes 52 seconds13:52
+Gareth Andrews 13 minutes 52 seconds
+Okay.
+Gareth Andrews 13 minutes 55 seconds
+So yeah, so the general flow of it, exactly as we've kind of been doing already, hot fixes, releases, features, sorry, going into the branch, auto incrementing, and as I mentioned, the server shark will also be updated alongside that. What that means is no matter which of the 50 plus services you're working with,
+Gareth Andrews 14 minutes 14 seconds
+whether it's Liquibase, whether it's the config, whether it will be the secrets or any of the applicant or any of the actual Spring Boot services we deploy, the second they are merged into the release branch, and I forgot to mention this, but for clarity as well, all the release branches will be automatically generated at the start of the sprint.
+Gareth Andrews 14 minutes 34 seconds
+So when we are ready to prep for release 9, every single repository that needs to have one will have a release branch auto-generated for it. So there's no manual, I need to go create this, where do I base it off of? It will always go from main, pull and create a release branch.
+Gareth Andrews 14 minutes 53 seconds
+By default, main, we will be able to define if we need to chain releases together, just for clarity as well.
+Gareth Andrews 15 minutes 1 second
+So the idea is at any given point then, the release branch on Cerberus is what can be deployed to any environment. And the plan is, still a bit of work on the logic on this, but that release branch, so the active release that we are working on as a community within Cerberus, will be automatically deployed to the dev environment.
+Gareth Andrews 15 minutes 23 seconds
+So dev will be a continuously evolving live record for cross-team integration testing. So we won't have to wait till we hit set environment. You will have an environment where everything will work.
+Gareth Andrews 15 minutes 35 seconds
+Again, there's a bit of logic to be figured out on this, but for all teams to test in and to make sure that multiple services and tickets don't conflict or anything like that. So when we get full automation testing, performance testing, and those kind of functionality up and running widespread, we will have a live environment that will constantly report those metrics to us.
+Gareth Andrews 15 minutes 57 seconds
+O'Brien.
+BM
+Brian Manganaro
+16 minutes 1 second16:01
+Brian Manganaro 16 minutes 1 second
+Hey, sorry, sorry for interrupting again. With this deployment to dev, is that the individual dev environments that every team has, or is there a new sort of merged dev environment with all cross-team changes?
+
+Gareth Andrews
+16 minutes 15 seconds16:15
+Gareth Andrews 16 minutes 15 seconds
+That would be an overarching dev environment. So teams will have dev test environments for their testing, and then there will be a dev environment, which is the next step in the chain, essentially.
+
+Stephen Craine
+16 minutes 28 seconds16:28
+Stephen Craine 16 minutes 28 seconds
+Yeah, Brian, it's what we wanted to move to a while back, but we just haven't, the dev test environments haven't been built yet, fully. So dev test environments are basically just squad dev environments for local testing within squads. But at the moment, SIT is the first time we release, you know, have a release candidate.
+Stephen Craine 16 minutes 47 seconds
+and deploy all the changes. Obviously, we want to deploy that to a dev environment on a regular basis. So anytime something makes it into the Release branch, we should be deploying to dev so we can do some integration testing to make sure stuff doesn't conflict.
+Stephen Craine 17 minutes 6 seconds
+Charles Guthikonda.
+JU
+
+Jawad Umar
+17 minutes 8 seconds17:08
+Jawad Umar 17 minutes 8 seconds
+Yeah, just quick one. Looks like we are mainly focusing on the release because I know it's been a pain. So my question might be slightly unrelated, but has there been any thought about, because at the moment we have NFT as our dev environment in Artemis.
+Jawad Umar 17 minutes 29 seconds
+Has has there been any thought about having like branch environments from real ones which you can spin up and that's your ticket, and then merge your changes in, because looking at it, there are about 60 or services, and people deploy their changes on different services, and then...
+
+Stephen Craine
+17 minutes 30 seconds17:30
+Stephen Craine 17 minutes 30 seconds
+Mm.
+JU
+
+Jawad Umar
+17 minutes 50 seconds17:50
+Jawad Umar 17 minutes 50 seconds
+Things go out of sync sometimes.
+
+Stephen Craine
+17 minutes 53 seconds17:53
+Stephen Craine 17 minutes 53 seconds
+I think squads will have to manage the deployments to their environments as and when. I don't think that ACP supports ephemeral environments, I could be wrong. So I think that's why we've gone down the route of having.
+Stephen Craine 18 minutes 7 seconds
+Um, these dev test environments.
+JU
+
+Jawad Umar
+18 minutes 11 seconds18:11
+Jawad Umar 18 minutes 11 seconds
+Okay.
+
+Stephen Craine
+18 minutes 13 seconds18:13
+Stephen Craine 18 minutes 13 seconds
+Maybe something we could do when we move to core cloud one day.
+JU
+
+Jawad Umar
+18 minutes 17 seconds18:17
+Jawad Umar 18 minutes 17 seconds
+Yeah, sure.
+
+Gareth Andrews
+18 minutes 22 seconds18:22
+Gareth Andrews 18 minutes 22 seconds
+So, yeah, one of the benefits of this pattern is your release box will exist post.
+Gareth Andrews 18 minutes 28 seconds
+across the entirety of your deployment. So, for example, here, let's say we deploy version 9.3 to sit. We discover we need to do a change. We do a hotfix off that and merge it in. It looks no different to a feature change that was done by anyone. It can be auto deployed to the dev environment for testing.
+Gareth Andrews 18 minutes 48 seconds
+purposes by teams, increments the tag, and we end up having to deploy to sit the hotfix version. It's just tagged as per usual. So that means there's less end of sprint work in regards to managing hotfixes, everything like that.
+
+Stephen Craine
+19 minutes 6 seconds19:06
+Stephen Craine 19 minutes 6 seconds
+If...
+Stephen Craine 19 minutes 7 seconds
+I've got a question, Gareth. If the release branch exists up until it, you know, goes live, I suppose.
+
+Gareth Andrews
+19 minutes 9 seconds19:09
+Gareth Andrews 19 minutes 9 seconds
+Yep.
+Gareth Andrews 19 minutes 14 seconds
+Yeah.
+
+Stephen Craine
+19 minutes 16 seconds19:16
+Stephen Craine 19 minutes 16 seconds
+What about the next release branch? How do changes from one release get to the next release? Because obviously it's going to be potentially two or three in existence at once. So how do we make sure that any hotfixes are going to let release 9 don't get missed from release 10, for example?
+
+Gareth Andrews
+19 minutes 26 seconds19:26
+
+
+Stephen Craine
+21 minutes 47 seconds21:47
+Stephen Craine 21 minutes 47 seconds
+Yep, thanks.
+
+Gareth Andrews
+21 minutes 49 seconds21:49
+Gareth Andrews 21 minutes 49 seconds
+So I did say I was going to try and avoid lingering on this one, but I've ended up spending more time than I wanted on this.
+Gareth Andrews 21 minutes 57 seconds
+So this is the new process. Oh, Deepesh, go for it.
+
+Deepesh Rathore
+22 minutes 3 seconds22:03
+Deepesh Rathore 22 minutes 3 seconds
+I just wanted to check something about the previous slide. So if, for example, something in a feature branch for some reason is not complete, is not able to, you know, merge into the release branch, then and we create a new release branch.
+
+Gareth Andrews
+22 minutes 18 seconds22:18
+Gareth Andrews 22 minutes 18 seconds
+Yeah.
+
+Deepesh Rathore
+22 minutes 23 seconds22:23
+Deepesh Rathore 22 minutes 23 seconds
+Say, then, so what is, how do we, you know, manage the feature, the old feature that someone is still working on?
+
+Gareth Andrews
+22 minutes 31 seconds22:31
+Gareth Andrews 22 minutes 31 seconds
+So at that point, when a feature branch is taken, technically it has no allegiance to release, not to the previous release. There's nothing holding it to it apart from that's where the source came from. So an example here, XXX5, is taken from release 9.
+Gareth Andrews 22 minutes 51 seconds
+the team starts working on it, but then, like you've mentioned, it's not ready to be merged in, it's not ready to go anywhere near an environment. Or this could also be, for example, if a feature needs to be worked out, so it's completely broken, it needs rethinking, anything like that. You would create a branch,
+
+Deepesh Rathore
+22 minutes 59 seconds22:59
+Deepesh Rathore 22 minutes 59 seconds
+Yeah.
+
+Gareth Andrews
+23 minutes 10 seconds23:10
+Gareth Andrews 23 minutes 10 seconds
+write out that code essentially, remove any functionality you need, toggles, config, whatever needs to happen. And then that branch will just exist alongside your new release. It does not have to go into the source branch where it came from.
+Gareth Andrews 23 minutes 24 seconds
+What would then happen is as part of your development work on that feature branch, hotfix branch, whatever you're working on, you will need to merge in release the previous release. And likewise, one thing I've forgot to mix here is also anything from the next release. So release 10 should also be merging in at this point.
+Gareth Andrews 23 minutes 46 seconds
+The.
+
+Deepesh Rathore
+23 minutes 46 seconds23:46
+Deepesh Rathore 23 minutes 46 seconds
+So, I mean, so there is going to be more work than making sure that the change is merged in both the branches, both the release branches.
+
+Gareth Andrews
+23 minutes 56 seconds23:56
+Gareth Andrews 23 minutes 56 seconds
+Teams will need to be aware of it if you're working on a feature. Ideally, best practice is always before you do changes, before you do commits, especially before anything relating to a merge request, you will always merge in your base branch. So release 9, and then if you know, for example, that release 9 isn't
+Gareth Andrews 24 minutes 16 seconds
+finished, you would then move to pulling in Release 10. So the idea is you should know ahead of time, or at least have some awareness of any conflicts or issues by merging it into your branch before you do a commit.
+
+Deepesh Rathore
+24 minutes 33 seconds24:33
+Deepesh Rathore 24 minutes 33 seconds
+OK, thanks.
+
+Gareth Andrews
+24 minutes 37 seconds24:37
+Gareth Andrews 24 minutes 37 seconds
+So, yep, so that's a good segue. So obviously the thing there is it's a lovely system, but it does involve a little more work. So how do we make that easier? So as I mentioned, the new process makes that a lot easier for us, particularly in regards to the end of release stuff. So you create your feature hotfix branch.
+Gareth Andrews 24 minutes 57 seconds
+potential automation there in the future. Stay tuned. You make your changes and there's an automatic tag. So every time you do a commit, you get that automatic tag. At the same time, it will automatically update Cerberus and ready to go. So all you need to do to tell your team lead that, for example, you want to deploy to dev test one.
+Gareth Andrews 25 minutes 18 seconds
+You just tell them I'm working on branch feature MMA X1.
+Gareth Andrews 25 minutes 25 seconds
+All they have to do is trigger the deployment pipeline for that particular environment with that particular branch specified.
+Gareth Andrews 25 minutes 33 seconds
+And that's it. You don't have to do any manual updates, any tracking. In theory, and I say this greatly, in theory, you will never have to manually update the Cerberus repository. All the chart numbers will be automatically updated. The only time you will manually have to do it is if your code has a dependency on another feature ticket or another ticket.
+Gareth Andrews 25 minutes 55 seconds
+Another branch from a different Cerberus.
+Gareth Andrews 25 minutes 59 seconds
+in which case you will be updating one, maybe 2 entries instead of three or four, and you will already have a branch ready for those changes. So fingers crossed, touch wood.
+Gareth Andrews 26 minutes 11 seconds
+Even the more complex scenarios make it look a little simpler.
+Gareth Andrews 26 minutes 17 seconds
+Once things go into the Release branch, as I mentioned, it will automatically update the Release branch on the server charts.
+Gareth Andrews 26 minutes 25 seconds
+and it will also generate a lovely report for us. So one of the downsides of moving to a completely automated system like this is we lose that end of sprint visibility of what changes have been made, what services need to be updated, what changes have actually gone into those services.
+Gareth Andrews 26 minutes 42 seconds
+So, Suresh has very kindly asked, you know, what has been released or changed? Well, the advantage is there will be 1 slight change to our process as well, but it will mean we can generate this. This is very basic HTML, CSS pending, will make lovely formal design patterns, I'm sure.
+Gareth Andrews 27 minutes 3 seconds
+Later on.
+Gareth Andrews 27 minutes 5 seconds
+But this system will basically generate a report based on what Cerberus charts have changed. So it will go through that Cerberus release and save right between version 5 and version 6.
+Gareth Andrews 27 minutes 17 seconds
+What charts have been changed?
+Gareth Andrews 27 minutes 20 seconds
+It will automatically pull out every image which has been changed on those charts. And then it will go through all of those services and it will pull out every single merged commit. So every feature that has been merged into those release branches for every single one of those services.
+Gareth Andrews 27 minutes 39 seconds
+and it will generate this information. So it will tell us the ticket number. It will tell us message essentially of the merge commit.
+Gareth Andrews 27 minutes 49 seconds
+This is using demo data at the moment because we're missing tags in places. So this is real info, just demo ticket numbers. It will tell us what team has worked on that, so what team it was assigned to, who was assigned to it, and the status. Those 3 last fields, the team, primary contact, and status, are all pill
+Gareth Andrews 28 minutes 11 seconds
+pulled directly from Dua. So at the time the report is generated, we'll get a list of every ticket that's been merged into the Release branch, what services it changed.
+Gareth Andrews 28 minutes 23 seconds
+the team that's responsible for that change, who to talk to if we need to address any issues with that change, and if it's actually marked, it's done.
+Gareth Andrews 28 minutes 33 seconds
+This report can be generated at any given point. All we need to do is provide 2 tags. So that will be the version number or the last tag of where we are comparing it between.
+Gareth Andrews 28 minutes 45 seconds
+So if all services are tagged at version 5, release version 5, release version 6, and there are no changes, this will generate an empty report. Otherwise, it will relate every single change across every single service and who made those changes.
+Gareth Andrews 29 minutes 4 seconds
+Are there any questions about that, Suresh? I know that was something you were asking about, so...
+SC
+
+Suresh Chilukuri
+29 minutes 10 seconds29:10
+
+Gareth Andrews
+33 minutes 11 seconds33:11
+Gareth Andrews 33 minutes 11 seconds
+So, currently, CPUs are raised as part, raised and kind of investigating and fixed as part of the final end of the sprint release stuff prior to us going live. So, part of this work is that CV scanning and stuff will be done and raised against a release branch.
+Gareth Andrews 33 minutes 27 seconds
+So the idea is they will look no different to if one of us had gone in and manually added the change. So this section of flow here, where you create the branch, make a change, it gets merged into release. That will be exactly the same for CB detection.
+Gareth Andrews 33 minutes 47 seconds
+CVEs will raise a hotfix part, a hotfix branch, will review it, make any adjustments needed to get the tests passing, etc. like that. We can then deploy it to environments if we need to test it because we're worried about functionality, and then it will be merged in and deployed similar to all other changes. They'll essentially become part of a day-to-day dev work.
+
+Bulent Kucuk
+34 minutes 5 seconds34:05
+Bulent Kucuk 34 minutes 5 seconds
+Mhm.
+Bulent Kucuk 34 minutes 9 seconds
+Big.
+
+Stephen Craine
+34 minutes 9 seconds34:09
+Stephen Craine 34 minutes 9 seconds
+We've got men renovate as well, haven't we, in place?
+
+Gareth Andrews
+34 minutes 12 seconds34:12
+Gareth Andrews 34 minutes 12 seconds
+Yeah, so that will be changed to hopefully, well, I say hopefully, that will be changed to create hotfix branches that will target the release branch. So the idea is that it will always be pointing them to the release we're working on. It will then also ensure that
+Gareth Andrews 34 minutes 29 seconds
+essentially amend, renovate, MR will always look identical to one raised by a team. So all we have to do is essentially make sure that we're watching those MRs raised and address them as part of the release.
+
+Stephen Craine
+34 minutes 41 seconds34:41
+Stephen Craine 34 minutes 41 seconds
+Mm.
+Stephen Craine 34 minutes 44 seconds
+Yeah.
+
+Bulent Kucuk
+34 minutes 44 seconds34:44
+Bulent Kucuk 34 minutes 44 seconds
+Okay, thank you.
+
+Gareth Andrews
+34 minutes 47 seconds34:47
+Gareth Andrews 34 minutes 47 seconds
+Susanta.
+SP
+
+Susanta Patnaik
+34 minutes 49 seconds34:49
+Susanta Patnaik 34 minutes 49 seconds
+Again, yeah, just thinking, I think someone already asked, there are three services are going. Right now we are building for all the services to bring to one level, but is it in future like only the three services need to update, rest automation tool will take care of?
+
+Gareth Andrews
+35 minutes 10 seconds35:10
+Gareth Andrews 35 minutes 10 seconds
+So the aim of this is to basically completely remove the need for people to manually update server shots. It will be automated completely. The only time you will ever have to do it is if you are affecting, if for example, you're working on ticket number one and you have a dependency on ticket #2.
+SP
+
+Susanta Patnaik
+35 minutes 18 seconds35:18
+Susanta Patnaik 35 minutes 18 seconds
+In here, yes.
+Susanta Patnaik 35 minutes 24 seconds
+Then.
+
+Gareth Andrews
+35 minutes 29 seconds35:29
+Gareth Andrews 35 minutes 29 seconds
+you might need to edit the numbers to get ticket number 2 dependency in your service charts.
+
+Stephen Craine
+35 minutes 36 seconds35:36
+Stephen Craine 35 minutes 36 seconds
+I think he's asking are we going to release all services every time or just the ones that are part of that release?
+SP
+
+Susanta Patnaik
+35 minutes 40 seconds35:40
+Susanta Patnaik 35 minutes 40 seconds
+Yeah.
+
+Gareth Andrews
+35 minutes 41 seconds35:41
+Gareth Andrews 35 minutes 41 seconds
+So part of that lovely reporting that I showed, and this is news to you, Steven, I've only just started working on this and thinking of this today, I'm working on enhancing the Cerberus deployment logic. So it will only, it will auto detect what charts have been changed.
+
+Stephen Craine
+35 minutes 45 seconds35:45
+Stephen Craine 35 minutes 45 seconds
+Mm.
+
+Gareth Andrews
+35 minutes 59 seconds35:59
+Gareth Andrews 35 minutes 59 seconds
+in the release and deploy just those charts. So instead of us having to list specifically, we want to deploy charts A, B and C, it will go in and say, right, well, I've detected these tickets of changing charts A&C, just deploy those. So we will be completely removing the need
+
+Stephen Craine
+36 minutes 1 second36:01
+Stephen Craine 36 minutes 1 second
+Mm.
+
+Gareth Andrews
+36 minutes 18 seconds36:18
+Gareth Andrews 36 minutes 18 seconds
+to manually define. There will still be the option in case we want to, for any particular reason, avoid a chart. Ideally though, all release branches and all updated charts should always be deployed upon every release.
+
+Stephen Craine
+36 minutes 20 seconds36:20
+Stephen Craine 36 minutes 20 seconds
+Mm.
+Stephen Craine 36 minutes 26 seconds
+Sit.
+Stephen Craine 36 minutes 33 seconds
+Thanks, sir.
+SP
+
+Susanta Patnaik
+36 minutes 34 seconds36:34
+Susanta Patnaik 36 minutes 34 seconds
+Thank you. Thank you. Yeah.
+
+Gareth Andrews
+36 minutes 37 seconds36:37
+Gareth Andrews 36 minutes 37 seconds
+Jason, you had your hand up.
+JP
+Jason Pang
+36 minutes 43 seconds36:43
+Jason Pang 36 minutes 43 seconds
+No, that's fine. Well, I was supposed to ask about, is there any like quality gates going to be built into this automation or are we just going to completely trust it and any human intervention release manager going to check it before approving the deployment or we're just going to let it?
+Jason Pang 37 minutes 3 seconds
+Automatically.
+Jason Pang 37 minutes 5 seconds
+AA.
+
+Gareth Andrews
+37 minutes 5 seconds37:05
+Gareth Andrews 37 minutes 5 seconds
+So...
+JP
+Jason Pang
+37 minutes 7 seconds37:07
+Jason Pang 37 minutes 7 seconds
+It's just, I think sometimes we know that the bill process is all dependent on the...
+Jason Pang 37 minutes 16 seconds
+or the ACP tooling, you know, you could get multiple failure points, artifactory, PIO, ECR, drone, GitLab, they're all, because it's all multi-tenanted and you know, you're always going to get system failures. How are we going to
+
+Gareth Andrews
+37 minutes 19 seconds37:19
+Gareth Andrews 37 minutes 19 seconds
+Yep.
+JP
+Jason Pang
+37 minutes 36 seconds37:36
+Jason Pang 37 minutes 36 seconds
+Address those.
+Jason Pang 37 minutes 39 seconds
+If, if like any part of this fails, for example, there could be like they the the job has gone to tag tag the container, but somehow it doesn't reach, it doesn't get stored, but even.
+
+Gareth Andrews
+37 minutes 51 seconds37:51
+Gareth Andrews 37 minutes 51 seconds
+Mhm.
+JP
+Jason Pang
+37 minutes 58 seconds37:58
+
+Stephen Craine
+36 minutes 1 second36:01
+Stephen Craine 36 minutes 1 second
+Mm.
+
+Gareth Andrews
+36 minutes 18 seconds36:18
+Gareth Andrews 36 minutes 18 seconds
+to manually define. There will still be the option in case we want to, for any particular reason, avoid a chart. Ideally though, all release branches and all updated charts should always be deployed upon every release.
+
+Stephen Craine
+36 minutes 20 seconds36:20
+Stephen Craine 36 minutes 20 seconds
+Mm.
+Stephen Craine 36 minutes 26 seconds
+Sit.
+Stephen Craine 36 minutes 33 seconds
+Thanks, sir.
+SP
+Susanta Patnaik
+36 minutes 34 seconds36:34
+Susanta Patnaik 36 minutes 34 seconds
+Thank you. Thank you. Yeah.
+
+Gareth Andrews
+36 minutes 37 seconds36:37
+Gareth Andrews 36 minutes 37 seconds
+Jason, you had your hand up.
+JP
+Jason Pang
+36 minutes 43 seconds36:43
+Jason Pang 36 minutes 43 seconds
+No, that's fine. Well, I was supposed to ask about, is there any like quality gates going to be built into this automation or are we just going to completely trust it and any human intervention release manager going to check it before approving the deployment or we're just going to let it?
+Jason Pang 37 minutes 3 seconds
+Automatically.
+Jason Pang 37 minutes 5 seconds
+AA.
+
+Gareth Andrews
+37 minutes 5 seconds37:05
+Gareth Andrews 37 minutes 5 seconds
+So...
+JP
+Jason Pang
+37 minutes 7 seconds37:07
+Jason Pang 37 minutes 7 seconds
+It's just, I think sometimes we know that the bill process is all dependent on the...
+Jason Pang 37 minutes 16 seconds
+or the ACP tooling, you know, you could get multiple failure points, artifactory, PIO, ECR, drone, GitLab, they're all, because it's all multi-tenanted and you know, you're always going to get system failures. How are we going to
+
+Gareth Andrews
+37 minutes 19 seconds37:19
+Gareth Andrews 37 minutes 19 seconds
+Yep.
+JP
+Jason Pang
+37 minutes 36 seconds37:36
+Jason Pang 37 minutes 36 seconds
+Address those.
+Jason Pang 37 minutes 39 seconds
+If, if like any part of this fails, for example, there could be like they the the job has gone to tag tag the container, but somehow it doesn't reach, it doesn't get stored, but even.
+
+Gareth Andrews
+37 minutes 51 seconds37:51
+Gareth Andrews 37 minutes 51 seconds
+Mhm.
+JP
+Jason Pang
+37 minutes 58 seconds37:58
+Jason Pang 37 minutes 58 seconds
+that type of thing and you can't put it down, those type of things. How are we going to address those type of issues?
+
+Gareth Andrews
+38 minutes 6 seconds38:06
+Gareth Andrews 38 minutes 6 seconds
+Soap.
+Gareth Andrews 38 minutes 8 seconds
+How it is coded is defensively. So the idea is this will be the final step on any build pipeline.
+Gareth Andrews 38 minutes 15 seconds
+So provided that the image has successfully been built, the chart, the Helm chart for your service has successfully been uploaded and it is ready to be used, similar to what we have right now, it will then run this step.
+Gareth Andrews 38 minutes 31 seconds
+Ninety-nine percent of this step is...
+JP
+Jason Pang
+38 minutes 31 seconds38:31
+Jason Pang 38 minutes 31 seconds
+Not fair.
+
+Gareth Andrews
+38 minutes 36 seconds38:36
+Gareth Andrews 38 minutes 36 seconds
+Basically, get commands - this really makes me sound like I've been spending a lot of time doing, not a lot - is get commands, and there are code requests to JIRA.
+Gareth Andrews 38 minutes 46 seconds
+So, provided that...
+Gareth Andrews 38 minutes 50 seconds
+We have functionality to get, which I would hope, given that we've been pulling down and building images, we have connectivity, and we have connectivity for Jira for the report basis.
+Gareth Andrews 39 minutes 4 seconds
+The auto-tagging Cerberus updates is all just Git commands. It's Git commits, Git logs, Git tags, and Git diffs.
+Gareth Andrews 39 minutes 15 seconds
+What that means is, even if it failed, so as you mentioned, our systems can be particularly fickle, particularly on Fridays. If at any point it failed, there is nothing stopping us from just rerunning.
+Gareth Andrews 39 minutes 30 seconds
+because all this stuff will do is if it can't talk to Git, it will try and run commands on local, even if it's cloned down previously and now lost connectivity. It will run the commands on local, and then it will try and push up the auto tags, the build numbers, the changes at the end.
+Gareth Andrews 39 minutes 47 seconds
+So it should hopefully, I say that because there's always caveats and changes to systems as they break. It should be a case of if, for example, the connectivity does drop,
+JP
+Jason Pang
+39 minutes 47 seconds39:47
+Jason Pang 39 minutes 47 seconds
+OK, so yeah.
+
+Gareth Andrews
+40 minutes 1 second40:01
+Gareth Andrews 40 minutes 1 second
+We just don't have any changes on the repos. You can rerun the step and that will be it.
+JP
+Jason Pang
+40 minutes 6 seconds40:06
+Jason Pang 40 minutes 6 seconds
+Okay. It'd be alert, I assume, alerted to something like Slack and email or whatever, and then just say which point, which step of the process needs rerunning, then something like that.
+
+Gareth Andrews
+40 minutes 18 seconds40:18
+Gareth Andrews 40 minutes 18 seconds
+At the moment, there is no alerting on it. That is something we should definitely probably look into.
+Gareth Andrews 40 minutes 28 seconds
+Boy.
+BM
+Brian Manganaro
+40 minutes 31 seconds40:31
+Brian Manganaro 40 minutes 31 seconds
+Yeah, sorry, I just wanted to bring your attention to the question I posted in the chat, but it sounded like earlier you mentioned that the commits needed a particular structure. So it sounds like we're expecting to just merge changes in rather than squash and merge. Any plans for supporting squash and merge just so we can get a...
+
+Gareth Andrews
+40 minutes 41 seconds40:41
+Gareth Andrews 40 minutes 41 seconds
+Mhm.
+BM
+Brian Manganaro
+40 minutes 50 seconds40:50
+Brian Manganaro 40 minutes 50 seconds
+A cleaner, get history on the services.
+
+Gareth Andrews
+40 minutes 53 seconds40:53
+Gareth Andrews 40 minutes 53 seconds
+I know this has been a topic that's been discussed and I think what we were leaning towards was squash instead of rebase for our commits. That is what this system is based on, having a squash or merge commit. Essentially what we want is, well essentially all we care about
+Gareth Andrews 41 minutes 12 seconds
+is whatever the merge commit going into the lease branch is has identifiable information on it, such as it has the ticket number in the message and it has the details of that ticket. So it has a verbose meaning and history log. What this essentially means as well is this will
+Gareth Andrews 41 minutes 32 seconds
+our commit history on our release branches becomes our change log. So any merge requests will need to have the ticket number and a meaningful message. They can't just be merge hotfix one into release 9 fixed this. It will need to detail it. Future work could include automating that.
+Gareth Andrews 41 minutes 53 seconds
+to pull the details from juror based on the ticket number instead. But for now, yes, I think we'll probably look to go towards a squash pattern just to reduce, like you said, the noise on the release branches.
+BM
+Brian Manganaro
+42 minutes 7 seconds42:07
+Brian Manganaro 42 minutes 7 seconds
+So does that mean that the individual commits in the feature branch don't matter then, or do they still need to follow the pattern?
+
+Gareth Andrews
+42 minutes 16 seconds42:16
+Gareth Andrews 42 minutes 16 seconds
+Ideally, they need to follow the pattern because that report will be able to generate off of those branches as well. So there is no reason why those reports and those systems would not be, could not be used as part of a long standing release. So for example, if there was a long standing
+
 Gareth Andrews 42 minutes 35 seconds
 change to multiple APIs based on new data coming in and new services on a new system. You can generate all of this automated tooling as well to point at those branches. So it could be destined for release 5 release versions forward, and we could still generate a weekly report to detail what's changed, what needs to be.
 Gareth Andrews 42 minutes 54 seconds
@@ -188,5 +916,3 @@ Susanta Patnaik
 47 minutes 3 seconds47:03
 Susanta Patnaik 47 minutes 3 seconds
 What?
-
-Rose Garratt stopped transcrip
