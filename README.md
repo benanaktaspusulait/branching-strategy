@@ -12,7 +12,13 @@ Then decide whether the branch model should be kept, simplified or replaced.
 
 ## Structure
 
-The documentation is organised in three layers:
+The documentation is organised as a decision-ready synthesis plus three supporting layers:
+
+### Decision-Ready Synthesis
+
+| Page | What It Covers |
+| --- | --- |
+| [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Clear current-state summary, problem analysis, solution options, risks and experience-based recommendations. |
 
 ### Layer 1: Current State (What Exists Today)
 
@@ -56,19 +62,20 @@ Key problems at a glance:
 
 **Quick overview (10 min):**
 1. This page.
-2. [Current release operating model](docs/current-release-operating-model.md) — how it works today.
-3. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) — what is broken.
-4. [Proposed release automation flow](docs/proposed-release-automation-flow.md) — what the solution looks like.
+2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) — decision-ready synthesis.
+3. [Current release operating model](docs/current-release-operating-model.md) — how it works today.
+4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) — what is broken.
+5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) — what the solution looks like.
 
 **Full picture:**
-5. [Deployment and release findings](docs/deployment-and-release-findings.md) — technical details.
-6. [Branching strategy options](docs/branching-options.md) — branch model comparison.
-7. [Rollout decision proposals](docs/rollout-decision-proposals.md) — decisions to approve.
+6. [Deployment and release findings](docs/deployment-and-release-findings.md) — technical details.
+7. [Branching strategy options](docs/branching-options.md) — branch model comparison.
+8. [Rollout decision proposals](docs/rollout-decision-proposals.md) — decisions to approve.
 
 **For approvers:**
-8. [Hotfix and rollback](docs/hotfix-and-rollback.md)
-9. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
-10. [Automation and validation](docs/automation-and-validation.md)
+9. [Hotfix and rollback](docs/hotfix-and-rollback.md)
+10. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
+11. [Automation and validation](docs/automation-and-validation.md)
 
 ## Visual Overview
 
