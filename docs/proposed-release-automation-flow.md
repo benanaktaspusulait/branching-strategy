@@ -216,4 +216,4 @@ GitOps alignment, tag/version guidance, multi-repo orchestration and progressive
 
 ---
 
-← [Deployment and release findings](deployment-and-release-findings.md) | → [Branching strategy options](branching-options.md)
+<- [Deployment and release findings](deployment-and-release-findings.md) | -> [Branching strategy options](branching-options.md)

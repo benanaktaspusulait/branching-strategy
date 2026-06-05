@@ -1,15 +1,19 @@
-# Sistem Durumu, Sorunlar, Cozum Secenekleri Ve Riskler
+# System State, Problems, Solution Options And Risks - Detailed Analysis
 
-Bu dokuman, mevcut CI/CD, branching, release ve deployment dokumanlarinin karar vermeye uygun ozetidir.
+This page contains the detailed analysis behind the shorter decision-ready summary.
 
-Amac:
+Use this page when you need the rationale, operational detail and experience-based notes. Use [system state, problems, solution options and risks](../system-state-problems-solutions.md) for the short version.
 
-1. Sistemin su anki durumunu netlestirmek.
-2. Sorunlari, etkilerini ve kok nedenlerini acikca gostermek.
-3. Cozum seceneklerini ve her cozumun risklerini karar seviyesinde ortaya koymak.
-4. Benzer CI/CD ve release donusumlerinde gorulen pratik deneyimi bu degerlendirmeye eklemek.
+## Purpose
 
-Bu dokuman tek basina detay kaynagi degildir. Detaylar icin mevcut sayfalar esas alinmalidir:
+This analysis answers four questions:
+
+1. What is the current state of the CI/CD, branching, release and deployment system?
+2. What are the main problems?
+3. What solution options are available?
+4. What risks does each solution introduce?
+
+Related pages:
 
 - [Current release operating model](../current-release-operating-model.md)
 - [Deployment and release findings](../deployment-and-release-findings.md)
@@ -21,947 +25,782 @@ Bu dokuman tek basina detay kaynagi degildir. Detaylar icin mevcut sayfalar esas
 - [Release scope, ownership and approvals](../scope-ownership-approvals.md)
 - [Rollout decision proposals](../rollout-decision-proposals.md)
 
-## Kisa Karar Ozeti
+## Detailed Executive Summary
 
-Net sonuc:
+The main issue is not the branch model alone.
 
-```text
-Su anki ana problem sadece branching modeli degil.
-Ana problem, release surecinin manuel, parca parca, sahipligi belirsiz ve yeterince denetlenebilir olmamasi.
+The bigger issue is that release state is distributed across several moving parts:
 
-Branch modelini degistirmeden once release akisi, tag/manifest dogrulamasi, chart update,
-hotfix/rollback, environment readiness ve ownership netlesmelidir.
-```
+- source branches,
+- release tags,
+- images and Helm artefacts,
+- Cerberus chart branches,
+- manifests,
+- values files,
+- secrets and configuration,
+- Liquibase/database changes,
+- runbooks,
+- JIRA metadata,
+- QAT approvals,
+- post-release reconciliation.
 
-Mevcut durum:
+That means a branch model change cannot, by itself, make releases safe.
 
-- Sistem su anda GitFlow'a yakin bir modelde calisiyor: `feature branch -> development -> release branch -> master / production`.
-- Hedef yon, `main` branch'inin production/live baseline olmasi ve release branch'lerinin otomatik olusturulmasi.
-- Release artefact yaratmak icin release branch tek basina yetmiyor; tag kritik tetikleyici.
-- Helm packaging, manifest update, Cerberus chart update ve deployment akisi hala kismen manuel.
-- Automation scriptleri lokal calisiyor; Drone icinde merkezi ve audit edilebilir sekilde calismasi henuz tamamlanmis degil.
-- Gareth/Achilles configuration service uzerinde pilot yapiyor.
-- Hotfix ve rollback kavramsal olarak tanimli, fakat operasyonel runbook ve reconciliation kurallari henuz yeterince kesin degil.
-- Feature flag'ler daha cok deploy-time config/values seviyesinde; runtime flag olgunlugu yok gibi gorunuyor.
-- Ownership ve approval matrix henuz tamamen isimlendirilmis degil.
-
-En guvenli yol:
+Recommended order:
 
 ```text
-1. Mevcut sureci gorunur ve olculebilir hale getir.
-2. Manuel/lokal adimlari Drone'a tasi.
-3. Strict validation ekle.
-4. Hotfix, rollback ve ownership'i imzali hale getir.
-5. Pilot basarili olunca `main = production` modeline kontrollu cutover yap.
-6. Daha sonra trunk-based veya daha agresif sadelemeleri tekrar degerlendir.
+1. Make the current release process visible and auditable.
+2. Move repeatable release work into Drone.
+3. Enforce strict tag, manifest and ticket validation.
+4. Name owners for release, hotfix, rollback, environment readiness and alerting.
+5. Cut over to `main = production` only after the pilot is proven.
+6. Consider trunk-based development later, after feature flags and rollback maturity improve.
 ```
 
-## 1. Sistemin Su Anki Durumu
+## 1. Current System State
 
-### 1.1 Branching Ve Release Modeli
+### 1.1 Branching And Release Model
 
-Mevcut model:
+The current branching model is close to GitFlow:
 
 ```text
-feature branch
-  -> development
-  -> release branch
-  -> master / production
+feature branch -> development -> release branch -> master / production
 ```
 
-Bu model, su anda aktif surecin en yakin tanimi. `development` aktif gelistirme ve release aday havuzu gibi davranir. Release branch `development` uzerinden kesilir. Production state'in `master` uzerinde temsil edilmesi beklenir.
+Current understanding:
 
-Hedef model:
+- Feature or ticket branches are used for individual changes.
+- Completed work is merged into `development`.
+- Release branches are cut from `development`.
+- `master` is expected to represent production/live state.
+- Release branches are tagged to trigger releasable artefact creation.
+- After release, the release branch should be reconciled back into `master` and `development`.
+
+Target direction:
 
 ```text
 main = production/live baseline
-release branch = sprint/release adayi
-feature/hotfix branch = ilgili release branch'ten acilir
-production release sonrasi release state main'e reconcile edilir
+release branch = sprint/release candidate
+feature/hotfix branch = created from the relevant release branch
+production release = reconciled back into main
 ```
 
-Bu hedef model dogru yonde, cunku `development` gibi uzun omurlu bir entegrasyon branch'inin maliyetini azaltir. Fakat bu model, ancak automation ve validation yeterince gucluyse guvenli olur.
+Important distinction:
 
-Deneyime dayali yorum:
+```text
+Do not rename `development` to `main`.
+Create or rename `main` from the confirmed production state.
+```
 
-Benzer donusumlerde branch modelini erken degistiren ekiplerde sorun cozulmek yerine yer degistirir. Eskiden "hangi branch dogru?" sorusu varken, yeni modelde "hangi chart, hangi tag, hangi manifest production'i temsil ediyor?" sorusu buyur. Bu nedenle branch degisikligi ancak release state'in tek bir kaynaktan izlenebildigi anda yapilmalidir.
+Experience-based note:
 
-### 1.2 Artefact, Tag Ve Deployment Durumu
+In release-process changes, teams often focus too early on "GitFlow vs trunk-based". The better first question is whether the team can prove exactly what is included in a release, who approved it, which artefact was deployed and how rollback would be handled.
 
-Release branch, tek basina release artefact uretmiyor. Tag yaratildiginda pipeline:
+### 1.2 Artefacts, Tags And Deployment
 
-- repository clone eder,
-- build/test calistirir,
-- security ve code quality scan yapar,
-- Helm package/dependency/upload adimlarini calistirir,
-- deploy edilebilir artefact uretir.
+A release branch alone does not produce a deployable artefact. The release tag is the bridge between source state and deployable state.
 
-Bu yuzden tag timing cok kritik. Yanlis commit'e tag atilirsa, yanlis artefact olusur. Yanlis artefact sonra manifest ve chart update uzerinden environment'a tasinabilir.
+Tag creation appears to trigger:
 
-Deployment tarafinda:
+- repository clone,
+- build/test setup,
+- Artifactory login,
+- service build,
+- Maven install/tests for Spring Boot services,
+- vulnerability scanning such as Trivy,
+- code quality scanning such as Sonar,
+- Helm package, dependency build and artefact upload.
 
-- Helm chart'lar package olarak deploy ediliyor.
-- Environment-specific values dosyalari deploy aninda kullaniliyor.
-- Deployment MMA Helm repo scriptleri ve service repo akisi ile ilerliyor.
-- Deployment parametreleri environment, scope, release version/tag ve chart isimlerini iceriyor.
-- Tum chart'lari deploy etmek icin chart isimleri manuel listelenebiliyor.
-- Changed-chart detection hedefleniyor ama production-ready oldugu henuz kanitlanmis degil.
+Deployment uses packaged Helm artefacts and environment-specific values files.
 
-Deneyime dayali yorum:
+Key risk:
 
-Artefact ve deployment zincirinde en sik gordugum hata, "branch dogruysa release dogrudur" varsayimidir. Gercekte production'a giden sey branch degil; image, Helm chart, values, secret, manifest ve runbook kombinasyonudur. Bu kombinasyon ayni anda dogrulanmadikca release state guvenilir sayilmaz.
+```text
+If the tag points at the wrong commit, every later step can look correct while still deploying the wrong artefact.
+```
 
-### 1.3 Manifest, JIRA Ve Release Metadata Durumu
+Experience-based note:
 
-Mevcut scriptler:
+"The branch is correct" is not enough. Production receives an image, chart, manifest, values, secrets and runbook combination. Release safety depends on that whole combination being consistent.
 
-- release ticket olusturabiliyor,
-- manifest olusturabiliyor,
-- JIRA release label'larindan ticket bulabiliyor,
-- GitLab tag field uzerinden servis version/tag bilgisi okuyabiliyor,
-- changelog update edebiliyor,
-- branch, commit, push ve MR olusturma adimlarini destekliyor.
+### 1.3 Manifest, JIRA And Release Metadata
 
-Fakat dogrulama politikalari henuz yeterince net degil:
+Existing scripts appear to support:
 
-- Wrong tag fail mi warning mi?
-- Missing tag fail mi warning mi?
-- `do not deploy` marker kesin stop mu?
-- `NA` tag entry release report'ta nasil temsil edilecek?
-- Invalid ticket status override edilebilir mi?
-- Tag jump checker yeni non-linear release branch modelinde kalacak mi?
+- release ticket creation,
+- manifest creation,
+- JIRA release-label lookup,
+- GitLab tag-field lookup,
+- changelog update,
+- branch creation,
+- commits,
+- pushes,
+- merge requests.
 
-Deneyime dayali yorum:
+Open validation questions:
 
-Release automation'da "uyari ver ama devam et" yaklasimi kisa vadede rahat gorunur, fakat production incident sonrasinda audit acisindan cok zayiftir. Dogrusu, integrity risklerinde fail-fast davranmak; istisnalari ise named approver, reason ve timestamp ile kaydetmektir.
+- Should a wrong tag fail or warn?
+- Should a missing tag fail or warn?
+- Does a `do not deploy` marker always stop release?
+- How should `NA` tag entries appear in the release report?
+- Can invalid ticket status be overridden?
+- Is the tag jump checker retired, replaced or adapted?
 
-### 1.4 Environment Durumu
+Recommended position:
 
-Lower environment'lar daha ad hoc calisiyor. SIT ve ustu ortamlarda release management ve QAT approval daha belirgin.
+```text
+Release-integrity issues should fail fast.
+Exceptions should be explicit, approved and recorded.
+```
 
-Bilinen noktalar:
+### 1.4 Environment Readiness
 
-- Shared dev environment hedefleniyor.
-- Squad dev/test environment'lari ayri kalacak.
-- B.Val/pre-production ve production arasindaki farklar tam dokumante degil.
-- Yeni environment icin values files, setup script entries, Drone secrets/tokens ve kube/robot token sahipligi netlesmeli.
-- Production access kisitli.
-- Bazi adimlar PNR room/location, tools pod veya environment variable/secret gerektirebilir.
+Lower environments are more ad hoc. SIT and above rely more heavily on release management and QAT approval.
 
-Deneyime dayali yorum:
+Environment readiness should include:
 
-"Pre-prod production'a yakin" ifadesi tek basina yeterli degil. En cok production problemi, pre-prod'da olmayan data shape, permission, network policy, external integration veya resource limit farkindan cikar. Environment parity checklist release gate'in parcasi olmazsa, pre-prod onayi yanlis guven yaratabilir.
+- values files,
+- environment setup script entries,
+- Drone secrets/tokens,
+- kube/robot token ownership,
+- secret chart entries,
+- deployment scope behaviour,
+- data shape,
+- external integrations,
+- network access,
+- operational permissions,
+- runbook steps.
 
-### 1.5 Secrets, Config, Feature Flags Ve Liquibase Durumu
+Experience-based note:
+
+A namespace existing in Kubernetes does not mean the environment is release-ready. Release readiness includes secrets, tokens, values, data, access and operational runbooks.
+
+### 1.5 Secrets, Config, Feature Flags And Liquibase
 
 Secrets:
 
-- Git-crypt ve managed secrets scriptleri ile yonetiliyor.
-- Secret key isimleri environment'lar arasinda ayni, degerler farkli olmali.
-- GPG/Git maintainer onboarding gerekiyor.
-- Secret exposure durumunda rotation gerekebilir.
+- Managed secrets scripts and Git-crypt appear to be the current direction.
+- Secret keys should remain consistent across environments.
+- Secret values differ by environment.
+- GPG/Git maintainer onboarding is required.
+- Secret exposure during screen sharing or recording may require rotation.
 
 Feature flags:
 
-- Daha cok values/config uzerinden deploy-time control seviyesinde.
-- Runtime dynamic flag control henuz yok gibi.
-- Bu nedenle feature enable/disable icin redeployment gerekebilir.
+- Feature activation appears to be mostly deploy-time, through values/config.
+- Runtime dynamic feature flags are not clearly documented.
+- Enabling or disabling a feature may require redeployment.
 
 Liquibase:
 
-- DB degisiklikleri release scope'un parcasidir.
-- Bir Liquibase update birden fazla projeyi etkileyebilir.
-- Rollback block zorunlulugu net degil.
+- Database changes are part of release scope.
+- One Liquibase update may affect multiple projects.
+- Rollback-block expectations are not fully defined.
 
-Deneyime dayali yorum:
+Experience-based note:
 
-Trunk-based veya "deploy ama aktif etme" modeli, feature flag olgunlugu dusukken sanildigi kadar guvenli degildir. Flag degistirmek redeploy gerektiriyorsa, release complexity branch'ten configuration'a tasinmis olur. Bu kotu degil, ama mutlaka kabul edilmis bir operasyonel gercek olmali.
+Trunk-based development works best when deployment and release are separated. If flag changes require chart redeployment, the team has moved complexity from branches into deployment/configuration rather than removing it.
 
-### 1.6 Ownership Ve Approval Durumu
+### 1.6 Ownership And Approval
 
-Dokumanlarda ownership ihtiyaci dogru tespit edilmis. Fakat su alanlar henuz net isimlendirilmemis:
+The ownership need is correctly identified, but several roles still need named owners:
 
 - release owner,
 - rollback decision owner,
 - hotfix approver,
 - Drone secret/token owner,
-- service ownership owner list,
+- service ownership list,
 - environment readiness approver,
 - post-release reconciliation owner,
 - alert owner.
 
-Pilot automation icin Gareth/Achilles isimleri geciyor. Bu iyi bir baslangic ama rollout icin yeterli degil.
+Experience-based note:
 
-Deneyime dayali yorum:
+Automation is not an owner. When automation fails, someone must decide whether to rerun, override, stop release, roll back or fix forward.
 
-CI/CD problemlerinde teknik cozumun basarisiz olmasinin en yaygin nedeni tooling degil, ownership boslugudur. "Automation yapacak" cumlesi bir owner degildir. Automation basarisiz oldugunda kimin karar verecegi, kimin override edecegi ve kimin release'i durdurabilecegi isimlendirilmelidir.
+## 2. Main Problems
 
-## 2. Sorunlar
+### P1 - The Problem Can Be Misframed As Branching Only
 
-### P1 - Sorun Yanlis Cercevelenebilir: Ana Problem Branching Degil, Release Operating Model
+The documents started from branching strategy, but the real system spans tags, artefacts, manifests, charts, config, secrets, environments, QAT, rollback and ownership.
 
-Durum:
+Impact:
 
-Dokumanlar branch strategy uzerinden baslamis gibi gorunse de gercek problem daha genis: tag, artefact, manifest, Helm chart, secret, config, environment, QAT, rollback ve ownership zinciri.
+- A branch change may move risk rather than reduce it.
+- A simpler branch model may expose more ambiguity if validation and ownership are weak.
 
-Etki:
+Root cause:
 
-Branch modelini degistirmek tek basina release riskini azaltmaz. Hatta validation ve ownership zayifken daha basit branch modeli daha fazla belirsizlik yaratabilir.
+- Release state is not represented by one system.
 
-Kok neden:
+Recommendation:
 
-Release state tek bir yerden okunamiyor. Production'i temsil eden sey branch, manifest, chart, tag, image ve environment config kombinasyonu.
+- Treat branching as one part of the release operating model.
 
-Deneyime dayali yorum:
+### P2 - Release Work Is Too Manual
 
-Bu tip sistemlerde "GitFlow mu trunk-based mi?" sorusu genellikle erken sorulur. Daha dogru soru sudur: "Bir release'in icinde ne oldugunu, kimin onayladigini, hangi artefact'in deploy edildigini ve rollback kararinin nasil verilecegini 5 dakika icinde kanitlayabiliyor muyuz?" Cevap hayirsa branch modeli ikincil kalir.
+The current process still includes local scripts and manual chart, tag or deployment steps.
 
-### P2 - Release Sureci Fazla Manuel Ve Lokal Scriptlere Bagimli
+Impact:
 
-Durum:
+- Release preparation can take days.
+- Execution varies by person.
+- Audit trail is weak.
+- Local environment differences affect outcomes.
 
-Scriptler lokal calisiyor, Drone'a tasinma henuz tamamlanmamis. Chart update, tag handling, server chart work ve deployment trigger tarafinda manuel adimlar var.
+Root cause:
 
-Etki:
+- Automation exists, but it is not yet the mandatory central path.
 
-- Release hazirligi gunler surebilir.
-- Ayni adim farkli kisiler tarafindan farkli sekilde calistirilabilir.
-- Audit trail eksik kalir.
-- Lokal environment farklari release sonucunu etkileyebilir.
-- Kidemli developer/release management zamani release plumbing'e harcanir.
+Recommendation:
 
-Kok neden:
+- Move repeatable release tasks into Drone and make pipeline output the audit source.
 
-Automation var ama merkezi, tekrarlanabilir ve zorunlu pipeline gate haline gelmemis.
+### P3 - Branch, Tag And Artefact Timing Is Not Strict Enough
 
-Deneyime dayali yorum:
+Branch lifecycle and artefact lifecycle are different.
 
-Lokal calisan release scripti, teknik olarak automation sayilir ama operasyonel olarak hala manuel surectir. Gercek automation, pipeline'da standard input'la calisir, sonucu saklar, log uretir, failure halinde alert yollar ve rerun kurali vardir.
+Impact:
 
-### P3 - Branch, Tag Ve Artefact Timing Kurallari Kesin Degil
+- Wrong commit can be tagged.
+- Wrong image or chart can be produced.
+- Manifest state can drift from branch state.
 
-Durum:
+Root cause:
 
-Release branch olusturma, temporary branch tag, full release tag, chart image update ve manifest update arasindaki sira netlestirilmeli.
+- Tag creation rules and validation gates are not fully formalised.
 
-Etki:
+Recommendation:
 
-- Yanlis commit'e tag atilabilir.
-- Yanlis image/chart release report'a girebilir.
-- Release branch state ile manifest state ayrisabilir.
-- Ayni release icinde fix/CVE geldikce tag/version karmasasi buyur.
+- Enforce tag timing, tag ownership and tag-to-commit validation in the release pipeline.
 
-Kok neden:
+### P4 - Release Scope Is Not Explicit
 
-Branch lifecycle ve artefact lifecycle ayni sey degil. Dokumanlarda bu ayrim dogru yakalanmis, fakat uygulanacak policy hala proposed durumda.
+"All services" needs a precise definition.
 
-Deneyime dayali yorum:
+Scope may include:
 
-Release sistemlerinde tag, production'a giden trenin bileti gibidir. Branch'te dogru kod olsa bile yanlis tag, yanlis image demektir. Bu yuzden tag atma hakki ve tag validation pipeline tarafindan kontrol edilmelidir.
-
-### P4 - Release Scope Net Degil
-
-Durum:
-
-"All services" ifadesi hangi repo ve change type'lari kapsiyor belirsiz:
-
-- service repo,
-- Helm chart repo,
+- service repos,
+- Helm chart repos,
 - deployment-management,
-- manifest,
+- manifests,
 - secrets/config,
-- Liquibase/database,
-- runbook,
+- Liquibase/database changes,
+- runbooks,
 - shared libraries,
-- release metadata/changelog.
+- changelog/release metadata.
 
-Etki:
+Impact:
 
-Automation fazla seyi dahil edebilir, az seyi dahil edebilir veya release-impacting bir config/secret/db degisikligini kacirabilir.
+- Automation may include too much, too little or the wrong thing.
+- Config, secret or database changes may be missed.
 
-Kok neden:
+Recommendation:
 
-Release sadece application code olarak dusunulurse deployment reality eksik kalir.
+- Create a repository and change-type scope list before scaling automation.
 
-Deneyime dayali yorum:
+### P5 - Manifest And Ticket Validation May Be Too Permissive
 
-En riskli release hatalari cogu zaman kod degil config kaynaklidir. "Kod degismedi, sadece values file degisti" cumlesi production icin dusuk risk anlamina gelmez. Values, secrets ve DB migration release scope'ta first-class citizen olmalidir.
+Validation exists, but fail/warn policy is not fully agreed.
 
-### P5 - Manifest Ve Ticket Validation Politikalari Cok Gevsek Kalabilir
+Impact:
 
-Durum:
+- Blocked tickets can enter release.
+- Wrong service versions can be promoted.
+- Release reports can become misleading.
 
-Wrong tag, missing tag, invalid ticket status, `do not deploy`, `NA`, tag/manifest mismatch gibi durumlarda neyin fail, neyin warning oldugu kesinlesmemis.
-
-Etki:
-
-- Bloke edilmis ticket release'e girebilir.
-- Yanlis service version production'a tasinabilir.
-- Release report gercegi temsil etmeyebilir.
-- Audit ve incident review zayiflar.
-
-Kok neden:
-
-Mevcut scriptler kontrol yapabiliyor, fakat strict policy formalize edilmemis.
-
-Deneyime dayali yorum:
-
-Validation kuralini "sonra bakariz" diye warning yapmak, release yogunlugunda kuralin hic bakilmamasi anlamina gelir. Kritik release integrity kontrolleri fail-fast olmali. Override gerekiyorsa override da release record'un parcasi olmali.
-
-### P6 - Changed-Chart Deployment Henuz Guvenilir Default Degil
-
-Durum:
-
-Hedef, sadece degisen chart'lari deploy etmek. Ancak bugun chart isimleri manuel listelenebiliyor ve umbrella chart yapisi dependency/blast radius analizi gerektiriyor.
-
-Etki:
-
-- Gereksiz chart deploy edilir.
-- Degismis chart atlanir.
-- Multi-service umbrella chart etkisi yanlis hesaplanir.
-- Release owner hangi chart'in neden deploy edildigini kanitlayamayabilir.
-
-Kok neden:
-
-Service change ile chart change birebir ayni sey degil. Umbrella chart bir veya birden fazla service iceriyor.
-
-Deneyime dayali yorum:
-
-Changed-only deployment cok iyi bir default'tur, fakat false negative riski production icin tehlikelidir. "Degismemis gorundu, deploy etmedik" hatasi, "fazla chart deploy ettik" hatasindan daha zor fark edilir. Ilk fazda changed-chart report insan tarafindan review edilmelidir.
-
-### P7 - Hotfix Ve Rollback Operasyonel Olarak Yeterince Standardize Degil
-
-Durum:
-
-Production hotfix ve release-phase hotfix ayrimi dokumante edilmis. Helm rollback teknik olarak mumkun. Fakat rollback otomatik degil; pratik davranis fix-forward'a yakin.
-
-Etki:
-
-- Production fix `main/master`, release branch, manifest ve active release branch'lerden birine islenmeyebilir.
-- Rollback sonrasi source control production'i temsil etmeyebilir.
-- Liquibase veya secrets/config dahilse rollback karari belirsizlesir.
-- Incident aninda ekip karar almakta gecikir.
-
-Kok neden:
-
-Rollback sadece Helm komutu olarak gorulurse eksik kalir. Rollback ayni zamanda source control, manifest, release report, JIRA ve validation isidir.
-
-Deneyime dayali yorum:
-
-Incident aninda yeni surec tasarlanmaz; yalnizca daha once prova edilmis runbook uygulanir. Rollback runbook'u yoksa ekip dogal olarak fix-forward'a kayar. Fix-forward bazen dogrudur, ama karar explicit olmali.
-
-### P8 - Environment Readiness Ve Parity Belirsiz
-
-Durum:
-
-Yeni environment'lar icin values, setup scripts, Drone secrets/tokens ve kube/robot token sahipligi net degil. B.Val/pre-prod ile production farklari tam yazili degil.
-
-Etki:
-
-- Environment var gibi gorunur ama deploy edilemez.
-- Pre-prod onayi production riskini gercekten azaltmayabilir.
-- Access/secret eksigi release gunu ortaya cikabilir.
-
-Kok neden:
-
-Environment readiness henuz checklist ve gate olarak ele alinmamis.
-
-Deneyime dayali yorum:
-
-Bir environment'in Kubernetes namespace olarak var olmasi, release-ready oldugu anlamina gelmez. Release-ready environment; secrets, values, tokens, network, data shape, permissions ve runbook adimlari ile birlikte tanimlanir.
-
-### P9 - Secrets Ve Config Sureci Scale Ettikce Zorlasabilir
-
-Durum:
-
-Git-crypt ve managed secrets scripts mevcut ve calisabilir bir short-term cozum. Ancak GPG onboarding, maintainer access, secret rotation ve screen sharing riskleri var.
-
-Etki:
-
-- Yeni ekip/maintainer onboarding yavaslar.
-- Secret exposure durumunda rotation maliyeti yukselir.
-- Environment-specific config farklari audit disinda kalabilir.
-
-Kok neden:
-
-Secret lifecycle merkezi secret manager veya Kubernetes-native model yerine Git/GPG odakli ilerliyor.
-
-Deneyime dayali yorum:
-
-Git-crypt kucuk/orta olcekte iyi bir gecis cozumudur. Fakat ekip ve environment sayisi arttikca asil maliyet encryption degil, key ownership ve rotation olur. Bu nedenle medium-term secret strategy karari simdiden roadmap'e girmeli.
-
-### P10 - Runtime Feature Flag Olgunlugu Yetersizse Trunk-Based Riskli
-
-Durum:
-
-Feature flags daha cok values/config ile deploy-time seviyesinde. Dynamic runtime flag veya merkezi kill-switch olgunlugu dokumante degil.
-
-Etki:
-
-- Incomplete feature'i main'e almak riskli olur.
-- Feature disable icin redeployment gerekebilir.
-- Trunk-based model config operasyonuna fazla yuk bindirir.
-
-Kok neden:
-
-Deployment ve release birbirinden tam ayrilmamis.
-
-Deneyime dayali yorum:
-
-Trunk-based development, feature flag sistemi olgun oldugunda harika calisir. Flag degistirmek icin chart redeploy gerekiyorsa, ekip aslinda trunk-based degil, "branch yerine config ile release kontrolu" yapiyordur. Bu gecis adimi olabilir ama net adlandirilmalidir.
-
-### P11 - Ownership Ve Approval Eksikleri Teknik Cozumu Zayiflatir
-
-Durum:
-
-Ownership matrix template var, fakat bircok alan TBD. Approval points listelenmis, ancak hangileri mandatory, hangileri automated olacak netlesmemis.
-
-Etki:
-
-- Automation failure kimin sorumlulugunda belirsiz kalir.
-- Override kararlarinda baski ve karisiklik olur.
-- Rollback/hotfix karar sureleri uzar.
-- Release closure yarim kalabilir.
-
-Kok neden:
-
-RACI henuz formal karara donusmemis.
-
-Deneyime dayali yorum:
-
-Basarili release automation projelerinde her kritik adimin tek accountable owner'i vardir. "Platform team bakar" veya "release management halleder" genel ifadeleri incident aninda yeterli olmaz.
-
-### P12 - Alerting Ve Rerun Kurallari Tam Degil
-
-Durum:
-
-Failed automation steps icin alerting modeli henuz tanimli degil. Final Git/chart/reporting step'in idempotent ve rerunnable olmasi oneriliyor.
-
-Etki:
-
-- Pipeline fail olur ama release state yarim kalir.
-- Artefact olusmus, chart update olmamis olabilir.
-- Manuel chart edit ile rerun conflict yaratabilir.
-- Ekip hangi adimin tekrar calistirilacagini bilemeyebilir.
-
-Kok neden:
-
-Failure mode'lar henuz production readiness kriteri haline gelmemis.
-
-Deneyime dayali yorum:
-
-Automation'in basari yolu kadar hata yolu da tasarlanmalidir. "Rerun'a bas" guvenli degilse automation production-ready degildir. Idempotency ve alerting rollout oncesi minimum gereksinim olmalidir.
-
-## 3. Cozum Secenekleri Ve Riskleri
-
-### S1 - Branch Modelini Hemen Degistirme; Once Mevcut Sureci Standardize Et
-
-Ne yapilir:
-
-- Mevcut GitFlow-style model kisa vadede korunur.
-- Release branch timing, tag timing, manifest validation, hotfix, rollback ve ownership dokumante edilir.
-- Kararlar [Rollout decision proposals](../rollout-decision-proposals.md) uzerinden approve/amend edilir.
-
-Fayda:
-
-- En dusuk degisim riski.
-- Mevcut ekip aliskanliklari korunur.
-- Gercek problemler gorunur hale gelir.
-- Sonraki automation icin baseline olusur.
-
-Risk:
-
-- Ekip "branching strategy hala degismedi" diye ilerleme hissini dusuk gorebilir.
-- Manuel isler kisa vadede devam eder.
-- Decision alma gecikirse dokumanlar proposed seviyede kalir.
-
-Risk azaltma:
-
-- Bu adimi zaman kutusuna al: ornegin 1 sprint icinde karar checklist'i kapat.
-- Quick win'leri hemen uygula: strict tag validation, ticket reference hook, deployment parameter documentation.
-- Success metric tanimla: release prep time, manual step count, report accuracy.
-
-Deneyime dayali yorum:
-
-Bu en az heyecan verici ama en dogru ilk adimdir. Cunku release surecinde belirsizlik varken branch modelini degistirmek, pusulasiz rota degistirmeye benzer. Once navigasyon cihazini calistirmak gerekir: report, validation, ownership.
-
-### S2 - Lokal Scriptleri Drone'a Tasi Ve Pipeline'i Release'in Tek Giris Kapisi Yap
-
-Ne yapilir:
-
-- Configuration service pilot tamamlanir.
-- Scriptler Drone'da standard input ile calisir.
-- Build/test/scan, tag, chart update, report generation pipeline tarafindan yurutulur.
-- Output pipeline artefact veya release record olarak saklanir.
-
-Fayda:
-
-- Audit trail olusur.
-- Lokal environment farklari azalir.
-- Release adimlari tekrarlanabilir olur.
-- Manual chart update ihtiyaci azalir.
-- Release report guvenilirlesir.
-
-Risk:
-
-- Scriptler lokal calissa bile Drone permission, proxy, secret, token veya working directory farki nedeniyle bozulabilir.
-- Idempotency eksikse rerun duplicate tag/chart/report uretebilir.
-- Pipeline cok sert fail ederse ekip manual workaround'a geri donebilir.
-- Drone secret/token ownership net degilse rollout takilir.
-
-Risk azaltma:
-
-- Pilot scope'u dar tut: one service, one release, one squad.
-- Rerun senaryolarini bilerek test et.
-- Final Git/chart/reporting step icin "safe to rerun" kriterlerini yaz.
-- Pipeline output'u release report ile karsilastir.
-- Manual fallback'i sadece approved emergency path olarak tut.
-
-Deneyime dayali yorum:
-
-Lokal scriptten pipeline'a geciste en cok unutulan konu permission modelidir. Developer'in lokal makinesinde calisan komut, Drone runner'da token, proxy, git author, GPG veya kube access farki yuzunden durabilir. Pilotun amaci sadece happy path'i degil, bu farklari ortaya cikarmaktir.
-
-### S3 - Strict Tag, Manifest, Ticket Ve Scope Validation Ekle
-
-Ne yapilir:
-
-Fail-fast policy uygulanir:
+Recommendation:
 
 ```text
 Wrong tag -> fail
 Missing tag -> fail
 Manifest/tag mismatch -> fail
-Invalid ticket status -> fail or explicit override
-Do-not-deploy marker -> fail unless release owner override
-Unknown ownership -> fail or release-owner approval
+Do-not-deploy marker -> fail unless explicitly overridden
+Invalid ticket status -> fail or release-owner override
 ```
 
-`NA` tag entry'leri release report'ta acikca gosterilir. Override'lar approver, reason, timestamp ve risk ile kaydedilir.
+### P6 - Changed-Chart Deployment Needs Proof
 
-Fayda:
+Deploying only changed charts is the right direction, but detection must be trusted.
 
-- Yanlis artefact production'a gitmeden durur.
-- Release report gercegi daha iyi temsil eder.
-- Audit ve incident review guclenir.
-- Manual kontrol yuku azalir.
+Impact:
 
-Risk:
+- A changed chart can be missed.
+- An unchanged chart can be deployed unnecessarily.
+- Umbrella-chart blast radius can be misunderstood.
 
-- Baslangicta cok fazla fail olabilir.
-- Mevcut ticket metadata kalitesi dusukse rollout yavaslar.
-- False positive'ler ekibi rahatsiz eder.
-- Override kulturu iyi yonetilmezse strict validation kagit uzerinde kalir.
+Recommendation:
 
-Risk azaltma:
+- Use changed-chart deployment by default only after detection has been reviewed against real releases.
+- Keep mass diff review mandatory early in rollout.
 
-- Ilk fazda report-only/dry-run calistir, sonra fail mode'a gec.
-- Top 5 validation failure sebebini olc.
-- Ticket metadata temizligi icin squad aksiyonu ac.
-- Override'lari release owner onayina bagla.
+### P7 - Hotfix And Rollback Are Not Fully Operationalised
 
-Deneyime dayali yorum:
+Production hotfix and release-phase hotfix scenarios are identified, but the runbook needs approval.
 
-Strict validation ilk hafta can yakar, ikinci hafta veri kalitesini duzeltir, ucuncu hafta release'e guven getirir. Bu gecis yonetilmezse ekip "pipeline bizi engelliyor" der. Bu yuzden failure'lar egitim ve cleanup backlog'u ile birlikte ele alinmali.
+Impact:
 
-### S4 - `main = Production` Modeline Kontrollu Cutover Yap
+- Production fixes can drift from `main`, release branches and manifests.
+- Rollback can leave source control and deployment-management inconsistent.
+- Liquibase and config changes can make rollback unsafe.
 
-Ne yapilir:
+Recommendation:
 
-- Cutover release belirlenir.
-- Production state dogrulanir.
-- `main` confirmed production state'ten olusturulur veya `master` rename edilir.
-- `development` freeze edilir, sonra archive/delete edilir.
-- Branch protections ayarlanir.
-- Release branch'ler `main` uzerinden otomatik olusturulur.
-- Production release sonrasi release state `main`'e reconcile edilir.
+- Make hotfix and rollback runbooks production gates.
 
-Fayda:
+### P8 - Environment Readiness Is Not A Gate
 
-- Production baseline daha net olur.
-- `development` kaynakli drift ve reconciliation yuku azalir.
-- Future simplified GitFlow modeline gecilir.
-- Release branch state ile live baseline arasindaki iliski sade olur.
+New environments need values, setup entries, Drone secrets/tokens and token ownership confirmed.
 
-Risk:
+Impact:
 
-- Yanlis production state'ten `main` olusturulabilir.
-- Open work `development` uzerinde kaybolmus gibi hissedilebilir.
-- Eski automation/jobs hala `development` veya `master` hedefleyebilir.
-- Multiple active release branch forward-merge disiplini kurulmazsa drift devam eder.
+- An environment can appear available but fail deployment.
+- Pre-prod approval can create false confidence if parity is poor.
 
-Risk azaltma:
+Recommendation:
 
-- Cutover oncesi repo-by-repo checklist hazirla.
-- Branch protection ve pipeline target'lari test et.
-- `development` freeze tarihini ve istisnalari duyur.
-- Open MR/branch inventory cikar.
-- Ilk iki release boyunca reconciliation audit yap.
+- Create an environment readiness checklist and require it before rollout.
 
-Deneyime dayali yorum:
+### P9 - Secrets And Config Management Will Become Harder At Scale
 
-`development`'i `main` diye rename etmek genellikle yanlis olur. Dogru olan, `main`'i production'in kanitlanmis state'inden baslatmaktir. Bu ayrim cok onemli; cunku `development` icinde production'a gitmemis isler olabilir.
+Git-crypt and managed secrets scripts are workable, but operationally heavy.
 
-### S5 - Ticket-Based Multi-Repo Aggregation Ve Changed-Chart Deployment Kullan
+Impact:
 
-Ne yapilir:
+- Maintainer onboarding slows down.
+- Rotation becomes harder.
+- Secret exposure response is more expensive.
 
-- Ayni ticket/branch name ile birden fazla repo degisikligi ayni Cerberus chart branch'inde toplanir.
-- Release report chart, image, service, commit, ticket, team ve assignee bilgilerini gosterir.
-- Deployment default olarak changed chart'lari deploy eder.
-- Chart exclusion sadece release owner approval ve audit note ile yapilir.
+Recommendation:
 
-Fayda:
+- Keep the current approach short term.
+- Evaluate External Secrets Operator, Sealed Secrets or a central secret manager after release automation stabilises.
 
-- Multi-service feature'lar daha iyi takip edilir.
-- Manual chart update azalir.
-- "Hangi chart deploy edilmeli?" sorusu otomatik cevaplanir.
-- Release blast radius gorunur olur.
+### P10 - Trunk-Based Development Is Risky Without Runtime Feature Flags
 
-Risk:
+Feature flags appear closer to deploy-time values than dynamic runtime control.
 
-- Branch/ticket naming tutarsizsa aggregation bozulur.
-- Bir ticket baska ticket'a bagimliysa chart branch elle duzenlenmek istenebilir.
-- Umbrella chart dependency nedeniyle false positive/false negative olabilir.
-- Chart exclusion approval'i zayifsa degisen chart deploy edilmeyebilir.
+Impact:
 
-Risk azaltma:
+- Incomplete work may be harder to isolate.
+- Turning a feature off may require redeployment.
 
-- Naming rule'u pipeline ile enforce et.
-- Cross-ticket dependency policy yaz.
-- Changed-chart detection'i ilk fazda human review ile calistir.
-- Mass diff output'u release approval'in zorunlu parcasi yap.
-- Exclusion reason ve follow-up action zorunlu olsun.
+Recommendation:
 
-Deneyime dayali yorum:
+- Move toward trunk-based development only after feature flag, testing, monitoring and rollback maturity improve.
 
-Ticket-based aggregation, multi-repo release'lerde cok ise yarar; fakat "ticket number is identity" varsayimina dayanir. Commit, branch, Jira ve MR metadata ayni dili konusmuyorsa sistem dagilir. Bu nedenle metadata hijyeni cozumun on kosuludur.
+### P11 - Ownership Gaps Can Break The Rollout
 
-### S6 - Hotfix Ve Rollback Runbook'unu Production Gate Yap
+Templates exist, but named owners are incomplete.
 
-Ne yapilir:
+Impact:
 
-- Production hotfix ve release-phase hotfix akisi kesinlestirilir.
-- Rollback vs fix-forward decision guide kullanilir.
-- Rollback sonrasinda `main`, manifest, release report, JIRA ve active release branch'ler reconcile edilir.
-- Liquibase rollback/fix-forward policy release report'ta gorunur olur.
-- Rollback prova edilir.
+- Failures become slow to resolve.
+- Overrides become unclear.
+- Rollback decisions are delayed.
 
-Fayda:
+Recommendation:
 
-- Incident aninda karar hizlanir.
-- Production state ile source control uyumu korunur.
-- Hotfix drift azalir.
-- DB/config/secrets etkisi gorunur olur.
+- Use a RACI model with one accountable owner per critical activity.
 
-Risk:
+### P12 - Alerting And Rerun Rules Are Incomplete
 
-- Rollback teknik olarak mumkun olsa bile DB/data nedeniyle guvensiz olabilir.
-- Runbook prova edilmezse kagit uzerinde kalir.
-- `main` veya manifest'i rollback state'e getirme operasyonu tartismali olabilir.
-- Fix-forward karari fazla kolay verilebilir.
+Failed final Git/chart/reporting steps can leave partial state.
 
-Risk azaltma:
+Impact:
 
-- Rollback tabletop exercise yap.
-- Helm rollback + manifest reconciliation dry-run calistir.
-- Liquibase iceren release'lerde rollback block veya "no rollback" justification zorunlu tut.
-- Hotfix time budget belirle: ornegin 4 saat icinde fix yoksa rollback karari tekrar degerlendirilsin.
+- Artefacts may exist while chart updates or reports are missing.
+- Manual edits may conflict with reruns.
 
-Deneyime dayali yorum:
+Recommendation:
 
-Rollback karari teknik oldugu kadar is karari da olabilir. Kullanici etkisi yuksekse, "birazdan fix gelir" demek tehlikelidir. Belirli bir time budget yoksa fix-forward sonsuza kadar uzayabilir.
+- Define alert content, alert channels, alert owners and safe rerun criteria before production rollout.
 
-### S7 - Ownership, Approval Ve RACI'yi Isimlendir
+## 3. Solution Options And Risks
 
-Ne yapilir:
+### S1 - Keep The Current Branch Model Temporarily
 
-- Her kritik release aktivitesi icin Responsible, Accountable, Consulted, Informed belirlenir.
-- Tek accountable owner kurali uygulanir.
-- CODEOWNERS/branch protection ile approval otomatik atanir.
-- Alert owner, rollback approver ve release closure owner isimlendirilir.
+What changes:
 
-Fayda:
+- The current GitFlow-style model remains short term.
+- Decisions, validation, scope, hotfix, rollback and ownership are completed first.
 
-- Karar gecikmesi azalir.
-- Override ve exception'lar denetlenebilir olur.
-- Ekipler kendi sorumluluklarini bilir.
-- Automation failure sahipsiz kalmaz.
+Benefits:
 
-Risk:
+- Lowest immediate process risk.
+- Familiar workflow remains in place.
+- Real process problems become visible before branch cutover.
 
-- Fazla approval gate release'i yavaslatabilir.
-- Owner bulunamazsa surec yine informal kalir.
-- Bazi ekipler "bu release management isi" diyerek sorumluluktan kacabilir.
+Risks:
 
-Risk azaltma:
+- Teams may feel the branching problem is not being addressed.
+- Manual work continues in the short term.
 
-- Her gate'i mandatory yapma; sadece riskli noktalar icin approval iste.
-- Default owner modeli kur: platform tooling'den, squad service behavior'dan sorumlu.
-- Backup owner belirle.
-- Approval SLA yaz.
+Mitigation:
 
-Deneyime dayali yorum:
+- Time-box this phase.
+- Publish exit criteria.
+- Deliver quick wins such as strict validation dry-run and deployment parameter documentation.
 
-RACI'nin degeri tablo olmasinda degil, incident aninda tartismayi bitirmesindedir. "Bu karari kim verir?" sorusunun cevabi bir rolde ve isimde yoksa RACI tamamlanmis sayilmaz.
+### S2 - Move Release Automation Into Drone
 
-### S8 - Feature Flag Ve Config Olgunlugunu Medium-Term Roadmap'e Al
+What changes:
 
-Ne yapilir:
+- Local scripts become centrally executed pipeline steps.
+- Tags, chart updates and release reports are generated through Drone.
 
-- Deploy-time flag mevcut haliyle standardize edilir.
-- Flag owner, removal date ve environment state release report'a eklenir.
-- Critical kill-switch icin redeploy gerektirmeyen yol degerlendirilir.
-- Runtime flag platformu medium-term opsiyon olarak incelenir.
+Benefits:
 
-Fayda:
+- Better auditability.
+- Repeatable execution.
+- Less local-machine dependency.
+- Clearer failure visibility.
 
-- Deployment ve release ayrimi guclenir.
-- Incomplete feature'lar daha guvenli saklanir.
-- Trunk-based veya release branch optional modele hazirlik olur.
-- Production'da hizli disable mumkun hale gelir.
+Risks:
 
-Risk:
+- Drone may expose proxy, permission, token, secret or working-directory issues.
+- Rerun may be unsafe if idempotency is not proven.
 
-- Runtime flag platformu ek operational dependency getirir.
-- Flag debt birikir.
-- Yanlis flag state production'da feature'i istemeden acabilir/kapatabilir.
-- Security/compliance acisindan flag audit gerekebilir.
+Mitigation:
 
-Risk azaltma:
+- Keep pilot scope narrow.
+- Test failure and rerun cases deliberately.
+- Store output as release evidence.
 
-- Her flag icin owner ve expiry date zorunlu yap.
-- Environment flag state release report'a yaz.
-- Critical flag change icin approval/audit kullan.
-- 2 release'ten eski flag'leri review et.
+### S3 - Add Strict Validation
 
-Deneyime dayali yorum:
+What changes:
 
-Feature flag sistemi yoksa trunk-based'e gecilmez demek dogru degil; ama trunk-based'in vaat ettigi guvenlik saglanmaz. Asil hedef "kod deploy edildi" ile "ozellik kullaniciya acildi" kararlarini ayirmaktir.
+- Release-integrity problems stop the pipeline unless explicitly overridden.
 
-### S9 - Secrets Management Icin Kademeli Modernizasyon Planla
+Benefits:
 
-Ne yapilir:
+- Prevents wrong artefacts and blocked work from reaching production.
+- Improves release report trust.
+- Strengthens incident review.
 
-- Short term: managed secrets scripts + Drone secrets devam eder.
-- Medium term: External Secrets Operator veya Sealed Secrets degerlendirilir.
-- Long term: Vault/AWS Secrets Manager gibi merkezi secret manager secenegi incelenir.
+Risks:
 
-Fayda:
+- Early rollout may fail often because metadata quality is inconsistent.
+- False positives may frustrate squads.
 
-- Rotation ve audit guclenir.
-- GPG onboarding maliyeti azalir.
-- Runtime secret delivery daha standart hale gelir.
-- Secret exposure response hizlanir.
+Mitigation:
 
-Risk:
+- Run in dry-run/report-only mode first.
+- Track common failure reasons.
+- Clean metadata before enforcing fail-fast.
 
-- Yeni controller/infrastructure dependency olusur.
-- Migration sirasinda secret path/name uyumsuzluklari cikabilir.
-- Platform team'e ek operasyon yuku gelir.
-- Access model yanlis tasarlanirsa security riski artar.
+### S4 - Cut Over To `main = Production`
 
-Risk azaltma:
+What changes:
 
-- Once non-production environment'ta pilot yap.
-- Secret inventory cikar.
-- Rotation runbook yaz.
-- Eski ve yeni modelin birlikte calistigi gecis penceresini sinirla.
+- `main` starts from confirmed production state.
+- Release branches are created from `main`.
+- Production release is reconciled back into `main`.
 
-Deneyime dayali yorum:
+Benefits:
 
-Secret management'i release automation ile ayni anda kokten degistirmek fazla riskli olur. Dogru sira: once mevcut release'i otomatik ve denetlenebilir yap, sonra secret lifecycle'i iyilestir.
+- Clear production baseline.
+- Less long-lived `development` drift.
+- Better foundation for a streamlined release model.
 
-## 4. Onerilen Yol Haritasi
+Risks:
 
-### Faz 0 - Karar Ve Baseline
+- Wrong production baseline could be selected.
+- Open work on `development` could be mishandled.
+- Automation may still point at old branch names.
 
-Sure: hemen / bu sprint
+Mitigation:
 
-Yapilacaklar:
+- Inventory open work.
+- Freeze `development`.
+- Test branch protections and pipeline targets before cutover.
 
-1. Rollout decision proposals uzerindeki 14 karar approve/amend edilir.
-2. Repository scope listesi cikarilir.
-3. Service ownership listesi cikarilir.
-4. Hotfix/rollback owner'lari isimlendirilir.
-5. Validation policy fail vs warning olarak kesinlestirilir.
+### S5 - Use Ticket-Based Multi-Repo Aggregation And Changed-Chart Deployment
 
-Cikis kriteri:
+What changes:
+
+- Changes using the same ticket/branch name feed into the same Cerberus chart branch.
+- Changed charts are deployed by default.
+
+Benefits:
+
+- Better multi-service release visibility.
+- Less manual chart editing.
+- Clearer release blast radius.
+
+Risks:
+
+- Naming inconsistencies break aggregation.
+- Cross-ticket dependencies may require manual handling.
+- Umbrella chart detection may be imperfect.
+
+Mitigation:
+
+- Enforce naming rules.
+- Keep chart diff review mandatory.
+- Require audited exclusions.
+
+### S6 - Make Hotfix And Rollback A Production Gate
+
+What changes:
+
+- Release cannot proceed without rollback/fix-forward guidance and reconciliation rules.
+
+Benefits:
+
+- Faster incident decision-making.
+- Less production/source-control drift.
+- Clearer database and config risk handling.
+
+Risks:
+
+- Rollback may be unsafe when database/data changes are involved.
+- Runbook may stay theoretical if not tested.
+
+Mitigation:
+
+- Run rollback tabletop exercises.
+- Require Liquibase rollback block or no-rollback justification.
+- Define hotfix time budget.
+
+### S7 - Name Ownership And Approvals
+
+What changes:
+
+- Critical release activities get responsible and accountable owners.
+- CODEOWNERS and branch protection can enforce approvals where possible.
+
+Benefits:
+
+- Faster decisions.
+- Cleaner overrides.
+- Better auditability.
+
+Risks:
+
+- Too many approval gates slow delivery.
+- Owner naming may become political or vague.
+
+Mitigation:
+
+- Keep gates focused on release risk.
+- Name backups.
+- Define approval SLA.
+
+### S8 - Improve Feature Flag And Config Maturity Later
+
+What changes:
+
+- Deploy-time flags are documented and governed.
+- Runtime flags are evaluated as a future improvement.
+
+Benefits:
+
+- Better separation of deployment and release.
+- Safer future movement toward trunk-based development.
+
+Risks:
+
+- Feature flag debt can grow.
+- Runtime flag platforms add operational dependency.
+
+Mitigation:
+
+- Add owner and expiry date to every flag.
+- Include flag state in release reports.
+- Review old flags regularly.
+
+### S9 - Modernise Secrets Management Later
+
+What changes:
+
+- Current managed secrets approach stays short term.
+- Modern secrets platforms are evaluated after release automation stabilises.
+
+Benefits:
+
+- Better rotation and audit in the long term.
+- Less GPG onboarding friction.
+
+Risks:
+
+- Migration can introduce path/name mismatches.
+- New controllers or platforms add operational dependencies.
+
+Mitigation:
+
+- Pilot in non-production.
+- Create a secret inventory.
+- Avoid combining this migration with the first release-automation rollout.
+
+## 4. Recommended Roadmap
+
+### Phase 0 - Decisions And Baseline
+
+Complete:
+
+- rollout decision approval,
+- repository scope list,
+- service ownership list,
+- hotfix/rollback owners,
+- validation fail/warn policy.
+
+Exit criterion:
 
 ```text
-Release surecinde neyin otomasyon, neyin approval, neyin exception oldugu yazili ve sahipli.
+The team knows which steps are automated, which require approval and which are exceptions.
 ```
 
-### Faz 1 - Quick Wins
+### Phase 1 - Quick Wins
 
-Sure: bu sprint / sonraki sprint
+Complete:
 
-Yapilacaklar:
+- ticket reference validation,
+- strict tag validation dry-run,
+- deployment parameter documentation,
+- changed-chart list in the release report,
+- alert template.
 
-1. Ticket reference pre-commit/MR validation etkinlestirilir.
-2. Wrong tag/missing tag strict mode dry-run baslatilir.
-3. Deployment parameters dokumante edilir.
-4. Release report'ta changed chart listesi gosterilir.
-5. Alert content template hazirlanir.
-
-Cikis kriteri:
+Exit criterion:
 
 ```text
-Release report gercegi anlatmaya baslar; metadata hatalari gorunur olur.
+Release metadata errors become visible before they become production risk.
 ```
 
-### Faz 2 - Drone Pilot
+### Phase 2 - Drone Pilot
 
-Sure: configuration service pilot release'i
+Complete:
 
-Yapilacaklar:
+- configuration-service pilot in Drone,
+- generated tag/version/chart validation,
+- release report validation,
+- rerun testing,
+- pilot review with squads.
 
-1. Lokal scriptler Drone'da calistirilir.
-2. Tag, chart update, report generation dogrulanir.
-3. Rerun senaryolari test edilir.
-4. Manual chart conflict senaryosu test edilir.
-5. Pilot sonucu squad'larla paylasilir.
-
-Cikis kriteri:
+Exit criterion:
 
 ```text
-Bir servis icin release plumbing merkezi pipeline'da, audit edilebilir ve rerunnable hale gelir.
+One service has release plumbing that is central, auditable and rerunnable.
 ```
 
-### Faz 3 - Kontrollu Branch Cutover
+### Phase 3 - Controlled Branch Cutover
 
-Sure: pilot basarili olduktan sonra belirlenen cutover release
+Complete:
 
-Yapilacaklar:
+- create `main` from confirmed production state,
+- freeze `development`,
+- apply branch protections,
+- auto-create release branches,
+- require production-to-main reconciliation.
 
-1. Confirmed production state secilir.
-2. `main` production baseline olarak olusturulur.
-3. `development` freeze edilir.
-4. Branch protections ve CODEOWNERS uygulanir.
-5. Release branches otomatik olusturulur.
-6. Production release sonrasi `main` reconciliation gate olur.
-
-Cikis kriteri:
+Exit criterion:
 
 ```text
-`main` production'i temsil eder; release branch'ler kisa omurlu ve otomasyonla yonetilir.
+`main` represents production and release branches are short-lived and automation-managed.
 ```
 
-### Faz 4 - Scale-Out
+### Phase 4 - Scale-Out
 
-Sure: 2-3 squad -> tum squadlar
+Complete:
 
-Yapilacaklar:
+- onboard more squads,
+- make changed-chart deployment the default,
+- audit chart exclusions,
+- expand shared dev deployment,
+- track release metrics.
 
-1. More services onboard edilir.
-2. Changed-chart deployment default olur.
-3. Exclusion approval audit edilir.
-4. Shared dev deployment manual trigger'dan scheduled/event trigger'a ilerler.
-5. Release metrics izlenir.
-
-Cikis kriteri:
+Exit criterion:
 
 ```text
-Manual release step sayisi belirgin azalir ve release report accuracy yukselir.
+Manual release steps decrease and release report accuracy increases.
 ```
 
-### Faz 5 - Optimize
+### Phase 5 - Optimise
 
-Sure: medium-term
+Complete:
 
-Yapilacaklar:
+- evaluate runtime feature flags,
+- pilot modern secrets management,
+- consider progressive delivery,
+- retire tag jump checker after new validation is green for two releases.
 
-1. Runtime feature flags degerlendirilir.
-2. Secret management modernizasyonu pilotlanir.
-3. Progressive delivery/canary opsiyonlari incelenir.
-4. Tag jump checker yeni validation iki release green olduktan sonra retire edilir.
-
-Cikis kriteri:
+Exit criterion:
 
 ```text
-Release kontrolu branch'ten yavas yavas runtime config ve progressive delivery olgunluguna tasinabilir.
+Release control can gradually move from branch management toward runtime configuration and progressive delivery.
 ```
 
-## 5. Go / No-Go Kriterleri
+## 5. Go / No-Go Criteria
 
-### Branch Cutover Icin Go
+### Go For Branch Cutover
 
-Cutover yapilabilir, eger:
+- Confirmed production state is known.
+- `main` branch protection is ready.
+- Automation targets the correct branch.
+- Release branch naming is approved.
+- Hotfix and rollback flow is approved.
+- Release owner and backup owner are named.
+- Strict validation has passed at least the pilot.
+- Open work inventory is complete.
+- `development` freeze plan is communicated.
 
-- confirmed production state belli,
-- `main` branch protection hazir,
-- automation target branch'leri dogru,
-- release branch naming onayli,
-- rollback/hotfix flow onayli,
-- release owner ve backup owner belli,
-- strict validation en az pilotta basarili,
-- open work inventory cikarilmis,
-- `development` freeze plani duyurulmus.
+### No-Go For Branch Cutover
 
-### Branch Cutover Icin No-Go
+- Production state cannot be tied to branch/tag/manifest.
+- Drone pilot is not green.
+- Open work on `development` is unknown.
+- Forward-merge owner is missing.
+- Manifest/tag validation remains warning-only.
+- Rollback reconciliation is unclear.
 
-Cutover yapilmamali, eger:
+### Go For Automation Rollout
 
-- production state'in hangi branch/tag/manifest ile temsil edildigi belirsizse,
-- Drone automation pilotu henuz green degilse,
-- `development` icindeki open work bilinmiyorsa,
-- hotfix forward-merge sahibi yoksa,
-- manifest/tag validation warning seviyesinde kalacaksa,
-- rollback sonrasi `main` ve manifest nasil reconcile edilecek belli degilse.
+- Pipeline logs and report are stored.
+- Rerun rules are tested.
+- Failure alerting is ready.
+- Manual chart edit policy is written.
+- Drone secrets/tokens are ready.
+- Changed-chart report has passed human review.
+- Squads have answered rollout input questions.
 
-### Automation Production Rollout Icin Go
+### No-Go For Automation Rollout
 
-Rollout yapilabilir, eger:
+- Scripts only work locally.
+- Pipeline failures are silent.
+- Rerun can create duplicate artefacts.
+- Release report does not match actual chart/manifest state.
+- Owners and approvals are unclear.
 
-- pipeline logs ve report saklaniyor,
-- rerun kurali test edildi,
-- failure alerting hazir,
-- manual chart edit policy yazildi,
-- Drone secrets/tokens hazir,
-- changed-chart report human review'den gecti,
-- squadlar rollout input sorularini cevapladi.
+## 6. Critical Decisions
 
-### Automation Production Rollout Icin No-Go
-
-Rollout ertelenmeli, eger:
-
-- script sadece lokal calisiyorsa,
-- pipeline failure sessiz kaliyorsa,
-- rerun duplicate artefact uretme riski tasiyorsa,
-- release report actual chart/manifest state ile uyusmuyorsa,
-- owner ve approval belirsizse.
-
-## 6. En Kritik Kararlar
-
-Bu kararlar alinmadan dokumanlar "iyi proposal" seviyesinde kalir, operating model seviyesine gecemez:
-
-| No | Karar | Neden Kritik |
+| No | Decision | Why It Matters |
 | --- | --- | --- |
-| 1 | `main` production baseline olacak mi, ne zaman? | Branch modelinin temeli. |
-| 2 | Release branch hangi source'tan ve ne zaman kesilecek? | Release scope ve conflict kontrolu. |
-| 3 | Wrong/missing tag kesin fail mi? | Release integrity. |
-| 4 | `do not deploy` override edilebilir mi, kim eder? | Governance ve audit. |
-| 5 | Changed chart exclusion'i kim onaylar? | Production blast radius. |
-| 6 | Rollback mi fix-forward mu kararini kim verir? | Incident response hizi. |
-| 7 | Liquibase rollback policy ne? | DB risk yonetimi. |
-| 8 | Drone secret/token owner kim? | Environment readiness. |
-| 9 | Release report nerede saklanir ve ne kadar tutulur? | Audit ve incident review. |
-| 10 | Tag jump checker ne zaman retire edilir? | Eski/yeni validation cakismasi. |
+| 1 | When does `main` become the production baseline? | Foundation of the branch model. |
+| 2 | When and from where are release branches created? | Scope and conflict control. |
+| 3 | Do wrong/missing tags fail? | Release integrity. |
+| 4 | Who can override `do not deploy`? | Governance and audit. |
+| 5 | Who approves changed-chart exclusions? | Production blast radius. |
+| 6 | Who decides rollback vs fix-forward? | Incident response speed. |
+| 7 | What is the Liquibase rollback policy? | Database risk management. |
+| 8 | Who owns Drone secrets/tokens? | Environment readiness. |
+| 9 | Where are release reports stored? | Audit and incident review. |
+| 10 | When is tag jump checker retired? | Old/new validation overlap. |
 
-## 7. Sonuc
+## 7. Final Recommendation
 
-Dokuman seti iyi yonde ilerlemis: mevcut durum, problemler ve proposed decision'lar artik gorunur. En buyuk eksik teknik bilgi degil; kararlarin onaylanip operating model haline getirilmesi.
+The documentation is moving in the right direction. The key remaining gap is not more technical explanation; it is turning proposed decisions into an approved operating model.
 
-Benim net onerim:
+Recommended sequence:
 
 ```text
-Branch modelini hemen degistirmeyin.
-Once Drone pilot, strict validation, ownership ve rollback/hotfix runbook'u tamamlayin.
-Pilot iki release boyunca guven verirse `main = production` cutover yapin.
-Trunk-based veya runtime-flag agirlikli modele ise ancak feature flag, test automation,
-rollback ve environment parity olgunlugu arttiktan sonra gecin.
+Do not change the branch model immediately.
+Complete Drone pilot, strict validation, ownership and hotfix/rollback runbooks first.
+After the pilot is trusted, cut over to `main = production`.
+Move toward trunk-based development only after feature flags, testing, rollback and environment parity mature.
 ```
 
-Bu siralama en hizli gorunen yol olmayabilir, ama production release riskini en kontrollu azaltan yoldur.
+This path is not the fastest-looking option, but it reduces production release risk in the most controlled way.
 
 ---
 

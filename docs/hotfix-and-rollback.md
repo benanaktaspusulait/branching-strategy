@@ -203,4 +203,4 @@ Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liqu
 
 ---
 
-← [Automation and validation](automation-and-validation.md) | → [Release scope, ownership and approvals](scope-ownership-approvals.md)
+<- [Automation and validation](automation-and-validation.md) | -> [Release scope, ownership and approvals](scope-ownership-approvals.md)

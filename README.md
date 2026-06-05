@@ -24,7 +24,7 @@ The documentation is organised as a decision-ready synthesis plus three supporti
 
 | Page | What It Covers |
 | --- | --- |
-| [Current release operating model](docs/current-release-operating-model.md) | End-to-end release flow: branches → tags → artefacts → deploy → reconciliation. |
+| [Current release operating model](docs/current-release-operating-model.md) | End-to-end release flow: branches -> tags -> artefacts -> deploy -> reconciliation. |
 | [Deployment and release findings](docs/deployment-and-release-findings.md) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
 
 ### Layer 2: Problems (What Is Broken Or Missing)
@@ -70,15 +70,15 @@ Key problems at a glance:
 
 **Quick overview (10 min):**
 1. This page.
-2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) — decision-ready synthesis.
-3. [Current release operating model](docs/current-release-operating-model.md) — how it works today.
-4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) — what is broken.
-5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) — what the solution looks like.
+2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - decision-ready synthesis.
+3. [Current release operating model](docs/current-release-operating-model.md) - how it works today.
+4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) - what is broken.
+5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) - what the solution looks like.
 
 **Full picture:**
-6. [Deployment and release findings](docs/deployment-and-release-findings.md) — technical details.
-7. [Branching strategy options](docs/branching-options.md) — branch model comparison.
-8. [Rollout decision proposals](docs/rollout-decision-proposals.md) — decisions to approve.
+6. [Deployment and release findings](docs/deployment-and-release-findings.md) - technical details.
+7. [Branching strategy options](docs/branching-options.md) - branch model comparison.
+8. [Rollout decision proposals](docs/rollout-decision-proposals.md) - decisions to approve.
 
 **For approvers:**
 9. [Hotfix and rollback](docs/hotfix-and-rollback.md)

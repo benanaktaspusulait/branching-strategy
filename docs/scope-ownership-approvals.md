@@ -174,4 +174,4 @@ RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-tra
 
 ---
 
-← [Hotfix and rollback](hotfix-and-rollback.md) | → [Rollout decision proposals](rollout-decision-proposals.md)
+<- [Hotfix and rollback](hotfix-and-rollback.md) | -> [Rollout decision proposals](rollout-decision-proposals.md)

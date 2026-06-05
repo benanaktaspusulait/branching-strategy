@@ -75,9 +75,9 @@ Current recommendation:
 The rollout follows a "show, don't tell" approach:
 
 ```text
-1. Pilot runs → results shared with squads.
-2. Squads review results → raise concerns or questions.
-3. Concerns addressed → next phase starts.
+1. Pilot runs -> results shared with squads.
+2. Squads review results -> raise concerns or questions.
+3. Concerns addressed -> next phase starts.
 4. Repeat until all squads are on the new process.
 ```
 
@@ -96,7 +96,7 @@ No squad will be switched to the new process without seeing it work first on a r
 ### What Will NOT Change Immediately
 
 - **Squad dev/test environments**: remain yours, deployed by you, no change.
-- **Feature development workflow**: still branch → develop → MR → review → merge.
+- **Feature development workflow**: still branch -> develop -> MR -> review -> merge.
 - **QAT approval**: still required for SIT and above.
 - **Production release timing**: still Thursday (or as agreed).
 - **Release owner approval**: still human, still required.
@@ -105,4 +105,4 @@ The automation handles the plumbing between your merge and the deployment. Your 
 
 ---
 
-← [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md) | → [README](../README.md)
+<- [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md) | -> [README](../README.md)

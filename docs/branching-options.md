@@ -57,9 +57,9 @@ Transition note:
 
 ```text
 Until the agreed cutover release, the current model remains active:
-  feature branches → development → release branch → master.
+  feature branches -> development -> release branch -> master.
 After cutover:
-  feature branches → release branch → main.
+  feature branches -> release branch -> main.
 Both models should not run simultaneously. The cutover date marks the switch.
 ```
 
@@ -248,4 +248,4 @@ Branching model selection, staged GitFlow-to-trunk transition guidance and commo
 
 ---
 
-← [Proposed release automation flow](proposed-release-automation-flow.md) | → [Automation and validation](automation-and-validation.md)
+<- [Proposed release automation flow](proposed-release-automation-flow.md) | -> [Automation and validation](automation-and-validation.md)

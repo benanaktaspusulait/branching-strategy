@@ -99,7 +99,7 @@ Not all problems are equally important. Prioritise by impact and effort:
 | --- | --- |
 | Move release automation to Drone | Central, auditable, repeatable. Removes local-script dependency. |
 | Auto release branch creation | Removes start-of-sprint manual work entirely. |
-| Auto Cerberus chart branch updates | Removes most manual chart editing — the biggest time sink. |
+| Auto Cerberus chart branch updates | Removes most manual chart editing - the biggest time sink. |
 | Alerting for failed steps | Makes failures visible instead of silent. |
 
 ### High Impact, High Effort
@@ -125,4 +125,4 @@ Not all problems are equally important. Prioritise by impact and effort:
 
 ---
 
-← [Rollout decision proposals](rollout-decision-proposals.md) | → [Squad briefing summary](squad-briefing-summary.md)
+<- [Rollout decision proposals](rollout-decision-proposals.md) | -> [Squad briefing summary](squad-briefing-summary.md)

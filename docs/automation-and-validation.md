@@ -257,4 +257,4 @@ Validation gates, idempotent pipeline design, immutable artefacts, release metri
 
 ---
 
-← [Branching strategy options](branching-options.md) | → [Hotfix and rollback](hotfix-and-rollback.md)
+<- [Branching strategy options](branching-options.md) | -> [Hotfix and rollback](hotfix-and-rollback.md)

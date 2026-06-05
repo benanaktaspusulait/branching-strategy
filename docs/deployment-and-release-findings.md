@@ -218,4 +218,4 @@ Helm versioning, values-file structure, umbrella chart dependency handling, mass
 
 ---
 
-← [Current release operating model](current-release-operating-model.md) | → [Proposed release automation flow](proposed-release-automation-flow.md)
+<- [Current release operating model](current-release-operating-model.md) | -> [Proposed release automation flow](proposed-release-automation-flow.md)
