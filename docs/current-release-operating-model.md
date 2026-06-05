@@ -75,31 +75,39 @@ Feature branch
 Current-state visual:
 
 ```mermaid
-flowchart LR
-  subgraph SC["Source control"]
+flowchart TD
+  subgraph SC["1. Source Control"]
     FB["Feature branch"] --> DEV["development"]
     DEV --> REL["Release branch"]
     REL --> TAG["Release tag"]
   end
 
-  subgraph BUILD["Artefact creation"]
-    TAG --> CI["Build / test / scan"]
-    CI --> HELM["Helm artefact"]
+  subgraph BUILD["2. Artefact Creation"]
+    CI["Build / test / scan"]
+    HELM["Helm artefact"]
+    CI --> HELM
   end
 
-  subgraph DEPLOY["Deployment and validation"]
-    HELM --> MAN["Manifest update"]
-    MAN --> ENV["Deploy to environment"]
-    ENV --> TECH["Technical validation"]
-    TECH --> QAT["QAT approval"]
-    QAT --> PROD["Production release"]
+  subgraph DEPLOY["3. Deployment & Validation"]
+    MAN["Manifest update"]
+    ENV["Deploy to environment"]
+    TECH["Technical validation"]
+    QAT["QAT approval"]
+    PROD["Production release"]
+    MAN --> ENV --> TECH --> QAT --> PROD
   end
 
-  subgraph POST["Post-release"]
-    PROD --> REC["Reconcile release branch"]
-    REC --> MASTER["master reflects production"]
-    REC --> DEVBACK["development receives released changes"]
+  subgraph POST["4. Post-Release"]
+    REC["Reconcile release branch"]
+    MASTER["master reflects production"]
+    DEVBACK["development receives changes"]
+    REC --> MASTER
+    REC --> DEVBACK
   end
+
+  TAG --> CI
+  HELM --> MAN
+  PROD --> REC
 ```
 
 The exact flow may vary by service and environment. That is why the process should be mapped end to end before changing the branching model.
