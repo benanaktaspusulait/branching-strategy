@@ -89,40 +89,41 @@ Key problems at a glance:
 ## Visual Overview
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#4a90d9', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2c6fad', 'secondaryColor': '#f0f4f8', 'tertiaryColor': '#e8f5e9'}}}%%
+
 flowchart TD
-  subgraph UNDERSTAND["Understand"]
-    A["Current Release\nOperating Model"]
-    B["Deployment &\nRelease Findings"]
-  end
+  %% Layer 1
+  A["📋 Current Release Operating Model"]:::current
+  B["🔧 Deployment & Release Findings"]:::current
 
-  subgraph DIAGNOSE["Diagnose"]
-    C["CI/CD Findings\n& Actions"]
-    D["System State,\nProblems & Solutions"]
-  end
+  %% Layer 2
+  C["⚠️ CI/CD Findings & Actions"]:::problem
+  D["🎯 System State, Problems & Solutions"]:::problem
 
-  subgraph SOLVE["Solve"]
-    E["Proposed Release\nAutomation Flow"]
-    F["Branching\nStrategy Options"]
-    G["Automation &\nValidation"]
-    H["Hotfix &\nRollback"]
-  end
+  %% Layer 3
+  E["🚀 Proposed Release Automation Flow"]:::solution
+  F["🌿 Branching Strategy Options"]:::solution
+  G["✅ Automation & Validation"]:::solution
+  H["🔄 Hotfix & Rollback"]:::solution
 
-  subgraph DECIDE["Decide & Act"]
-    I["Rollout Decision\nProposals"]
-    J["Scope, Ownership\n& Approvals"]
-    K["Squad Briefing\nSummary"]
-  end
+  %% Layer 4
+  I["📝 Rollout Decision Proposals"]:::decision
+  J["👥 Scope, Ownership & Approvals"]:::decision
+  K["📢 Squad Briefing Summary"]:::decision
 
-  A --> C
-  B --> C
-  C --> D
-  D --> E
-  D --> F
-  E --> G
-  E --> H
-  F --> I
-  G --> I
-  H --> I
-  I --> J
-  J --> K
+  %% Relationships
+  A & B --> C --> D
+  D --> E & F
+  E --> G & H
+  F & G & H --> I
+  I --> J --> K
+
+  %% Styles
+  classDef current fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
+  classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
+  classDef solution fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
+  classDef decision fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
 ```
+
+**Renk anahtarı:**
+🔵 Mevcut durum · 🟠 Sorunlar · 🟢 Çözümler · 🟣 Kararlar
