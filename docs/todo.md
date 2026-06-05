@@ -87,38 +87,29 @@ Bu dosya, `docs/` klasöründeki tüm belgelerin tutarlılık, çelişki, hata v
 
 ---
 
-## 10. 🟡 Tag Jump Checker Geleceği Netleşmemiş
+## 10. 🟢 Tag Jump Checker Geleceği — ÇÖZÜLDÜ
 
-**Sorun:** `kt-session-findings.md` tag jump checker'ın yeni modelde "less relevant" olabileceğini söylüyor. Ama ne yapılacağına dair karar yok.
+**Sorun:** Somut bir karar/öneri yoktu.
 
-- `kt-session-findings.md` → "It may be less relevant with the proposed branching structure"
-- `automation-and-validation.md` → "Decide whether tag jump checking is retired, replaced or adapted"
-- `kt-session-todo-list.md` → Proposed: "Reassess the existing tag jump checker"
-
-**Eksik:** Somut bir öneri/karar yok.
-
-**Çözüm Önerisi:** `rollout-decision-proposals.md`'ye tag jump checker için bir decision section ekle.
+**Çözüm:** `rollout-decision-proposals.md`'ye Section 12 "Tag Jump Checker Future" eklendi. Yeni model aktif olduktan ve yeni validation 2 ardışık release boyunca yeşil kaldıktan sonra retire edilecek.
 
 ---
 
-## 11. 🟡 notes.txt Ham Transkript Olarak Kalıyor
+## 11. 🟡 notes.txt Ham Transkript — KISMİ
 
-**Sorun:** `notes.txt` ~2500 satırlık ham bir konuşma transkripsiyonu. Hiçbir yerde yapılandırılmamış. `kt-session-findings.md` bu notlardan çıkarım yapıyor ama transkriptin ortasında kesilmiş olabileceğini söylüyor.
+**Sorun:** `notes.txt` ~2500 satırlık ham bir konuşma transkripsiyonu. Transkriptin ortasında kesilmiş olabilir.
 
-**Eksik:** Transkriptin tamamının dokümanlara aktarılıp aktarılmadığı belli değil.
+**Durum:** Mevcut dokümanlar, transkriptteki mevcut içeriği kapsamlı şekilde yansıtıyor. Ancak transkriptin sonunun kesilmiş olması nedeniyle kayıp bilgi olup olmadığı kesin değil. Bu, tam transkript olmadan doğrulanamaz.
 
-**Çözüm Önerisi:** notes.txt'deki tüm aksiyon noktalarının docs'a aktarıldığını doğrula veya eksik kalan bilgileri tespit et.
+**Aksiyon:** Tam transkript mevcut olduğunda tekrar kontrol et.
 
 ---
 
-## 12. 🟡 CVE/Renovate İş Akışı Detayı Yetersiz
+## 12. 🟢 CVE/Renovate İş Akışı Detayı — ÇÖZÜLDÜ
 
-**Sorun:** `proposed-release-automation-flow.md`'de CVE/Renovate akışından bahsediliyor ama pratik detay yok.
+**Sorun:** CVE/Renovate için pratik owner ve SLA detayı yoktu.
 
-- "CVE scanning should raise work against the release branch" → Kim yapacak?
-- "Teams/release owners must watch, review and merge" → Hangi SLA ile?
-
-**Çözüm Önerisi:** CVE/Renovate için owner, SLA ve merge priority ekle.
+**Çözüm:** `proposed-release-automation-flow.md`'deki CVE And Renovate Flow bölümüne ownership ve SLA tablosu eklendi.
 
 ---
 

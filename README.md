@@ -67,6 +67,7 @@ flowchart TD
 - [Automation and validation](docs/automation-and-validation.md)
 - [Hotfix and rollback](docs/hotfix-and-rollback.md)
 - [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
+- [Documentation review and resolved issues](docs/todo.md)
 
 ## Suggested Reading Path
 
