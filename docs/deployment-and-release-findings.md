@@ -212,6 +212,82 @@ The new release automation must explicitly define strict validation rules for ti
 6. Confirm whether tag jump logic is retired, replaced or adapted for the new branching model.
 7. Confirm secrets access/onboarding process for maintainers.
 
+## Industry Best Practices For Helm And Deployment
+
+### Helm Chart Versioning
+
+Treat Helm chart versions with the same discipline as application versions:
+
+```text
+Chart version: version of the chart packaging/templates.
+App version: version of the application image inside the chart.
+These are independent and should be tracked separately.
+```
+
+When the chart templates change (new env var, new sidecar, resource limits), bump the chart version even if the app version stays the same. This makes debugging deployment differences possible.
+
+### Values File Organisation
+
+For multi-environment deployments, a clean values file structure reduces errors:
+
+```text
+charts/
+  myservice/
+    values.yaml              ← defaults (dev-safe)
+    values-dev.yaml          ← dev overrides
+    values-sit.yaml          ← SIT overrides
+    values-preprod.yaml      ← pre-prod overrides
+    values-prod.yaml         ← production overrides
+```
+
+Principles:
+- **Base values should be safe for the lowest environment.** If someone deploys without specifying an environment file, it should hit dev, not production.
+- **Override files should only contain differences.** Do not duplicate the entire base file — only override what changes per environment.
+- **Secrets should never be in values files.** Use sealed-secrets, external-secrets-operator or Drone secrets injection instead.
+
+### Secrets Management: Modern Approaches
+
+The current approach (Git-crypt, managed secrets scripts) works but has scaling limitations. Industry alternatives:
+
+| Approach | How It Works | Pros | Cons |
+| --- | --- | --- | --- |
+| Git-crypt (current) | Encrypt secrets in Git with GPG keys | Simple, version-controlled | Key management overhead, onboarding friction |
+| Sealed Secrets | Encrypt secrets client-side; only the cluster can decrypt | Kubernetes-native, safe to commit | Requires sealed-secrets controller per cluster |
+| External Secrets Operator | Sync secrets from AWS Secrets Manager / Vault / etc. | Central secret store, rotation built-in | Extra infrastructure dependency |
+| Drone secrets | Secrets stored in Drone CI, injected at pipeline time | Simple for CI/CD use | Not available at runtime in pods |
+
+Recommended direction for Cerberus:
+- Short term: Continue with managed secrets scripts + Drone secrets.
+- Medium term: Evaluate External Secrets Operator to centralise secret management and simplify rotation.
+- Long term: Integrate with a secrets manager (HashiCorp Vault, AWS Secrets Manager) for rotation, audit and access control.
+
+### Dependency Management In Umbrella Charts
+
+With ~24 umbrella charts, dependency management is critical:
+
+```text
+Chart.yaml:
+  dependencies:
+    - name: service-a
+      version: "~1.2.0"    ← allow patch updates
+      repository: "https://..."
+```
+
+Recommendations:
+- Pin dependency versions to at least minor (`~1.2.0` allows `1.2.x`). Never use `*` or open ranges.
+- Run `helm dependency update` in CI — do not commit the `charts/` folder with vendored dependencies unless required for air-gapped deployment.
+- Use a dependency update bot (Renovate) to raise MRs when subchart versions change.
+- Document which services are in which umbrella chart — a mapping table helps identify blast radius.
+
+### Mass Diff As A Safety Net
+
+The mass diff step (comparing rendered templates against the target branch) is an excellent safety pattern. To maximise its value:
+
+- Make diff output mandatory reading for release approval. If the approver has not looked at the diff, the approval is incomplete.
+- Flag unexpected changes (e.g., resource limits changed in production when only an env var was expected to change).
+- Consider storing diff output as a pipeline artefact alongside the release report.
+- If the diff shows zero changes for a chart, that chart should not be deployed — reinforce the changed-chart-only deployment default.
+
 ---
 
 ← [Current release operating model](current-release-operating-model.md) | → [Proposed release automation flow](proposed-release-automation-flow.md)

@@ -300,6 +300,75 @@ The process should be confirmed around:
 - How `master` is kept aligned with production.
 - Who owns release readiness, execution, validation and reconciliation.
 
+## Industry Best Practices For Feature Flags And Environment Management
+
+### Feature Flag Maturity Model
+
+Feature flags range from simple to sophisticated:
+
+| Level | Description | Example |
+| --- | --- | --- |
+| 1. Build-time flags | Compile-time constants or config at deploy | `application.yml: feature.x.enabled: true` |
+| 2. Deploy-time flags | Values files per environment | Helm values: `features.newRule: false` |
+| 3. Runtime flags (static) | Flag service checked at startup | Config read from external source at boot |
+| 4. Runtime flags (dynamic) | Flag changes without redeploy | LaunchDarkly, Unleash, Flagsmith, or custom |
+
+Cerberus appears to be at Level 2 (deploy-time flags via values files). This means:
+- Enabling a feature requires a chart/values change + redeployment.
+- "Dark launching" (deploy but keep disabled) works, but enabling requires operational action.
+- Quick disable in production requires re-deploy with the flag turned off.
+
+Moving to Level 3–4 enables:
+- Instant feature kill-switch without redeployment.
+- Gradual rollout (enable for 10% of users, then 50%, then 100%).
+- A/B testing without branch complexity.
+- Decoupling deployment from release entirely.
+
+### Recommended Feature Flag Rules
+
+```text
+1. Every incomplete feature merged to a release branch MUST be behind a flag.
+2. Flags must have an owner and a planned removal date.
+3. Flags older than 2 releases should be reviewed — either enable permanently or remove.
+4. Flag state per environment must be documented in the release report.
+5. Critical flags (kill-switches for new features) should have a fast-disable path that does not require full release.
+```
+
+### Environment Promotion Pattern
+
+A clean environment promotion model:
+
+```mermaid
+flowchart LR
+  DEV["Dev (per squad)"] --> SHARED["Shared Dev (integration)"]
+  SHARED --> SIT["SIT"]
+  SIT --> PREPROD["Pre-prod / B.Val"]
+  PREPROD --> PROD["Production"]
+```
+
+Each promotion should:
+- Use the **same artefact** (never rebuild for a higher environment).
+- Apply **environment-specific config only** (values files, secrets, feature flags).
+- Pass **defined quality gates** before proceeding.
+- Be **auditable** (who promoted, when, which version, what changed).
+
+### Environment Parity Checklist
+
+To reduce "works in dev, fails in prod" issues:
+
+| Aspect | Dev | Pre-prod | Production | Notes |
+| --- | --- | --- | --- | --- |
+| Container images | Same | Same | Same | Immutable artefact |
+| Helm chart version | Same | Same | Same | Packaged artefact |
+| Values/config | Environment-specific | Close to prod | Production | Minimise differences |
+| Data shape | Synthetic/subset | Representative | Real | Pre-prod data should exercise edge cases |
+| External integrations | Mocked/stubbed | Real (sandboxed) | Real | Know which integrations are different |
+| Network/access | Open | Restricted | Restricted | Pre-prod should match prod restrictions |
+| Resource limits | Relaxed | Match prod | Production | Catch resource issues before prod |
+| Feature flags | All enabled (testing) | Match prod defaults | Controlled | Document differences |
+
+The fewer differences between pre-prod and production, the more confident the team can be that pre-prod validation means production will work.
+
 ---
 
 ← [README](../README.md) | → [Deployment and release findings](deployment-and-release-findings.md)

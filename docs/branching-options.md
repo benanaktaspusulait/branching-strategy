@@ -242,6 +242,75 @@ First standardise:
 
 Then reassess whether the branch model is still the main constraint.
 
+## Industry Perspective: Choosing The Right Model
+
+### Team Size And Release Cadence Drive The Choice
+
+The branching model should match the team's release cadence and operational maturity, not the other way around:
+
+| Factor | GitFlow Better | Trunk-Based Better |
+| --- | --- | --- |
+| Release cadence | Weekly / fortnightly / scheduled | Multiple times per day / on-demand |
+| Team size per repo | Large (10+), multiple squads | Small (2–5), single ownership |
+| Regulatory/approval gates | Heavy (QAT, release sign-off) | Light (automated gates only) |
+| Feature flag maturity | Low / not available | High / runtime control |
+| Test automation coverage | Partial / manual QA involved | High / full automated regression |
+| Deployment confidence | Low (manual, risky) | High (automated, reversible) |
+| Shared codebase coupling | High (multiple teams in one repo) | Low (service per team) |
+
+### The Transition Path That Works In Practice
+
+Most teams that successfully move from GitFlow to trunk-based do it in stages. Jumping directly is risky:
+
+```text
+Stage 1: Stabilised GitFlow
+  - Automate branch creation, tagging and reconciliation.
+  - Reduce manual steps to near-zero.
+  - Measure release cycle time.
+
+Stage 2: Simplified Release Branches
+  - Drop `development` (done: proposed cutover to `main`).
+  - Short-lived release branches (1–2 weeks max).
+  - Feature flags for incomplete work.
+
+Stage 3: Release Branch Optional
+  - Feature flags mature enough to merge to main continuously.
+  - Release = "enable flags in production config."
+  - Release branch only for exceptional cases (regulated release, multi-week validation).
+
+Stage 4: Trunk-Based
+  - All work merges to main within 1–2 days.
+  - Feature flags control everything.
+  - Release is a deployment + flag decision, not a branch decision.
+```
+
+The Cerberus team appears to be at Stage 1 moving towards Stage 2. Skipping stages creates risk because each stage depends on automation and confidence from the previous one.
+
+### Common Mistakes When Choosing A Model
+
+- **Picking trunk-based because it sounds modern.** Without runtime feature flags and high test coverage, trunk-based creates instability that manifests as "main is broken" incidents.
+- **Keeping GitFlow but not automating it.** The overhead of GitFlow is only justified if automation handles branch creation, tag timing, reconciliation and reporting. Manual GitFlow at scale is unsustainable.
+- **Changing the branch model to fix process problems.** If the real problem is unclear ownership, missing validation or manual deployment, a simpler branch model just moves the pain elsewhere.
+- **Treating release branches as long-lived.** Release branches should live days to weeks, not months. A release branch open for more than one sprint suggests unclear scope or blocked work that should be managed differently.
+
+### Hybrid Models That Work Well For Mid-Size Teams
+
+For teams with 3–6 squads, scheduled releases and partial automation (this appears to match Cerberus), a common successful pattern is:
+
+```text
+main = production baseline (always deployable)
+release/<version> = short-lived stabilisation branch (max 1–2 weeks)
+feature/<ticket> = created from release branch, merged back quickly
+hotfix/<ticket> = created from main for production emergencies
+```
+
+This is essentially a streamlined GitFlow without `development`, which is exactly what the proposed model describes. The key success factor is not the branch structure itself but:
+
+1. Release branches are short (≤2 weeks).
+2. Automation handles creation, tagging, chart updates and reconciliation.
+3. Feature flags prevent incomplete work from blocking releases.
+4. Forward-merge discipline keeps branches aligned.
+
 ---
 
 ← [Proposed release automation flow](proposed-release-automation-flow.md) | → [Automation and validation](automation-and-validation.md)

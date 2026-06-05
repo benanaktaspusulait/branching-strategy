@@ -254,6 +254,78 @@ Follow-up needed:
 - What information should be included in the audit trail?
 - What should fail immediately vs require manual approval?
 
+## Industry Best Practices For CI/CD Validation
+
+### Shift-Left Testing
+
+Move validation as early as possible in the pipeline. The later a problem is found, the more expensive it is to fix:
+
+```text
+Cost to fix multiplier:
+  Local dev:        1x
+  Feature branch:   2x
+  Release branch:   5x
+  SIT/QAT:         10x
+  Production:      50x+
+```
+
+Recommended shift-left gates:
+
+| Gate | When | What |
+| --- | --- | --- |
+| Pre-commit hook | Before commit | Ticket reference, lint, basic format |
+| Branch pipeline | On push | Build, unit test, SAST, Helm lint/template |
+| MR pipeline | On MR open/update | Integration test, Helm diff, dependency check |
+| Release pipeline | On merge to release | Full regression, security scan, manifest validation |
+| Promotion gate | Before higher env | Human approval + automated report check |
+
+### Pipeline Design Principles
+
+1. **Fail fast**: Put the cheapest, fastest checks first. Do not run a 20-minute integration test suite if the Helm template is invalid.
+2. **Idempotent steps**: Every pipeline step should be safe to rerun. If the Helm upload succeeded but the chart update failed, rerunning should not create duplicate artefacts.
+3. **Immutable artefacts**: Build once, deploy many. The same image that passed testing in dev should be the one deployed to production. Never rebuild for a higher environment.
+4. **Pipeline as code**: Pipeline definitions live in the repository, versioned alongside the code they build. No secret pipeline config that only exists in Drone UI.
+5. **Separation of concerns**: Build pipeline produces artefacts. Deployment pipeline consumes artefacts. These should be independent — a deployment failure should not require rebuilding.
+
+### Artefact Provenance And Supply Chain Security
+
+For auditable releases, consider:
+
+- **SBOM (Software Bill of Materials)**: Generate an SBOM with each build. Tools like Syft or Trivy can produce this alongside vulnerability scans.
+- **Signed artefacts**: Sign container images and Helm charts so deployment can verify they came from the trusted pipeline.
+- **Provenance attestation**: Record which pipeline, commit, branch and actor produced each artefact. SLSA framework provides levels of assurance.
+- **Dependency pinning**: Lock dependency versions in Helm charts and application builds. Renovate MRs make updates explicit and reviewable.
+
+These are not immediate requirements but should be on the roadmap, especially if regulatory or compliance pressure increases.
+
+### Validation Gate Pattern
+
+A clean pattern for quality gates:
+
+```mermaid
+flowchart TD
+  TRIGGER["Event: commit / tag / promote"] --> CHECK["Run automated checks"]
+  CHECK --> PASS{"All passed?"}
+  PASS -->|Yes| AUTO["Auto-proceed to next stage"]
+  PASS -->|No| BLOCK["Block and notify"]
+  BLOCK --> OVERRIDE{"Approved override?"}
+  OVERRIDE -->|Yes| AUDIT["Record override + proceed"]
+  OVERRIDE -->|No| FIX["Fix required"]
+```
+
+Key principle: automation should handle the happy path entirely. Humans only intervene for exceptions and approvals at defined gates.
+
+### Monitoring Pipeline Health
+
+Track these metrics to know whether the pipeline is helping or hindering:
+
+- **Lead time**: Commit to production (target: < 1 week for a scheduled release team).
+- **Deployment frequency**: How often releases go to production.
+- **Change failure rate**: % of deployments that cause an incident or require rollback.
+- **Mean time to restore**: How long from failure detection to fix/rollback in production.
+
+These are the DORA metrics. They tell you whether process changes are actually improving delivery.
+
 ---
 
 ← [Branching strategy options](branching-options.md) | → [Hotfix and rollback](hotfix-and-rollback.md)
