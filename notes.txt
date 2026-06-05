@@ -1,918 +1,2503 @@
-Stephen Craine
-0 40:04
-Stephen Craine 0 minutes 4 seconds
-Yeah, thanks everyone for joining. Here to discuss changes to our sort of git strategy, branching strategy that will help us automate our release process so we're not having to continue with the tactical solution, which is very, very manual heavy. So there's been lots of people involved.
-Stephen Craine 0 minutes 23 seconds
-helping out each week to get our releases created or the artifacts created. But yeah, it's a lot of work. So Gareth and team have been doing some work in the background to try and do some automation around the release so that we can do end to end, click a button hopefully, and then get some reporting out of it as well.
-Stephen Craine 0 minutes 45 seconds
-Cross reference with JIRA, make sure we're releasing what we're meant to be releasing as well. So lots of benefits to be brought by this. So I'll hand over to you, Gareth, if you want to talk through it.
+
+Liam Moncur
+0 minutes 6 seconds0:06
+Liam Moncur 0 minutes 6 seconds
+Yeah, so this is just not Katie. It feels weird seeing all this transfer. No, I don't think I could ever say that again. It has to be Katie.
+Liam Moncur 0 minutes 14 seconds
+Um...
+Liam Moncur 0 minutes 16 seconds
+This is to go over the deployment scripts used by the Cerberus, and then specifically gonna go because.
+Liam Moncur 0 minutes 24 seconds
+When we deploy things, we do use the service repo. I'm going to focus on the service repo specifically for this. The individual service charts do have their own drone pipeline for deploying, but that was previous, the previous way of working, when the dev environment
+Liam Moncur 0 minutes 43 seconds
+used to have all the individual services deployed as Helm charts, but that's not true anymore. Everything's now deployed by the service repo, so focus on that because the old ones, the service charts aren't really relevant. And to be honest, most of the stages are exactly the same, as far as I'm aware.
+Liam Moncur 1 minute 2 seconds
+The first I remember, anyway. Yeah, so what we'll be doing is focusing on the MMA Helm repo. So this is the repository where these deployment scripts live. So if you're going to be, I guess, kind of rule of thumb of this thing here is it's for deploying Helm charts. So if there's anything you want to add,
+Liam Moncur 1 minute 23 seconds
+like in the future to the drone pipeline, then this is where you would put it, basically, is where you would expect to put it. So yeah, just a summary, we're going to go over sort of in order of how it works. So Helm packaging, linting, templating, mass diff, and then the uploading and deployment.
+Liam Moncur 1 minute 42 seconds
+stuff. Like I already said, this isn't going to take an hour, so if you want to ask anything to go, feel free just to interrupt.
+Liam Moncur 1 minute 51 seconds
+I'm not very good at formal things, so I work better if you say things at me, if you think to think of anything right, so...
+Liam Moncur 2 minutes 1 second
+Yeah, so as I mentioned already,
+Liam Moncur 2 minutes 4 seconds
+In terms of deployments, everything in the new ways of working anyways through this repository here, the service repo.
+Liam Moncur 2 minutes 12 seconds
+I won't bore you to death by going over the drone pipeline, but essentially everything is configured here. And again, if it feels like I'm saying things you already know, I apologize. I have no idea wherever, wherever, whatever's knowledge level is and stuff. So I'm just going to cover most of it. So if it feels like I'm talking down to you, you're like, God, I know all this, shut up.
+Liam Moncur 2 minutes 31 seconds
+I apologise now.
+Liam Moncur 2 minutes 35 seconds
+Yeah, so it's all in here. This is where all the steps are configured. You can look at that in your own time, but I'll go through essentially the main script, the main scripts themselves, the main Helm related things you need to know.
+Liam Moncur 2 minutes 48 seconds
+So, yeah, so packaging, so...
+Liam Moncur 2 minutes 56 seconds
+He said, come on. So, when we deploy our Helm charts, we deploy them as Helm packages, so we don't deploy. It's not like a case of where we will cheque out the service repo and we'll then you know, depend, update dependencies and.
+Liam Moncur 3 minutes 15 seconds
+and run from there, we essentially will.
+Liam Moncur 3 minutes 20 seconds
+Um...
+Liam Moncur 3 minutes 22 seconds
+Once something's been tagged, we tend to, we will then that will get pushed up as a helm package and then when we deploy it, we pull down that helm package and then also we then include the values files, any sort of the environment specific values files.
+Liam Moncur 3 minutes 38 seconds
+So...
+Liam Moncur 3 minutes 40 seconds
+and yeah, that being, there's not really much to say on this one. The sound packaging is, as you can see here, does expensive build packages it. The reason we do this as part of the pipeline is it's going to be used by the next step, which is linting and templating. So when we template it, we template the package itself. Sorry.
+Liam Moncur 4 minutes
+Rather than.
+Liam Moncur 4 minutes 3 seconds
+the local files on the repo itself.
+Liam Moncur 4 minutes 7 seconds
+So...
+Liam Moncur 4 minutes 9 seconds
+Yeah, so when we pull down the, when we pull down the package, we don't know, it's a code browser toggle file. So we'll run linting over it, which is just to cheque the formatting is correct. I must say, I've never seen this thing catch anything, so I don't, I'm not sure how much help use it is really, but it's there. It's an extra step. I'm sure one day we'll catch something.
+
+And then more importantly, the templating, just to make sure that what you've changed in Helm or anything you update in any of the Helm templates actually is valid YAML when it gets rendered.
+Liam Moncur 4 minutes 43 seconds
+Yeah, this is good to appoint this stuff. You might find that you may have errors, like you'll get errors deploying stuff, even if this is stuff's passed. There's a sort of disconnect between what Helm can cheque and what's valid to Helm and what's valid to Kubernetes. Kubernetes will sometimes
+Liam Moncur 5 minutes 2 seconds
+find things that the Helm template didn't find. But again, you can, you know, this sort of thing, you can do local deployments and stuff to test all that stuff, but this is there anyway, as part of that. After that, we have a little bit more complicated script.
+Liam Moncur 5 minutes 21 seconds
+It's essentially...
+Liam Moncur 5 minutes 24 seconds
+In A nutshell, this thing will go through your changes for all environments, all charts, or well, not all charts, sorry, for all environments.
+Liam Moncur 5 minutes 36 seconds
+for any for any charts that you have updated the helm for, and it will template to how it will then do that again based on on the release, the release V50. I can't see my against it will then do that exact same thing against this.
+Liam Moncur 5 minutes 55 seconds
+branch here, which is the default target branch, that will then template that and then it will run a diff over those two templates, essentially, and it will try and the idea behind it is to try and show you what your change is going to do, what your change is going to do. So, it's good, it's useful for, you know, you can do, you can make changes to
+Liam Moncur 6 minutes 16 seconds
+you haven't changed it, deploy it into there if you're comfortable, you're happy with it, that's cool. But the idea behind this is to try and catch anything that you might inadvertently change, say like in the product environment.
+Liam Moncur 6 minutes 29 seconds
+I don't actually have an example of it, but the has a readme around it.
+Liam Moncur 6 minutes 36 seconds
+That's worth looking at.
+Liam Moncur 6 minutes 40 seconds
+Yeah, so it kind of, that's kind of, kind of what I've already covered all that stuff here. You can also run it locally as well. So if you don't want to push things up to drone, you could run the script locally and it will do the same thing where it also output standard out what changes you're going to be doing.
+Liam Moncur 6 minutes 59 seconds
+Probably the most useful thing to know about it is the output of it. So they'll get printed out into the console.
+Liam Moncur 7 minutes 6 seconds
+Just basic stuff there that is plus minus and it will the template that is going to the template that's got the change in it. So, for example, the justification UI's config map, it comes out as sort of format it will be formatted like this, so we'll have you'll have the umbrella chart name.
+Liam Moncur 7 minutes 25 seconds
+your branch that you're working on, the environment, the dev environment.
+Liam Moncur 7 minutes 31 seconds
+The, the, the justification chart is the local chart, the actual chart, and then these are the child dependencies, so of the justification chart that you're deploying in Cerberus, here are the changes you've made, you'll be making to the conflict map for.
+Liam Moncur 7 minutes 52 seconds
+MMA justification UI.
+Liam Moncur 7 minutes 56 seconds
+That's pretty much that in my shot.
+Liam Moncur 8 minutes
+So assuming all that passes,
+Liam Moncur 8 minutes 5 seconds
+So all the steps we've gone through just now are things that run every time you make any changes to the repo. So any branch you push up will always run this sort of basic.
+
+Liam Moncur 8 minutes 15 seconds
+Templating the templating and then the checking changes that you're going to be making, assuming that you're happy with everything.
+Liam Moncur 8 minutes 26 seconds
+You'll then tag the your merger branch and then you'll create a tag, so it'd be like...
+Liam Moncur 8 minutes 35 seconds
+You know that one, but it'd be like this, so you would then create your next, the next sort of patch version you're doing.
+Liam Moncur 8 minutes 46 seconds
+I.
+Liam Moncur 8 minutes 47 seconds
+In terms of the actual tag doing the tagging, I don't tend to do it. It's more of a release management thing. I Herbie tends to do it a lot.
+Liam Moncur 8 minutes 58 seconds
+So, maybe one actually, now I think about it, maybe one just to push on to her brief for now, in terms of actually creating these, because then they'll get, because as you see here, they've got 58 here, but they've had, they've been having issues with it, so they've had to create a 581, 582, 583, 584.
+Liam Moncur 9 minutes 18 seconds
+Yeah. So, okay, now think about it. Maybe not worry too much about this side of things, but if you're wanting to test things via drone, you would create something like this. This tagging process will kick off the next two steps, which is the uploading and deploying.
+Liam Moncur 9 minutes 35 seconds
+So the uploading is essentially the packaging stage. Again, because when you do a tag, this will rerun again.
+Liam Moncur 9 minutes 44 seconds
+And the uploading is, yeah, it's just not very much to say about it; it just pushes up to our factory, so it's ready to deploy.
+Liam Moncur 9 minutes 53 seconds
+And then the deployment, um...
+Liam Moncur 9 minutes 57 seconds
+kind of things again.
+Liam Moncur 10 minutes
+There's a lot to go through, but it's, yeah, it's essentially just gonna...
+Liam Moncur 10 minutes 6 seconds
+Yeah, yeah, okay, yeah, so once you're, once you've done the, you create the tag, it will do something like this. Sorry, I am.
+Liam Moncur 10 minutes 15 seconds
+Bringing it a little bit more than I actually should be reading my notes. So it will create something like this here. So you'll have a drone pipe that runs and this will go through. So you see all those.
+Liam Moncur 10 minutes 26 seconds
+The tagging process will then go through and do the Helm packaging template again, uploading it.
+Liam Moncur 10 minutes 34 seconds
+Once that's passed.
+Liam Moncur 10 minutes 36 seconds
+This, this, but for now, it doesn't, it's not super important. You'll then promote the tag, so you'll use the these little assuming your permissions to anyway to promote it, and then this is where you, this is how you deploy it. So, you would then I've got the examples of how you would do it. So, you've got the target, which is just the environment.
+Liam Moncur 10 minutes 59 seconds
+Deployment scope, which is if you're going to deploy it to live, so dev, so to, so for example, it'd be DSA MMA demo, but if you wanted to deploy it to DSA MMA demo hyphen historical, you would do historical, or if you wanted to, which is default, if you don't, if you admit deployment scope, you'll do both by default.
+Liam Moncur 11 minutes 19 seconds
+AA.
+Liam Moncur 11 minutes 20 seconds
+Or you can just do that and define that as well, so that will deploy it to both live and historical.
+Liam Moncur 11 minutes 27 seconds
+Um, and then release version that tends to just be the tag that you've just was done.
+Liam Moncur 11 minutes 34 seconds
+and then chart names. This is defined which chart you want to deploy so we wouldn't deploy.
+Liam Moncur 11 minutes 43 seconds
+You have to, if you want to deploy all of them, you would literally have to do something like this. You have to put them all out.
+
+Liam Moncur 11 minutes 51 seconds
+But this lets you target which charts you actually want to deploy into the demo environment, so you don't just deploy, so you deploy what you need to actually deploy.
+Liam Moncur 12 minutes 1 second
+Yes, that is pretty much it.
+Liam Moncur 12 minutes 6 seconds
+Um...
+Liam Moncur 12 minutes 7 seconds
+Yeah, the key bit is the MMA Helm library. So if you wanted to, MMA Helm, sorry to say, is where all this stuff lives. So anything, if you're looking for any issues with deployments and stuff like that, this is where you would end up going, most likely, to try and figure out what's happened. And that is that. Any questions?
 
 Gareth Andrews
-0 560:56
-Gareth Andrews 0 minutes 56 seconds
-Yeah. Hi all. As Steve said, I'm part of the Achilles team working to hopefully streamline our lease process. If anyone has any questions at any point, please use the raise hand feature. I will keep glancing off to the screen on my side just to pick them up as soon as possible.
-Gareth Andrews 1 minute 15 seconds
-hopefully without losing my flow too much.
-Gareth Andrews 1 minute 19 seconds
-So yeah, so the main caveat of this is obviously we're trying to improve what's currently working and basically free up time, free up time, free up people and stabilise what's being done.
-Gareth Andrews 1 minute 35 seconds
-So at the moment, when it comes to deploying to environments, environments are a bit of a mismatch. There's work in this area to improve things. Obviously, any production, any feature, any change which is being done normally involves an application being changed, but it can also involve secrets or a change to the database through Liquid Base.
-Gareth Andrews 1 minute 56 seconds
-That should be Liquibase. Apologies for typo. Yeah, no, apologies for that. That's probably going to be everywhere. I was meant to correct it, but...
-
-Stephen Craine
-1 591:59
-Stephen Craine 1 minute 59 seconds
-Yeah, I was going to say, there's no D in it.
+12 minutes 31 seconds12:31
+Gareth Andrews 12 minutes 31 seconds
+This one may be a bit historic. So I've looked through the deployment scripts, or more particularly the drone file within the service repository, and it's running all the Helm deployments simultaneously in parallel, sorry.
+LM
+Liam Moncur
+12 minutes 49 seconds12:49
+Liam Moncur 12 minutes 49 seconds
+Yeah.
 
 Gareth Andrews
-2 minutes 8 seconds2:08
-Gareth Andrews 2 minutes 8 seconds
-So everything's kind of deployed to the low environments ad hoc. And then when it comes to active releases, we update server charts and those deployed to the higher environments. What this means is there's a lot of, as Steve said, changes which we're currently trying to deal with as we're deploying on a
-Gareth Andrews 2 minutes 27 seconds
-very regular basis. It's a lot of work for people to keep track of all those changes, to make sure they're all being documented and to make sure they all work together and that one environment looks like the next.
-Gareth Andrews 2 minutes 40 seconds
-How about changing overtime?
-Gareth Andrews 2 minutes 43 seconds
-Well, the main caveat is we're looking to update everything so they're all in charts. So all environments will be a mirror of a chart. So once you deploy a version of a chart, that is what the environment should look like. There will be caveats to that. Obviously, there's probably be manual steps until we're into a fully infrastructure as code kind of environment.
-Gareth Andrews 3 minutes 4 seconds
-But the main focus will be getting everything into that code and then managing it all through Cerberus Helm charts.
-Gareth Andrews 3 minutes 12 seconds
-So that's not just the applications, that's all the runbooks we're currently managing will be versioned as well. Liquid Base will be Liquid Base. I will get rid of the D eventually, I promise. Bad habits. Configuration and even the secrets. There's work currently to get configuration and secrets managed via.
-Gareth Andrews 3 minutes 32 seconds
-a chart entry. So the idea is if you're making any changes, you make a corresponding change in those repositories. Everything will then feed into your Helm charts. That's then what's deployed, be that to dev test environments, sit, be val or production. Everything
-
-Stephen Craine
-3 minutes 50 seconds3:50
-Stephen Craine 3 minutes 50 seconds
-And by app. Sorry, Gareth, but by app, you basically mean a service.
+12 minutes 50 seconds12:50
+Gareth Andrews 12 minutes 50 seconds
+Is there a reason for that why it's all being done as part of one step and they've not had their own steps for each one to get?
+LM
+Liam Moncur
+12 minutes 57 seconds12:57
+Liam Moncur 12 minutes 57 seconds
+It used to have his own steps, but it got changed to that to speed it up.
 
 Gareth Andrews
-3 minutes 51 seconds3:51
-Gareth Andrews 3 minutes 51 seconds
+13 minutes 1 second13:01
+Gareth Andrews 13 minutes 1 second
+Support.
+LM
+Liam Moncur
+13 minutes 6 seconds13:06
+Liam Moncur 13 minutes 6 seconds
+It was just cut down on the time it took drone to run.
+Liam Moncur 13 minutes 11 seconds
+I believe so. I should know because I was here when it happened.
+Liam Moncur 13 minutes 14 seconds
+Um...
+Liam Moncur 13 minutes 17 seconds
+Yeah, it was literally to speed up. That was the reason they've done it that way.
+
+Gareth Andrews
+13 minutes 22 seconds13:22
+Gareth Andrews 13 minutes 22 seconds
+Click.
+RK
+
+Rayhan Khan
+13 minutes 31 seconds13:31
+Rayhan Khan 13 minutes 31 seconds
+Maybe a silly question, but do all these steps run automatically in the drone pipelines? Are there any manual steps?
+LM
+Liam Moncur
+13 minutes 38 seconds13
+am Moncur
+13 minutes 38 seconds13:38
+Liam Moncur 13 minutes 38 seconds
+Other than the what the deployment of it, once you do the tag, it's all done automatically, yeah.
+RK
+
+Rayhan Khan
+13 minutes 46 seconds13:46
+Rayhan Khan 13 minutes 46 seconds
+On the.
+LM
+Liam Moncur
+13 minutes 46 seconds13:46
+Liam Moncur 13 minutes 46 seconds
+Uh, you need to you need to promote this intro, but the rest of it's run automatically in.
+Liam Moncur 13 minutes 59 seconds
 Cool.
-Gareth Andrews 3 minutes 55 seconds
-Yeah, and any of our services or any corresponding tooling.
-Gareth Andrews 4 minutes 1 second
-So the big question that everyone always asks when you start doing grandiose big designs like this is how does it actually impact what we do on a day to day basis?
-Gareth Andrews 4 minutes 12 seconds
-So quick kind of summary of that is what's currently done. So you create your feature branch, you make changes, keep making changes. When you want to deploy, you create a manual tag. And then what would have to happen is someone who has access to the server's charts,
-Gareth Andrews 4 minutes 31 seconds
-So that is typically a team lead or a senior within the team. Someone who has access to the MMA DM project within GitLab would have to create a branch, update the tag of whichever image, whichever service you're changing, and then click the deployment to deploy to dev test to any other environment.
-Gareth Andrews 4 minutes 52 seconds
-Obviously, if you are talking to a senior on a team, that is a lot of manual work straight off the gate for any change that needs to be deployed.
-Gareth Andrews 5 minutes 3 seconds
-Once all those changes are done, it's merged into the development branch. End of Sprint, we create release branches and tags. We then go through that release branch, doing hot fixes, removing code which needs to be unpicked due to any kind of issues with it found during testing.
-Gareth Andrews 5 minutes 22 seconds
-And one of the big time sinks that we currently have is fixing any CVEs that are detected on the release branches as well. So that means that from creating that release branch to when that release branch is ready to go into actually an environment can be several days.
-Gareth Andrews 5 minutes 41 seconds
-The next step then, as Steve mentioned before, is we then update the service charts to all of those different versions. So we have to go in, tag those release branches again every time we update them with fixes, and update the service chart images to pick which version we want to deploy as part of that release.
-Gareth Andrews 5 minutes 59 seconds
-At that point, we then get to do the deployment and get ready for the next release. Normally, hopefully, with a day or two downtime, but obviously, depending on the hot fixes, CVEs, any kind of last minute feature changes we need to make, that can very quickly get close to the next release.
-Gareth Andrews 6 minutes 17 seconds
-which means at the moment we are losing a lot of developers' time.
-Gareth Andrews 6 minutes 23 seconds
-How we plan to fix that is a diagram which I'm going to apologise for because it looks like, as someone mentioned yesterday, the London Underground.
-Gareth Andrews 6 minutes 33 seconds
-So the general premise is we will have a main branch. So what is essentially development will become main.
-Gareth Andrews 6 minutes 44 seconds
-that will always be representative of live. So when something is deployed into live or production, apologies, I use the two interchangeably.
-Gareth Andrews 6 minutes 55 seconds
-When something is deployed in production, it will be merged into main. So at any given point, anything we have to do off of what is in production could be taken from main.
-Gareth Andrews 7 minutes 6 seconds
-At the start of each sprint, so the start of each release, a release branch will be created. In this example, I'm saying release 9. I believe we're currently up to release 12, probably be closer to 13, 14, or, well, I suspect 14 or 15 by the time we're ready to roll this automation out.
-Gareth Andrews 7 minutes 25 seconds
-Um, so...
+RK
 
-Stephen Craine
-7 minutes 25 seconds7:25
-Stephen Craine 7 minutes 25 seconds
-Yeah, I mean, we're our major version is still 5, so it's 5.12, so let's get that's gonna go live.
-
-Gareth Andrews
-7 minutes 31 seconds7:31
-Gareth Andrews 7 minutes 31 seconds
-Okay.
-Gareth Andrews 7 minutes 34 seconds
-Okay, that might end up changing to six then, which is good. The reason for that. So, ideas, whenever you do a feature for your release, you'll take it off of your release branch.
-Gareth Andrews 7 minutes 47 seconds
-You do your commits. Whenever you do a commit on your branch, it will automatically generate a tag and build a deployable candidate for your release branch. Well, for your feature branch, sorry. That is true for feature branches and hotfix branches as well. So they are essentially interchangeable in this process.
-Gareth Andrews 8 minutes 8 seconds
-You will get a tag which will essentially be, I say app name here, that's not correct. I've just checked the logic. It is the last version of your application. So in this case, say 9.0 dash MMA with your ticket number.
-Gareth Andrews 8 minutes 25 seconds
-Why that matters is that is the following tag. So whenever you do a commit, it will always use the latest. It will always build off of the latest commit on your branch with all your changes, and it will always be that same tag.
-Gareth Andrews 8 minutes 40 seconds
-So as you are working on it, it will always use the same. We are not going to be generating 60,000 images for every feature branch.
-Gareth Andrews 8 minutes 49 seconds
-The main benefit of that, and what isn't demonstrated here, is at the exact same time as that image is successfully built.
-
-It will also update a branch on the Cerberus chart.
-Gareth Andrews 9 minutes
-So all of those manual work which your team leads would have to do will be done automatically as part of the build pipeline. So the second risk commit is made on MMA XXX1 on this repository, Cerberus repository will have a branch with the same name created.
-Gareth Andrews 9 minutes 19 seconds
-and the image for your particular service will automatically be updated to point to your developing your development tag.
-Gareth Andrews 9 minutes 29 seconds
-What that means is when you need to request your application be deployed to an environment.
-Gareth Andrews 9 minutes 36 seconds
-All you have to do is give a deployer the ticket. Once they are aware of your branch name, they can deploy the chart with all of your changes.
-Gareth Andrews 9 minutes 48 seconds
-How this is done, quite simple. When it updates the image, it goes off and makes a corresponding change on the server shot. The benefit of that,
-Gareth Andrews 9 minutes 58 seconds
-is that it doesn't matter if you're training one service or five. You can add secrets, you can add runbook changes, you can add changes to three or four services all under the same ticket. If they are using the same feature ticket and have the same branch name on any repository, it will update the same branch and Cerberus.
-Gareth Andrews 10 minutes 21 seconds
-Meaning that at any given time, if you are changing secrets, the database, multiple services to talk to one another, if they are all being done under the same ticket name,
-Gareth Andrews 10 minutes 32 seconds
-They will always update the same chart, which means any environment deployed to will have a collection of all of your changes.
-Gareth Andrews 10 minutes 41 seconds
-Have I lost anyone yet?
-Gareth Andrews 10 minutes 48 seconds
-Don't see any hands up, so that's probably a good sign.
-Gareth Andrews 10 minutes 54 seconds
-The main benefit of this.
-Gareth Andrews 10 minutes 56 seconds
-is the release branch is what will be deployed to environments.
-Gareth Andrews 11 minutes 1 second
-So it is what will be every time a feature branch is merged in, it will create a new tag.
-Gareth Andrews 11 minutes 9 seconds
-And it will also update on this release branch. It will create a corresponding serverless branch as well and automatically update the image based on the full version number. So not the dash *** MMA *** 1 number, but the next feature number to go in.
-Gareth Andrews 11 minutes 29 seconds
-So, for example, if this is for the full service.
-Gareth Andrews 11 minutes 34 seconds
-The point of it being merged into the Release branch.
-Gareth Andrews 11 minutes 38 seconds
-It stopped, it basically will lose this tag number, this temporary tag number, and it will increment accordingly.
-
-Stephen Craine
-11 minutes 47 seconds11:47
-Stephen Craine 11 minutes 47 seconds
-Yeah, I think Brian's got a question.
-
-Gareth Andrews
-11 minutes 49 seconds11:49
-Gareth Andrews 11 minutes 49 seconds
-Oh, go for it.
-Gareth Andrews 11 minutes 53 seconds
-Uh, yep, let me just check, uh...
-
-Stephen Craine
-11 minutes 55 seconds11:55
-Stephen Craine 11 minutes 55 seconds
-Facebook chat, but...
-Stephen Craine 11 minutes 58 seconds
-So, if you wanna come on off like...
-BM
-
-Brian Manganaro
-12 minutes 2 seconds12:02
-Brian Manganaro 12 minutes 2 seconds
-Yeah, I can explain it. I was just wondering, I didn't want to interrupt the flow, sorry. I was just wondering, you mentioned that all the tickets or all the changes related to that ticket would be merged in as long as they're using the same ticket number, but does that mean that they, because the tag uses...
-
-Stephen Craine
-12 minutes 2 seconds12:02
-Stephen Craine 12 minutes 2 seconds
-On on might say.
-BM
-
-Brian Manganaro
-12 minutes 21 seconds12:21
-Brian Manganaro 12 minutes 21 seconds
-the base release that you've branched off of, does that mean that all of those changes to be sort of bundled together need to be off of the same base release?
-
-Gareth Andrews
-12 minutes 33 seconds12:33
-Gareth Andrews 12 minutes 33 seconds
-Technically, no. How the logic will work is it will only, it will update the version numbers based on purely the ticket name, the branch name, sorry. So it will not, it basically is completely ambiguous to the lease branch where it comes from or where it's going.
-Gareth Andrews 12 minutes 52 seconds
-So the idea is if you are working across multiple releases, there's no reason why a branch can't exist. So if, for example, a feature is delayed and can't be merged into Release 9, I think I've got an example here courtesy of a conversation I had earlier with Madhu. XXX5, for example, it started on Release 9.
-Gareth Andrews 13 minutes 13 seconds
-It does not matter because it will stay.
-
-
-Gareth Andrews 13 minutes 16 seconds
-basically active and it won't change or affect the Cerberus charts until such time as it merged into a release.
-Gareth Andrews 13 minutes 24 seconds
-The tag on those branches, the tag on the branches essentially is a temp holder just to kind of be completely separate from release as a whole. And the only point where it ever will become noticeable essentially to a release is when it is merged into that release.
-Gareth Andrews 13 minutes 47 seconds
-Does that answer your question?
-BM
-
-Brian Manganaro
-13 minutes 50 seconds13:50
-Brian Manganaro 13 minutes 50 seconds
-Are you?
-
-Gareth Andrews
-13 minutes 52 seconds13:52
-Gareth Andrews 13 minutes 52 seconds
-Okay.
-Gareth Andrews 13 minutes 55 seconds
-So yeah, so the general flow of it, exactly as we've kind of been doing already, hot fixes, releases, features, sorry, going into the branch, auto incrementing, and as I mentioned, the server shark will also be updated alongside that. What that means is no matter which of the 50 plus services you're working with,
-Gareth Andrews 14 minutes 14 seconds
-whether it's Liquibase, whether it's the config, whether it will be the secrets or any of the applicant or any of the actual Spring Boot services we deploy, the second they are merged into the release branch, and I forgot to mention this, but for clarity as well, all the release branches will be automatically generated at the start of the sprint.
-Gareth Andrews 14 minutes 34 seconds
-So when we are ready to prep for release 9, every single repository that needs to have one will have a release branch auto-generated for it. So there's no manual, I need to go create this, where do I base it off of? It will always go from main, pull and create a release branch.
-Gareth Andrews 14 minutes 53 seconds
-By default, main, we will be able to define if we need to chain releases together, just for clarity as well.
-Gareth Andrews 15 minutes 1 second
-So the idea is at any given point then, the release branch on Cerberus is what can be deployed to any environment. And the plan is, still a bit of work on the logic on this, but that release branch, so the active release that we are working on as a community within Cerberus, will be automatically deployed to the dev environment.
-Gareth Andrews 15 minutes 23 seconds
-So dev will be a continuously evolving live record for cross-team integration testing. So we won't have to wait till we hit set environment. You will have an environment where everything will work.
-Gareth Andrews 15 minutes 35 seconds
-Again, there's a bit of logic to be figured out on this, but for all teams to test in and to make sure that multiple services and tickets don't conflict or anything like that. So when we get full automation testing, performance testing, and those kind of functionality up and running widespread, we will have a live environment that will constantly report those metrics to us.
-Gareth Andrews 15 minutes 57 seconds
-O'Brien.
-BM
-Brian Manganaro
-16 minutes 1 second16:01
-Brian Manganaro 16 minutes 1 second
-Hey, sorry, sorry for interrupting again. With this deployment to dev, is that the individual dev environments that every team has, or is there a new sort of merged dev environment with all cross-team changes?
-
-Gareth Andrews
-16 minutes 15 seconds16:15
-Gareth Andrews 16 minutes 15 seconds
-That would be an overarching dev environment. So teams will have dev test environments for their testing, and then there will be a dev environment, which is the next step in the chain, essentially.
-
-Stephen Craine
-16 minutes 28 seconds16:28
-Stephen Craine 16 minutes 28 seconds
-Yeah, Brian, it's what we wanted to move to a while back, but we just haven't, the dev test environments haven't been built yet, fully. So dev test environments are basically just squad dev environments for local testing within squads. But at the moment, SIT is the first time we release, you know, have a release candidate.
-Stephen Craine 16 minutes 47 seconds
-and deploy all the changes. Obviously, we want to deploy that to a dev environment on a regular basis. So anytime something makes it into the Release branch, we should be deploying to dev so we can do some integration testing to make sure stuff doesn't conflict.
-Stephen Craine 17 minutes 6 seconds
-Charles Guthikonda.
-JU
-
-Jawad Umar
-17 minutes 8 seconds17:08
-Jawad Umar 17 minutes 8 seconds
-Yeah, just quick one. Looks like we are mainly focusing on the release because I know it's been a pain. So my question might be slightly unrelated, but has there been any thought about, because at the moment we have NFT as our dev environment in Artemis.
-Jawad Umar 17 minutes 29 seconds
-Has has there been any thought about having like branch environments from real ones which you can spin up and that's your ticket, and then merge your changes in, because looking at it, there are about 60 or services, and people deploy their changes on different services, and then...
-
-Stephen Craine
-17 minutes 30 seconds17:30
-Stephen Craine 17 minutes 30 seconds
-Mm.
-JU
-
-Jawad Umar
-17 minutes 50 seconds17:50
-Jawad Umar 17 minutes 50 seconds
-Things go out of sync sometimes.
-
-Stephen Craine
-17 minutes 53 seconds17:53
-Stephen Craine 17 minutes 53 seconds
-I think squads will have to manage the deployments to their environments as and when. I don't think that ACP supports ephemeral environments, I could be wrong. So I think that's why we've gone down the route of having.
-Stephen Craine 18 minutes 7 seconds
-Um, these dev test environments.
-JU
-
-Jawad Umar
-18 minutes 11 seconds18:11
-Jawad Umar 18 minutes 11 seconds
-Okay.
-
-Stephen Craine
-18 minutes 13 seconds18:13
-Stephen Craine 18 minutes 13 seconds
-Maybe something we could do when we move to core cloud one day.
-JU
-
-Jawad Umar
-18 minutes 17 seconds18:17
-Jawad Umar 18 minutes 17 seconds
-Yeah, sure.
-
-Gareth Andrews
-18 minutes 22 seconds18:22
-Gareth Andrews 18 minutes 22 seconds
-So, yeah, one of the benefits of this pattern is your release box will exist post.
-Gareth Andrews 18 minutes 28 seconds
-across the entirety of your deployment. So, for example, here, let's say we deploy version 9.3 to sit. We discover we need to do a change. We do a hotfix off that and merge it in. It looks no different to a feature change that was done by anyone. It can be auto deployed to the dev environment for testing.
-Gareth Andrews 18 minutes 48 seconds
-purposes by teams, increments the tag, and we end up having to deploy to sit the hotfix version. It's just tagged as per usual. So that means there's less end of sprint work in regards to managing hotfixes, everything like that.
-
-Stephen Craine
-19 minutes 6 seconds19:06
-Stephen Craine 19 minutes 6 seconds
-If...
-Stephen Craine 19 minutes 7 seconds
-I've got a question, Gareth. If the release branch exists up until it, you know, goes live, I suppose.
-
-Gareth Andrews
-19 minutes 9 seconds19:09
-Gareth Andrews 19 minutes 9 seconds
+Rayhan Khan
+14 minutes 1 second14:01
+Rayhan Khan 14 minutes 1 second
+I see, so on a tag, it'll run up to helm upload and then the manual step for deploying is a separate pipeline, manually triggered.
+LM
+Liam Moncur
+14 minutes 1 second14:01
+Liam Moncur 14 minutes 1 second
 Yep.
-Gareth Andrews 19 minutes 14 seconds
+Liam Moncur 14 minutes 9 seconds
 Yeah.
+RK
 
-Stephen Craine
-19 minutes 16 seconds19:16
-Stephen Craine 19 minutes 16 seconds
-What about the next release branch? How do changes from one release get to the next release? Because obviously it's going to be potentially two or three in existence at once. So how do we make sure that any hotfixes are going to let release 9 don't get missed from release 10, for example?
-
-Gareth Andrews
-19 minutes 26 seconds19:26
-
-
-Stephen Craine
-21 minutes 47 seconds21:47
-Stephen Craine 21 minutes 47 seconds
-Yep, thanks.
+Rayhan Khan
+14 minutes 12 seconds14:12
+Rayhan Khan 14 minutes 12 seconds
+Just.
 
 Gareth Andrews
-21 minutes 49 seconds21:49
-Gareth Andrews 21 minutes 49 seconds
-So I did say I was going to try and avoid lingering on this one, but I've ended up spending more time than I wanted on this.
-Gareth Andrews 21 minutes 57 seconds
-So this is the new process. Oh, Deepesh, go for it.
-
-Deepesh Rathore
-22 minutes 3 seconds22:03
-Deepesh Rathore 22 minutes 3 seconds
-I just wanted to check something about the previous slide. So if, for example, something in a feature branch for some reason is not complete, is not able to, you know, merge into the release branch, then and we create a new release branch.
-
-Gareth Andrews
-22 minutes 18 seconds22:18
-Gareth Andrews 22 minutes 18 seconds
-Yeah.
-
-Deepesh Rathore
-22 minutes 23 seconds22:23
-Deepesh Rathore 22 minutes 23 seconds
-Say, then, so what is, how do we, you know, manage the feature, the old feature that someone is still working on?
-
-Gareth Andrews
-22 minutes 31 seconds22:31
-Gareth Andrews 22 minutes 31 seconds
-So at that point, when a feature branch is taken, technically it has no allegiance to release, not to the previous release. There's nothing holding it to it apart from that's where the source came from. So an example here, XXX5, is taken from release 9.
-Gareth Andrews 22 minutes 51 seconds
-the team starts working on it, but then, like you've mentioned, it's not ready to be merged in, it's not ready to go anywhere near an environment. Or this could also be, for example, if a feature needs to be worked out, so it's completely broken, it needs rethinking, anything like that. You would create a branch,
-
-Deepesh Rathore
-22 minutes 59 seconds22:59
-Deepesh Rathore 22 minutes 59 seconds
-Yeah.
-
-Gareth Andrews
-23 minutes 10 seconds23:10
-Gareth Andrews 23 minutes 10 seconds
-write out that code essentially, remove any functionality you need, toggles, config, whatever needs to happen. And then that branch will just exist alongside your new release. It does not have to go into the source branch where it came from.
-Gareth Andrews 23 minutes 24 seconds
-What would then happen is as part of your development work on that feature branch, hotfix branch, whatever you're working on, you will need to merge in release the previous release. And likewise, one thing I've forgot to mix here is also anything from the next release. So release 10 should also be merging in at this point.
-Gareth Andrews 23 minutes 46 seconds
+14 minutes 18 seconds14:18
+Gareth Andrews 14 minutes 18 seconds
+Do we have any validation on those environment variables that we feed in? So things like target and chart names.
+LM
+Liam Moncur
+14 minutes 22 seconds14:22
+Liam Moncur 14 minutes 22 seconds
 The.
-
-Deepesh Rathore
-23 minutes 46 seconds23:46
-Deepesh Rathore 23 minutes 46 seconds
-So, I mean, so there is going to be more work than making sure that the change is merged in both the branches, both the release branches.
-
-Gareth Andrews
-23 minutes 56 seconds23:56
-Gareth Andrews 23 minutes 56 seconds
-Teams will need to be aware of it if you're working on a feature. Ideally, best practice is always before you do changes, before you do commits, especially before anything relating to a merge request, you will always merge in your base branch. So release 9, and then if you know, for example, that release 9 isn't
-Gareth Andrews 24 minutes 16 seconds
-finished, you would then move to pulling in Release 10. So the idea is you should know ahead of time, or at least have some awareness of any conflicts or issues by merging it into your branch before you do a commit.
-
-Deepesh Rathore
-24 minutes 33 seconds24:33
-Deepesh Rathore 24 minutes 33 seconds
-OK, thanks.
-
-Gareth Andrews
-24 minutes 37 seconds24:37
-Gareth Andrews 24 minutes 37 seconds
-So, yep, so that's a good segue. So obviously the thing there is it's a lovely system, but it does involve a little more work. So how do we make that easier? So as I mentioned, the new process makes that a lot easier for us, particularly in regards to the end of release stuff. So you create your feature hotfix branch.
-Gareth Andrews 24 minutes 57 seconds
-potential automation there in the future. Stay tuned. You make your changes and there's an automatic tag. So every time you do a commit, you get that automatic tag. At the same time, it will automatically update Cerberus and ready to go. So all you need to do to tell your team lead that, for example, you want to deploy to dev test one.
-Gareth Andrews 25 minutes 18 seconds
-You just tell them I'm working on branch feature MMA X1.
-Gareth Andrews 25 minutes 25 seconds
-All they have to do is trigger the deployment pipeline for that particular environment with that particular branch specified.
-Gareth Andrews 25 minutes 33 seconds
-And that's it. You don't have to do any manual updates, any tracking. In theory, and I say this greatly, in theory, you will never have to manually update the Cerberus repository. All the chart numbers will be automatically updated. The only time you will manually have to do it is if your code has a dependency on another feature ticket or another ticket.
-Gareth Andrews 25 minutes 55 seconds
-Another branch from a different Cerberus.
-Gareth Andrews 25 minutes 59 seconds
-in which case you will be updating one, maybe 2 entries instead of three or four, and you will already have a branch ready for those changes. So fingers crossed, touch wood.
-Gareth Andrews 26 minutes 11 seconds
-Even the more complex scenarios make it look a little simpler.
-Gareth Andrews 26 minutes 17 seconds
-Once things go into the Release branch, as I mentioned, it will automatically update the Release branch on the server charts.
-Gareth Andrews 26 minutes 25 seconds
-and it will also generate a lovely report for us. So one of the downsides of moving to a completely automated system like this is we lose that end of sprint visibility of what changes have been made, what services need to be updated, what changes have actually gone into those services.
-Gareth Andrews 26 minutes 42 seconds
-So, Suresh has very kindly asked, you know, what has been released or changed? Well, the advantage is there will be 1 slight change to our process as well, but it will mean we can generate this. This is very basic HTML, CSS pending, will make lovely formal design patterns, I'm sure.
-Gareth Andrews 27 minutes 3 seconds
-Later on.
-Gareth Andrews 27 minutes 5 seconds
-But this system will basically generate a report based on what Cerberus charts have changed. So it will go through that Cerberus release and save right between version 5 and version 6.
-Gareth Andrews 27 minutes 17 seconds
-What charts have been changed?
-Gareth Andrews 27 minutes 20 seconds
-It will automatically pull out every image which has been changed on those charts. And then it will go through all of those services and it will pull out every single merged commit. So every feature that has been merged into those release branches for every single one of those services.
-Gareth Andrews 27 minutes 39 seconds
-and it will generate this information. So it will tell us the ticket number. It will tell us message essentially of the merge commit.
-Gareth Andrews 27 minutes 49 seconds
-This is using demo data at the moment because we're missing tags in places. So this is real info, just demo ticket numbers. It will tell us what team has worked on that, so what team it was assigned to, who was assigned to it, and the status. Those 3 last fields, the team, primary contact, and status, are all pill
-Gareth Andrews 28 minutes 11 seconds
-pulled directly from Dua. So at the time the report is generated, we'll get a list of every ticket that's been merged into the Release branch, what services it changed.
-Gareth Andrews 28 minutes 23 seconds
-the team that's responsible for that change, who to talk to if we need to address any issues with that change, and if it's actually marked, it's done.
-Gareth Andrews 28 minutes 33 seconds
-This report can be generated at any given point. All we need to do is provide 2 tags. So that will be the version number or the last tag of where we are comparing it between.
-Gareth Andrews 28 minutes 45 seconds
-So if all services are tagged at version 5, release version 5, release version 6, and there are no changes, this will generate an empty report. Otherwise, it will relate every single change across every single service and who made those changes.
-Gareth Andrews 29 minutes 4 seconds
-Are there any questions about that, Suresh? I know that was something you were asking about, so...
-SC
-
-Suresh Chilukuri
-29 minutes 10 seconds29:10
-
-Gareth Andrews
-33 minutes 11 seconds33:11
-Gareth Andrews 33 minutes 11 seconds
-So, currently, CPUs are raised as part, raised and kind of investigating and fixed as part of the final end of the sprint release stuff prior to us going live. So, part of this work is that CV scanning and stuff will be done and raised against a release branch.
-Gareth Andrews 33 minutes 27 seconds
-So the idea is they will look no different to if one of us had gone in and manually added the change. So this section of flow here, where you create the branch, make a change, it gets merged into release. That will be exactly the same for CB detection.
-Gareth Andrews 33 minutes 47 seconds
-CVEs will raise a hotfix part, a hotfix branch, will review it, make any adjustments needed to get the tests passing, etc. like that. We can then deploy it to environments if we need to test it because we're worried about functionality, and then it will be merged in and deployed similar to all other changes. They'll essentially become part of a day-to-day dev work.
-
-Bulent Kucuk
-34 minutes 5 seconds34:05
-Bulent Kucuk 34 minutes 5 seconds
-Mhm.
-Bulent Kucuk 34 minutes 9 seconds
-Big.
-
-Stephen Craine
-34 minutes 9 seconds34:09
-Stephen Craine 34 minutes 9 seconds
-We've got men renovate as well, haven't we, in place?
-
-Gareth Andrews
-34 minutes 12 seconds34:12
-Gareth Andrews 34 minutes 12 seconds
-Yeah, so that will be changed to hopefully, well, I say hopefully, that will be changed to create hotfix branches that will target the release branch. So the idea is that it will always be pointing them to the release we're working on. It will then also ensure that
-Gareth Andrews 34 minutes 29 seconds
-essentially amend, renovate, MR will always look identical to one raised by a team. So all we have to do is essentially make sure that we're watching those MRs raised and address them as part of the release.
-
-Stephen Craine
-34 minutes 41 seconds34:41
-Stephen Craine 34 minutes 41 seconds
-Mm.
-Stephen Craine 34 minutes 44 seconds
+Liam Moncur 14 minutes 27 seconds
+Um, funny, I say there is work going for these two, um, again, deployment scope.
+Liam Moncur 14 minutes 34 seconds
+I don't know is the honest answer. I don't have to look at the actual deployment script.
+Liam Moncur 14 minutes 43 seconds
+Times.
+Liam Moncur 14 minutes 47 seconds
+Find, let's put.
+Liam Moncur 14 minutes 54 seconds
+And...
+Liam Moncur 15 minutes 4 seconds
+I don't think there's anything for...
+Liam Moncur 15 minutes 8 seconds
+So the chart name and release version, so it will just error out, but there is a ticket to get that one fixed. I'm trying to see if I can spot the historical one, but I can't see it.
+Liam Moncur 15 minutes 23 seconds
 Yeah.
+Liam Moncur 15 minutes 27 seconds
+Don't know what John sounds like.
+Liam Moncur 15 minutes 30 seconds
+The target one definitely has, I'm sure there's a thing for if environment isn't, yeah.
+Liam Moncur 15 minutes 40 seconds
+Yeah, so the the I'm not Hans and Shawn deployment scope, I think, I believe there is.
+Liam Moncur 15 minutes 46 seconds
+Ohh, sorry.
+JP
 
-Bulent Kucuk
-34 minutes 44 seconds34:44
-Bulent Kucuk 34 minutes 44 seconds
-Okay, thank you.
-
-Gareth Andrews
-34 minutes 47 seconds34:47
-Gareth Andrews 34 minutes 47 seconds
-Susanta.
-SP
-
-Susanta Patnaik
-34 minutes 49 seconds34:49
-Susanta Patnaik 34 minutes 49 seconds
-Again, yeah, just thinking, I think someone already asked, there are three services are going. Right now we are building for all the services to bring to one level, but is it in future like only the three services need to update, rest automation tool will take care of?
-
-Gareth Andrews
-35 minutes 10 seconds35:10
-Gareth Andrews 35 minutes 10 seconds
-So the aim of this is to basically completely remove the need for people to manually update server shots. It will be automated completely. The only time you will ever have to do it is if you are affecting, if for example, you're working on ticket number one and you have a dependency on ticket #2.
-SP
-
-Susanta Patnaik
-35 minutes 18 seconds35:18
-Susanta Patnaik 35 minutes 18 seconds
-In here, yes.
-Susanta Patnaik 35 minutes 24 seconds
-Then.
-
-Gareth Andrews
-35 minutes 29 seconds35:29
-Gareth Andrews 35 minutes 29 seconds
-you might need to edit the numbers to get ticket number 2 dependency in your service charts.
-
-Stephen Craine
-35 minutes 36 seconds35:36
-Stephen Craine 35 minutes 36 seconds
-I think he's asking are we going to release all services every time or just the ones that are part of that release?
-SP
-
-Susanta Patnaik
-35 minutes 40 seconds35:40
-Susanta Patnaik 35 minutes 40 seconds
-Yeah.
-
-Gareth Andrews
-35 minutes 41 seconds35:41
-Gareth Andrews 35 minutes 41 seconds
-So part of that lovely reporting that I showed, and this is news to you, Steven, I've only just started working on this and thinking of this today, I'm working on enhancing the Cerberus deployment logic. So it will only, it will auto detect what charts have been changed.
-
-Stephen Craine
-35 minutes 45 seconds35:45
-Stephen Craine 35 minutes 45 seconds
-Mm.
-
-Gareth Andrews
-35 minutes 59 seconds35:59
-Gareth Andrews 35 minutes 59 seconds
-in the release and deploy just those charts. So instead of us having to list specifically, we want to deploy charts A, B and C, it will go in and say, right, well, I've detected these tickets of changing charts A&C, just deploy those. So we will be completely removing the need
-
-Stephen Craine
-36 minutes 1 second36:01
-Stephen Craine 36 minutes 1 second
-Mm.
-
-Gareth Andrews
-36 minutes 18 seconds36:18
-Gareth Andrews 36 minutes 18 seconds
-to manually define. There will still be the option in case we want to, for any particular reason, avoid a chart. Ideally though, all release branches and all updated charts should always be deployed upon every release.
-
-Stephen Craine
-36 minutes 20 seconds36:20
-Stephen Craine 36 minutes 20 seconds
-Mm.
-Stephen Craine 36 minutes 26 seconds
-Sit.
-Stephen Craine 36 minutes 33 seconds
-Thanks, sir.
-SP
-
-Susanta Patnaik
-36 minutes 34 seconds36:34
-Susanta Patnaik 36 minutes 34 seconds
-Thank you. Thank you. Yeah.
-
-Gareth Andrews
-36 minutes 37 seconds36:37
-Gareth Andrews 36 minutes 37 seconds
-Jason, you had your hand up.
+Jason Pang
+15 minutes 51 seconds15:51
+Jason Pang 15 minutes 51 seconds
+All right, I got a question now.
+Jason Pang 15 minutes 55 seconds
+Nahiyan and myself would be involved in dip.
+Jason Pang 15 minutes 59 seconds
+what you call it, the new dev test one to six environments. Would we need to update, I'm sure we need to update the drone pipeline for the MMADM Cerberus repo to deploy to those new environments because
+Jason Pang 16 minutes 19 seconds
+they're brand new and they're not in the pipeline. Would we need to do the same on the MMA Helm library or the MMA Helm library is generic enough that it would handle that?
+LM
+Liam Moncur
+16 minutes 32 seconds16:32
+Liam Moncur 16 minutes 32 seconds
+Which this to mean this?
 JP
 Jason Pang
-36 minutes 43 seconds36:43
-Jason Pang 36 minutes 43 seconds
-No, that's fine. Well, I was supposed to ask about, is there any like quality gates going to be built into this automation or are we just going to completely trust it and any human intervention release manager going to check it before approving the deployment or we're just going to let it?
-Jason Pang 37 minutes 3 seconds
-Automatically.
-Jason Pang 37 minutes 5 seconds
-AA.
-
-Gareth Andrews
-37 minutes 5 seconds37:05
-Gareth Andrews 37 minutes 5 seconds
-So...
+16 minutes 35 seconds16:35
+Jason Pang 16 minutes 35 seconds
+Yeah, yeah, yes.
+LM
+Liam Moncur
+16 minutes 35 seconds16:35
+Liam Moncur 16 minutes 35 seconds
+What do you? Yeah, sorry, just to clarification, M.A. Hall Library is where I...
 JP
 Jason Pang
-37 minutes 7 seconds37:07
-Jason Pang 37 minutes 7 seconds
-It's just, I think sometimes we know that the bill process is all dependent on the...
-Jason Pang 37 minutes 16 seconds
-or the ACP tooling, you know, you could get multiple failure points, artifactory, PIO, ECR, drone, GitLab, they're all, because it's all multi-tenanted and you know, you're always going to get system failures. How are we going to
-
-Gareth Andrews
-37 minutes 19 seconds37:19
-Gareth Andrews 37 minutes 19 seconds
-Yep.
+16 minutes 38 seconds16:38
+Jason Pang 16 minutes 38 seconds
+Oh no, no, it looks like that. It looks like you're already on the right line. So we do need to update it then.
+LM
+Liam Moncur
+16 minutes 42 seconds16:42
+Liam Moncur 16 minutes 42 seconds
+No, what I mean is, yeah, yeah, just careful there is an MMA Helm hyphen library repo as well, which is where all the Helm templates live.
+Liam Moncur 16 minutes 51 seconds
+So, just careful with rewording that, because there are there is another repo there from your, but yeah, you'll need to update these for a new environment to run again.
 JP
 Jason Pang
-37 minutes 36 seconds37:36
-Jason Pang 37 minutes 36 seconds
-Address those.
-Jason Pang 37 minutes 39 seconds
-If, if like any part of this fails, for example, there could be like they the the job has gone to tag tag the container, but somehow it doesn't reach, it doesn't get stored, but even.
-
-Gareth Andrews
-37 minutes 51 seconds37:51
-Gareth Andrews 37 minutes 51 seconds
-Mhm.
-JP
-Jason Pang
-37 minutes 58 seconds37:58
-
-Stephen Craine
-36 minutes 1 second36:01
-Stephen Craine 36 minutes 1 second
-Mm.
-
-Gareth Andrews
-36 minutes 18 seconds36:18
-Gareth Andrews 36 minutes 18 seconds
-to manually define. There will still be the option in case we want to, for any particular reason, avoid a chart. Ideally though, all release branches and all updated charts should always be deployed upon every release.
-
-Stephen Craine
-36 minutes 20 seconds36:20
-Stephen Craine 36 minutes 20 seconds
-Mm.
-Stephen Craine 36 minutes 26 seconds
-Sit.
-Stephen Craine 36 minutes 33 seconds
-Thanks, sir.
-SP
-Susanta Patnaik
-36 minutes 34 seconds36:34
-Susanta Patnaik 36 minutes 34 seconds
-Thank you. Thank you. Yeah.
-
-Gareth Andrews
-36 minutes 37 seconds36:37
-Gareth Andrews 36 minutes 37 seconds
-Jason, you had your hand up.
-JP
-Jason Pang
-36 minutes 43 seconds36:43
-Jason Pang 36 minutes 43 seconds
-No, that's fine. Well, I was supposed to ask about, is there any like quality gates going to be built into this automation or are we just going to completely trust it and any human intervention release manager going to check it before approving the deployment or we're just going to let it?
-Jason Pang 37 minutes 3 seconds
-Automatically.
-Jason Pang 37 minutes 5 seconds
-AA.
-
-Gareth Andrews
-37 minutes 5 seconds37:05
-Gareth Andrews 37 minutes 5 seconds
-So...
-JP
-Jason Pang
-37 minutes 7 seconds37:07
-Jason Pang 37 minutes 7 seconds
-It's just, I think sometimes we know that the bill process is all dependent on the...
-Jason Pang 37 minutes 16 seconds
-or the ACP tooling, you know, you could get multiple failure points, artifactory, PIO, ECR, drone, GitLab, they're all, because it's all multi-tenanted and you know, you're always going to get system failures. How are we going to
-
-Gareth Andrews
-37 minutes 19 seconds37:19
-Gareth Andrews 37 minutes 19 seconds
-Yep.
-JP
-Jason Pang
-37 minutes 36 seconds37:36
-Jason Pang 37 minutes 36 seconds
-Address those.
-Jason Pang 37 minutes 39 seconds
-If, if like any part of this fails, for example, there could be like they the the job has gone to tag tag the container, but somehow it doesn't reach, it doesn't get stored, but even.
-
-Gareth Andrews
-37 minutes 51 seconds37:51
-Gareth Andrews 37 minutes 51 seconds
-Mhm.
-JP
-Jason Pang
-37 minutes 58 seconds37:58
-Jason Pang 37 minutes 58 seconds
-that type of thing and you can't put it down, those type of things. How are we going to address those type of issues?
-
-Gareth Andrews
-38 minutes 6 seconds38:06
-Gareth Andrews 38 minutes 6 seconds
-Soap.
-Gareth Andrews 38 minutes 8 seconds
-How it is coded is defensively. So the idea is this will be the final step on any build pipeline.
-Gareth Andrews 38 minutes 15 seconds
-So provided that the image has successfully been built, the chart, the Helm chart for your service has successfully been uploaded and it is ready to be used, similar to what we have right now, it will then run this step.
-Gareth Andrews 38 minutes 31 seconds
-Ninety-nine percent of this step is...
-JP
-Jason Pang
-38 minutes 31 seconds38:31
-Jason Pang 38 minutes 31 seconds
-Not fair.
-
-Gareth Andrews
-38 minutes 36 seconds38:36
-Gareth Andrews 38 minutes 36 seconds
-Basically, get commands - this really makes me sound like I've been spending a lot of time doing, not a lot - is get commands, and there are code requests to JIRA.
-Gareth Andrews 38 minutes 46 seconds
-So, provided that...
-Gareth Andrews 38 minutes 50 seconds
-We have functionality to get, which I would hope, given that we've been pulling down and building images, we have connectivity, and we have connectivity for Jira for the report basis.
-Gareth Andrews 39 minutes 4 seconds
-The auto-tagging Cerberus updates is all just Git commands. It's Git commits, Git logs, Git tags, and Git diffs.
-Gareth Andrews 39 minutes 15 seconds
-What that means is, even if it failed, so as you mentioned, our systems can be particularly fickle, particularly on Fridays. If at any point it failed, there is nothing stopping us from just rerunning.
-Gareth Andrews 39 minutes 30 seconds
-because all this stuff will do is if it can't talk to Git, it will try and run commands on local, even if it's cloned down previously and now lost connectivity. It will run the commands on local, and then it will try and push up the auto tags, the build numbers, the changes at the end.
-Gareth Andrews 39 minutes 47 seconds
-So it should hopefully, I say that because there's always caveats and changes to systems as they break. It should be a case of if, for example, the connectivity does drop,
-JP
-Jason Pang
-39 minutes 47 seconds39:47
-Jason Pang 39 minutes 47 seconds
-OK, so yeah.
-
-Gareth Andrews
-40 minutes 1 second40:01
-Gareth Andrews 40 minutes 1 second
-We just don't have any changes on the repos. You can rerun the step and that will be it.
-JP
-Jason Pang
-40 minutes 6 seconds40:06
-Jason Pang 40 minutes 6 seconds
-Okay. It'd be alert, I assume, alerted to something like Slack and email or whatever, and then just say which point, which step of the process needs rerunning, then something like that.
-
-Gareth Andrews
-40 minutes 18 seconds40:18
-Gareth Andrews 40 minutes 18 seconds
-At the moment, there is no alerting on it. That is something we should definitely probably look into.
-Gareth Andrews 40 minutes 28 seconds
-Boy.
-BM
-Brian Manganaro
-40 minutes 31 seconds40:31
-Brian Manganaro 40 minutes 31 seconds
-Yeah, sorry, I just wanted to bring your attention to the question I posted in the chat, but it sounded like earlier you mentioned that the commits needed a particular structure. So it sounds like we're expecting to just merge changes in rather than squash and merge. Any plans for supporting squash and merge just so we can get a...
-
-Gareth Andrews
-40 minutes 41 seconds40:41
-Gareth Andrews 40 minutes 41 seconds
-Mhm.
-BM
-Brian Manganaro
-40 minutes 50 seconds40:50
-Brian Manganaro 40 minutes 50 seconds
-A cleaner, get history on the services.
-
-Gareth Andrews
-40 minutes 53 seconds40:53
-Gareth Andrews 40 minutes 53 seconds
-I know this has been a topic that's been discussed and I think what we were leaning towards was squash instead of rebase for our commits. That is what this system is based on, having a squash or merge commit. Essentially what we want is, well essentially all we care about
-Gareth Andrews 41 minutes 12 seconds
-is whatever the merge commit going into the lease branch is has identifiable information on it, such as it has the ticket number in the message and it has the details of that ticket. So it has a verbose meaning and history log. What this essentially means as well is this will
-Gareth Andrews 41 minutes 32 seconds
-our commit history on our release branches becomes our change log. So any merge requests will need to have the ticket number and a meaningful message. They can't just be merge hotfix one into release 9 fixed this. It will need to detail it. Future work could include automating that.
-Gareth Andrews 41 minutes 53 seconds
-to pull the details from juror based on the ticket number instead. But for now, yes, I think we'll probably look to go towards a squash pattern just to reduce, like you said, the noise on the release branches.
-BM
-Brian Manganaro
-42 minutes 7 seconds42:07
-Brian Manganaro 42 minutes 7 seconds
-So does that mean that the individual commits in the feature branch don't matter then, or do they still need to follow the pattern?
-
-Gareth Andrews
-42 minutes 16 seconds42:16
-Gareth Andrews 42 minutes 16 seconds
-Ideally, they need to follow the pattern because that report will be able to generate off of those branches as well. So there is no reason why those reports and those systems would not be, could not be used as part of a long standing release. So for example, if there was a long standing
-
-Gareth Andrews 42 minutes 35 seconds
-change to multiple APIs based on new data coming in and new services on a new system. You can generate all of this automated tooling as well to point at those branches. So it could be destined for release 5 release versions forward, and we could still generate a weekly report to detail what's changed, what needs to be.
-Gareth Andrews 42 minutes 54 seconds
-Change what chance to deploy is part of that testing into an environment.
-BM
-Brian Manganaro
-43 minutes 2 seconds43:02
-Brian Manganaro 43 minutes 2 seconds
-Sorry, I meant to say the feature branches, the commits on the feature branches. Those get deleted, right? The feature branches, or are they going to hang around after they've been merged in?
-
-Gareth Andrews
-43 minutes 7 seconds43:07
-Gareth Andrews 43 minutes 7 seconds
-Yeah, so.
-Gareth Andrews 43 minutes 13 seconds
-They'll be deleted as part of the mergers. Nothing worse than having 1000 feature branches, which will be merged previously. Ideally, all of those commits will also need to follow the same pattern. Firstly, generally good practice. And secondly, it will make us
-Gareth Andrews 43 minutes 32 seconds
-be able to report on those feature branches as well. So if there are any issues, we can pull the reports and report based on those commit histories in those branches.
-BM
-Brian Manganaro
-43 minutes 43 seconds43:43
-Brian Manganaro 43 minutes 43 seconds
-How is the report going to be generated on a deleted branch?
-
-Gareth Andrews
-43 minutes 48 seconds43:48
-Gareth Andrews 43 minutes 48 seconds
-Hopefully before it's deleted. I'm thinking more along the lines of if a feature branch lives for a long period of time and we need to report based on that. Once it's been merged, obviously, yeah, history doesn't exist anymore, essentially.
-BM
-Brian Manganaro
-44 minutes 2 seconds44:02
-Brian Manganaro 44 minutes 2 seconds
-Yes.
-Brian Manganaro 44 minutes 9 seconds
-OK, thanks.
-
-Gareth Andrews
-44 minutes 16 seconds44:16
-Gareth Andrews 44 minutes 16 seconds
-Are there any other questions, concerns?
-Gareth Andrews 44 minutes 20 seconds
-Thoughts in general.
-
-Stephen Craine
-44 minutes 23 seconds44:23
-Stephen Craine 44 minutes 23 seconds
-Is any hands up?
-Stephen Craine 44 minutes 29 seconds
-So I think it's been really useful. Thanks Gareth. When do we plan to make changes in terms of like the branching? So creating the release branch and get rid of development branch and master and replace it with main.
-
-Gareth Andrews
-44 minutes 42 seconds44:42
-Gareth Andrews 44 minutes 42 seconds
-So at the moment, I'm testing the automation code itself on, strangely enough, the new configuration service. So once that pipeline is successfully running, the scripts will work locally. I can see the changes for service charts, for versions, for tags and everything being generated.
-
-Stephen Craine
-44 minutes 50 seconds44:50
-Stephen Craine 44 minutes 50 seconds
-Mhm.
-
-Gareth Andrews
-45 minutes 1 second45:01
-Gareth Andrews 45 minutes 1 second
-Same for the report. So it's literally just getting it to run in drone.
-Gareth Andrews 45 minutes 6 seconds
-Once that is done, it will essentially be ready to go. Nice to have such things like the Git pre-commit hook to avoid people accidentally submitting without the MMA tickets inside the commits. That's another area that's being worked on in tandem at the moment. So the hope would
-
-Stephen Craine
-45 minutes 6 seconds45:06
-Stephen Craine 45 minutes 6 seconds
-Mm.
-Stephen Craine 45 minutes 22 seconds
-But...
-
-Gareth Andrews
-45 minutes 25 seconds45:25
-Gareth Andrews 45 minutes 25 seconds
-be within the next release or two would be able to get this rolled out. There's nothing, at least from an automation side, from a process point of view, I see no reason why the next release we couldn't start using release branches.
-
-Stephen Craine
-45 minutes 30 seconds45:30
-Stephen Craine 45 minutes 30 seconds
-Yeah.
-
-Gareth Andrews
-45 minutes 42 seconds45:42
-Gareth Andrews 45 minutes 42 seconds
-It would be probably just, again, it would just require manual work for the server charts and stuff like that at the moment until such time as we can update the drawing pipelines. But I'm optimistic that that automation should be ready to be moved into pipelines soon.
-
-Stephen Craine
-45 minutes 42 seconds45:42
-Stephen Craine 45 minutes 42 seconds
-Cool.
-Stephen Craine 45 minutes 49 seconds
-Mm.
-Stephen Craine 45 minutes 54 seconds
+16 minutes 51 seconds16:51
+Jason Pang 16 minutes 51 seconds
 Okay.
-Stephen Craine 46 minutes 4 seconds
-Okay, well, thanks everyone. Um, sure everyone's itching to get some lunch, so yeah, thanks for attending. Um, yeah, if anyone from your squads wasn't on the call, please.
-Stephen Craine 46 minutes 16 seconds
-Let them know about this change and ask them to watch this back if we get time, Rose.
-
-Rose Garratt
-46 minutes 23 seconds46:23
-Rose Garratt 46 minutes 23 seconds
-Hi, yeah, thanks everyone. Same things you said, Steve. Thanks all for joining. Thanks Gareth for presenting. Thanks for the questions. I just wanted to put something on everyone's radar while we're on a call as well. We're looking to put in a community of practice process going forward where we get engagement between squads, sharing hints and tips, sharing ideas, improvement opportunities. So
-Rose Garratt 46 minutes 42 seconds
-I just want to put that on everyone's radar and we can pick it up next week, get more detail, get those sessions scheduled.
-Rose Garratt 46 minutes 50 seconds
-But that's all for me, and if nothing from anyone else, we can close, Steve, if you're happy.
-JW
-Jonathan Winters
-46 minutes 54 seconds46:54
-Jonathan Winters 46 minutes 54 seconds
-Can we go? Can we go for lunch now?
-
-Stephen Craine
-46 minutes 56 seconds46:56
-Stephen Craine 46 minutes 56 seconds
-Yeah, yeah.
-
-Rose Garratt
-46 minutes 57 seconds46:57
-Rose Garratt 46 minutes 57 seconds
-Please do. Yeah. Thanks all. Bye.
-JW
-Jonathan Winters
-46 minutes 58 seconds46:58
-Jonathan Winters 46 minutes 58 seconds
-Thank you.
-
-Stephen Craine
-47 minutes 1 second47:01
-Stephen Craine 47 minutes 1 second
-That's all, bye.
-
-Bulent Kucuk
-47 minutes 1 second47:01
-Bulent Kucuk 47 minutes 1 second
-Thank you. Bye.
+Jason Pang 16 minutes 53 seconds
+Oh, sorry, okay, okay.
+Jason Pang 16 minutes 59 seconds
+Okay, so line 7, well, anywhere where where there's like multiple environments listed that needs updating.
+LM
+Liam Moncur
+17 minutes 5 seconds17:05
+Liam Moncur 17 minutes 5 seconds
+Yeah, because that will then get used when it does to the here. So when it logs in the uses the new value files, it expects, yeah, values hyphen, whatever.
 JP
 Jason Pang
-47 minutes 2 seconds47:02
-Jason Pang 47 minutes 2 seconds
-Bye.
+17 minutes 12 seconds17:12
+Jason Pang 17 minutes 12 seconds
+Yeah, yeah, yeah, yeah.
+Jason Pang 17 minutes 15 seconds
+Yeah, okay. And then similarly, the same would need to be done on the Cerberus repo as well, right? The deployment repo in the drone pipeline, perhaps.
+LM
+Liam Moncur
+17 minutes 25 seconds17:25
+Liam Moncur 17 minutes 25 seconds
+Group.
+Liam Moncur 17 minutes 27 seconds
+AA.
+Liam Moncur 17 minutes 29 seconds
+Yay and nay? I don't know, actually. I don't think so. I don't know why you would need to update this.
+Jason Pang
+17 minutes 35 seconds17:35
+Jason Pang 17 minutes 35 seconds
+Ohh, is it is it picked up in?
+LM
+Liam Moncur
+17 minutes 36 seconds17:36
+Liam Moncur 17 minutes 36 seconds
+Yeah, I would have thought it would need to.
+JP
+Jason Pang
+17 minutes 40 seconds17:40
+Jason Pang 17 minutes 40 seconds
+OK, so.
+LM
+Liam Moncur
+17 minutes 40 seconds17:40
+Liam Moncur 17 minutes 40 seconds
+But I could be wrong. Oh, wait, there is this all this all this stuff here.
+Liam Moncur 17 minutes 45 seconds
+So you might have to do that.
+JP
+Jason Pang
+17 minutes 47 seconds17:47
+Jason Pang 17 minutes 47 seconds
+So that needs updating and then all of these secrets.
+Jason Pang 17 minutes 51 seconds
+Are they? I think they entered manually right into the drone environment.
+LM
+Liam Moncur
+17 minutes 59 seconds17:59
+Liam Moncur 17 minutes 59 seconds
+Yeah, I think I don't know if I have access to do this or not.
+Liam Moncur 18 minutes 4 seconds
+Do I try? There we go, there we go, right?
+Liam Moncur 18 minutes 9 seconds
+Thing, and then the secrets, yeah, I think got stuff in there.
+JP
+Jason Pang
+18 minutes 9 seconds18:09
+Jason Pang 18 minutes 9 seconds
+Settings.
+Jason Pang 18 minutes 12 seconds
+So that needs to be added for all the new environments. So what are the minimum? Could we see what needs to be added for each environment?
+LM
+Liam Moncur
+18 minutes 13 seconds18:13
+Liam Moncur 18 minutes 13 seconds
+Yes.
+Liam Moncur 18 minutes 15 seconds
+Yeah.
+Liam Moncur 18 minutes 22 seconds
+AA.
+JP
+Jason Pang
+18 minutes 25 seconds18:25
+Jason Pang 18 minutes 25 seconds
+Basically, here, right?
+LM
+Liam Moncur
+18 minutes 26 seconds18:26
+Liam Moncur 18 minutes 26 seconds
+Yeah, I think just keep tokens facts in the cluster namespace.
+JP
+Jason Pang
+18 minutes 31 seconds18:31
+Jason Pang 18 minutes 31 seconds
+Right, so...
+LM
+Liam Moncur
+18 minutes 31 seconds18:31
+Liam Moncur 18 minutes 31 seconds
+Everything else should already be there, because it should be Jeroen.
+JP
+Jason Pang
+18 minutes 33 seconds18:33
+Jason Pang 18 minutes 33 seconds
+So whose cube token is that using? Is it using Herbie?
+iam Moncur
+18 minutes 38 seconds18:38
+Liam Moncur 18 minutes 38 seconds
+No, I don't know, actually.
+Liam Moncur 18 minutes 43 seconds
+Yeah, I have no idea.
+Liam Moncur 18 minutes 45 seconds
+As soon as a robot token from, as soon as ACU provide robot tokens, don't they?
+JP
+Jason Pang
+18 minutes 45 seconds18:45
+Jason Pang 18 minutes 45 seconds
+Yeah, because...
+Jason Pang 18 minutes 51 seconds
+They provide, as far as I know, they provide robot tokens for accessing the container repositories, BCR.
+LM
+Liam Moncur
+18 minutes 51 seconds18:51
+Liam Moncur 18 minutes 51 seconds
+So...
+JP
+Jason Pang
+19 minutes 3 seconds19:03
+Jason Pang 19 minutes 3 seconds
+Read, read, or read-write tokens.
+Jason Pang 19 minutes 8 seconds
+But for...
+Jason Pang 19 minutes 11 seconds
+The cube token.
+Jason Pang 19 minutes 13 seconds
+Actually, I'm not sure. Yeah, that's something that we need to understand how, for a new environment, what, because all this is like already set up, is it, before your time?
+LM
+Liam Moncur
+19 minutes 24 seconds19:24
+Liam Moncur 19 minutes 24 seconds
+Yeah, yeah, I've done it in new environments, so it's always been.
+JP
+Jason Pang
+19 minutes 26 seconds19:26
+Jason Pang 19 minutes 26 seconds
+Yeah, would Herbie be able to answer the question or Matt?
+LM
+Liam Moncur
+19 minutes 30 seconds19:30
+Liam Moncur 19 minutes 30 seconds
+Um, uh, yeah, probably I don't think so. Uh, it probably just one for ACU, to be honest. I would assume they'd be able to...
+Liam Moncur 19 minutes 37 seconds
+Once the next base is created.
+Liam Moncur 19 minutes 40 seconds
+When I've used it in the past, I was able to create robot tokens and I've used those for doing various bits and bobs, like for running script automation.
+JP
+Jason Pang
+19 minutes 49 seconds19:49
+Jason Pang 19 minutes 49 seconds
+So are you saying that this is stored in the...
+LM
+Liam Moncur
+19 minutes 53 seconds19:53
+Liam Moncur 19 minutes 53 seconds
+These are in.
+JP
+Jason Pang
+19 minutes 53 seconds19:53
+Jason Pang 19 minutes 53 seconds
+Namespace secrets.
+Liam Moncur
+19 minutes 55 seconds19:55
+Liam Moncur 19 minutes 55 seconds
+These are, no, these are drone secrets, so they will have been created. I assume they've been created. No, yeah, then these aren't. These are used by drone, unless they might they might be in the namespace secrets, because that will be how I when ACU create.
+JP
+Jason Pang
+19 minutes 57 seconds19:57
+Jason Pang 19 minutes 57 seconds
+That there won't be in the names.
+LM
+Liam Moncur
+20 minutes 9 seconds20:09
+Liam Moncur 20 minutes 9 seconds
+Tokens, they might store them in that, yeah.
+JP
+Jason Pang
+20 minutes 9 seconds20:09
+Jason Pang 20 minutes 9 seconds
+A namespace.
+Jason Pang 20 minutes 12 seconds
+All right, so this is an open question that we need to ask in the second session then, is that right?
+LM
+Liam Moncur
+20 minutes 18 seconds20:18
+Liam Moncur 20 minutes 18 seconds
+Yeah, yeah, I I actually don't know is the answer. I don't know how they do it. I'm assuming they use like just get a token from ACU like and then.
+Liam Moncur 20 minutes 29 seconds
+That's what's used in the sword. Oh, I know it's then the sword and drone and then drone uses it. That's how he uses it.
+BA
 
-Deepesh Rathore
-47 minutes 2 seconds47:02
-Deepesh Rathore 47 minutes 2 seconds
-Yeah, thanks, great.
-SP
-Susanta Patnaik
-47 minutes 3 seconds47:03
-Susanta Patnaik 47 minutes 3 seconds
-What?
+Benan Aktas
+20 minutes 39 seconds20:39
+Benan Aktas 20 minutes 39 seconds
+Yeah, I have a question. Do we promote the same artefact across environments or do we rebuild per environment?
+LM
+Liam Moncur
+20 minutes 50 seconds20:50
+Liam Moncur 20 minutes 50 seconds
+Sorry, promote which, sorry, say again.
+BA
+
+Benan Aktas
+20 minutes 52 seconds20:52
+Benan Aktas 20 minutes 52 seconds
+I mean, we are creating a new deployment. After then, we are using for all environments, using the same deployment.
+LM
+Liam Moncur
+21 minutes 1 second21:01
+Liam Moncur 21 minutes 1 second
+All the environments is the same deployment. Yeah, it's the same deployment process. It's just you define which one you're going into when you do it.
+BA
+
+Benan Aktas
+21 minutes 3 seconds21:03
+Benan Aktas 21 minutes 3 seconds
+Yeah.
+Benan Aktas 21 minutes 10 seconds
+And the differences between lower image and product are only the parameter files.
+LM
+Liam Moncur
+21 minutes 16 seconds21:16
+Liam Moncur 21 minutes 16 seconds
+Yeah, for a technical point of view, that's the only difference. Obviously, there's a whole release process and stuff, so actually getting into prod, but...
+BA
+Benan Aktas
+21 minutes 24 seconds21:24
+Benan Aktas 21 minutes 24 seconds
+And and the differences are in the values files, values, YAML files.
+LM
+Liam Moncur
+21 minutes 30 seconds21:30
+Liam Moncur 21 minutes 30 seconds
+Yeah, yeah, so they will be they're read from from here, so they'd be like these all these ones here, so if you were deploying into production.
+BA
+Benan Aktas
+21 minutes 31 seconds21:31
+Benan Aktas 21 minutes 31 seconds
+Secret twice.
+Benan Aktas 21 minutes 39 seconds
+and.
+LM
+Liam Moncur
+21 minutes 39 seconds21:39
+Liam Moncur 21 minutes 39 seconds
+The product.
+BA
+Benan Aktas
+21 minutes 41 seconds21:41
+Benan Aktas 21 minutes 41 seconds
+The deployment is being done now by those guys or developer guys.
+LM
+Liam Moncur
+21 minutes 44 seconds21:44
+Liam Moncur 21 minutes 44 seconds
+The the devs will do devs will do their own environment, so the way the so each team's got its own environment, which is dev, NFT, test, preset, test and preset, it's the same thing, just to clarify, just the name space is called test, but for some reason everyone calls it preset.
+Benan Aktas
+22 minutes 5 seconds22:05
+Benan Aktas 22 minutes 5 seconds
+And.
+LM
+Liam Moncur
+22 minutes 5 seconds22:05
+Liam Moncur 22 minutes 5 seconds
+I don't know if they were doing it before I joined.
+BA
+Benan Aktas
+22 minutes 9 seconds22:09
+Benan Aktas 22 minutes 9 seconds
+And all pieces are very similar process.
+LM
+Liam Moncur
+22 minutes 9 seconds22:09
+Liam Moncur 22 minutes 9 seconds
+Oh.
+Liam Moncur 22 minutes 11 seconds
+Yeah, yeah, that's all the same. So the devs will handle that, but then it will go to release management when it comes to SIP. They'll then get the changes pushed into SIP and then QAT approve it, and then it goes up to B Val pre-prod and then prod.
+BA
+Benan Aktas
+22 minutes 26 seconds22:26
+Benan Aktas 22 minutes 26 seconds
+and deployment are triggered by automatically or after merging or any other steps.
+LM
+Liam Moncur
+22 minutes 34 seconds22:34
+Liam Moncur 22 minutes 34 seconds
+We have to deployments have to be triggered by the whoever's doing the work.
+Liam Moncur 22 minutes 39 seconds
+For the non-prod stuff and then the release to release management will deal with.
+Liam Moncur 22 minutes 44 seconds
+Production, the way it currently works anyway, the release management deployed to production environments, so that's prod beval and pre-prod.
+BA
+Benan Aktas
+22 minutes 44 seconds22:44
+Benan Aktas 22 minutes 44 seconds
+Yes.
+Benan Aktas 22 minutes 54 seconds
+And no, there are almost no manual steps, no, all automatically.
+LM
+Liam Moncur
+23 minutes23:00
+Liam Moncur 23 minutes
+No, yeah, it's supposed to be, yeah. So, other than having to do the deployment, it's all manual, yeah, and to trigger the deployment, then the the helm deploy scripts will then deploy everything.
+BA
+Benan Aktas
+23 minutes 3 seconds23:03
+Benan Aktas 23 minutes 3 seconds
+Yeah.
+Benan Aktas 23 minutes 12 seconds
+Yeah, last question: deployment always means activation, because rules modules are a bit different, I understood.
+Benan Aktas 23 minutes 24 seconds
+I mean, when you deploy, it means always it is activated.
+LM
+Liam Moncur
+23 minutes 24 seconds23:24
+Liam Moncur 23 minutes 24 seconds
+AA.
+Liam Moncur 23 minutes 28 seconds
+Yeah, it depends on the feature flag. Do you mean what about activation?
+BA
+Benan Aktas
+23 minutes 35 seconds23:35
+Benan Aktas 23 minutes 35 seconds
+Like the rules are very complicated, I think, so when you add a new rule or...
+Benan Aktas 23 minutes 43 seconds
+Leanne.
+LM
+Liam Moncur
+23 minutes 44 seconds23:44
+
+Liam Moncur
+23 minutes 44 seconds23:44
+Liam Moncur 23 minutes 44 seconds
+That's all controlled by feature flag. So if you deploy it, like for example, the NFT, there must be a feature flag somewhere in here.
+Liam Moncur 23 minutes 55 seconds
+They have the value files will, so even if you deploy it, depending on the value files value, which is whether certain features will be enabled.
+Liam Moncur 24 minutes 4 seconds
+Don't have, anyway.
+Liam Moncur 24 minutes 7 seconds
+There's a feature flag, so it does it based on the various different.
+BA
+Benan Aktas
+24 minutes 9 seconds24:09
+Benan Aktas 24 minutes 9 seconds
+Freeman.
+Benan Aktas 24 minutes 11 seconds
+Okay.
+LM
+Liam Moncur
+24 minutes 12 seconds24:12
+Liam Moncur 24 minutes 12 seconds
+Settings, but the devs deal with that stuff; they decide what they what they do and don't need in each environment.
+BA
+Benan Aktas
+24 minutes 18 seconds24:18
+Benan Aktas 24 minutes 18 seconds
+Mm.
+Benan Aktas 24 minutes 19 seconds
+For example, with the plates something after then we have seen the green.
+Benan Aktas 24 minutes 24 seconds
+After then, is it enough, or is there any specific checks?
+LM
+Liam Moncur
+24 minutes 29 seconds24:29
+Liam Moncur 24 minutes 29 seconds
+So they have, I don't, they're supposed to be using Playwright as far as I understand, the dev teams for their stuff. But for sitting above QAT, you have to approve it. They have to say, I mean, from our point of view, yeah, we'll just cheque that the deployment worked, that the pods have started up.
+Liam Moncur 24 minutes 48 seconds
+So the dev team, I think they're starting to use Playwright. Certainly use Cypress, I think, the other one they use. So they'll do that to make sure they're happy with their changes. But then when it gets to sit, that's when we hand off to QAT and QAT will.
+Liam Moncur 25 minutes 4 seconds
+have to approve it before it goes any higher.
+BA
+Benan Aktas
+25 minutes 9 seconds25:09
+Benan Aktas 25 minutes 9 seconds
+Yeah, I think we didn't talk about the rollback scenarios. I mean, yeah.
+LM
+Liam Moncur
+25 minutes 15 seconds25:15
+Liam Moncur 25 minutes 15 seconds
+The rollbacks is not something they have built into the deployment. So when the deployment goes through, if it fails, it fails. They don't have a automatic like check, say, like they do have a monitoring steps that cheque to see if the, I'm trying to find an example of.
+Liam Moncur 25 minutes 33 seconds
+It would be helpful.
+enan Aktas
+25 minutes 36 seconds25:36
+Benan Aktas 25 minutes 36 seconds
+Yeah, for example, the last time you have done rollback, what was the reason?
+LM
+Liam Moncur
+25 minutes 42 seconds25:42
+Liam Moncur 25 minutes 42 seconds
+They don't really. The last, the last, the last time they they had an issue and sit recently with 5A and they're just essentially going through and trying to fix it and fix forward. It doesn't, when the monetary step fails, it doesn't trigger a rollback step or anything like that.
+BA
+Benan Aktas
+25 minutes 43 seconds25:43
+Benan Aktas 25 minutes 43 seconds
+Yes.
+LM
+Liam Moncur
+25 minutes 58 seconds25:58
+Liam Moncur 25 minutes 58 seconds
+automatically. So there is, I, there isn't, so I would say there is no roll back. Oh, for goodness sake. Ignore these chart names. These are local stuff. I just kind of want to switch my context out. But if you do need to roll back from my point of view, you could always just do
+Liam Moncur 26 minutes 20 seconds
+I use like Helm History and I can just do Helm.
+Liam Moncur 26 minutes 24 seconds
+Go back database, ignore all this nonsense, this is my local stuff, and then that will roll back the.
+Liam Moncur 26 minutes 35 seconds
+Okay, well, I thought it might do something, but that's how you, that's how you do handle rollbacks in Helm, but there's no automation in the script to do it correctly.
+BA
+Benan Aktas
+26 minutes 43 seconds26:43
+Benan Aktas 26 minutes 43 seconds
+Okay.
+LM
+Liam Moncur
+26 minutes 45 seconds26:45
+Liam Moncur 26 minutes 45 seconds
+Not doing anything, don't know why.
+BA
+Benan Aktas
+26 minutes 45 seconds26:45
+Benan Aktas 26 minutes 45 seconds
+B.
+Benan Aktas 26 minutes 47 seconds
+And is there a big difference between periprod and product environment?
+LM
+Liam Moncur
+26 minutes 51 seconds26:51
+Liam Moncur 26 minutes 51 seconds
+I don't know. I I'm very, I'm very hands off when it comes to. I I don't I don't think I've ever logged in at any gotten any access to prod. I've got like read access, but that's it. I've never needed to, so I don't know. It's hard to answer, but in theory, there should be no difference, right?
+BA
+Benan Aktas
+26 minutes 53 seconds26:53
+Benan Aktas 26 minutes 53 seconds
+Yeah, it's important stuff.
+Benan Aktas 26 minutes 56 seconds
+Yeah.
+LM
+Liam Moncur
+27 minutes 11 seconds27:11
+Liam Moncur 27 minutes 11 seconds
+That's what it's set for.
+BA
+Benan Aktas
+27 minutes 11 seconds27:11
+Benan Aktas 27 minutes 11 seconds
+I think, yeah, when we get a book, I think this will be the most important thing.
+LM
+Liam Moncur
+27 minutes 16 seconds27:16
+Liam Moncur 27 minutes 16 seconds
+Yeah, yeah, B, I know B.Val's bigger than, like, they've got more data in B.Val than broad. That's one thing I do know, but yeah, they should be as close to broad as possible, I hope, but I have not really.
+Liam Moncur 27 minutes 28 seconds
+Whatever, I've never been part of the release, like any like actual release since I've been here. Amazingly. So.
+BA
+Benan Aktas
+27 minutes 33 seconds27:33
+Benan Aktas 27 minutes 33 seconds
+Yeah, yeah, these scripts are in GitLab already, so there should be some approved, like when we need to do some change after then, that will be a similar scenario code approving code review, I think.
+LM
+Liam Moncur
+27 minutes 51 seconds27:51
+Liam Moncur 27 minutes 51 seconds
+Yeah, so they, those, those are sort of what we've gone through is that the the sort of basic deployments, like just defined charts, but we also have like runbooks and stuff. There's runbook repo, which they also sometimes use when the idea behind this is that for B-val environment, this version, you need to run this alongside the...
+BA
+Benan Aktas
+27 minutes 53 seconds27:53
+Benan Aktas 27 minutes 53 seconds
+Yeah.
+LM
+Liam Moncur
+28 minutes 12 seconds28:12
+Liam Moncur 28 minutes 12 seconds
+Other releases you're doing, and again, these are supposed to be approved and before you can run commands in those environments, but again, I don't have any visibility, so I don't have experience with prod environments, prod deployments in this project, so...
+Liam Moncur 28 minutes 29 seconds
+I assume they use number.
+Liam Moncur 28 minutes 31 seconds
+But.
+
+Liam Moncur s
+
+
+I-generated content may be incorrect
+
+Herbie Barnett started transcription
+
+Herbie Barnett
+0 minutes 4 seconds0:04
+Herbie Barnett 0 minutes 4 seconds
+Cool, alright, let me just...
+Herbie Barnett 0 minutes 8 seconds
+Do this right, so we'll start. So, initially, when we're doing a release, we will be compiling it using a combination of a variety of different things, but let me show you an example. So, quite a big one, actually. So, currently, the current situation that we're in.
+Herbie Barnett 0 minutes 27 seconds
+We have released version 5.8.0 into production. We have not released version 5.9.0. Master branch has currently not been re-based and development is our current master branch. So a number of different things would need to happen. We would need to merge in release 5.8.0 into master branch and development.
+Herbie Barnett 0 minutes 47 seconds
+just to reconcile that. And we would then start creating a new release branch, which I'm not going to do it here, but here's what I made earlier, here's release 5.9.0, which will contain other unreleased changes. Okay, so the first kind of step is as part of this work, when we've got a release branch like this, you'll see here that there is no tag.
+Herbie Barnett 1 minute 6 seconds
+This is a bad example, but still, there's not a tag there. Okay, so the first thing that a developer would do, or would generally do as part of a release, would be to create a tag in this branch once it's ready to go. So I'll pretend it's 6.12.6.
+Herbie Barnett 1 minute 21 seconds
+or any of them, doesn't really matter.
+Herbie Barnett 1 minute 23 seconds
+And then we'll do. So what it'll do is it'll kick off a tag creation pipeline, which will create you a releaseable artefact for the service. So moving to this processor, as this example is here, there's a number of quite standard things. It will clone the Git repository, it'll set up Docker to do testing, it'll log into artifactory, and then it'll run through a number of things.
+Herbie Barnett 1 minute 42 seconds
+Build the service, so, in this case, it's a Spring Group service that will do a Maven clean install, it will do a Maven test, it will do all that, which all the service actually will start all the test path, etcetera.
+Herbie Barnett 1 minute 53 seconds
+If that does work, it will then do a couple of things. So it will do a trivia scan, which cheques the vulnerabilities in the code base, and it will do a sonar scan, which cheques the code quality. So this does things like cheques the code smells or just bad coding practises or things like that. Writing all that passes, it will then go on to a deploy stage where it will
+Herbie Barnett 2 minutes 12 seconds
+cheque to make sure the build actually works, and then once that build works, it will then begin doing the actual Helm stuff. So, there's three different stages to actually producing a releasable artefact for a service, and that is a Helm package, a Helm dependency build, and a Helm, what is it, Helm art factory upload, whatever it's called. So, the first step, the Helm package,
+Herbie Barnett 2 minutes 31 seconds
+essentially downloads any dependencies that are held in Helm. So in our services, that's only the MA Helm library. So there's never anything else other than that one dependency. But as you can see, it downloads it. Okay. That is a predicate in order to be able to actually do the packaging as well. So it does the Helm dependency up download, which is there, and then it will then start packaging.
+Herbie Barnett 2 minutes 51 seconds
+These linting here, so this cheques to make sure that the Helm package that's been generated is actually valid, and it will, in this situation, there's multiple alias versions of different deployments, so there's pose and roll on. Usually, there'll just be one, but it doesn't matter. Either way, it's fine, and then it will run through it, it'll just lint it, which in this case, it passed. It's great.
+Herbie Barnett 3 minutes 9 seconds
+And then I'll do a home package upload, so it uploads it to the remote artifactory, which is what it's doing here. And then in this example, this is a bad example, let's go back to the other one.
+Herbie Barnett 3 minutes 21 seconds
+Let's go to give me this one here, so this one it doesn't have those steps 'cause they've been removed, so it'll do the upload and then it'll just notify you on Slack, and that's your release artefact for a service created. So, the next step that it will do is it will go to, you'll go on MADM Servers, which is our primary deposit.
+
+
+
+
+Herbie Barnett 3 minutes 41 seconds
+deployment repository. In here, using that example, you'd want to navigate to the message aggregation chart, which is where that configuration is stored for the service. You'd go in the chart at YAML, which defines different versions of each service, and you then need to increment this, which one it was, to match the type that you want to release. Okay.
+Herbie Barnett 4 minutes
+Once you've done that, in whatever combination you want, it will then do this. So the person who's doing the release will then create a release sack, as you've got here as an example.
+Herbie Barnett 4 minutes 11 seconds
+And then as part of that, it does largely what you've already seen, but it does it for this MADM service repository. So it'll still do all the base stuff it needs to do. But then it won't do things like build and test because it can't do that because it's just a just a hell library essentially. And then it'll still do the package lending validation and then the upload. So what this essentially does, it just packages all of the
+Herbie Barnett 4 minutes 31 seconds
+individual services into one big package that you can then release and it kind of has a logical split. So using the deployment mechanism that I'll show you in a minute, you can deploy these all in one go, or you can do it in isolation. There's about 24 umbrella charts, as they're called, and those umbrella charts make up a number of different services within them.
+Herbie Barnett 4 minutes 50 seconds
+varying size. For example, the notification chart only has the notification service in it. Message Integration has about 12 different services in it, as an example. This bit's currently broken, but what it's supposed to do is deploy into our not problem environment. This is a kind of semi-CI environment in that we do test our deployment.
+Herbie Barnett 5 minutes 11 seconds
+But it does do it based on the not prod deployment values rather than the global ones. And as you can see at the moment, it's currently failing because of incompatibility with something or another. I can't remember what it is, but it's something that's not quite working. So 95% of this will still work. So you can see these are all succeeding, but like one out of the 20 doesn't work. So yeah, it's currently failing.
+Herbie Barnett 5 minutes 31 seconds
+Not a massive issue, and starting to actually not products just because of this, so you can ignore it for now. And then, once you've done that, that's the artefact created. We would then do actually want to do an actual release. So, to do that, you do a promotion. You use this functionality up here, so 3 little dots, promote, and you can provide a number of different parameters in order to actually do the release.
+
+Herbie Barnett 5 minutes 54 seconds
+and then in here it does the standard stuff, but then it will do the Helm deploy. All that does is a Helm upgrade. So it takes the artefacts that you want to deploy and just upgrades them using a Helm upgrade and pops them to every environment you want. So that's live and historical. Okay.
+Herbie Barnett 6 minutes 11 seconds
+That's your overview of what the release actually is. So what we want to come and do now is show you the individual scripts that power this under the hood. So if we go to MA DM Cerberus.
+Herbie Barnett 6 minutes 25 seconds
+This is where it's going to get a little bit more ad hoc than planned. So in here, we look in the drawing.yaml file. This is kind of the first entry point in here. So if we look at, say, the promote.
+Herbie Barnett 6 minutes 39 seconds
+OK, so the prior is, no, no, let's do the tags essentially, so...
+Herbie Barnett 6 minutes 47 seconds
+Point and tag. So this will show you all the different things that occur when a tag happens. I presume everyone is familiar with drone.yaml file. It's actually just a big long list of the individual steps. These match up to what's in the drone UI. It's not that complicated, but yeah, if you're not familiar with it, it's going to be a little bit weird to look at first. But if we look here, right, so this is the tag pipeline.
+Herbie Barnett 7 minutes 9 seconds
+This will match up to what we saw a minute ago. So it starts Docker, it does the iFactory login, does the Helm login, etc. It sets up environments, you get the idea. The stuff that you were really interested in though is going to be these Helm packages and the Helm validate. So in here, you'll notice how there is an image of MMA Helm.
+Herbie Barnett 7 minutes 29 seconds
+and then there's a couple of environment variables that are defined, and then in here is some commands. So that first one is literally just doing a login into the artifactory, so nothing crazy. But then you can see here we've got this Helm, Helm package.sh file. And similarly, under the validate, you'll see there's a Helm lint template.
+Herbie Barnett 7 minutes 49 seconds
+File there, and then if we look down at the deploy, you'll see there's a Helm deploy.sh file, and I think that might be it, just those three. OK, so if we navigate now to the MMA Helm.
+Herbie Barnett 8 minutes 6 seconds
+MA Helm, not to be confused, MA Helm library, they are different. The MA Helm is our kind of legacy deployment scripts kind of folder. We probably need to sort this out at some point, but for now they're all in here. So in here, there are a number of things, but the scripts is the important part. So this is going to contain all the individual scripts we actually use to do the deployment.
+
+
+Herbie Barnett 8 minutes 27 seconds
+So, if we first have a look at the, so like three of them, so Helm Pole, quite simple, literally Helm Pole, just pulls in, just pulls the actual.
+Herbie Barnett 8 minutes 40 seconds
+A remote artefact from the artifactory, all it does. You can see the helpful OCI and then it has the dock repo base followed by the service name.
+Herbie Barnett 8 minutes 49 seconds
+We've got the, what else we got? We got the Helm lint template. So this is, it does a variety of different things, but essentially it just, it limits it's a linting tool. I won't go into the depths of how this works or some of the scripts as well, but get the idea.
+Herbie Barnett 9 minutes 7 seconds
+Um, what else we got?
+Herbie Barnett 9 minutes 10 seconds
+Helm cheque annotation, I believe that's a legacy script we don't use anymore. Again, with the Helm cheque annotation to promote, I don't know what to use either. We've got the Helm package, so this is going to do a couple of things. So just the Helm dependency builds, as I mentioned earlier, that pulls all of your Helm dependencies in, and then this Helm package just builds it. So this is what turns your service or your MDM server.
+Herbie Barnett 9 minutes 32 seconds
+from a bunch of Helm templates into an actual collection of the templates. And what I forgot.
+Herbie Barnett 9 minutes 44 seconds
+Help upload. So this is the command that we use to actually push to the remote artifactory. Yeah, quite simple. It's literally just help push service name, version, and then just the Docker base again. That's pretty much it. The rest of this stuff is all just like.
+Herbie Barnett 10 minutes 2 seconds
+Supporting bash files is nothing in here that's actually particularly important. I think Liam did already did a KT on his mass diff stuff, so I won't call that, but essentially this is a it's an additional piece of tooling that Liam created in order to allow you to to see what you're actually changing as part of her release, make it easier to work out what's going on.
+Herbie Barnett 10 minutes 23 seconds
+That's essentially it. That is that is what it is under the hood. It's just a bunch of different bash files that run in a drone pipeline.
+Herbie Barnett 10 minutes 31 seconds
+Any questions?
+Herbie Barnett 10 minutes 38 seconds
+Must be some questions. I've not, I've not given off everything.
+Herbie Barnett 10 minutes 44 seconds
+No, okay, fine. So we go back to the MADM service repository. So I'll walk you through the drone bit a little bit more. So.
+Herbie Barnett 10 minutes 53 seconds
+In the drawing file, it's kind of there's two ways to define the different steps. So, you can either do it top down, i.e. trigger event and then provide a list of steps, or you can do it like this when event push tag. So, there's kind of two ways to define the steps, but then within the steps, they're all pretty standard. They have a name,
+Herbie Barnett 11 minutes 12 seconds
+a pull, an image and a command. It'll all pull pretty much the same kind of setup. In the environment, you find any environment variables you need. So in this case, because this is the artifactory login, we need the artifactory password and username. The image defines where the step is going to grab whatever it needs to do from. So we've already explained, it's the MA Helm library.
+
+
+
+Herbie Barnett 11 minutes 34 seconds
+Pull only does not exist, that just defines the standard, whether it pulls the content or not. Name's the name, obviously. Command is any commands that you want. So as far as I'm aware, this runs in.
+Herbie Barnett 11 minutes 47 seconds
+Bash, I think I can't actually quite remember. Feel free to jump in, guys, if you're aware what language actually used to. I think it's Bash, and then you can pretty much put whatever you want in here, and it would just work as if you were doing it through a command line. So, levels of varying complexity in here, but that's a pretty simple one you can see.
+BR
+
+Benjamin Reynolds
+12 minutes 5 seconds12:05
+Benjamin Reynolds 12 minutes 5 seconds
+These depend on the image used and what's supported in there. So if the image up above supports Python, you can also use Python here. Usually it's, yeah, I think Bash is a good fallback for whatever we're running.
+
+Herbie Barnett
+12 minutes 10 seconds12:10
+Herbie Barnett 12 minutes 10 seconds
+Okay.
+BR
+
+Benjamin Reynolds
+12 minutes 23 seconds12:23
+Benjamin Reynolds 12 minutes 23 seconds
+And a lot of our stuff actually does use Bash, but...
+Benjamin Reynolds 12 minutes 27 seconds
+Yeah.
+
+Herbie Barnett
+12 minutes 29 seconds12:29
+Herbie Barnett 12 minutes 29 seconds
+Good to know. So I don't think we have any examples of how Python actually in here, but I'll see if I can find some in a second.
+BR
+
+Benjamin Reynolds
+12 minutes 35 seconds12:35
+Benjamin Reynolds 12 minutes 35 seconds
+I think mostly we use the best to run the Python script, but if you haven't got Python specified or as part of the image, it's not supported, then it won't run the Python, it just won't recognise it.
+
+Herbie Barnett
+12 minutes 38 seconds12:38
+Herbie Barnett 12 minutes 38 seconds
+Okay.
+Herbie Barnett 12 minutes 42 seconds
+Tall list.
+Herbie Barnett 12 minutes 44 seconds
+C.
+Herbie Barnett 12 minutes 51 seconds
+Gotcha, gotcha. OK, cool. So.
+
+
+Benjamin Reynolds
+12 minutes 51 seconds12:51
+Benjamin Reynolds 12 minutes 51 seconds
+Yeah.
+
+Herbie Barnett
+12 minutes 56 seconds12:56
+Herbie Barnett 12 minutes 56 seconds
+Well, I guess this depends on time. Yeah, go on, Jason.
+JP
+
+Jason Pang
+13 minutes13:00
+Jason Pang 13 minutes
+Yeah, I want to ask about...
+Jason Pang 13 minutes 2 seconds
+Line 89 to 91 or actually 989 and.
+
+Herbie Barnett
+13 minutes 6 seconds13:06
+Herbie Barnett 13 minutes 6 seconds
+Yep.
+JP
+
+Jason Pang
+13 minutes 10 seconds13:10
+Jason Pang 13 minutes 10 seconds
+90, yeah, sorry. It's because we've got some new environments that we need to build. So we need to update MMH dash helm then. Is that right?
+
+Herbie Barnett
+13 minutes 17 seconds13:17
+Herbie Barnett 13 minutes 17 seconds
+Okay.
+Herbie Barnett 13 minutes 22 seconds
+AG.
+JP
+
+Jason Pang
+13 minutes 22 seconds13:22
+Jason Pang 13 minutes 22 seconds
+to add these new environments into here.
+
+Herbie Barnett
+13 minutes 26 seconds13:26
+Herbie Barnett 13 minutes 26 seconds
+Yes and no, I don't. I think a lot of this is legacy stuff. Some of this isn't actually used anymore. If we have a look at, let's look at promotion and we can actually work it out in real time. So.
+BR
+Benjamin Reynolds
+13 minutes 38 seconds13:38
+Benjamin Reynolds 13 minutes 38 seconds
+And not prod itself, the environment, not prod, not to be confused with the cluster, not prod is not really a workable environment. Essentially what we should be, what it does and what we use it for is when we do the builds for the tags, it builds and deploys to there to make sure it is buildable and deployable.
+
+Herbie Barnett
+13 minutes 46 seconds13:46
+Herbie Barnett 13 minutes 46 seconds
+Yeah.
+BR
+Benjamin Reynolds
+13 minutes 59 seconds13:59
+Benjamin Reynolds 13 minutes 59 seconds
+and then it uninstalls it, so there's nothing there. Don't get caught up in these lines, which is copying secrets, because that's being moved over to the actual.
+Benjamin Reynolds 14 minutes 10 seconds
+What's it called? Words, mind. That's being moved over to Azure deployment stuff inside the Cerberus repo. So it's got its own chart now. We're just working on testing it via deployment. But at the moment, not prod, the environment is not working because
+
+Herbie Barnett
+14 minutes 14 seconds14:14
+Herbie Barnett 14 minutes 14 seconds
+Pick Richard.
+BR
+Benjamin Reynolds
+14 minutes 30 seconds14:30
+Benjamin Reynolds 14 minutes 30 seconds
+I believe all the secrets have changed.
+Benjamin Reynolds 14 minutes 33 seconds
+since we extracted them. So we're working on that right now.
+Benjamin Reynolds 14 minutes 38 seconds
+And that's why you see it not working in the builds.
+JP
+
+Jason Pang
+14 minutes 42 seconds14:42
+Jason Pang 14 minutes 42 seconds
+Yeah, I was also asking because of if we need to build new environments like this dev test one and two when we want to use an umbrella chart to deploy to those new environments.
+
+Herbie Barnett
+14 minutes 53 seconds14:53
+Herbie Barnett 14 minutes 53 seconds
+Yeah, so we look at, let's just look at the service because this definitely this bit of script actually is in the service rather than there. So in here we look for.
+Herbie Barnett 15 minutes 3 seconds
+Where is it?
+Herbie Barnett 15 minutes 6 seconds
+scripts and then yes, there are a few scripts in here. One that we want is set up environments like SH. So in here, there is potentially some configuration we'd have to add. So specifically at the top here, we would need to define whether or not it's a production environment and it's got a historical counterpart in that configuration up there. There are a few other things we need to do as well.
+Herbie Barnett 15 minutes 25 seconds
+If I just use NFC as an example.
+Herbie Barnett 15 minutes 30 seconds
+Maybe not, actually. It might literally just be that, Jason. It might be all you need to do, add an extra couple of values in there.
+
+
+son Pang
+15 minutes 37 seconds15:37
+Jason Pang 15 minutes 37 seconds
+Okay, and change some of these echoes just set up. Do we know what the valid environments are that will deploy to? Yeah, right, okay.
+
+Herbie Barnett
+15 minutes 40 seconds15:40
+Herbie Barnett 15 minutes 40 seconds
+Yeah.
+Herbie Barnett 15 minutes 44 seconds
+Yeah, exactly.
+Herbie Barnett 15 minutes 46 seconds
+Yeah.
+Herbie Barnett 15 minutes 48 seconds
+I'll come up with those scripts in a second. So this is an example of a promotion. In here you can see that we have the setup environment live, so we definitely do need to update that.
+Herbie Barnett 15 minutes 58 seconds
+There you go. What else do we have in here? Let's have a look. So the promote.sh function, this is what powers the promote pipeline. So what do you actually have in here? It literally just grabs the drone token.
+Herbie Barnett 16 minutes 14 seconds
+Finds a bunch of environment variables and just has a Carl command to actually do the promotion.
+Herbie Barnett 16 minutes 20 seconds
+So we didn't actually write this, so I'm not familiar with it, but it does work. It does work.
+Herbie Barnett 16 minutes 28 seconds
+Not pro secret copy, which is the one that you saw a second ago. So this is the, as Ben alluded to, this is now defunct essentially, but it's the legacy method of setting up the secrets for not prod, which isn't actual workable environment. It's just like dummy data and dummy values. So yeah, just set that up. Deploy to SH, cut that one in a second.
+Herbie Barnett 16 minutes 48 seconds
+Big build manifest, this isn't actually used, I don't think.
+Herbie Barnett 16 minutes 54 seconds
+Check.
+Herbie Barnett 16 minutes 56 seconds
+Oh, there it is.
+Herbie Barnett 16 minutes 59 seconds
+Where is it used?
+Herbie Barnett 17 minutes 6 seconds
+OK, so this build manifest script is only used in the monitoring, but I'm not familiar with that, but what does it actually do?
+Herbie Barnett 17 minutes 17 seconds
+This is a Python file as well.
+Herbie Barnett 17 minutes 23 seconds
+Yeah, I think a lot of this is probably defunct to be honest.
+Herbie Barnett 17 minutes 27 seconds
+You can see, like, yeah.
+Herbie Barnett 17 minutes 30 seconds
+It's not even referencing all the environments in here.
+Herbie Barnett 17 minutes 35 seconds
+Would want to check, but I think I'm pretty sure that's defunct and that's actually used anymore. We've also got the manifest SH. Again, this one I think is defunct. Yeah, it's defunct. This is the old method of deploying. This is normally used, I think.
+
+
+Herbie Barnett 17 minutes 52 seconds
+Um, and then you've also got...
+Herbie Barnett 17 minutes 56 seconds
+Tests, I don't think you've actually used either. Maybe they are. I've not been touched in over three years. Not something that was handed over to us. It was something to look at in the future and the secrets. Ben, I don't know if you want to cover this. So you've got a better idea than I have.
+Herbie Barnett 18 minutes 13 seconds
+Oh.
+BR
+Benjamin Reynolds
+18 minutes 15 seconds18:15
+Benjamin Reynolds 18 minutes 15 seconds
+I mean, this was mostly given by Lorelei, but I've got a basic understanding. So essentially how we've changed it is to...
+
+Herbie Barnett
+18 minutes 16 seconds18:16
+Herbie Barnett 18 minutes 16 seconds
+No.
+Herbie Barnett 18 minutes 18 seconds
+Yeah.
+Herbie Barnett 18 minutes 19 seconds
+Stop.
+BR
+Benjamin Reynolds
+18 minutes 25 seconds18:25
+Benjamin Reynolds 18 minutes 25 seconds
+I haven't got a workspace open, but I can describe it here. We have inside the Cerberus project a section for the secrets. Now, we are at the moment in the process of extracting those secrets, which is via the managed secrets script, as you can see inside the
+Benjamin Reynolds 18 minutes 46 seconds
+read me, which you can have a quick read through if you need to refresh your memory or, you know, after this meeting, because it is a little bit complicated for three scripts, but I'll dumb it down. Essentially, manage secrets does a few things. The only thing I've done right now is extract them. So it extracts the secrets and its
+Benjamin Reynolds 19 minutes 5 seconds
+encrypts them for that environment. And this is the reason why the not prod environment is currently not working. Apparently the secrets in dev have changed since we first extracted them and the not prod secrets match those in dev. So it's a slight mismatch, which we are currently correcting.
+Benjamin Reynolds 19 minutes 23 seconds
+The, once they are extracted, they get put into their chart inside the service project and under the specific environment, so that if we need to reinstate them, we can quite easily. There are, if you scroll down a bit in the document, please. Yep, so in order to
+Benjamin Reynolds 19 minutes 43 seconds
+modify this, you need to be added as a Git maintainer or Git crypt maintainer, which anybody that I believe is a current maintainer can do. So we can add you all to that.
+Benjamin Reynolds 19 minutes 57 seconds
+Well, I guess after this we can, I'll speak to Lorelei and we'll get all of you guys set up. We will need your GPG key, so if you guys wouldn't mind reading this document just to...
+
+Herbie Barnett
+20 minutes20:00
+Herbie Barnett 20 minutes
+They will.
+BR
+Benjamin Reynolds
+20 minutes 8 seconds20:08
+Benjamin Reynolds 20 minutes 8 seconds
+clear up how it all works in your own heads and understand the process. If we scroll down a bit more, please, because this is just talking about adding a maintainer and a bit more.
+
+Herbie Barnett
+20 minutes 17 seconds20:17
+Herbie Barnett 20 minutes 17 seconds
+Yeah.
+Herbie Barnett 20 minutes 19 seconds
+Okay.
+BR
+Benjamin Reynolds
+20 minutes 21 seconds20:21
+Benjamin Reynolds 20 minutes 21 seconds
+There you go. So the quick start bit just above the script is talking about how to extract the scripts, encrypts them, as I said. There is functionality which is described in this document to rotate. As you see the under manage secrets, the third header when using rotate, which is the minus R option,
+
+Herbie Barnett
+20 minutes 34 seconds20:34
+Herbie Barnett 20 minutes 34 seconds
+So much.
+Herbie Barnett 20 minutes 36 seconds
+No.
+BR
+Benjamin Reynolds
+20 minutes 41 seconds20:41
+Benjamin Reynolds 20 minutes 41 seconds
+which allows you to rotate the secrets within an environment as well. So don't modify the files themselves or don't modify in the...
+Benjamin Reynolds 20 minutes 51 seconds
+environment, you use this script to rotate them and you can use the manage secret script to restore as well. So that will restore them from the file, which is part of the deployment procedure. Export secrets.
+Benjamin Reynolds 21 minutes 10 seconds
+I don't believe is run by itself. It is run via the managed secrets, but you are able to run it by itself. Obviously, they are different scripts. So if something goes wrong with the main one, there is that backup. You can just use the export secrets and the same with the encrypt secrets. The
+Benjamin Reynolds 21 minutes 28 seconds
+Managers secret scripts will export and encrypt for you. So that is like the main entry points, but these are there just in case you need to use them for whatever reason or use any other.
+Benjamin Reynolds 21 minutes 43 seconds
+It's called options. So you see there's a headless and a base 64. They are all set up to be a specific way inside that main script. However, you have the option to use the script directly or the subscript directly to specify other options there. I think that is basically everything.
+Benjamin Reynolds 22 minutes 4 seconds
+You wouldn't have Cerberus project open, would you, Herbie?
+
+Herbie Barnett
+22 minutes 7 seconds22:07
+Herbie Barnett 22 minutes 7 seconds
+Stoop.
+BR
+Benjamin Reynolds
+22 minutes 8 seconds22:08
+Benjamin Reynolds 22 minutes 8 seconds
+There you go.
+Benjamin Reynolds 22 minutes 10 seconds
+So if we go into the files or the main thing in MMA Deployment Management, there is a secret chart here. Yeah, so that's the chart and these.
+Benjamin Reynolds 22 minutes 24 seconds
+So, if we click on one of the files...
+Benjamin Reynolds 22 minutes 27 seconds
+Just any of them. Maybe not. Is this the right one?
+Benjamin Reynolds 22 minutes 32 seconds
+There you go. Yeah, so as you see, we have all of the secrets here and we have the values that are encrypted next to it. They're base 64 and then encrypted. So bear that in mind if you are encrypting something yourself to put in, you shouldn't be. But I understand there is a reason for workarounds most of the time.
+Benjamin Reynolds 22 minutes 51 seconds
+in a technical environment. These can obviously be used if you're setting up a new environment and you want to know which secrets you need, because this, they should not, the values should not, well, the values, the keys should not change between environments, the value should. So what is specified in one should be what is required for another.
+Benjamin Reynolds 23 minutes 12 seconds
+And if we go back up to...
+
+
+Benjamin Reynolds 23 minutes 16 seconds
+Cerberus.
+Benjamin Reynolds 23 minutes 18 seconds
+There is another secrets, there is, oh, one minute. There's the secrets charts where we were just in, and then there is also, is this the one? This is the, that's where the scripts are, but there's another one I think if we go back into Cerberus, please.
+Benjamin Reynolds 23 minutes 35 seconds
+I think it's near the bottom of the folders. Do, do, do.
+MG
+
+Madhu Guthikonda
+23 minutes 46 seconds23:46
+Madhu Guthikonda 23 minutes 46 seconds
+It should be the MSK secrets. Herbie, if you search for MSK.
+BR
+Benjamin Reynolds
+23 minutes 50 seconds23:50
+Benjamin Reynolds 23 minutes 50 seconds
+Yeah.
+Benjamin Reynolds 23 minutes 52 seconds
+Ah, because we're in R, we're not M. There you go.
+
+Herbie Barnett
+23 minutes 56 seconds23:56
+Herbie Barnett 23 minutes 56 seconds
+There you go. Yes.
+BR
+Benjamin Reynolds
+24 minutes 2 seconds24:02
+Benjamin Reynolds 24 minutes 2 seconds
+And yep, this is the...
+Benjamin Reynolds 24 minutes 5 seconds
+Other one for MSK secrets.
+
+Herbie Barnett
+24 minutes 10 seconds24:10
+Herbie Barnett 24 minutes 10 seconds
+Kucuk.
+BR
+Benjamin Reynolds
+24 minutes 10 seconds24:10
+Benjamin Reynolds 24 minutes 10 seconds
+Yeah. Any questions? Granted that the best person for these questions may be Lola, but I can answer some basic questions about how it all fits together as she basically wrote the whole thing.
+Benjamin Reynolds 24 minutes 30 seconds
+Okay, cool. Yeah, as I said, reach out to Lorelai if you have any further questions about that and we can document them in the
+Benjamin Reynolds 24 minutes 42 seconds
+Well, wherever we document these, this may be documented in the...
+Benjamin Reynolds 24 minutes 50 seconds
+source code tools at some point. We have a documents directory in there with readmes in a nice kind of like index structure. So for most of the things that we, Katie, if you look in there,
+Benjamin Reynolds 25 minutes 5 seconds
+At some point, we hopefully should have a document there.
+Benjamin Reynolds 25 minutes 12 seconds
+Yep.
+Benjamin Reynolds 25 minutes 14 seconds
+I can show that. I mean, it hasn't got this bit in, but I can show the directory if you guys want.
+
+Herbie Barnett
+25 minutes 24 seconds25:24
+Herbie Barnett 25 minutes 24 seconds
+Steve.
+Benjamin Reynolds
+25 minutes 31 seconds25:31
+Benjamin Reynolds 25 minutes 31 seconds
+Just go up the screen quickly.
+Benjamin Reynolds 25 minutes 36 seconds
+And this is, well, for most of it, for most of my stuff anyway, I try to get a thing in here, so inside the source code tools directory.
+Benjamin Reynolds 25 minutes 45 seconds
+Oh, you can all see, right? I'm not just talking to myself and.
+JP
+Jason Pang
+25 minutes 51 seconds25:51
+Jason Pang 25 minutes 51 seconds
+Yeah, I can see, yeah.
+BR
+Benjamin Reynolds
+25 minutes 53 seconds25:53
+Benjamin Reynolds 25 minutes 53 seconds
+Good. OK, so there is the documents directory here.
+Benjamin Reynolds 25 minutes 59 seconds
+Inside here, as you see in the readme.
+Benjamin Reynolds 26 minutes 2 seconds
+Got a few things that isn't this one here, but I will attempt to add bits for this, and.
+Benjamin Reynolds 26 minutes 9 seconds
+But it will mostly link to the read me and the project. Yeah, just for things you guys want to add as well, you click on it and it forwards to just a read me to describe how to use it. A good one is auto tagging, for example. That doesn't go there. It comes to here, which has the how to use and how to implement.
+Benjamin Reynolds 26 minutes 30 seconds
+Depending on what you're doing, and that's a good way to...
+Benjamin Reynolds 26 minutes 35 seconds
+Make the document if there are two basically uses for it.
+Benjamin Reynolds 26 minutes 39 seconds
+Um, yeah.
+Benjamin Reynolds 26 minutes 41 seconds
+But that was just a quick...
+Benjamin Reynolds 26 minutes 43 seconds
+showing you where that document directory resides.
+Benjamin Reynolds 26 minutes 49 seconds
+And.
+Benjamin Reynolds 26 minutes 51 seconds
+Yeah.
+Benjamin Reynolds 26 minutes 53 seconds
+That's all from that, I think.
+Benjamin Reynolds 26 minutes 56 seconds
+Unless you want me to go into some auto tagging, I don't know if that is relevant here, Herbie.
+
+Herbie Barnett
+27 minutes 1 second27:01
+Herbie Barnett 27 minutes 1 second
+Um, let's recover off the auto manifest stuff.
+BR
+Benjamin Reynolds
+27 minutes 4 seconds27:04
+Benjamin Reynolds 27 minutes 4 seconds
+Yeah, sure. I will release the screen.
+Benjamin Reynolds 27 minutes 8 seconds
+Oh wait, no, I'm doing auto manifest, aren't I?
+
+Herbie Barnett
+27 minutes 10 seconds27:10
+Herbie Barnett 27 minutes 10 seconds
+Yeah, I don't mind. Yep.
+BR
+Benjamin Reynolds
+27 minutes 12 seconds27:12
+Benjamin Reynolds 27 minutes 12 seconds
+Yeah, think about where auto manifest resides. That would be tools, bash.
+Benjamin Reynolds 27 minutes 20 seconds
+Release manifest creation. Okay, it has been a while since I've gone into it. It hasn't been relevant for a while, Herbie, has it? So...
+
+Herbie Barnett
+27 minutes 30 seconds27:30
+Herbie Barnett 27 minutes 30 seconds
+It has not, no.
+BR
+Benjamin Reynolds
+27 minutes 31 seconds27:31
+Benjamin Reynolds 27 minutes 31 seconds
+So if we go into the documents here, we do have the auto manifest section here, which has a nice little description. So
+
+Benjamin Reynolds
+27 minutes 31 seconds27:31
+Benjamin Reynolds 27 minutes 31 seconds
+So if we go into the documents here, we do have the auto manifest section here, which has a nice little description. So
+Benjamin Reynolds 27 minutes 44 seconds
+I've instantly seen a typo. The auto manifest process has two stages and I've followed it by three. But yeah, the two stages of the auto manifest are the create the release ticket and the create the manifest. I guess the checking the jump tags. One isn't really relevant for now.
+Benjamin Reynolds 28 minutes 3 seconds
+Don't know if it will be again in the future and it isn't really part of an auto manifest. It is just something we clumped with it to see when we were jumping tags. I will maybe go into that later as it's not really that relevant. But yeah. So yeah, requires a few things, Python, YQ and JQ, as it does manipulate quite a lot of the data coming back and forth in Jason and YAML.
+Benjamin Reynolds 28 minutes 28 seconds
+Um...
+Benjamin Reynolds 28 minutes 30 seconds
+So, yeah, what the script actually does is it creates a release ticket. So when we create a release, we generally need a Jira ticket, which is used to manage that release itself. It creates that in Jira for you. And the command is right here.
+Benjamin Reynolds 28 minutes 51 seconds
+The specific data might be different when you guys get to it. This is based off of the previous structure, which was, as an example, a major, minor and patch version, dash FC number. So yeah,
+Benjamin Reynolds 29 minutes 10 seconds
+I think we are migrating away from using that structure, but I don't think we're required to put the FC anymore. The minus P.
+Benjamin Reynolds 29 minutes 19 seconds
+is something that is added for proxy. Now, the reason for that is because if you're running from a workspace or your poise, you cannot access Jira. You have to use the proxy to actually bypass that and get the result from it.
+Benjamin Reynolds 29 minutes 39 seconds
+It will not contact, it will time out if you do not specify the proxy. This is not specified if it's running in drone, only if you're running in your workspace. Okay, as you see, it's optional. Release version is mandatory there.
+Benjamin Reynolds 29 minutes 58 seconds
+So this is the first stage, it creates the release ticket.
+Benjamin Reynolds 30 minutes 2 seconds
+Do do do.
+Benjamin Reynolds 30 minutes 4 seconds
+Yeah, as you say, as you see, running from workspace or poise. If you're running from drone, you can put no, but you can just admit, oh wait, no, I changed that. It's not yes or no, it's just a parameter now. So it is just a minus P now. You don't put that in if you're running from drone. Okay, running this.
+Benjamin Reynolds 30 minutes 24 seconds
+scripts, so you need to install the requirements.txt as it does call Python and you will need to source the create manifest. Following that, you run the scripts via this method and it is, yeah, just an example here.
+Benjamin Reynolds 30 minutes 45 seconds
+So, this is assuming you are outside of the source code tools, but...
+Benjamin Reynolds 30 minutes 51 seconds
+There you go, that is the full.
+Benjamin Reynolds 30 minutes 53 seconds
+Directory structure for it. Same again, this is the version of the release you're doing. This is the ticket number.
+Benjamin Reynolds 31 minutes 4 seconds
+And this, yes, it's slightly different. Various people made these scripts. So this is proxy.
+Benjamin Reynolds 31 minutes 14 seconds
+As well, I may need to update this and document as.
+Benjamin Reynolds 31 minutes 19 seconds
+Parts have been updated during modifications, but some haven't.
+Benjamin Reynolds 31 minutes 26 seconds
+Yep, and the Python tagged tracker. This isn't relevant at all now, is it, Herbie?
+
+Herbie Barnett
+31 minutes 36 seconds31:36
+Herbie Barnett 31 minutes 36 seconds
+Good question. No, it's not. It's still, it's possibly. The problem is that with the new branching structure, we could no longer guarantee that things are linear. So therefore we can't determine that, you know, 1.0.0 is actually before 1.1.1, for example. So.
+BR
+Benjamin Reynolds
+31 minutes 40 seconds31:40
+Benjamin Reynolds 31 minutes 40 seconds
+Will it be?
+Benjamin Reynolds 31 minutes 44 seconds
+Okay.
+Benjamin Reynolds 31 minutes 54 seconds
+Okay, so I'll describe this just in case it is relevant in the future. How we used to do our branching strategy is that the devs would work on it, it would go into review, it would then get merged to master.
+Benjamin Reynolds 32 minutes 11 seconds
+From there, a tag would be built and then it would go along to the deployment. Now, the issue here is that we would specify in JIRA which...
+
+Herbie Barnett
+32 minutes 22 seconds32:22
+Herbie Barnett 32 minutes 22 seconds
+Yes.
+BR
+Benjamin Reynolds
+32 minutes 25 seconds32:25
+Benjamin Reynolds 32 minutes 25 seconds
+Tickets needed to be included in a release, and if...
+Benjamin Reynolds 32 minutes 33 seconds
+One developer was working on a ticket and that got merged and it was not supposed to be released. And then another developer was working on a ticket that needed to be released that got merged. While releasing that second ticket that was required, the previous one would, the previous ticket would also be released.
+Benjamin Reynolds 32 minutes 52 seconds
+This script would go through and cheque which tickets were being released, even though they were not specified in the release tags. Does that make sense to everyone?
+Benjamin Reynolds 33 minutes 8 seconds
+Not why we did the release that way. Does the words I just said explain what was happening?
+Benjamin Reynolds 33 minutes 20 seconds
+Yes, no, or any questions?
+Benjamin Reynolds 33 minutes 24 seconds
+Or thumbs up if you're okay.
+
+BR
+Benjamin Reynolds
+33 minutes 30 seconds33:30
+Benjamin Reynolds 33 minutes 30 seconds
+They used to be used a lot, this script, and this used to flag all of the jumps tags.
+DK
+Dhananjay Kumar
+33 minutes 42 seconds33:42
+Dhananjay Kumar 33 minutes 42 seconds
+And these days, we are not doing that many religious, or what's the story?
+BR
+Benjamin Reynolds
+33 minutes 46 seconds33:46
+Benjamin Reynolds 33 minutes 46 seconds
+Mhm.
+Benjamin Reynolds 33 minutes 48 seconds
+Not right now, we've changed the way of working since then. I'm describing this because the way of working keeps changing, so it may be relevant depending on what happened.
+Benjamin Reynolds 34 minutes
+Even if it's not with the way they decide, it may be relevant in some regards. You might be able to modify it if there is something similar.
+Benjamin Reynolds 34 minutes 11 seconds
+Okay.
+DK
+Dhananjay Kumar
+34 minutes 15 seconds34:15
+Dhananjay Kumar 34 minutes 15 seconds
+Yeah.
+BR
+Benjamin Reynolds
+34 minutes 17 seconds34:17
+Benjamin Reynolds 34 minutes 17 seconds
+Cool. Yeah, sure.
+MG
+Madhu Guthikonda
+34 minutes 18 seconds34:18
+Madhu Guthikonda 34 minutes 18 seconds
+Ben, I have a question: Is the script what exactly does mean? Does it cheque the comments that are created for the merge branch or?
+BR
+Benjamin Reynolds
+34 minutes 27 seconds34:27
+Benjamin Reynolds 34 minutes 27 seconds
+Um, I will...
+MG
+Madhu Guthikonda
+34 minutes 28 seconds34:28
+Madhu Guthikonda 34 minutes 28 seconds
+Does it act?
+BR
+Benjamin Reynolds
+34 minutes 30 seconds34:30
+Benjamin Reynolds 34 minutes 30 seconds
+This is me just going through what they do. I'm going to go through the scripts in a second. Would you like me to start with the jump tag checker, considering it's completely separate, and then go to the manifest creation after?
+MG
+Madhu Guthikonda
+34 minutes 35 seconds34:35
+Madhu Guthikonda 34 minutes 35 seconds
+YouTube.
+Madhu Guthikonda 34 minutes 43 seconds
+Yeah, yeah, no, that's fine.
+BR
+Benjamin Reynolds
+34 minutes 45 seconds34:45
+Benjamin Reynolds 34 minutes 45 seconds
+Okay. Unless anybody has any problems with that.
+Benjamin Reynolds 34 minutes 52 seconds
+Okay. Okay, so I believe...
+Benjamin Reynolds 34 minutes 59 seconds
+I also need to.
+Benjamin Reynolds 35 minutes 2 seconds
+Go into Python, because there's a lot of stuff here.
+Benjamin Reynolds 35 minutes 9 seconds
+Okay, so let's just...
+Benjamin Reynolds 35 minutes 13 seconds
+Is that him?
+Benjamin Reynolds 35 minutes 15 seconds
+Well, here, so it is the...
+Benjamin Reynolds 35 minutes 19 seconds
+Jump tag checker PY.
+Benjamin Reynolds 35 minutes 23 seconds
+So...
+Benjamin Reynolds 35 minutes 25 seconds
+Jump tag checker, PY.
+Benjamin Reynolds 35 minutes 28 seconds
+So...
+Benjamin Reynolds 35 minutes 30 seconds
+Give me a second because I'm getting my head around this and it can be quite confusing as you see it as a long script. So if we come straight into it, it does all the imports, which you know, most of them, well, they're all required for various reasons. It sets up your...
+Benjamin Reynolds 35 minutes 49 seconds
+or gets your bearer token and GitLab token, which are required to access Jira and GitLab.
+Benjamin Reynolds 36 minutes 5 seconds
+Just thinking if I have an example.
+Benjamin Reynolds 36 minutes 7 seconds
+Jira, yeah, V4.1.
+MG
+Madhu Guthikonda
+36 minutes 11 seconds36:11
+Madhu Guthikonda 36 minutes 11 seconds
+And and those tokens, are they service account tokens in both GitLab and Jeroen?
+BR
+Benjamin Reynolds
+36 minutes 18 seconds36:18
+Benjamin Reynolds 36 minutes 18 seconds
+One second, let me just do a search.
+Benjamin Reynolds 36 minutes 25 seconds
+Um...
+Benjamin Reynolds 36 minutes 33 seconds
+And it will say inside here, is it the release?
+Benjamin Reynolds 36 minutes 45 seconds
+Trying to see what is the label it uses, because we haven't used it in a while. Or do we still use the release label, Herbie?
+
+Herbie Barnett
+36 minutes 52 seconds36:52
+Herbie Barnett 36 minutes 52 seconds
+You do not know.
+BR
+Benjamin Reynolds
+36 minutes 54 seconds36:54
+Benjamin Reynolds 36 minutes 54 seconds
+No, okay, um, do do do, where is it setting the?
+Benjamin Reynolds 37 minutes 3 seconds
+Turn.
+Benjamin Reynolds 37 minutes 14 seconds
+Yeah.
+Benjamin Reynolds 37 minutes 16 seconds
+Gay version is what it uses.
+Benjamin Reynolds 37 minutes 23 seconds
+And that's the...
+Benjamin Reynolds 37 minutes 25 seconds
+Or not, you can get that bar using.
+Benjamin Reynolds 37 minutes 30 seconds
+Business.
+Benjamin Reynolds 37 minutes 39 seconds
+And.
+Benjamin Reynolds 37 minutes 48 seconds
+Okay, that doesn't help. Okay, I'll try and go through this a bit better. Okay, so it's, where is the start, the entry point for this?
+Benjamin Reynolds 38 minutes 5 seconds
+There we are. Okay, so it comes into here. It sets up a few parameters which are global, which are required for everything.
+Benjamin Reynolds 38 minutes 15 seconds
+cheques to see if we're using proxy and you can do it as a dry run if you want, which will get stuff and it will not.
+Benjamin Reynolds 38 minutes 27 seconds
+tag it as a tag jump, which is part of this process. It adds a label to let you know that it is a tag jump for that version.
+Benjamin Reynolds 38 minutes 36 seconds
+So, do do do starting.
+Benjamin Reynolds 38 minutes 41 seconds
+Cheques for the tokens.
+Benjamin Reynolds 38 minutes 45 seconds
+It takes AA.
+Benjamin Reynolds 38 minutes 48 seconds
+which are specified in the previous section, a base version, which is usually the main like what you're coming from, obviously, the release version, what you're releasing, and a label which you are checking Jira for. Inside Jira,
+Benjamin Reynolds 39 minutes 5 seconds
+things are set or tickets are set up with a label to what release or were set up with a label to what releases they were part of. And the tag jump label just added underscore TJ to the end of it. And FR was added to ones that have fully been released.
+Benjamin Reynolds 39 minutes 28 seconds
+And the reason for this is to make sure that things are set up as tag jump and not a tag jump correctly, rather than not putting the label on it. Okay, so it essentially gets the version differences. Now this here, get version differences, it will be...
+Benjamin Reynolds 39 minutes 47 seconds
+Good, if you...
+Benjamin Reynolds 39 minutes 50 seconds
+So, I'm used to searching in my IntelliJ. It basically gets the old and new versions of the charts and the project charts here.
+
+Herbie Barnett
+39 minutes 53 seconds39:53
+
+Herbie Barnett 39 minutes 53 seconds
+Yeah.
+BR
+Benjamin Reynolds
+40 minutes 7 seconds40:07
+Benjamin Reynolds 40 minutes 7 seconds
+A to do.
+Benjamin Reynolds 40 minutes 11 seconds
+It goes into the GitLab repo for each of the releases and it says, get me the old one, get me the new one, and return the...
+Benjamin Reynolds 40 minutes 23 seconds
+chart stuff from it. I mean, you don't really need to know much and that the names are generally set up in a way that you can understand what they're doing. So once it has the charts directories, it goes through them and it gets the manifests.
+
+Herbie Barnett
+40 minutes 31 seconds40:31
+Herbie Barnett 40 minutes 31 seconds
+Sure.
+BR
+Benjamin Reynolds
+40 minutes 40 seconds40:40
+Benjamin Reynolds 40 minutes 40 seconds
+It then does a diff.
+Benjamin Reynolds 40 minutes 43 seconds
+by the keys, it joins them and says, okay, what's the old one? What's the new one? And then it, I'm wondering, does it still output? I think it outputs the versions, but it basically, as you see here, for each service it finds, it puts the...
+
+Herbie Barnett
+41 minutes 2 seconds41:02
+Herbie Barnett 41 minutes 2 seconds
+You can do it from there.
+BR
+Benjamin Reynolds
+41 minutes 2 seconds41:02
+Benjamin Reynolds 41 minutes 2 seconds
+Current version and then the highest version with a diff between.
+Benjamin Reynolds 41 minutes 8 seconds
+the old and the new. This also means that if there is a rollback, it will not accept the rollback.
+Benjamin Reynolds 41 minutes 16 seconds
+as a jump, it will put the higher version, which can be a problem because it will always take the current if the new one is less. But if you're doing a rollback, then you kind of know what's already happening. So yeah.
+Benjamin Reynolds 41 minutes 36 seconds
+And from that, it returns the dependency diff, which is this.
+Benjamin Reynolds 41 minutes 42 seconds
+essentially Jason of the old and the new.
+Benjamin Reynolds 41 minutes 47 seconds
+I think it's Jason or it's Gamble, one or the other.
+Benjamin Reynolds 41 minutes 54 seconds
+And do do do.
+Benjamin Reynolds 41 minutes 57 seconds
+Support.
+Benjamin Reynolds 41 minutes 59 seconds
+There we are. So once it's got the list of versions.
+Benjamin Reynolds 42 minutes 5 seconds
+It goes to which item?
+Benjamin Reynolds 42 minutes 9 seconds
+and it finds the jump tickets. The way it does this is that it does a one line cheque and or one like get log.
+Benjamin Reynolds 42 minutes 23 seconds
+It does a log for each line and then it cheques to see as the Git commits start with the ticket number, if those ticket numbers exist in the release list.
+Benjamin Reynolds 42 minutes 40 seconds
+So if there was a few issues here when people accidentally committed with wrong ticket numbers and it would say it's a tag jump. So it did require a bit of manual intervention sometimes, as some things would pop up as tag jumps when they weren't. But essentially, that's how it does it. It does a one line git log.
+Benjamin Reynolds 43 minutes
+and then it cheques it against the ticket numbers.
+Benjamin Reynolds 43 minutes 4 seconds
+Um...
+Benjamin Reynolds 43 minutes 5 seconds
+And then, yeah, one second, do do do.
+Benjamin Reynolds 43 minutes 11 seconds
+Yeah, if it can't get the good log, it errors for you, so you can see that there's an error there.
+Benjamin Reynolds 43 minutes 18 seconds
+And then, oh yeah, to get the log, it has to cheque out the project, which it does there, so it removes it and it essentially just goes through each one, doing that exact same thing.
+Benjamin Reynolds 43 minutes 33 seconds
+Yeah, so what's remaining is the jump tickets.
+Benjamin Reynolds 43 minutes 42 seconds
+Do do do.
+Benjamin Reynolds 43 minutes 45 seconds
+Let me get you a ticket to get lab tags. So yeah.
+Benjamin Reynolds 43 minutes 50 seconds
+gets the tags, serialises tickets. What was this? This was a big function, wasn't it?
+Benjamin Reynolds 43 minutes 58 seconds
+As I said, sorry, this has been a while since I've gone over this, so...
+Benjamin Reynolds 44 minutes 7 seconds
+Um...
+Benjamin Reynolds 44 minutes 11 seconds
+I'm feeling this might be the other.
+Benjamin Reynolds 44 minutes 26 seconds
+Did I miss it? Did you guys see me go past that?
+Benjamin Reynolds 44 minutes 35 seconds
+So, I'm trying to get to the tabs here because the thing keeps swapping in my way.
+Benjamin Reynolds 44 minutes 41 seconds
+And.
+Benjamin Reynolds 44 minutes 51 seconds
+Serialised tickets, where are serialised tickets? Let's see, ah, get your release tickets, serialised tickets.
+Benjamin Reynolds 45 minutes 7 seconds
+Okay, so serialised tickets, strict is true. This cheques the tickets themselves and it cheques to see the GitLab tag field. And this basically is something that's filled in when you tag.
+Benjamin Reynolds 45 minutes 25 seconds
+A ticket and to say which tag it relates to. If this wasn't filled in correctly, it would fail completely. And yeah, as you see here, missing tags. If it's not specified as strict, then it doesn't really worry about this. It doesn't care about missing tags.
+Benjamin Reynolds 45 minutes 46 seconds
+However, if you haven't put a tag in, we assume that you have done something wrong with the script and it bails out as it needs the tag to know what's been jumped.
+Benjamin Reynolds 46 minutes
+So yeah, it will say this ticket is a jump ticket. It's in this version or it will add a tag to the list. So yeah, it compiles the list of those.
+Benjamin Reynolds 46 minutes 19 seconds
+And there you go, there's the warning that it outputs. And if it's strict, yeah. Although if it's strict, there should be another bit here. So I'm rushing through this a bit because it's not completely relevant, but maybe in the future and stop me if you have any questions.
+Benjamin Reynolds 46 minutes 38 seconds
+Yeah.
+Benjamin Reynolds 46 minutes 41 seconds
+And yeah, then it returns the.
+Benjamin Reynolds 46 minutes 48 seconds
+The output tickets, which should have the...
+Benjamin Reynolds 46 minutes 58 seconds
+Get lab tags in them.
+Benjamin Reynolds 47 minutes 2 seconds
+Once you have gone back here.
+Benjamin Reynolds 47 minutes 11 seconds
+There we are. So as the GitLab tags and any output from the result. Creates A dict of the jumped tickets, which we have specified up here.
+Benjamin Reynolds 47 minutes 25 seconds
+And do do do.
+
+Benjamin Reynolds 47 minutes 30 seconds
+and it goes through each ticket in the jump tickets and it starts to cheque them. If you've specified do not deploy in the GitLab tags, it notifies you in a big block so that you know that that cannot be deployed, so you hopefully don't miss it. If it is tagged jump, it does a load of govins here.
+Benjamin Reynolds 47 minutes 52 seconds
+which it cheques to see if the dependent tickets on it are deployed. If it is, it is considered fully deployed. So if we...
+Benjamin Reynolds 48 minutes 5 seconds
+Okay.
+Benjamin Reynolds 48 minutes 7 seconds
+If the project's in the GitLab tag list.
+Benjamin Reynolds 48 minutes 11 seconds
+And it does a comparison against the GitLab tags. So as you can understand it, if something has previously been pack jumped, then it may already be deployed.
+
+Herbie Barnett
+48 minutes 18 seconds48:18
+Herbie Barnett 48 minutes 18 seconds
+Yeah.
+BR
+Benjamin Reynolds
+48 minutes 28 seconds48:28
+Benjamin Reynolds 48 minutes 28 seconds
+And following that, if it is not fully deployed, it adds a tag jump label to the ticket so you know it's tag jumped.
+
+Herbie Barnett
+48 minutes 33 seconds48:33
+Herbie Barnett 48 minutes 33 seconds
+It's on the.
+Herbie Barnett 48 minutes 38 seconds
+People.
+BR
+Benjamin Reynolds
+48 minutes 39 seconds48:39
+Benjamin Reynolds 48 minutes 39 seconds
+It also cheques to see if it is complete or not complete or done, because we don't want to put through things that are in progress still and flags those with a warning.
+
+Herbie Barnett
+48 minutes 42 seconds48:42
+Herbie Barnett 48 minutes 42 seconds
+But it was important.
+Herbie Barnett 48 minutes 46 seconds
+Just tell me.
+Herbie Barnett 48 minutes 48 seconds
+What's that?
+BR
+Benjamin Reynolds
+48 minutes 51 seconds48:51
+Benjamin Reynolds 48 minutes 51 seconds
+And yeah, and then it updates the tickets themselves with the labels.
+
+Herbie Barnett
+48 minutes 51 seconds48:51
+Herbie Barnett 48 minutes 51 seconds
+Find Rider.
+Herbie Barnett 48 minutes 54 seconds
+No.
+Herbie Barnett 48 minutes 57 seconds
+When we go buy them.
+BR
+Benjamin Reynolds
+48 minutes 58 seconds48:58
+Benjamin Reynolds 48 minutes 58 seconds
+This is only if it's not a dry run.
+Benjamin Reynolds 49 minutes 2 seconds
+Then it close everything. So yeah, essentially what it does is it cheques to see if you've got any tag jumps by checking the...
+
+Herbie Barnett
+49 minutes 8 seconds49:08
+Herbie Barnett 49 minutes 8 seconds
+Gaut.
+BR
+Benjamin Reynolds
+49 minutes 11 seconds49:11
+Benjamin Reynolds 49 minutes 11 seconds
+ticket numbers against the release versions and the release versions you specified on the ticket. And then it labels each ticket as a tag jump if it should not be released and or isn't specified in release and a full release otherwise.
+
+Herbie Barnett
+49 minutes 12 seconds49:12
+Herbie Barnett 49 minutes 12 seconds
+I think it is.
+BR
+Benjamin Reynolds
+49 minutes 31 seconds49:31
+Benjamin Reynolds 49 minutes 31 seconds
+Any questions?
+Benjamin Reynolds 49 minutes 37 seconds
+Okay, I'll move on. So that's that bit. That does jump around a bit, so it does sometimes take a while to get your head around.
+
+
+
+Benjamin Reynolds
+48 minutes 51 seconds48:51
+Benjamin Reynolds 48 minutes 51 seconds
+And yeah, and then it updates the tickets themselves with the labels.
+
+Herbie Barnett
+48 minutes 51 seconds48:51
+Herbie Barnett 48 minutes 51 seconds
+Find Rider.
+Herbie Barnett 48 minutes 54 seconds
+No.
+Herbie Barnett 48 minutes 57 seconds
+When we go buy them.
+BR
+Benjamin Reynolds
+48 minutes 58 seconds48:58
+Benjamin Reynolds 48 minutes 58 seconds
+This is only if it's not a dry run.
+Benjamin Reynolds 49 minutes 2 seconds
+Then it close everything. So yeah, essentially what it does is it cheques to see if you've got any tag jumps by checking the...
+
+Herbie Barnett
+49 minutes 8 seconds49:08
+Herbie Barnett 49 minutes 8 seconds
+Gaut.
+BR
+Benjamin Reynolds
+49 minutes 11 seconds49:11
+Benjamin Reynolds 49 minutes 11 seconds
+ticket numbers against the release versions and the release versions you specified on the ticket. And then it labels each ticket as a tag jump if it should not be released and or isn't specified in release and a full release otherwise.
+
+Herbie Barnett
+49 minutes 12 seconds49:12
+Herbie Barnett 49 minutes 12 seconds
+I think it is.
+BR
+Benjamin Reynolds
+49 minutes 31 seconds49:31
+Benjamin Reynolds 49 minutes 31 seconds
+Any questions?
+Benjamin Reynolds 49 minutes 37 seconds
+Okay, I'll move on. So that's that bit. That does jump around a bit, so it does sometimes take a while to get your head around.
+
+Herbie Barnett
+49 minutes 42 seconds49:42
+Herbie Barnett 49 minutes 42 seconds
+My.
+Herbie Barnett 49 minutes 43 seconds
+Training.
+Herbie Barnett 49 minutes 47 seconds
+This.
+BR
+Benjamin Reynolds
+49 minutes 48 seconds49:48
+Benjamin Reynolds 49 minutes 48 seconds
+So the next bit is the...
+Benjamin Reynolds 49 minutes 52 seconds
+I'm already here. I'm already here. Okay, the...
+Benjamin Reynolds 49 minutes 57 seconds
+Create manifest.
+Benjamin Reynolds 50 minutes
+So, the create manifest direct, or create manifest script does exactly what it says. It creates a manifest. So, inside the Cerberus,
+Benjamin Reynolds 50 minutes 15 seconds
+If I can spell.
+Benjamin Reynolds 50 minutes 18 seconds
+Um...
+Benjamin Reynolds 50 minutes 19 seconds
+And I can't see what that's true.
+Benjamin Reynolds 50 minutes 37 seconds
+So inside Cerberus, as you guys will know, we have the chart directories for each.
+Benjamin Reynolds 50 minutes 46 seconds
+out of the sub products. So just grab one here. Inside the chart YAML, it specifies each of the services inside that sub product. And inside each of the values, it specifies, I'll go into the main one.
+
+Herbie Barnett
+51 minutes 8 seconds51:08
+Herbie Barnett 51 minutes 8 seconds
+It was.
+BR
+Benjamin Reynolds
+51 minutes 9 seconds51:09
+Benjamin Reynolds 51 minutes 9 seconds
+All of the pod.
+Benjamin Reynolds 51 minutes 12 seconds
+Um, parameters.
+Benjamin Reynolds 51 minutes 15 seconds
+Did I miss something? Oh, yeah, I missed something. Sorry. The version. Inside here, it specifies inside the chart YAML the version. So what the create manifest script will do is it will go through the list of specified release Jira tickets.
+
+Herbie Barnett
+51 minutes 19 seconds51:19
+Herbie Barnett 51 minutes 19 seconds
+You wanna wait?
+BR
+Benjamin Reynolds
+51 minutes 34 seconds51:34
+Benjamin Reynolds 51 minutes 34 seconds
+It will get the tags from them and it will update the relevant services.
+Benjamin Reynolds 51 minutes 43 seconds
+with those versions. So if I bring up a Jira ticket for that,
+Benjamin Reynolds 51 minutes 53 seconds
+What? That is the wrong one, isn't it? That is not Algera. This is Algera. So if I go into the search...
+Benjamin Reynolds 52 minutes 5 seconds
+And.
+Benjamin Reynolds 52 minutes 9 seconds
+What was the one we set Herbie? Was it?
+Benjamin Reynolds 52 minutes 14 seconds
+Release version.
+
+Herbie Barnett
+52 minutes 16 seconds52:16
+Herbie Barnett 52 minutes 16 seconds
+This underscore version we usually use, alright, do you mean do you mean the label? Sorry, yeah, so you'd have to search in the labels field, you'd have to label.
+BR
+Benjamin Reynolds
+52 minutes 21 seconds52:21
+Benjamin Reynolds 52 minutes 21 seconds
+Yeah.
+Benjamin Reynolds 52 minutes 26 seconds
+Is it just label? Okay.
+
+Herbie Barnett
+52 minutes 27 seconds52:27
+Herbie Barnett 52 minutes 27 seconds
+Yeah, just label, and then value do like 5, the five dots, something you find the example, okay.
+Herbie Barnett 52 minutes 36 seconds
+Yes.
+BR
+Benjamin Reynolds
+52 minutes 48 seconds52:48
+Benjamin Reynolds 52 minutes 48 seconds
+I think that, was it 4019 that we had the version? Oh, no, sir. As you see, inside the labels, we've got 5019.
+Benjamin Reynolds 53 minutes 3 seconds
+as the release version. This is the thing that will be taken. Obviously, some of these have other ones, 520.
+Benjamin Reynolds 53 minutes 13 seconds
+A lot of these do have NA in GitLab tag, but this down here has the tag link provided by GitLab when you tag something. So this is what is used by that get tag section and what is required when you put the GitLab tag in.
+
+Herbie Barnett
+53 minutes 21 seconds53:21
+Herbie Barnett 53 minutes 21 seconds
+Thank you.
+BR
+Benjamin Reynolds
+53 minutes 33 seconds53:33
+Benjamin Reynolds 53 minutes 33 seconds
+So, it only accepts the link.
+Benjamin Reynolds 53 minutes 37 seconds
+relating to a service dash tags dash or slash.
+Benjamin Reynolds 53 minutes 44 seconds
+tag number and you can have multiple in here as long as they are separated by a new line.
+Benjamin Reynolds 53 minutes 50 seconds
+So these, or this is how the release tags are structured.
+
+Herbie Barnett
+53 minutes 56 seconds53:56
+Herbie Barnett 53 minutes 56 seconds
+Ms.
+BR
+Benjamin Reynolds
+53 minutes 58 seconds53:58
+Benjamin Reynolds 53 minutes 58 seconds
+So in here, 6423, if this MM, actually, what is this here? We are.
+Benjamin Reynolds 54 minutes 8 seconds
+In here it is justification service. So let's use that one as an example.
+
+Benjamin Reynolds 55 minutes 13 seconds
+OK, the scripts themselves.
+Benjamin Reynolds 55 minutes 17 seconds
+So it takes a few parameters, takes the version, which is as a V, and a ticket number, which, as I said, is required to manage the release itself. Proxy required is Y,
+
+Herbie Barnett
+55 minutes 26 seconds55:26
+Herbie Barnett 55 minutes 26 seconds
+Yeah, so can we say?
+BR
+Benjamin Reynolds
+55 minutes 32 seconds55:32
+Benjamin Reynolds 55 minutes 32 seconds
+T.
+Benjamin Reynolds 55 minutes 34 seconds
+Oh, no, sorry, proxy required here is P. Sorry, get confused, which sets it to yes, and if you don't specify it, it exits.
+
+Herbie Barnett
+56 minutes 2 seconds56:02
+Herbie Barnett 56 minutes 2 seconds
+This is.
+BR
+Benjamin Reynolds
+56 minutes 3 seconds56:03
+Benjamin Reynolds 56 minutes 3 seconds
+out of a group of scripts, it won't just return to the previous script and maybe cause some havoc. This is just standard stuff to say set it correctly. It outputs at first the list of parameters that you're running.
+
+Herbie Barnett
+56 minutes 3 seconds56:03
+Herbie Barnett 56 minutes 3 seconds
+I.
+Herbie Barnett 56 minutes 16 seconds
+Play Guthikonda.
+BR
+Benjamin Reynolds
+56 minutes 23 seconds56:23
+Benjamin Reynolds 56 minutes 23 seconds
+This is mostly for debugging, so you can see right away if it's correct and gives you a chance to cancel it.
+Benjamin Reynolds 56 minutes 33 seconds
+sanitises the sanitary cheques the version you've put in to make sure that it is correct and it follows our structure.
+
+Herbie Barnett
+56 minutes 36 seconds56:36
+Herbie Barnett 56 minutes 36 seconds
+Thank you.
+Herbie Barnett 56 minutes 47 seconds
+Thank you.
+BR
+Benjamin Reynolds
+56 minutes 49 seconds56:49
+Benjamin Reynolds 56 minutes 49 seconds
+This here sets the parameters for the curl, as it is not a minus P, it expects no proxy, which is added to the end and it's done here, which gets the release values using the get Jira release tickets script.
+
+Herbie Barnett
+57 minutes 3 seconds57:03
+Herbie Barnett 57 minutes 3 seconds
+No.
+BR
+Benjamin Reynolds
+57 minutes 9 seconds57:09
+Benjamin Reynolds 57 minutes 9 seconds
+Ohh, God, I closed the...
+Benjamin Reynolds 57 minutes 12 seconds
+Python.
+Benjamin Reynolds 57 minutes 19 seconds
+Yep, I believe this is the one with the serial eyes.
+Benjamin Reynolds 57 minutes 23 seconds
+What is it? Tell me that.
+Benjamin Reynolds 57 minutes 26 seconds
+Yep, this is the one with the serialised tickets in, so...
+Benjamin Reynolds 57 minutes 32 seconds
+This does a few checks.
+Benjamin Reynolds 57 minutes 34 seconds
+Which?
+Benjamin Reynolds 57 minutes 36 seconds
+Function was it calling?
+Benjamin Reynolds 57 minutes 44 seconds
+And this was running the...
+Benjamin Reynolds 57 minutes 48 seconds
+Oh, it's just running the script itself, so that's going to call the main.
+Benjamin Reynolds 57 minutes 55 seconds
+We go.
+Benjamin Reynolds 57 minutes 57 seconds
+So.
+Benjamin Reynolds 57 minutes 59 seconds
+Yeah, so this one using the proxy server, if it's specified, as I said, you cannot access Jira without a proxy server when you're running locally or on workspace rather. Goes through.
+Benjamin Reynolds 58 minutes 19 seconds
+OK, gets the version label and it.
+Benjamin Reynolds 58 minutes 30 seconds
+Gareth.
+Benjamin Reynolds 58 minutes 32 seconds
+Seconds.
+Benjamin Reynolds 58 minutes 36 seconds
+Yep, this gets the label field and it gets the, if we scroll down and I'll show you which bits it's looking at for the field once I.
+
+Herbie Barnett
+58 minutes 42 seconds58:42
+Herbie Barnett 58 minutes 42 seconds
+The.
+BR
+Benjamin Reynolds
+58 minutes 46 seconds58:46
+Benjamin Reynolds 58 minutes 46 seconds
+Tell you it gets the total issues for the release that you specified. Now, U here inside the...
+
+Herbie Barnett
+58 minutes 48 seconds58:48
+Herbie Barnett 58 minutes 48 seconds
+Yeah.
+BR
+Benjamin Reynolds
+58 minutes 57 seconds58:57
+Benjamin Reynolds 58 minutes 57 seconds
+JSON, we specified what it needs to get. So headers and they're pretty standard. Parameters in JQL, we specified, where have I clicked? That was not what I wanted to click. We specified that we need the label field. The label field, however,
+Benjamin Reynolds 59 minutes 17 seconds
+not label field, sorry, the Gitlab tag field is this field here.
+Benjamin Reynolds 59 minutes 23 seconds
+Um...
+Benjamin Reynolds 59 minutes 25 seconds
+So bear that in mind if you're looking into Jira, our custom fields, or rather custom fields that you specified, even though they have a name in Jira, they will have a custom field number. So that is the custom field number for the GitLab tag fields. I think we've specified it up top.
+Benjamin Reynolds 59 minutes 47 seconds
+but it uses single quotes down here. No, okay, maybe not on the script.
+Benjamin Reynolds 59 minutes 54 seconds
+Um...
+Benjamin Reynolds 59 minutes 57 seconds
+And obviously a page size that we specify, which is modifiable up top.
+Benjamin Reynolds 1 hour 6 seconds
+There you go, D4 is 50.
+Benjamin Reynolds 1 hour 10 seconds
+So that will go through and it will basically get all of the tickets for that and all of the issues and then it returns the list of issues and the GitLab tags relating to it.
+Benjamin Reynolds 1 hour 26 seconds
+Mm.
+Benjamin Reynolds 1 hour 27 seconds
+It's up here, isn't it? It's main.
+Benjamin Reynolds 1 hour 33 seconds
+Out of that, it gets the tickets themselves, as those are the things that we need to get right through.
+Benjamin Reynolds 1 hour 43 seconds
+So a lot of inline.
+Benjamin Reynolds 1 hour 47 seconds
+statements here, which makes it sometimes a little bit difficult to go through, but it does cut down a lot on the line numbers. So this is pretty self-explanatory in terms of tickets. Basically get the
+Benjamin Reynolds 1 hour 1 minute 1 second
+Tickets tags for tickets, so we're basically converting them to a list of output items. So, inside the tickets with tags, which is here,
+Benjamin Reynolds 1 hour 1 minute 15 seconds
+Actually, just go through those to do and make sure to say here.
+Benjamin Reynolds 1 hour 1 minute 24 seconds
+If you don't specify the right stuff, that it quits.
+Benjamin Reynolds 1 hour 1 minute 31 seconds
+Yeah, as I said, we need to make sure that you've specified the correct values. Otherwise, we assume that you've done the ticket wrong.
+Benjamin Reynolds 1 hour 1 minute 42 seconds
+And.
+
+Benjamin Reynolds 1 hour 2 minutes 58 seconds
+Yes.
+Benjamin Reynolds 1 hour 3 minutes 2 seconds
+Okay, there was a bit of an issue when I was making it where some things were using the HTTPS and some were using SSH. So rather continually remember to change it back and forth, I just set it. It tries one.
+Benjamin Reynolds 1 hour 3 minutes 20 seconds
+If it times out, it tries the other. So if you're running this and you start to see a timeout, don't worry about it.
+Benjamin Reynolds 1 hour 3 minutes 28 seconds
+it most probably is just making sure that it's using the right type. So you'll see cloning using this, and if not, it will fail and use the other one.
+Benjamin Reynolds 1 hour 3 minutes 42 seconds
+And.
+Benjamin Reynolds 1 hour 3 minutes 44 seconds
+and then it clones the repo, the service repo, so that we can start modifying it for the battery.
+Benjamin Reynolds 1 hour 3 minutes 59 seconds
+Start modifying it for...
+Benjamin Reynolds 1 hour 4 minutes 3 seconds
+The manifest release.
+Benjamin Reynolds 1 hour 4 minutes 7 seconds
+Okay, so the next bit, it essentially just iterates through each of the key pairs and says, okay, this is the
+Benjamin Reynolds 1 hour 4 minutes 18 seconds
+service we're talking about, this is the version, update it in the file.
+Benjamin Reynolds 1 hour 4 minutes 26 seconds
+It does copy the initial state to do a diff against.
+Benjamin Reynolds 1 hour 4 minutes 29 seconds
+But, yeah.
+Benjamin Reynolds 1 hour 4 minutes 32 seconds
+Um...
+Benjamin Reynolds 1 hour 4 minutes 33 seconds
+Script, where is script?
+Benjamin Reynolds 1 hour 4 minutes 50 seconds
+Ah, yes, it is self. So it does call itself for various functions as well.
+Benjamin Reynolds 1 hour 5 minutes 2 seconds
+And you'll see, I'll explain this in a minute, but you'll see like script here in a few different scripts so that it can reference other scripts that are in other directories in reference to its own location.
+Benjamin Reynolds 1 hour 5 minutes 17 seconds
+So, through each of the key pairs, it gets the project and the version.
+Benjamin Reynolds 1 hour 5 minutes 21 seconds
+and then it's essentially...
+Benjamin Reynolds 1 hour 5 minutes 24 seconds
+updates the version in the chart unless it's NA. NA you can specify in the GitLab tags so that it doesn't update it. So there may be a change that does not have a tag and that happens with some things.
+Benjamin Reynolds 1 hour 5 minutes 44 seconds
+It may be that it's you've just updated some tests. You don't need to build a tag for it. So you'll put NA in the GitLab tag field and it will skip it, but it will also notify you about it. There are exceptions in these.
+Benjamin Reynolds 1 hour 6 minutes
+So, DB Liquibase, it modifies those because if we go in to handle DB Liquibase exceptions, DB Liquibase relates to multiple different projects and as a result,
+Benjamin Reynolds 1 hour 6 minutes 19 seconds
+It has the, if Liquibase is updated, it needs to update all of these.
+Benjamin Reynolds 1 hour 6 minutes 27 seconds
+Okay.
+Benjamin Reynolds 1 hour 6 minutes 31 seconds
+And.
+Benjamin Reynolds 1 hour 6 minutes 34 seconds
+There you go. Also, schema registry, that was a different name. We have since released a new version of it, which is not MMASR at SVC, but these things are replaced.
+Benjamin Reynolds 1 hour 6 minutes 52 seconds
+and for everything else, it updates that version in the chart and it just, it does a brute force. It goes through files and it says, do I find this service in any files and then update it. We then update the
+Benjamin Reynolds 1 hour 7 minutes 9 seconds
+change log file for what we've done, which it says the ticket number which we specified and it says that you've auto-manifested the changes so that we can keep a log of what was auto-manifested and what wasn't. Commits, pushes,
+Benjamin Reynolds 1 hour 7 minutes 27 seconds
+removes the stuff you've downloaded and then it runs a script to notify Slack. That's pretty standard stuff. I will go into the change log file.
+Benjamin Reynolds 1 hour 7 minutes 41 seconds
+and.
+Benjamin Reynolds 1 hour 7 minutes 42 seconds
+function or I will not because it's not in there.
+Benjamin Reynolds 1 hour 7 minutes 47 seconds
+Support.
+Benjamin Reynolds 1 hour 7 minutes 49 seconds
+OK, fair enough. Essentially, what this does is inside bash.
+Benjamin Reynolds 1 hour 7 minutes 57 seconds
+we have a load of helper scripts. So this is before you go into the release manifest creation directory. And this is going to, is it get utils?
+Benjamin Reynolds 1 hour 8 minutes 11 seconds
+Yep, change change log file. This, we've got a load of helper functions in here for various different things. This obviously adds to the change log file. It's very basic, but it adds something that we can use. You specify the
+Benjamin Reynolds 1 hour 8 minutes 29 seconds
+project directory that you want to modify and the text that you want to add in it and the examples here. But that is essentially what it does to end that auto manifest so that we have the record of it. It is then pushed and then MR is created and you know all the standard governs there. But these scripts are also
+Benjamin Reynolds 1 hour 8 minutes 51 seconds
+interesting things to look through. So we've got various functions in here for committing changes, pushing changes, creating branches from master, creating new branch from current branch and such, creating new MR so that if you have things that you want to do, you don't need to start looking up how to
+Benjamin Reynolds 1 hour 9 minutes 11 seconds
+do it, this does it for you.
+Benjamin Reynolds 1 hour 9 minutes 17 seconds
+And these.
+Benjamin Reynolds 1 hour 9 minutes 20 seconds
+This is the one that we use in part of the scripts inside where we push the MR to the slack room. So as an example of this, we use the minus C and get, which uses the project path that you specify. As we've got changes, it sets the upstream.
+Benjamin Reynolds 1 hour 9 minutes 40 seconds
+To the branch itself, as we just created it, and then it pushes it.
+Benjamin Reynolds 1 hour 9 minutes 48 seconds
+add to the title that's generated. And yeah, just says create the merge request. And generally these output a nice little bit of text to say what we've done. Yeah.
+Benjamin Reynolds 1 hour 10 minutes 10 seconds
+I think.
+Benjamin Reynolds 1 hour 10 minutes 12 seconds
+For the auto manifest, it was quite long, and but that is the bulk of it.
+Benjamin Reynolds 1 hour 10 minutes 21 seconds
+I can show you one run.
+Benjamin Reynolds 1 hour 10 minutes 31 seconds
+Release manifest creation. So this is the project that it uses, which this project.
+Benjamin Reynolds 1 hour 10 minutes 47 seconds
+is just a container for what it does.
+Benjamin Reynolds 1 hour 10 minutes 54 seconds
+Beside the drone.
+Benjamin Reynolds 1 hour 10 minutes 56 seconds
+It cheques out the...
+Benjamin Reynolds 1 hour 11 minutes 2 seconds
+It's the step because we're looking in the drone. Release manifest creation. Where's the drone here? I haven't got it, of course.
+Benjamin Reynolds 1 hour 11 minutes 20 seconds
+There we go.
+Benjamin Reynolds 1 hour 11 minutes 33 seconds
+Yeah, okay, let's see.
+
+Benjamin Reynolds 1 hour 12 minutes 15 seconds
+The release version, the base version.
+Benjamin Reynolds 1 hour 12 minutes 19 seconds
+And the release label.
+Benjamin Reynolds 1 hour 12 minutes 23 seconds
+And the new branch name, which is generally the...
+Benjamin Reynolds 1 hour 12 minutes 28 seconds
+New release version with dash auto manifest at the end and a ticket number, and it's running in drone, so there's no proxy.
+Benjamin Reynolds 1 hour 12 minutes 41 seconds
+Going through one minute, are there not many changes here?
+Benjamin Reynolds 1 hour 12 minutes 51 seconds
+Two issues, that would be why. Only 2 issues. So starting manifest creation.
+Benjamin Reynolds 1 hour 12 minutes 59 seconds
+As you see, yep, here's a nice little output from the git utils that I was showing you.
+Benjamin Reynolds 1 hour 13 minutes 6 seconds
+It's created a new branch.
+Benjamin Reynolds 1 hour 13 minutes 8 seconds
+So new branch created from the project Cerberus base branch was released 500. The new branch it created was released 540 also manifest.
+Benjamin Reynolds 1 hour 13 minutes 19 seconds
+Okay.
+Benjamin Reynolds 1 hour 13 minutes 21 seconds
+Start manifestation.
+Benjamin Reynolds 1 hour 13 minutes 24 seconds
+Skipping, so the first one it found had NA in the tag.
+Benjamin Reynolds 1 hour 13 minutes 28 seconds
+And the next one says it was updating MMA travel history enrichment.
+Benjamin Reynolds 1 hour 13 minutes 36 seconds
+with version 515 from 510, and it specifies also with the greater version. Now, this may seem logical that 515 is going to be greater than 510, but there were...
+Benjamin Reynolds 1 hour 13 minutes 48 seconds
+some things that did not look right at one point, we decided to output the greater version at the end, just to make sure that it's doing it correctly.
+Benjamin Reynolds 1 hour 13 minutes 59 seconds
+It's finished with it, and it's a change log, and then it creates an edge request.
+Benjamin Reynolds 1 hour 14 minutes 4 seconds
+Um...
+Benjamin Reynolds 1 hour 14 minutes 6 seconds
+Yeah.
+Benjamin Reynolds 1 hour 14 minutes 9 seconds
+Cleans up and removes and blah blah blah.
+Benjamin Reynolds 1 hour 14 minutes 16 seconds
+If you want to see it, this is the output of the...
+Benjamin Reynolds 1 hour 14 minutes 21 seconds
+Tag jump.
+Benjamin Reynolds 1 hour 14 minutes 23 seconds
+See, as you can see, it's...
+Benjamin Reynolds 1 hour 14 minutes 26 seconds
+Seeing this, it's a full release ticket. However, the ticket is still in test.
+Benjamin Reynolds 1 hour 14 minutes 32 seconds
+which is not ideal.
+Benjamin Reynolds 1 hour 14 minutes 34 seconds
+Um...
+Benjamin Reynolds 1 hour 14 minutes 36 seconds
+For that.
+Benjamin Reynolds 1 hour 14 minutes 39 seconds
+As you can see, the label for that one was changed to 50FR as a full release. These generally would have been looked at or will be looked at by the release manager to make sure that they are suitable for release or if some rollback needs to be done.
+Benjamin Reynolds 1 hour 14 minutes 59 seconds
+And.
+Benjamin Reynolds 1 hour 15 minutes 1 second
+To be fair, I would really like one that's...
+Benjamin Reynolds 1 hour 15 minutes 5 seconds
+Took a bit longer, so that was by...
+Benjamin Reynolds 1 hour 15 minutes 11 seconds
+Oh, one month ago. Okay. That was 51 seconds. Have we got any longer ones here?
+Benjamin Reynolds 1 hour 15 minutes 25 seconds
+They got me from me, that's a merchant branch, though.
+Benjamin Reynolds 1 hour 15 minutes 36 seconds
+Will be quite quick, but I think I saw one.
+Benjamin Reynolds 1 hour 15 minutes 39 seconds
+A minute and a half. That should have a nice amount of tickets in it.
+Benjamin Reynolds 1 hour 15 minutes 44 seconds
+And.
+Benjamin Reynolds 1 hour 15 minutes 47 seconds
+And if we go into here, OK.
+Benjamin Reynolds 1 hour 15 minutes 51 seconds
+Okay, no, it's only got 6 tickets, but it's more than two. So you can see here it goes through.
+Benjamin Reynolds 1 hour 15 minutes 58 seconds
+Skips one, updates the rest, it skips another one.
+Benjamin Reynolds 1 hour 16 minutes 4 seconds
+Because the update version.
+Benjamin Reynolds 1 hour 16 minutes 10 seconds
+of 690 is less than equal to 691, the current manifest version.
+Benjamin Reynolds 1 hour 16 minutes 16 seconds
+Um...
+Benjamin Reynolds 1 hour 16 minutes 19 seconds
+That might or should be the other way around, and.
+Benjamin Reynolds 1 hour 16 minutes 24 seconds
+Do do do.
+Benjamin Reynolds 1 hour 16 minutes 26 seconds
+Is my mind not working? Anyway, yeah, outputs all these.
+Benjamin Reynolds 1 hour 16 minutes 31 seconds
+labels for you to understand what exactly is changing. The other ones here seem to have changed fine.
+Benjamin Reynolds 1 hour 16 minutes 39 seconds
+And any other errors? Nope. Edits the change log and then it does the other clearing up stuff.
+Benjamin Reynolds 1 hour 16 minutes 49 seconds
+And then here you go, a bit more information inside the tag jump.
+Benjamin Reynolds 1 hour 16 minutes 55 seconds
+processes this service. It cheques between start tag and end tag.
+Benjamin Reynolds 1 hour 17 minutes 3 seconds
+Fully released tickets is this one and it adds the label. It doesn't find any issues with it.
+Benjamin Reynolds 1 hour 17 minutes 10 seconds
+Cheques between these two, doesn't find any issues. No, and then it finds another one with multiple tickets.
+Benjamin Reynolds 1 hour 17 minutes 19 seconds
+Full release, as we see, and full release.
+Benjamin Reynolds 1 hour 17 minutes 24 seconds
+Um...
+Benjamin Reynolds 1 hour 17 minutes 27 seconds
+It's found a blocked.
+Benjamin Reynolds 1 hour 17 minutes 30 seconds
+It has also...
+Benjamin Reynolds 1 hour 17 minutes 33 seconds
+Mm.
+Benjamin Reynolds 1 hour 17 minutes 36 seconds
+Okay, no, it didn't find anything. I just saw this and got confused. This here, as you see, is somebody has entered the incorrect tag.
+Benjamin Reynolds 1 hour 17 minutes 46 seconds
+In that ticket, so...
+Benjamin Reynolds 1 hour 17 minutes 50 seconds
+Interesting why it passed, but yeah.
+Benjamin Reynolds 1 hour 17 minutes 56 seconds
+It should have failed at this point. We might have changed it. But yeah, if people enter the wrong thing, it generally fails, but it will give you an output saying for this ticket, there's been an error.
+Benjamin Reynolds 1 hour 18 minutes 8 seconds
+I think that covers all of the...
+Benjamin Reynolds 1 hour 18 minutes 11 seconds
+Scenarios.
+Benjamin Reynolds 1 hour 18 minutes 13 seconds
+We've got the works.
+Benjamin Reynolds 1 hour 18 minutes 17 seconds
+Ticket status and the incorrect tag version.
+Benjamin Reynolds 1 hour 18 minutes 24 seconds
+Any questions?
+Benjamin Reynolds 1 hour 18 minutes 27 seconds
+Oh, and no tags found, sorry. That should have also failed it, but maybe we've changed it to be looser in terms of the generation recently.
+Benjamin Reynolds 1 hour 18 minutes 40 seconds
+Any questions?
+JP
+Jason Pang
+1 hour 18 minutes 42 seconds1:18:42
+Jason Pang 1 hour 18 minutes 42 seconds
+On the workspace, what are parameters?
+Jason Pang 1 hour 18 minutes 47 seconds
+with the proxy server that you export.
+Jason Pang 1 hour 18 minutes 51 seconds
+To allow it to talk to Jira.
+BR
+Benjamin Reynolds
+1 hour 18 minutes 54 seconds1:18:54
+Benjamin Reynolds 1 hour 18 minutes 54 seconds
+OK, so is this the scripts?
+Benjamin Reynolds 1 hour 19 minutes 5 seconds
+The proxy we use is user proxy poise home office local ATOT.
+Benjamin Reynolds 1 hour 19 minutes 17 seconds
+This to be.
+Benjamin Reynolds 1 hour 19 minutes 25 seconds
+And inside a Jason that goes into there. However.
+Benjamin Reynolds 1 hour 19 minutes 33 seconds
+AG.
+Benjamin Reynolds 1 hour 19 minutes 42 seconds
+Start on my workspace quickly. I'll show you the, hopefully if I've got it in my history, the command that you add if you are trying to curl locally. One minute, this is using.
+Benjamin Reynolds 1 hour 19 minutes 58 seconds
+This is Python, right? Yes, we might actually have it in the best share, actually.
+Benjamin Reynolds 1 hour 20 minutes 9 seconds
+Oxy.
+Benjamin Reynolds 1 hour 20 minutes 17 seconds
+No, we go through Python for those requests. So let me quickly...
+JP
+Jason Pang
+1 hour 20 minutes 29 seconds1:20:29
+Jason Pang 1 hour 20 minutes 29 seconds
+Yeah, Ben, no worries. Just maybe you could send it later. I think you've overrun anyway for 25 minutes.
+BR
+Benjamin Reynolds
+1 hour 20 minutes 36 seconds1:20:36
+Benjamin Reynolds 1 hour 20 minutes 36 seconds
+Oh, yeah, sorry, it's very complicated, those scripts and
+
+Benjamin Reynolds 1 hour 17 minutes 36 seconds
+Okay, no, it didn't find anything. I just saw this and got confused. This here, as you see, is somebody has entered the incorrect tag.
+Benjamin Reynolds 1 hour 17 minutes 46 seconds
+In that ticket, so...
+Benjamin Reynolds 1 hour 17 minutes 50 seconds
+Interesting why it passed, but yeah.
+Benjamin Reynolds 1 hour 17 minutes 56 seconds
+It should have failed at this point. We might have changed it. But yeah, if people enter the wrong thing, it generally fails, but it will give you an output saying for this ticket, there's been an error.
+Benjamin Reynolds 1 hour 18 minutes 8 seconds
+I think that covers all of the...
+Benjamin Reynolds 1 hour 18 minutes 11 seconds
+Scenarios.
+Benjamin Reynolds 1 hour 18 minutes 13 seconds
+We've got the works.
+Benjamin Reynolds 1 hour 18 minutes 17 seconds
+Ticket status and the incorrect tag version.
+Benjamin Reynolds 1 hour 18 minutes 24 seconds
+Any questions?
+Benjamin Reynolds 1 hour 18 minutes 27 seconds
+Oh, and no tags found, sorry. That should have also failed it, but maybe we've changed it to be looser in terms of the generation recently.
+Benjamin Reynolds 1 hour 18 minutes 40 seconds
+Any questions?
+JP
+Jason Pang
+1 hour 18 minutes 42 seconds1:18:42
+Jason Pang 1 hour 18 minutes 42 seconds
+On the workspace, what are parameters?
+Jason Pang 1 hour 18 minutes 47 seconds
+with the proxy server that you export.
+Jason Pang 1 hour 18 minutes 51 seconds
+To allow it to talk to Jira.
+BR
+Benjamin Reynolds
+1 hour 18 minutes 54 seconds1:18:54
+Benjamin Reynolds 1 hour 18 minutes 54 seconds
+OK, so is this the scripts?
+Benjamin Reynolds 1 hour 19 minutes 5 seconds
+The proxy we use is user proxy poise home office local ATOT.
+Benjamin Reynolds 1 hour 19 minutes 17 seconds
+This to be.
+Benjamin Reynolds 1 hour 19 minutes 25 seconds
+And inside a Jason that goes into there. However.
+Benjamin Reynolds 1 hour 19 minutes 33 seconds
+AG.
+Benjamin Reynolds 1 hour 19 minutes 42 seconds
+Start on my workspace quickly. I'll show you the, hopefully if I've got it in my history, the command that you add if you are trying to curl locally. One minute, this is using.
+Benjamin Reynolds 1 hour 19 minutes 58 seconds
+This is Python, right? Yes, we might actually have it in the best share, actually.
+Benjamin Reynolds 1 hour 20 minutes 9 seconds
+Oxy.
+Benjamin Reynolds 1 hour 20 minutes 17 seconds
+No, we go through Python for those requests. So let me quickly...
+JP
+Jason Pang
+1 hour 20 minutes 29 seconds1:20:29
+Jason Pang 1 hour 20 minutes 29 seconds
+Yeah, Ben, no worries. Just maybe you could send it later. I think you've overrun anyway for 25 minutes.
+BR
+Benjamin Reynolds
+1 hour 20 minutes 36 seconds1:20:36
+Benjamin Reynolds 1 hour 20 minutes 36 seconds
+Oh, yeah, sorry, it's very complicated, those scripts and.
+Benjamin Reynolds 1 hour 20 minutes 43 seconds
+Yeah, it's better for you to understand what it's doing, which is why I kept stopping asking for questions. Because, yeah, so if I...
+Benjamin Reynolds 1 hour 20 minutes 53 seconds
+Is it?
+Benjamin Reynolds 1 hour 20 minutes 58 seconds
+Yep, so as you hear, see here, if you're curling, it's just the dash slash proxy and you can put the.
+Benjamin Reynolds 1 hour 21 minutes 5 seconds
+proxy value there.
+Benjamin Reynolds 1 hour 21 minutes 9 seconds
+and it will, yeah, it will work. So I can...
+Benjamin Reynolds 1 hour 21 minutes 21 seconds
+As an example.
+Benjamin Reynolds 1 hour 21 minutes 24 seconds
+So that comes back with data.
+Benjamin Reynolds 1 hour 21 minutes 27 seconds
+However, watch how I take it away and it works now.
+Benjamin Reynolds 1 hour 21 minutes 31 seconds
+No, okay. It will not work. It will just time out if you do not put the proxy.
+Benjamin Reynolds 1 hour 21 minutes 39 seconds
+Okay.
+JP
+Jason Pang
+1 hour 21 minutes 40 seconds1:21:40
+Jason Pang 1 hour 21 minutes 40 seconds
+Bye, thank you.
+BR
+Benjamin Reynolds
+1 hour 21 minutes 42 seconds1:21:42
+Benjamin Reynolds 1 hour 21 minutes 42 seconds
+There you go.
+Benjamin Reynolds 1 hour 21 minutes 45 seconds
+Anymore questions?
+Benjamin Reynolds 1 hour 21 minutes 58 seconds
+Okay, cool.
+JP
+Jason Pang
+1 hour 22 minutes 2 seconds1:22:02
+Jason Pang 1 hour 22 minutes 2 seconds
+All right, thanks, Herbie. Thanks, man.
+BR
+Benjamin Reynolds
+1 hour 22 minutes 5 seconds1:22:05
+Benjamin Reynolds 1 hour 22 minutes 5 seconds
+Is that everything, Herbie? Any more that you want to?
+Benjamin Reynolds 1 hour 22 minutes 11 seconds
+KG.
+JP
+Jason Pang
+1 hour 22 minutes 13 seconds1:22:13
+Jason Pang 1 hour 22 minutes 13 seconds
+He put on the chat, be right back, so I assume it'll be fine.
+BR
+Benjamin Reynolds
+1 hour 22 minutes 16 seconds1:22:16
+Benjamin Reynolds 1 hour 22 minutes 16 seconds
+Yeah, OK.
+Benjamin Reynolds 1 hour 22 minutes 18 seconds
+Fair enough. You guys all okay with that?
+Benjamin Reynolds 1 hour 22 minutes 23 seconds
+Anything in terms of releases that you wanted to know about?
+Benjamin Reynolds 1 hour 22 minutes 41 seconds
+Okay, cool. There is also the auto tag, which may be relevant soon, but we can set up another call to go through that considering we've overrun a bit.
+Benjamin Reynolds 1 hour 22 minutes 55 seconds
+Okay.
+JP
+Jason Pang
+1 hour 22 minutes 58 seconds1:22:58
+Jason Pang 1 hour 22 minutes 58 seconds
+Thank you. Thanks, man. Cheers. Thank you. Bye.
+BR
+Benjamin Reynolds
+1 hour 22 minutes 59 seconds1:22:59
+Benjamin Reynolds 1 hour 22 minutes 59 seconds
+Cool. See you guys. Bye.
+MG
+Madhu Guthikonda
+1 hour 23 minutes 3 seconds1:23:03
+Madhu Guthikonda 1 hour 23 minutes 3 seconds
+Nope.
+
+Herbie Barnett stopped transcription
