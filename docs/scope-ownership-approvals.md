@@ -11,9 +11,15 @@ Release risk is not limited to source branches. It may also include Helm charts,
 If scope is unclear, automation may process too much, too little or the wrong thing.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  REL["Release process"] --> SCOPE["Repos + charts + manifests<br/>config + secrets + Liquibase + runbooks"]
-  SCOPE --> OWNER["Named owners + approvals"]
+  REL["📋 Release Process"]:::process --> SCOPE["📦 Scope\n─────────\nRepos • Charts • Manifests\nConfig • Secrets • Liquibase\nRunbooks"]:::scope
+  SCOPE --> OWNER["👥 Named Owners\n+ Approvals"]:::owner
+
+  classDef process fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef scope fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef owner fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
 ```
 
 ## Repositories To Classify
@@ -117,14 +123,22 @@ Potential approval points:
 The team should decide which approval points are mandatory and which can be automated.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  DEV["Merge to development"] --> CUT["Release branch cut"]
-  CUT --> TAG["Tag creation"]
-  TAG --> MAN["Manifest MR"]
-  MAN --> SIT["Deploy / promote"]
-  SIT --> QAT["QAT approval"]
-  QAT --> PROD["Production release"]
-  PROD --> POST["Post-release reconciliation"]
+  DEV["🔀 Merge to\ndevelopment"]:::step
+  CUT["✂️ Release\nbranch cut"]:::step
+  TAG["🏷️ Tag\ncreation"]:::step
+  MAN["📝 Manifest\nMR"]:::step
+  SIT["🚀 Deploy /\npromote"]:::step
+  QAT["✅ QAT\napproval"]:::gate
+  PROD["🏁 Production\nrelease"]:::gate
+  POST["🔄 Post-release\nreconciliation"]:::step
+
+  DEV --> CUT --> TAG --> MAN --> SIT --> QAT --> PROD --> POST
+
+  classDef step fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef gate fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
 ## Ownership Matrix Template

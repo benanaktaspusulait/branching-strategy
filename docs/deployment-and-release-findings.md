@@ -22,12 +22,23 @@ Key points:
 Current Helm flow:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  BRANCH["Branch pushed"] --> BASIC["Package / lint / template / mass diff"]
-  BASIC --> TAG["Release tag created"]
-  TAG --> UPLOAD["Helm package upload"]
-  UPLOAD --> PROMOTE["Manual promote / deploy trigger"]
-  PROMOTE --> DEPLOY["Helm upgrade to target environment"]
+  BRANCH["🌿 Branch pushed"]:::start
+  BASIC["⚙️ Package / lint\ntemplate / mass diff"]:::auto
+  TAG["🏷️ Release tag created"]:::tag
+  UPLOAD["📤 Helm package upload"]:::auto
+  PROMOTE["👤 Manual promote /\ndeploy trigger"]:::manual
+  DEPLOY["🚀 Helm upgrade to\ntarget environment"]:::deploy
+
+  BRANCH --> BASIC --> TAG --> UPLOAD --> PROMOTE --> DEPLOY
+
+  classDef start fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef auto fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef tag fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef manual fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
+  classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 Important details:

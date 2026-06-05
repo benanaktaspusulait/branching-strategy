@@ -45,9 +45,18 @@ The current process should be made visible, repeatable and auditable before the 
 ## Findings Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  CURRENT["Current findings"] --> PROBLEMS["Manual work<br/>unclear scope<br/>validation gaps<br/>operational constraints"]
-  PROBLEMS --> ACTIONS["Drone automation<br/>strict validation<br/>changed-chart deploy<br/>clear owners"]
+  CURRENT["🔍 Current State Analysis"]:::input
+  PROBLEMS["⚠️ Problems Identified\n─────────────\n• Manual work\n• Unclear scope\n• Validation gaps\n• Operational constraints"]:::problem
+  ACTIONS["✅ Recommended Actions\n─────────────\n• Drone automation\n• Strict validation\n• Changed-chart deploy\n• Clear ownership"]:::solution
+
+  CURRENT --> PROBLEMS --> ACTIONS
+
+  classDef input fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
+  classDef solution fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 ## Recommended Actions
