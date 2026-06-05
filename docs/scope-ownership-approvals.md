@@ -36,6 +36,7 @@ Confirm whether these are in scope for the same release process:
 - Cerberus deployment management repository.
 - Manifest repositories.
 - Secrets/config repositories.
+- Liquibase/database change repositories or scripts.
 - Runbook repositories.
 - Any release metadata or changelog repositories.
 
@@ -47,6 +48,50 @@ Confirm whether these are in scope for the same release process:
 - Are there services without clear squad ownership?
 - Are shared libraries or shared charts included?
 - Are environment-only changes included in the same release scope?
+- Are secrets and Liquibase/database changes included in the same release readiness check?
+
+## Change Types To Track
+
+The latest KT session made it explicit that a production or feature change may involve more than application code.
+
+Track whether each release includes:
+
+| Change Type | Included? | Notes |
+| --- | --- | --- |
+| Application/service code | TBD | Service repository changes. |
+| Service chart changes | TBD | May remain partly manual until Drone pipelines are updated. |
+| Manifest updates | TBD | Must match generated/expected tags. |
+| Secrets/config changes | TBD | Needs careful handling and audit trail. |
+| Liquibase/database changes | TBD | Needs release sequencing and rollback consideration. |
+| Runbook steps | TBD | Needed for manual or environment-specific operations. |
+
+## New Environment Readiness
+
+Older KT sessions raised several setup points for new dev/test environments.
+
+Before a new environment is treated as release-ready, confirm:
+
+- Required values files exist.
+- Environment names are configured in the relevant setup/deploy scripts.
+- Drone secrets/tokens exist for the environment.
+- Kube/robot token ownership is clear.
+- ACU responsibilities are clear where token/environment provisioning depends on them.
+- Deployment scope behaviour is known for live, historical or both.
+- Secret chart entries exist and use the expected encrypted format.
+
+## Cross-Repository Ticket Grouping
+
+The proposed automation relies heavily on consistent ticket and branch naming.
+
+If multiple repositories use the same ticket/branch name, their changes should update the same Cerberus chart branch. This allows one feature ticket to group service, config, secret, Liquibase and runbook changes together for deployment/testing.
+
+Open items:
+
+- Confirm the exact branch/ticket naming rule.
+- Confirm which repositories participate in cross-repo grouping.
+- Confirm what happens when one ticket depends on another ticket/branch.
+- Confirm who can manually adjust chart entries for cross-ticket dependencies.
+- Confirm who owns secret/config updates when the change spans multiple repositories.
 
 ## Ownership Areas
 

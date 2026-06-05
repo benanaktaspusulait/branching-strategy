@@ -40,6 +40,11 @@ flowchart TD
 ## Start Here
 
 - [Meeting agenda and actions](docs/meeting-agenda-and-actions.md) - use this to prepare for the next discussion.
+- [KT session todo list](docs/kt-session-todo-list.md) - actions inferred from the latest KT session notes.
+- [Squad briefing summary](docs/squad-briefing-summary.md) - short update for squad leads.
+- [Proposed release automation flow](docs/proposed-release-automation-flow.md) - target flow from the latest KT session.
+- [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed answers for the remaining open decisions.
+- [Historical KT session findings](docs/historical-kt-session-findings.md) - deployment, secrets and auto-manifest context from older KT sessions.
 - [Current release operating model](docs/current-release-operating-model.md) - current-state branching, release and deployment flow.
 - [Branching strategy options](docs/branching-options.md) - GitFlow-style, simplified release branches and trunk-based development options.
 

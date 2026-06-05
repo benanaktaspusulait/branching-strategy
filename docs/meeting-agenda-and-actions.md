@@ -24,6 +24,8 @@ Before deciding whether to stay with GitFlow, simplify release branches or move 
 7. Assess trunk-based development readiness.
 8. Agree documentation and follow-up actions.
 
+Use [rollout decision proposals](rollout-decision-proposals.md) as the approval checklist for the latest KT follow-up.
+
 ```mermaid
 flowchart TD
   A["Confirm current flow"] --> B["Agree short-term branching baseline"]

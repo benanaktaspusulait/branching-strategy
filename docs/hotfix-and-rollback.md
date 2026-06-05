@@ -8,7 +8,7 @@ Rollback and hotfix handling need to be clear because they affect the branching 
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
 
-The likely expectation is:
+The earlier likely expectation was:
 
 ```text
 production state / master
@@ -18,6 +18,14 @@ production state / master
   -> merge hotfix back into development
   -> merge hotfix into any active release branches if needed
 ```
+
+The latest KT session described a more release-branch-centred automation flow:
+
+- Feature and hotfix branches are treated similarly.
+- Hotfix branches can be created from the active release branch.
+- Commits on a hotfix branch should generate a deployable candidate and update the matching Cerberus chart branch.
+- When merged into the release branch, the hotfix should increment the release version/tag like any other merged change.
+- CVE and Renovate-style changes are expected to raise hotfix/MR work targeting the active release branch.
 
 ```mermaid
 flowchart LR
@@ -34,6 +42,7 @@ flowchart LR
 ## Hotfix Questions To Answer
 
 - Should hotfixes always be made from `master`?
+- In the proposed model, should release-phase hotfixes target the active release branch instead?
 - Who approves a hotfix merge?
 - Does a hotfix create a release branch or a hotfix branch?
 - When is the hotfix tagged?
@@ -41,6 +50,7 @@ flowchart LR
 - How is the hotfix merged back into `development`?
 - How is the hotfix merged into any active release branches?
 - How do we prevent hotfix drift between production and development?
+- How do CVE/Renovate hotfix branches get reviewed and prioritised during release work?
 
 ## Rollback Current Understanding
 

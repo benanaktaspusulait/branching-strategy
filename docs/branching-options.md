@@ -16,6 +16,58 @@ Before choosing a model, confirm whether the team has:
 - Strong enough test automation.
 - Feature flags and configuration that can safely control incomplete work.
 
+## Branch And Commit Hygiene To Confirm
+
+The latest KT session raised several branch hygiene points that should be agreed before rollout.
+
+Proposed branch naming examples:
+
+| Branch Type | Purpose | Example |
+| --- | --- | --- |
+| `feature/*` | Individual ticket or feature work. | `feature/MMA-1234-login-validation` |
+| `release/*` | Release candidate branch for a planned release. | `release/2026.06.1` |
+| `hotfix/*` | Urgent fix from production state. | `hotfix/MMA-5678-prod-timeout` |
+| `main` or `master` | Production/live baseline. | `main` |
+| `development` | Integration branch, if retained. | `development` |
+
+Proposed cleanup rule:
+
+```text
+Feature branches should be deleted after merge, once any required release report has been generated.
+```
+
+Proposed future model from the latest KT session:
+
+```text
+main represents production/live.
+release branches are auto-created from main at the start of each sprint/release.
+feature and hotfix branches are created from the relevant release branch.
+```
+
+For more detail, see [proposed release automation flow](proposed-release-automation-flow.md).
+
+Proposed decision:
+
+```text
+Move to `main` as the production/live baseline after an agreed cutover release.
+Keep `development` transitional only until the automation pilot and branch protections are ready.
+```
+
+For the full proposal, see [rollout decision proposals](rollout-decision-proposals.md).
+
+## Multiple Active Release Branches
+
+The KT session raised an important branch maintenance point: more than one release branch may exist at the same time.
+
+If a feature starts from one release branch but is not ready for that release, it can continue alongside later releases. The team working on the feature should merge in the relevant release branches to detect conflicts before opening or updating the merge request.
+
+Proposed rule:
+
+```text
+Forward-merge fixes from earlier active releases into later active release branches before release closure.
+Feature owners keep long-running branches current by merging in the relevant active release branch before MR updates.
+```
+
 ## Option 1: Continue With The Current GitFlow-Style Model
 
 ```text

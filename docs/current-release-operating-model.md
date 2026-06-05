@@ -4,6 +4,30 @@ This page captures the current understanding of how branching, release and deplo
 
 It is a current-state summary, not a final process definition.
 
+## Latest KT Session Updates
+
+The latest KT session added several useful clarifications and a more detailed proposed target flow.
+
+- The release process is currently too manual-heavy, especially around creating releases and artefacts.
+- The target direction is to automate the release flow so it can be triggered centrally, update Cerberus charts and produce reporting.
+- The automation should cross-reference JIRA so the team can check that the release contains what it is expected to contain.
+- Gareth/Achilles are testing the automation on the new configuration service.
+- The scripts currently work locally; the remaining implementation step is to run them through Drone.
+- The automation is expected to generate service chart changes, versions, tags and release reports.
+- The team may be able to start using release branches within the next release or two, subject to confirmation.
+- Some manual server chart work may remain until the relevant Drone pipelines are updated.
+- Lower environments are currently more ad hoc, while higher-environment releases rely on server chart updates.
+- Changes may include application code, secrets and Liquibase/database changes, not only service code.
+- The proposed future model has `main` representing production/live state, with release branches auto-created at the start of each sprint/release.
+- Feature and hotfix branches are expected to update matching Cerberus chart branches automatically.
+- A shared dev environment is expected to receive the active release branch for cross-team integration testing.
+
+These points do not finalise the operating model, but they sharpen the immediate rollout focus.
+
+For the detailed proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).
+
+For older KT context around Helm scripts, secrets and auto manifest tooling, see [historical KT session findings](historical-kt-session-findings.md).
+
 ## Current Branching Model
 
 The current approach appears to be close to a GitFlow-style model:
@@ -24,6 +48,8 @@ Current understanding:
 - Hotfixes should be possible from production state, but the exact hotfix and back-merge process needs to be documented.
 
 The previous approach was closer to using `main/master` and release tags only. That reportedly contributed to long release gaps, fix-forward pressure and defect accumulation. The `development` branch was introduced to separate active development from production state.
+
+The latest KT session described a proposed future direction where `development` effectively becomes `main`, and `main` represents production/live state. That needs explicit confirmation before this document treats it as the agreed model.
 
 ## End-To-End Flow
 
@@ -88,6 +114,9 @@ Key points:
 - That was part of the previous way of working, where the dev environment deployed individual services as Helm charts.
 - The current approach appears to deploy through the service repo instead.
 - The MMA Helm repo contains deployment scripts used for Helm packaging, linting, templating, diffing, uploading and deployment-related tasks.
+- The MMA Helm repo is separate from the MMA Helm library repo.
+- Helm charts are deployed as packaged artefacts with environment-specific values files.
+- Tag creation runs packaging/upload steps; deployment itself is promoted or manually triggered.
 - If future changes are needed in the Drone pipeline for Helm deployment, the MMA Helm repo is likely where those changes would be added.
 
 Deployment script stages mentioned:
@@ -98,6 +127,22 @@ Deployment script stages mentioned:
 - Mass diff.
 - Uploading.
 - Deployment.
+
+Deployment parameters mentioned in older KT sessions:
+
+- Target environment.
+- Deployment scope, such as live, historical or both.
+- Release version/tag.
+- Chart names to deploy.
+
+Temporary manual work still to document:
+
+- Which server chart updates remain manual.
+- Which environments still require manual chart handling.
+- Which Drone pipeline changes are needed before server chart work is automated.
+- Who performs manual server chart updates while automation is being rolled out.
+- How manual chart changes are reviewed and reconciled with generated release reports.
+- How exceptions are handled when one feature depends on another ticket/branch and a manual chart edit is still required.
 
 ## Tagging And Artefact Creation
 
@@ -219,6 +264,8 @@ Areas to document:
 - External integrations.
 - Network/access constraints.
 - Operational permissions.
+- Whether lower environments are deployed ad hoc while higher environments use server chart releases.
+- Which environment-specific values files, Drone secrets and tokens are required for each environment.
 
 ## Manual Steps And Operational Constraints
 
@@ -233,6 +280,8 @@ Observed points:
 - There is a runbook repository used for environment-specific release activities.
 - Screen sharing or recording while viewing decoded secrets is a security risk.
 - If secrets are exposed in a recording, secret rotation may be required.
+- Secrets/config may be managed through encrypted chart entries and managed secrets scripts.
+- Secret keys should be consistent across environments, while values differ by environment.
 
 These operational requirements should be documented as part of the release process, not left as informal knowledge.
 
