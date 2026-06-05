@@ -14,8 +14,6 @@ The release and deployment challenge is broader than the branch model itself.
 
 CI/CD needs to work with service branches, tags, Helm artefacts, manifests, configuration, feature flags, approvals, hotfixes, rollback, runbooks and ownership.
 
-The KT sessions are current-state input for this documentation. They explain the release and deployment mechanisms that the proposed automation must work with.
-
 The safest short-term direction appears to be:
 
 ```text
@@ -46,48 +44,35 @@ flowchart TD
   VALIDATION --> ROLLOUT
   HOTFIX --> ROLLOUT
 
-  ROLLOUT --> TODO["Todo and approval tracking"]
   ROLLOUT --> ACTIONS["Findings and action tracking"]
   ROLLOUT --> BRIEF["Squad briefing summary"]
 ```
 
-## Start Here
+## Pages
 
-- [Current release operating model](docs/current-release-operating-model.md) - current-state branching, release and deployment flow.
-- [KT session findings](docs/kt-session-findings.md) - current deployment, secrets, manifest and validation knowledge from KT sessions.
-- [Proposed release automation flow](docs/proposed-release-automation-flow.md) - target flow from the KT sessions.
-- [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed answers for the remaining open decisions.
-- [KT session todo list](docs/kt-session-todo-list.md) - actions inferred from the KT session notes.
-- [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) - problem areas and recommended follow-up actions.
-- [Squad briefing summary](docs/squad-briefing-summary.md) - short update for squad leads.
-- [Branching strategy options](docs/branching-options.md) - GitFlow-style, simplified release branches and trunk-based development options.
-
-## Deep Dives
-
-- [Automation and validation](docs/automation-and-validation.md)
-- [Hotfix and rollback](docs/hotfix-and-rollback.md)
-- [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
-- [Documentation review and resolved issues](docs/todo.md)
+| # | Page | Purpose |
+| --- | --- | --- |
+| 1 | [Current release operating model](docs/current-release-operating-model.md) | Current-state branching, release and deployment flow. |
+| 2 | [KT session findings](docs/kt-session-findings.md) | Deployment, secrets, manifest and validation knowledge. |
+| 3 | [Proposed release automation flow](docs/proposed-release-automation-flow.md) | Target automation flow. |
+| 4 | [Branching strategy options](docs/branching-options.md) | GitFlow, simplified and trunk-based options. |
+| 5 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, reporting and quality gates. |
+| 6 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Hotfix flow, rollback and reconciliation. |
+| 7 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Who owns what, approval points. |
+| 8 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed answers for open decisions. |
+| 9 | [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | Problem areas and follow-up actions. |
+| 10 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads. |
 
 ## Suggested Reading Path
 
-For a quick overview of the current process and proposed changes:
+For a quick overview:
 
-1. Read this page.
-2. Read [current release operating model](docs/current-release-operating-model.md).
-3. Read [proposed release automation flow](docs/proposed-release-automation-flow.md).
+1. This page → [Current release operating model](docs/current-release-operating-model.md) → [Proposed release automation flow](docs/proposed-release-automation-flow.md).
 
 For problem areas and recommendations:
 
-1. Read [KT session findings](docs/kt-session-findings.md).
-2. Read [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md).
-3. Review [KT session todo list](docs/kt-session-todo-list.md).
-4. Review [rollout decision proposals](docs/rollout-decision-proposals.md).
+2. [KT session findings](docs/kt-session-findings.md) → [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) → [Rollout decision proposals](docs/rollout-decision-proposals.md).
 
 For process owners:
 
-1. Read the [current release operating model](docs/current-release-operating-model.md).
-2. Read [KT session findings](docs/kt-session-findings.md).
-3. Review [automation and validation](docs/automation-and-validation.md).
-4. Review [hotfix and rollback](docs/hotfix-and-rollback.md).
-5. Review [release scope, ownership and approvals](docs/scope-ownership-approvals.md).
+3. [Automation and validation](docs/automation-and-validation.md) → [Hotfix and rollback](docs/hotfix-and-rollback.md) → [Release scope, ownership and approvals](docs/scope-ownership-approvals.md).

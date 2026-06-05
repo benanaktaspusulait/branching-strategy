@@ -241,3 +241,7 @@ First standardise:
 - Ownership and approvals.
 
 Then reassess whether the branch model is still the main constraint.
+
+---
+
+← [Proposed release automation flow](proposed-release-automation-flow.md) | → [Automation and validation](automation-and-validation.md)

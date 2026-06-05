@@ -253,3 +253,7 @@ Follow-up needed:
 - How will the automation detect services with actual changes?
 - What information should be included in the audit trail?
 - What should fail immediately vs require manual approval?
+
+---
+
+← [Branching strategy options](branching-options.md) | → [Hotfix and rollback](hotfix-and-rollback.md)

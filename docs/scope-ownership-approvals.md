@@ -178,3 +178,7 @@ The team should produce:
 4. A release approval map.
 5. A manual access/runbook checklist.
 6. A post-release reconciliation owner and checklist.
+
+---
+
+← [Hotfix and rollback](hotfix-and-rollback.md) | → [Rollout decision proposals](rollout-decision-proposals.md)

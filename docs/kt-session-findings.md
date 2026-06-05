@@ -1,8 +1,6 @@
 # KT Session Findings
 
-This page summarises the KT sessions captured in [notes.txt](../notes.txt).
-
-These notes are current-state knowledge transfer input for the release automation analysis. They explain the deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
+This page summarises the knowledge transfer sessions. It covers deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
 
 Read this page together with:
 
@@ -215,3 +213,7 @@ The new release automation must explicitly define strict validation rules for ti
 6. Confirm whether tag jump logic is retired, replaced or adapted for the new branching model.
 7. Confirm secrets access/onboarding process for maintainers.
 8. Confirm whether an auto-tag KT/follow-up session is still needed.
+
+---
+
+← [Current release operating model](current-release-operating-model.md) | → [Proposed release automation flow](proposed-release-automation-flow.md)

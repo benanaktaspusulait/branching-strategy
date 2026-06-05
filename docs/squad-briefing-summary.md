@@ -67,3 +67,7 @@ Current recommendation:
 6. Are there services that should not be auto-deployed even if their chart changed?
 7. Do any squad-owned changes use `NA` tag entries, secrets/config or Liquibase exceptions?
 8. Who should be the squad contact for rollout questions?
+
+---
+
+← [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md) | → [README](../README.md)

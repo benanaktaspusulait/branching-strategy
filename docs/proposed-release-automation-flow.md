@@ -209,3 +209,7 @@ Individual feature branch commits should ideally also follow the ticket/message 
 5. Who is the named release owner for forward-merge tracking?
 6. Where are release reports published and retained?
 7. Which Slack/email channels receive automation failure alerts?
+
+---
+
+← [KT session findings](kt-session-findings.md) | → [Branching strategy options](branching-options.md)

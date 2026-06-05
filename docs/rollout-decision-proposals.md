@@ -359,3 +359,7 @@ Before rollout, approve or amend:
 12. Auto manifest/tag validation strictness.
 13. Rollback reconciliation procedure.
 14. Tag jump checker retirement plan.
+
+---
+
+← [Release scope, ownership and approvals](scope-ownership-approvals.md) | → [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md)

@@ -196,3 +196,7 @@ The team should produce:
 4. A branch reconciliation checklist.
 5. A manifest reconciliation checklist.
 6. Clear ownership for decision, execution and validation.
+
+---
+
+← [Automation and validation](automation-and-validation.md) | → [Release scope, ownership and approvals](scope-ownership-approvals.md)

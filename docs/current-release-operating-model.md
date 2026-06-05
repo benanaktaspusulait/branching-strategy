@@ -303,3 +303,7 @@ The process should be confirmed around:
 - How hotfixes and rollback are handled.
 - How `master` is kept aligned with production.
 - Who owns release readiness, execution, validation and reconciliation.
+
+---
+
+← [README](../README.md) | → [KT session findings](kt-session-findings.md)

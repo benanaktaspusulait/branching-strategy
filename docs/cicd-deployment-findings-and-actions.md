@@ -92,3 +92,7 @@ First make the current CI/CD and deployment process visible, repeatable and audi
 
 Then decide whether the branching model should be kept, simplified or replaced.
 ```
+
+---
+
+← [Rollout decision proposals](rollout-decision-proposals.md) | → [Squad briefing summary](squad-briefing-summary.md)
