@@ -360,6 +360,60 @@ Before rollout, approve or amend:
 13. Rollback reconciliation procedure.
 14. Tag jump checker retirement plan.
 
+## Rollout Strategy Best Practices
+
+### Incremental Rollout: Do Not Big-Bang
+
+Process changes should be rolled out incrementally, not all at once:
+
+```text
+Phase 1 (Pilot): One service, one squad, one release cycle.
+Phase 2 (Expand): 2–3 squads, full release cycle.
+Phase 3 (Standard): All squads, all services.
+Phase 4 (Optimise): Measure, tune, remove friction.
+```
+
+Cerberus is doing this correctly — the configuration-service pilot is Phase 1. The key is to resist pressure to skip phases.
+
+### Measuring Rollout Success
+
+Define success criteria before rollout, not after:
+
+| Metric | Phase 1 Target | Phase 3 Target |
+| --- | --- | --- |
+| Release preparation time | <50% of current manual effort | <10% of current |
+| Time from merge to deployable artefact | <30 minutes | <15 minutes |
+| Manual steps in release | <5 manual steps | <2 (approve + trigger) |
+| Release report accuracy | Matches actual deployed state | 100% automated |
+| Failed deployment recovery time | <1 hour | <15 minutes |
+| Hotfix to production time | <4 hours | <2 hours |
+
+If metrics are not improving, the rollout has a problem that needs addressing before expanding.
+
+### Handling Resistance And Edge Cases
+
+Common resistance patterns and responses:
+
+| Resistance | Response |
+| --- | --- |
+| "My service is special" | All services use the same pipeline. If a service truly needs an exception, document it as an approved override with a plan to remove the exception. |
+| "We don't have time to change" | The automation is designed to reduce time, not add it. Phase 1 proves this before asking others to adopt. |
+| "What if the automation breaks?" | Rerun is safe. Manual fallback is documented. Alerting is in place. The current process also breaks — it just breaks silently. |
+| "We need feature X first" | Separate must-have (blocks rollout) from nice-to-have (improves later). Do not let nice-to-haves delay rollout. |
+
+### Rollback Plan For The Rollout Itself
+
+If the new release process causes more problems than it solves during pilot:
+
+```text
+1. Stop the pilot.
+2. Revert to the previous manual process for affected services.
+3. Diagnose the root cause.
+4. Fix and restart from the last known-good phase.
+```
+
+The rollout of the new process should itself have a rollback plan. This is meta but important — it builds confidence that the change is reversible.
+
 ---
 
 ← [Release scope, ownership and approvals](scope-ownership-approvals.md) | → [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md)

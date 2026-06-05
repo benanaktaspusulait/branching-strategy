@@ -93,6 +93,49 @@ First make the current CI/CD and deployment process visible, repeatable and audi
 Then decide whether the branching model should be kept, simplified or replaced.
 ```
 
+## Prioritisation: Effort vs Impact
+
+Not all problems are equally important. Prioritise by impact and effort:
+
+### Quick Wins (High Impact, Low Effort)
+
+| Action | Why Quick Win |
+| --- | --- |
+| Pre-commit hook for ticket references | Already in progress. Prevents garbage commits entering release history. |
+| Strict validation: fail on missing/wrong tag | Script change only. Prevents wrong artefacts reaching production. |
+| Document deployment parameters | Write-up only. Removes tribal knowledge dependency. |
+| Changed-chart detection in release report | Reporting change. Shows what should deploy without manual listing. |
+
+### High Impact, Medium Effort
+
+| Action | Why Important |
+| --- | --- |
+| Move release automation to Drone | Central, auditable, repeatable. Removes local-script dependency. |
+| Auto release branch creation | Removes start-of-sprint manual work entirely. |
+| Auto Cerberus chart branch updates | Removes most manual chart editing — the biggest time sink. |
+| Alerting for failed steps | Makes failures visible instead of silent. |
+
+### High Impact, High Effort
+
+| Action | Why Harder |
+| --- | --- |
+| Full rollback runbook and testing | Requires cross-team agreement, environment access, testing time. |
+| Environment parity documentation | Requires production access/knowledge that few people have. |
+| Ownership matrix sign-off | Requires management decisions and role assignment. |
+| Feature flag runtime control | Requires new tooling or infrastructure. |
+
+### Recommended Execution Order
+
+```text
+1. Quick wins (this sprint / next sprint)
+2. Move automation to Drone (current pilot)
+3. Auto release branch + chart updates (immediately after pilot green)
+4. Alerting and strict validation (alongside #3)
+5. Rollback runbook (before next production incident)
+6. Ownership sign-off (before expanding beyond pilot squads)
+7. Feature flags and environment parity (medium-term roadmap)
+```
+
 ---
 
 ← [Rollout decision proposals](rollout-decision-proposals.md) | → [Squad briefing summary](squad-briefing-summary.md)
