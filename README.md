@@ -89,10 +89,40 @@ Key problems at a glance:
 ## Visual Overview
 
 ```mermaid
-flowchart LR
-  A["Decision-ready synthesis"] --> B["Current state"]
-  B --> C["Problems"]
-  C --> D["Proposed solutions"]
-  D --> E["Approval decisions"]
-  E --> F["Reference detail"]
+flowchart TD
+  subgraph UNDERSTAND["Understand"]
+    A["Current Release\nOperating Model"]
+    B["Deployment &\nRelease Findings"]
+  end
+
+  subgraph DIAGNOSE["Diagnose"]
+    C["CI/CD Findings\n& Actions"]
+    D["System State,\nProblems & Solutions"]
+  end
+
+  subgraph SOLVE["Solve"]
+    E["Proposed Release\nAutomation Flow"]
+    F["Branching\nStrategy Options"]
+    G["Automation &\nValidation"]
+    H["Hotfix &\nRollback"]
+  end
+
+  subgraph DECIDE["Decide & Act"]
+    I["Rollout Decision\nProposals"]
+    J["Scope, Ownership\n& Approvals"]
+    K["Squad Briefing\nSummary"]
+  end
+
+  A --> C
+  B --> C
+  C --> D
+  D --> E
+  D --> F
+  E --> G
+  E --> H
+  F --> I
+  G --> I
+  H --> I
+  I --> J
+  J --> K
 ```
