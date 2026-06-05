@@ -45,22 +45,9 @@ The current process should be made visible, repeatable and auditable before the 
 ## Findings Flow
 
 ```mermaid
-flowchart TD
-  INPUT["Current findings"] --> CURRENT["Current CI/CD and deployment process"]
-  CURRENT --> MANUAL["Manual or local steps"]
-  CURRENT --> SCOPE["Unclear release scope"]
-  CURRENT --> VALIDATION["Validation gaps"]
-  CURRENT --> OPS["Operational constraints"]
-
-  MANUAL --> REC["Recommendations"]
-  SCOPE --> REC
-  VALIDATION --> REC
-  OPS --> REC
-
-  REC --> AUTO["Move repeatable steps into Drone"]
-  REC --> STRICT["Define strict tag / manifest / ticket validation"]
-  REC --> CHANGED["Deploy changed charts by default"]
-  REC --> OWNERS["Assign owners, approvals and rollback responsibilities"]
+flowchart LR
+  CURRENT["Current findings"] --> PROBLEMS["Manual work<br/>unclear scope<br/>validation gaps<br/>operational constraints"]
+  PROBLEMS --> ACTIONS["Drone automation<br/>strict validation<br/>changed-chart deploy<br/>clear owners"]
 ```
 
 ## Recommended Actions

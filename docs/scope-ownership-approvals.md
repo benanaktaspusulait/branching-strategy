@@ -11,20 +11,9 @@ Release risk is not limited to source branches. It may also include Helm charts,
 If scope is unclear, automation may process too much, too little or the wrong thing.
 
 ```mermaid
-flowchart TD
-  REL["Release process"] --> SVC["Service repositories"]
-  REL --> HELM["Helm chart repositories"]
-  REL --> MAN["Manifest repositories"]
-  REL --> CFG["Secrets / config repositories"]
-  REL --> RUN["Runbook repositories"]
-  REL --> META["Release metadata / changelog"]
-
-  SVC --> OWNER["Service ownership"]
-  HELM --> OWNER
-  MAN --> OWNER
-  CFG --> OWNER
-  RUN --> OWNER
-  META --> OWNER
+flowchart LR
+  REL["Release process"] --> SCOPE["Repos + charts + manifests<br/>config + secrets + Liquibase + runbooks"]
+  SCOPE --> OWNER["Named owners + approvals"]
 ```
 
 ## Repositories To Classify
@@ -179,99 +168,9 @@ The team should produce:
 5. A manual access/runbook checklist.
 6. A post-release reconciliation owner and checklist.
 
-## Industry Best Practices For Ownership And Approvals
+## Related Best Practices
 
-### RACI Model For Release Activities
-
-RACI provides clarity on who does what:
-
-```text
-R = Responsible (does the work)
-A = Accountable (owns the outcome, one person only)
-C = Consulted (provides input before)
-I = Informed (told after)
-```
-
-Example for a release:
-
-| Activity | Squad Dev | Release Owner | QAT | Platform/DevOps |
-| --- | --- | --- | --- | --- |
-| Feature development | R | I | I | I |
-| Merge to release branch | R | A | I | I |
-| Release branch creation | I | A | I | R |
-| Tag and artefact build | I | A | I | R |
-| Deploy to SIT | I | R | C | I |
-| Functional validation | C | I | R | I |
-| Production deploy | I | R | A | C |
-| Rollback decision | C | A | C | R |
-| Post-release reconciliation | I | A | I | R |
-
-The key principle: **one accountable person per activity**. If two people think they are accountable, nobody is.
-
-### Platform Team vs Stream-Aligned Team Patterns
-
-The ownership model should reflect team topology:
-
-```text
-Platform team: owns shared infrastructure, pipelines, Helm libraries, deployment tooling.
-Stream-aligned teams (squads): own services, business logic, feature delivery.
-```
-
-For Cerberus:
-- **Platform responsibility**: Drone pipelines, MMA Helm repo/library, deployment-management automation, secrets infrastructure, environment provisioning.
-- **Squad responsibility**: Service code, feature flags, values file content (what config their service needs), Liquibase migrations, functional testing.
-- **Shared responsibility**: Release timing, hotfix decisions, cross-service dependencies.
-
-When ownership is unclear, default to the platform team for infrastructure/tooling and the squad for service behaviour.
-
-### Automating Approvals With CODEOWNERS
-
-GitLab (and GitHub) support CODEOWNERS files that automatically assign reviewers:
-
-```text
-# .gitlab/CODEOWNERS
-
-# Platform team owns pipeline and Helm config
-.drone.yml                    @platform-team
-charts/                       @platform-team
-scripts/                      @platform-team
-
-# Squad owns their service code
-src/                          @squad-lead
-values-*.yaml                 @squad-lead @platform-team
-
-# Release owner must approve manifest changes
-deployment-management/        @release-owner
-```
-
-This removes "who should review this?" ambiguity. The system enforces it.
-
-### Merge Rules That Prevent Common Problems
-
-Recommended branch protection rules for the key branches:
-
-| Branch | Rule |
-| --- | --- |
-| `main` | No direct push. Only merge from release branch. Requires release owner approval. |
-| `release/*` | No direct push except by automation. MR requires squad lead + QAT approval for SIT+. |
-| `feature/*` | Requires at least 1 peer review. Pipeline must be green. |
-| `hotfix/*` | Requires release owner approval. Fast-track review allowed (1 reviewer, not 2). |
-
-### Release Train Concept
-
-For teams with multiple squads releasing on the same cadence, a "release train" model helps:
-
-```text
-Train departs: Start of sprint → release branch created.
-Boarding: Features merge into release branch during sprint.
-Departure deadline: End of sprint minus N days → no new features, only fixes.
-Train arrives: Release deployed to production.
-Next train: Starts immediately after.
-```
-
-If a feature misses the train, it waits for the next one — it does not delay the current release. This creates predictable cadence and removes "can we squeeze this in?" pressure.
-
-The Cerberus model already describes something similar. Making it explicit as a "release train" helps squad communication and expectation setting.
+RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-train guidance are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
 ---
 

@@ -91,7 +91,7 @@ Common practical response: fix-forward
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
   ISSUE["Production issue"] --> DECIDE{"Rollback or fix-forward?"}
   DECIDE -->|Rollback| RB["Run rollback procedure"]
   DECIDE -->|Fix-forward| FF["Create and release fix"]
@@ -197,114 +197,9 @@ The team should produce:
 5. A manifest reconciliation checklist.
 6. Clear ownership for decision, execution and validation.
 
-## Industry Best Practices For Rollback And Hotfix
+## Related Best Practices
 
-### Kubernetes Rollback Capabilities And Limitations
-
-Helm provides rollback via `helm rollback <release> <revision>`, but it has important limitations:
-
-| What Helm Rollback Does | What It Does NOT Do |
-| --- | --- |
-| Reverts Kubernetes manifests to previous revision | Revert database/data changes |
-| Restores previous container image | Undo external state (queues, caches, third-party calls) |
-| Restores previous config maps / secrets in chart | Guarantee pod health after rollback |
-| Records rollback as a new revision | Notify dependent services |
-
-Practical notes:
-- Helm keeps a configurable history of revisions (default 10). If history is pruned, rollback targets are lost.
-- Rolling back to a revision that depends on a database schema that no longer exists will fail at runtime.
-- Rollback is fast (seconds to minutes) because it reapplies known-good manifests. But "known-good" assumes the environment state matches.
-
-### Deployment Strategies That Make Rollback Safer
-
-**Blue-Green Deployment:**
-```text
-Current (blue): running production traffic
-New (green): deployed and validated, no traffic
-Switch: route traffic from blue to green
-Rollback: route traffic back to blue (instant)
-```
-
-- Requires double infrastructure (cost).
-- Rollback is instant — just switch traffic back.
-- Best for stateless services.
-
-**Canary Deployment:**
-```text
-Deploy new version to small subset (5–10% of pods/traffic)
-Monitor error rates, latency, business metrics
-If healthy: gradually increase to 100%
-If unhealthy: remove canary pods (instant rollback)
-```
-
-- Lower cost than blue-green.
-- Catches issues before full rollout.
-- Requires traffic splitting (Istio, Nginx ingress canary annotations, or Flagger).
-- Best for high-traffic services where a full rollout failure has large blast radius.
-
-**Rolling Update (current Kubernetes default):**
-```text
-Replace pods one by one (or in batches)
-If new pods fail health checks, rollout pauses
-Manual rollback with: kubectl rollout undo / helm rollback
-```
-
-- This is likely what Cerberus uses today.
-- Rollback is manual but fast.
-- Risk: if health checks pass but functional issues exist, full rollout completes before the problem is detected.
-
-### Hotfix Time Budget
-
-A useful operational principle:
-
-```text
-If a hotfix cannot be developed, tested and deployed within 4 hours,
-strongly prefer rollback over fix-forward.
-```
-
-The exact threshold varies by team, but having a defined time budget prevents "we'll fix it soon" from turning into multi-day production incidents.
-
-### Liquibase Forward-Only Migration Best Practices
-
-Most mature teams adopt a forward-only migration strategy for databases:
-
-```text
-Never rollback a database migration.
-Instead, write a new forward migration that undoes the change.
-```
-
-Why:
-- Rollback blocks in Liquibase are fragile and rarely tested.
-- Data written after a migration cannot be un-written by schema rollback.
-- Forward migrations are tested by the same pipeline as all other changes.
-
-Pattern for safe database changes:
-
-| Phase | Action |
-| --- | --- |
-| Expand | Add new column/table. Do not remove old. Both old and new code work. |
-| Migrate | Move data from old to new. Application uses new. |
-| Contract | Remove old column/table in a later release when confirmed safe. |
-
-This "expand/migrate/contract" pattern means any single release can be rolled back at the application layer without touching the database, because both old and new schemas coexist during the transition.
-
-### Runbook-Driven Rollback
-
-For complex rollbacks involving multiple components:
-
-```text
-1. Decision: rollback approved by [release owner].
-2. Communication: notify squads and stakeholders.
-3. Database: assess whether DB rollback is possible or if forward-only applies.
-4. Application: helm rollback to target revision.
-5. Config/secrets: revert values file changes if needed.
-6. Manifest: update deployment-management to reflect rolled-back state.
-7. Verification: run smoke tests against rolled-back state.
-8. Source control: update main to reflect production state.
-9. Incident record: document what happened and why.
-```
-
-This should be a runbook, not ad hoc decisions made under pressure.
+Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liquibase forward-only migration guidance are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
 ---
 

@@ -38,7 +38,7 @@ Keep `development` as transitional until the automation pilot and branch protect
 ## Feature And Hotfix Branch Flow
 
 ```mermaid
-flowchart TD
+flowchart LR
   REL["Release branch"] --> FH["Feature or hotfix branch"]
   FH --> COMMIT["Commit to branch"]
   COMMIT --> TAG["Generate temporary deployable tag"]
@@ -73,7 +73,7 @@ This is intended to remove most manual chart updates for multi-service changes.
 ## Release Branch Flow
 
 ```mermaid
-flowchart TD
+flowchart LR
   MAIN["main / production baseline"] --> REL["Auto-created release branch"]
   REL --> FEATURE["Feature/hotfix branches"]
   FEATURE --> MR["Merge into release branch"]
@@ -210,89 +210,9 @@ Individual feature branch commits should ideally also follow the ticket/message 
 6. Where are release reports published and retained?
 7. Which Slack/email channels receive automation failure alerts?
 
-## Industry Best Practices For Release Automation
+## Related Best Practices
 
-### GitOps Pattern
-
-The proposed automation aligns with GitOps principles — Git as the single source of truth for both application code and deployment state:
-
-```text
-Git commit → Pipeline builds artefact → Git commit updates deployment repo → Deployment controller syncs
-```
-
-The Cerberus chart branch approach is already a form of GitOps. To strengthen it:
-
-- Treat the Cerberus deployment-management repo as the canonical deployment state.
-- Never manually edit chart versions — always through automation or audited MR.
-- If ArgoCD or Flux is ever adopted, this pattern translates directly.
-- The deployment repo commit history becomes the deployment audit trail.
-
-### Semantic Versioning For Release Tags
-
-Recommended tag format for release artefacts:
-
-```text
-<major>.<minor>.<patch>[-<pre-release>]
-
-Examples:
-  5.14.0        — full release
-  5.14.1        — patch/hotfix
-  5.14.0-rc.1   — release candidate (for pre-prod validation)
-  5.14.0-dev.3  — development/branch build (for lower environments)
-```
-
-Benefits:
-- Machines and humans can parse version ordering.
-- Rollback targets are unambiguous.
-- Release reports can auto-detect whether a change is major/minor/patch.
-
-### Conventional Commits And Auto-Changelog
-
-If commit messages follow a structured format, changelogs and release notes can be generated automatically:
-
-```text
-feat(MMA-1234): add customer eligibility validation
-fix(MMA-5678): correct manifest version comparison
-chore(MMA-9012): update Renovate config
-```
-
-This reduces manual release report work. The merge commit into the release branch becomes the changelog entry. Tools like `semantic-release`, `standard-version` or custom scripts can parse this.
-
-The pre-commit hook already being built should enforce this format.
-
-### Multi-Repo Orchestration
-
-With multiple repositories participating in a single release, orchestration becomes critical:
-
-```text
-Challenge: Service A, Service B and Config C all need to release together.
-Solution: Ticket-based grouping in Cerberus charts (already proposed).
-```
-
-Additional recommendations:
-
-- Define a "release manifest" that lists all repos/versions for a given release.
-- The release report should show cross-repo dependencies explicitly.
-- If Service A depends on Service B's new API, the release order matters — document deployment sequencing.
-- Consider a lightweight dependency graph for services that must deploy in order.
-
-### Progressive Delivery (Future Consideration)
-
-Once automation is stable, consider progressive delivery for production:
-
-```text
-Stage 1: Deploy to canary (small % of traffic)
-Stage 2: Monitor error rates and latency
-Stage 3: If healthy, promote to full production
-Stage 4: If unhealthy, auto-rollback canary
-```
-
-This requires:
-- Traffic splitting capability (Istio, Nginx canary, etc.)
-- Automated health metric evaluation
-- Fast rollback mechanism
-
-This is a future-state consideration, not immediate. The current priority is automating the existing release flow.
+GitOps alignment, tag/version guidance, multi-repo orchestration and progressive delivery considerations are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
 ---
 

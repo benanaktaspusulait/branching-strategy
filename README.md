@@ -58,6 +58,14 @@ Key problems at a glance:
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 14 proposed decisions ready for team approval. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
+### Reference
+
+| Page | What It Covers |
+| --- | --- |
+| [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
+| [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
+| [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
+
 ## Suggested Reading Order
 
 **Quick overview (10 min):**
@@ -76,29 +84,15 @@ Key problems at a glance:
 9. [Hotfix and rollback](docs/hotfix-and-rollback.md)
 10. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
 11. [Automation and validation](docs/automation-and-validation.md)
+12. [Release engineering best practices](docs/release-engineering-best-practices.md)
 
 ## Visual Overview
 
 ```mermaid
-flowchart TD
-  subgraph CURRENT["Layer 1: Current State"]
-    A["Release operating model"]
-    B["Deployment and release findings"]
-  end
-
-  subgraph PROBLEMS["Layer 2: Problems"]
-    C["CI/CD findings and actions"]
-  end
-
-  subgraph SOLUTIONS["Layer 3: Solutions"]
-    D["Release automation flow"]
-    E["Branching options"]
-    F["Validation and reporting"]
-    G["Hotfix and rollback"]
-    H["Scope and ownership"]
-    I["Rollout decisions"]
-  end
-
-  CURRENT --> PROBLEMS
-  PROBLEMS --> SOLUTIONS
+flowchart LR
+  A["Decision-ready synthesis"] --> B["Current state"]
+  B --> C["Problems"]
+  C --> D["Proposed solutions"]
+  D --> E["Approval decisions"]
+  E --> F["Reference detail"]
 ```
