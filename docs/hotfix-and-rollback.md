@@ -49,22 +49,32 @@ Both hotfix types share the following automation behaviour:
 - CVE and Renovate-style changes are expected to raise hotfix/MR work targeting the active release branch.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  subgraph PROD_HF["Production Hotfix"]
-    M["main / production state"] --> HF["Hotfix branch"]
-    HF --> TEST["Test hotfix"]
-    TEST --> TAG["Tag hotfix"]
-    TAG --> DEPLOY["Deploy to production"]
-    DEPLOY --> BACK_MAIN["Merge back to main"]
-    BACK_MAIN --> FWD["Forward-merge to active release branches"]
+  subgraph PROD_HF["🚨 Production Hotfix"]
+    M["🏁 main"]:::prod --> HF["🔥 Hotfix branch"]:::hotfix
+    HF --> TEST["🧪 Test"]:::test
+    TEST --> TAG["🏷️ Tag"]:::tag
+    TAG --> DEPLOY["🚀 Deploy to prod"]:::deploy
+    DEPLOY --> BACK_MAIN["🔄 Merge to main"]:::merge
+    BACK_MAIN --> FWD["➡️ Forward-merge\nto release branches"]:::merge
   end
 
-  subgraph REL_HF["Release-Phase Hotfix"]
-    REL["Active release branch"] --> RHF["Hotfix branch"]
-    RHF --> RTEST["Test hotfix"]
-    RTEST --> RMERGE["Merge back to release branch"]
-    RMERGE --> RVER["Release version incremented"]
+  subgraph REL_HF["⚡ Release-Phase Hotfix"]
+    REL["📋 Release branch"]:::rel --> RHF["🔥 Hotfix branch"]:::hotfix
+    RHF --> RTEST["🧪 Test"]:::test
+    RTEST --> RMERGE["🔄 Merge to release"]:::merge
+    RMERGE --> RVER["🏷️ Version incremented"]:::tag
   end
+
+  classDef prod fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef hotfix fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
+  classDef test fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef tag fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
+  classDef merge fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
 ```
 
 ## Hotfix Questions To Answer
@@ -91,18 +101,38 @@ Common practical response: fix-forward
 ```
 
 ```mermaid
-flowchart LR
-  ISSUE["Production issue"] --> DECIDE{"Rollback or fix-forward?"}
-  DECIDE -->|Rollback| RB["Run rollback procedure"]
-  DECIDE -->|Fix-forward| FF["Create and release fix"]
-  RB --> MANRB["Reconcile manifest"]
-  RB --> BRRB["Reconcile branches"]
-  FF --> MANFF["Update manifest to fixed version"]
-  FF --> BRFF["Back-merge fix"]
-  MANRB --> CLOSE["Validate and close incident"]
-  BRRB --> CLOSE
-  MANFF --> CLOSE
-  BRFF --> CLOSE
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  ISSUE["🚨 Production issue detected"]:::alert
+  DECIDE{"⚖️ Rollback or fix-forward?"}:::decision
+
+  subgraph RB_PATH["Rollback Path"]
+    RB["⏪ Run rollback procedure"]:::rollback
+    MANRB["📋 Reconcile manifest"]:::action
+    BRRB["🌿 Reconcile branches"]:::action
+  end
+
+  subgraph FF_PATH["Fix-Forward Path"]
+    FF["🔧 Create and release fix"]:::fix
+    MANFF["📋 Update manifest"]:::action
+    BRFF["🔄 Back-merge fix"]:::action
+  end
+
+  CLOSE["✅ Validate and close incident"]:::done
+
+  ISSUE --> DECIDE
+  DECIDE -->|Rollback| RB
+  DECIDE -->|Fix-forward| FF
+  RB --> MANRB & BRRB --> CLOSE
+  FF --> MANFF & BRFF --> CLOSE
+
+  classDef alert fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
+  classDef decision fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
+  classDef rollback fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef fix fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef action fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef done fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 ## Rollback Questions To Answer
