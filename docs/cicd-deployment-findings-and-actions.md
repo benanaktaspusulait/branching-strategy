@@ -1,6 +1,6 @@
 # CI/CD Deployment Findings And Actions
 
-This page summarises the CI/CD and deployment findings from the KT sessions.
+This page summarises the CI/CD and deployment findings.
 
 Its purpose is to show:
 
@@ -46,7 +46,7 @@ The current process should be made visible, repeatable and auditable before the 
 
 ```mermaid
 flowchart TD
-  KT["KT session input"] --> CURRENT["Current CI/CD and deployment process"]
+  INPUT["Current findings"] --> CURRENT["Current CI/CD and deployment process"]
   CURRENT --> MANUAL["Manual or local steps"]
   CURRENT --> SCOPE["Unclear release scope"]
   CURRENT --> VALIDATION["Validation gaps"]
@@ -66,7 +66,7 @@ flowchart TD
 ## Recommended Actions
 
 1. Keep the current-state flow in [current release operating model](current-release-operating-model.md) as the baseline view.
-2. Use [KT session findings](kt-session-findings.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
+2. Use [deployment and release findings](deployment-and-release-findings.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
 3. Move local/manual release automation into Drone once the configuration-service pilot is green.
 4. Define strict validation for wrong tags, missing tags, manifest/tag mismatch, invalid ticket status and `do not deploy` markers.
 5. Confirm repository scope for service code, Helm charts, deployment management, secrets/config, Liquibase and runbooks.

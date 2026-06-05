@@ -1,6 +1,6 @@
 # CI/CD Deployment And Branching Strategy
 
-This folder documents the current Cerberus CI/CD, release and deployment process based on the KT sessions.
+This folder documents the current Cerberus CI/CD, release and deployment process.
 
 The material is split into short pages, but it should be read as one process narrative:
 
@@ -25,7 +25,7 @@ Then decide whether to keep GitFlow, simplify it or move towards trunk-based dev
 
 ```mermaid
 flowchart TD
-  KT["KT session findings"] --> CURRENT["Current state"]
+  FINDINGS["Deployment and release findings"] --> CURRENT["Current state"]
   CURRENT --> FLOW["Release operating model"]
   CURRENT --> TOOLING["Deployment, Helm, secrets and manifests"]
   CURRENT --> PAIN["Problem areas"]
@@ -53,7 +53,7 @@ flowchart TD
 | # | Page | Purpose |
 | --- | --- | --- |
 | 1 | [Current release operating model](docs/current-release-operating-model.md) | Current-state branching, release and deployment flow. |
-| 2 | [KT session findings](docs/kt-session-findings.md) | Deployment, secrets, manifest and validation knowledge. |
+| 2 | [Deployment and release findings](docs/deployment-and-release-findings.md) | Deployment, secrets, manifest and validation knowledge. |
 | 3 | [Proposed release automation flow](docs/proposed-release-automation-flow.md) | Target automation flow. |
 | 4 | [Branching strategy options](docs/branching-options.md) | GitFlow, simplified and trunk-based options. |
 | 5 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, reporting and quality gates. |
@@ -71,7 +71,7 @@ For a quick overview:
 
 For problem areas and recommendations:
 
-2. [KT session findings](docs/kt-session-findings.md) → [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) → [Rollout decision proposals](docs/rollout-decision-proposals.md).
+2. [Deployment and release findings](docs/deployment-and-release-findings.md) → [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) → [Rollout decision proposals](docs/rollout-decision-proposals.md).
 
 For process owners:
 

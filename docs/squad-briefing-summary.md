@@ -8,7 +8,7 @@ The team is working to reduce the current manual-heavy release process.
 
 The target direction is to automate more of the release flow so that release branches, versions, tags, Cerberus chart changes and reporting can be generated through a repeatable pipeline.
 
-The proposed model described in the KT sessions is:
+The proposed model is:
 
 - `development` effectively becomes `main`.
 - `main` represents production/live state.

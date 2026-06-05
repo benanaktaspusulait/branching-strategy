@@ -52,7 +52,7 @@ Confirm whether these are in scope for the same release process:
 
 ## Change Types To Track
 
-The KT sessions made it explicit that a production or feature change may involve more than application code.
+A production or feature change may involve more than application code.
 
 Track whether each release includes:
 
@@ -67,7 +67,7 @@ Track whether each release includes:
 
 ## New Environment Readiness
 
-The KT sessions raised several setup points for new dev/test environments.
+Several setup points apply for new dev/test environments.
 
 Before a new environment is treated as release-ready, confirm:
 

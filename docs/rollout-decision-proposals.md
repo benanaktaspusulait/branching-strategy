@@ -1,6 +1,6 @@
 # Rollout Decision Proposals
 
-These are proposed decisions for the open items from the KT sessions.
+These are proposed decisions for the remaining open items.
 
 They are written as defaults the team can approve or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 
@@ -255,7 +255,7 @@ Ephemeral branch environments.
 Reason:
 
 ```text
-ACP support for ephemeral branch environments is uncertain, and the KT direction is to use squad dev test environments plus a shared dev integration environment.
+ACP support for ephemeral branch environments is uncertain, and the current direction is to use squad dev test environments plus a shared dev integration environment.
 ```
 
 ## 10. Release Report Location And Retention

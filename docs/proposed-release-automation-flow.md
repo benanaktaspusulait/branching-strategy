@@ -1,6 +1,6 @@
 # Proposed Release Automation Flow
 
-This page summarises the proposed release automation flow described in the KT sessions.
+This page summarises the proposed release automation flow.
 
 It is still a proposal until the team confirms rollout timing, branch naming, quality gates and ownership.
 
@@ -18,7 +18,7 @@ The current process is manual-heavy:
 
 ## Target Branch Model
 
-The KT session described this target direction:
+The target direction is:
 
 - `development` effectively becomes `main`.
 - `main` should represent what is live/production.
@@ -146,7 +146,7 @@ Only release owners can approve exclusions, and the reason must be recorded in t
 
 ## CVE And Renovate Flow
 
-The KT session suggested CVE and Renovate-style updates should follow the same pattern as normal team changes:
+CVE and Renovate-style updates should follow the same pattern as normal team changes:
 
 - CVE scanning should raise work against the release branch.
 - CVE fixes should use a hotfix branch.
@@ -184,7 +184,7 @@ Proposed policy:
 
 ## Merge Commit Expectations
 
-The KT session leaned towards a squash-style pattern to reduce noisy release branch history.
+The preferred approach is a squash-style pattern to reduce noisy release branch history.
 
 The key requirement is:
 
@@ -212,4 +212,4 @@ Individual feature branch commits should ideally also follow the ticket/message 
 
 ---
 
-← [KT session findings](kt-session-findings.md) | → [Branching strategy options](branching-options.md)
+← [Deployment and release findings](deployment-and-release-findings.md) | → [Branching strategy options](branching-options.md)

@@ -38,9 +38,9 @@ Existing scripts or automation steps appear to cover parts of the release proces
 
 Some of these steps currently require tweaking or are not fully automated yet.
 
-## KT Automation Status
+## Current Automation Status
 
-The KT sessions suggest the current automation status is:
+The current automation status is:
 
 - Automation is being tested on the new configuration service.
 - The scripts work locally.
@@ -54,7 +54,7 @@ The KT sessions suggest the current automation status is:
 
 For the end-to-end proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).
 
-For detailed KT findings around current Helm scripts and auto manifest tooling, see [KT session findings](kt-session-findings.md).
+For detailed findings around current Helm scripts and auto manifest tooling, see [deployment and release findings](deployment-and-release-findings.md).
 
 ## Intended Direction
 
@@ -129,7 +129,7 @@ The pre-commit hook should prevent obvious missing ticket references, but it sho
 
 ## Merge Strategy
 
-The KT sessions leaned towards a squash-style pattern to keep release branch history readable.
+The preferred approach is a squash-style pattern to keep release branch history readable.
 
 The important requirement is not the exact Git button by itself. The important requirement is that the merge commit into the release branch contains:
 
@@ -143,7 +143,7 @@ Individual feature branch commits should ideally follow the same pattern because
 
 The automation is expected to run after image build and Helm chart upload have succeeded.
 
-If the final Git/chart/reporting step fails because of a transient system issue, it should be rerunnable. The KT session also identified a gap:
+If the final Git/chart/reporting step fails because of a transient system issue, it should be rerunnable. There is a known gap:
 
 ```text
 There is not currently an alerting model for failed automation steps.
@@ -234,7 +234,7 @@ Overrides may still be necessary, but they should be visible, approved and audit
 
 ## Auto Manifest And Tag Jump Follow-Up
 
-The KT sessions described auto manifest and tag jump tooling that must be reassessed against the proposed non-linear release branch model.
+Auto manifest and tag jump tooling must be reassessed against the proposed non-linear release branch model.
 
 Follow-up needed:
 

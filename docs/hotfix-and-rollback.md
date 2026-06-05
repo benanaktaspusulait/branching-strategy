@@ -41,7 +41,7 @@ This is for fixes discovered during SIT, QAT or pre-production validation.
 
 ### Shared Behaviour
 
-Both hotfix types share the following automation behaviour as described in the KT sessions:
+Both hotfix types share the following automation behaviour:
 
 - Feature and hotfix branches are treated similarly by the automation.
 - Commits on a hotfix branch should generate a deployable candidate and update the matching Cerberus chart branch.

@@ -27,7 +27,7 @@ Before choosing a model, confirm whether the team has:
 
 ## Branch And Commit Hygiene To Confirm
 
-The KT sessions raised several branch hygiene points that should be agreed before rollout.
+Several branch hygiene points should be agreed before rollout.
 
 Proposed branch naming examples:
 
@@ -45,7 +45,7 @@ Proposed cleanup rule:
 Feature branches should be deleted after merge, once any required release report has been generated.
 ```
 
-Proposed target model from the KT sessions:
+Proposed target model:
 
 ```text
 main represents production/live.
@@ -76,7 +76,7 @@ For the full proposal, see [rollout decision proposals](rollout-decision-proposa
 
 ## Multiple Active Release Branches
 
-The KT session raised an important branch maintenance point: more than one release branch may exist at the same time.
+An important branch maintenance point: more than one release branch may exist at the same time.
 
 If a feature starts from one release branch but is not ready for that release, it can continue alongside later releases. The team working on the feature should merge in the relevant release branches to detect conflicts before opening or updating the merge request.
 

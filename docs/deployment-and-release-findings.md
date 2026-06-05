@@ -1,6 +1,6 @@
-# KT Session Findings
+# Deployment And Release Findings
 
-This page summarises the knowledge transfer sessions. It covers deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
+This page covers the current deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
 
 Read this page together with:
 
@@ -10,11 +10,10 @@ Read this page together with:
 
 ## 1. Deployment Scripts And Helm Flow
 
-The deployment KT focused on the service repo and the MMA Helm repo.
+The current deployment path focuses on the service repo and the MMA Helm repo.
 
 Key points:
 
-- The current deployment path focuses on the service repo.
 - Individual service chart Drone pipelines have existed around dev-environment Helm chart deployment.
 - The MMA Helm repo contains the deployment scripts for Helm packaging, linting, templating, mass diff, uploading and deployment.
 - The MMA Helm repo is different from the MMA Helm library repo, which contains Helm templates/library content.
@@ -43,9 +42,9 @@ Important details:
 - Deployment scope can distinguish live, historical or both.
 - To deploy all charts today, chart names may need to be listed explicitly.
 
-## 2. Current Environment And Release Responsibilities
+## 2. Environment And Release Responsibilities
 
-The KT sessions clarified the current split of responsibilities:
+Current split of responsibilities:
 
 - Developers/squads handle lower/squad environments.
 - Release management handles SIT and higher environments.
@@ -77,7 +76,7 @@ The release process must track both deployed version and activation/config state
 
 ## 4. Rollback Current State
 
-The KT sessions confirmed:
+Current rollback status:
 
 - Automatic rollback is not built into the deployment scripts.
 - If deployment fails, the pipeline does not automatically rollback.
@@ -93,12 +92,12 @@ Rollback needs a documented operational process, not just Helm capability.
 
 ## 5. New Environment Setup Considerations
 
-For new dev/test environments, the KT raised several setup points:
+For new dev/test environments, several setup points must be addressed:
 
 - Environment lists or setup scripts may need updating.
 - Values files for new environments need to exist and match naming expectations.
 - Drone secrets/tokens may need to be added for new environments.
-- There was uncertainty around whether kube/robot tokens come from ACU or existing Drone/namespace secrets.
+- There is uncertainty around whether kube/robot tokens come from ACU or existing Drone/namespace secrets.
 - This needs confirmation before new environments can be treated as ready.
 
 Open items:
@@ -110,7 +109,7 @@ Open items:
 
 ## 6. Secrets Management
 
-The secrets KT covered the current direction for managing secrets:
+Current direction for managing secrets:
 
 - Secrets are being extracted into the Cerberus/deployment-management structure.
 - Managed secrets scripts can extract and encrypt secrets for an environment.
@@ -129,7 +128,7 @@ Secrets/config changes should be part of release scope and release readiness che
 
 ## 7. Release Artefact Creation
 
-The release/tag KT described service artefact creation:
+Service artefact creation flow:
 
 - A release branch may not have a tag until it is ready.
 - Creating a tag kicks off a tag creation pipeline.
@@ -153,7 +152,7 @@ This matters for changed-chart deployment because the automation needs to reason
 
 ## 9. Auto Manifest And Tag Jump Scripts
 
-The auto manifest KT described supporting scripts that still matter for release metadata, manifest generation and validation decisions.
+Supporting scripts that still matter for release metadata, manifest generation and validation decisions.
 
 Auto manifest has two main stages:
 
@@ -203,7 +202,7 @@ Implication:
 The new release automation must explicitly define strict validation rules for ticket status, missing tags, incorrect tags and do-not-deploy markers.
 ```
 
-## Follow-Up Items From KT Sessions
+## Follow-Up Items
 
 1. Confirm which scripts/repos must be updated for new dev/test environments.
 2. Confirm Drone secret/token ownership for new environments.
@@ -212,7 +211,6 @@ The new release automation must explicitly define strict validation rules for ti
 5. Confirm how `NA` tag entries should be represented in release reports.
 6. Confirm whether tag jump logic is retired, replaced or adapted for the new branching model.
 7. Confirm secrets access/onboarding process for maintainers.
-8. Confirm whether an auto-tag KT/follow-up session is still needed.
 
 ---
 

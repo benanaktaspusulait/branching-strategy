@@ -4,12 +4,10 @@ This page captures the current understanding of how branching, release and deplo
 
 It is a current-state summary, not a final process definition.
 
-## KT Session Updates
+## Current Direction
 
-The KT sessions added several useful clarifications and a more detailed proposed target flow.
+The release process is currently too manual-heavy, especially around creating releases and artefacts. The target direction is to automate the release flow so it can be triggered centrally, update Cerberus charts and produce reporting.
 
-- The release process is currently too manual-heavy, especially around creating releases and artefacts.
-- The target direction is to automate the release flow so it can be triggered centrally, update Cerberus charts and produce reporting.
 - The automation should cross-reference JIRA so the team can check that the release contains what it is expected to contain.
 - Gareth/Achilles are testing the automation on the new configuration service.
 - The scripts currently work locally; the remaining implementation step is to run them through Drone.
@@ -22,11 +20,9 @@ The KT sessions added several useful clarifications and a more detailed proposed
 - Feature and hotfix branches are expected to update matching Cerberus chart branches automatically.
 - A shared dev environment is expected to receive the active release branch for cross-team integration testing.
 
-These points do not finalise the operating model, but they sharpen the immediate rollout focus.
-
 For the detailed proposed flow, see [proposed release automation flow](proposed-release-automation-flow.md).
 
-For detailed KT findings around Helm scripts, secrets and auto manifest tooling, see [KT session findings](kt-session-findings.md).
+For detailed findings around Helm scripts, secrets and auto manifest tooling, see [deployment and release findings](deployment-and-release-findings.md).
 
 ## Current Branching Model
 
@@ -47,9 +43,9 @@ Current understanding:
 - After a release, the release branch should be reconciled back into `master` and `development`.
 - Hotfixes should be possible from production state, but the exact hotfix and back-merge process needs to be documented.
 
-The KT context says using `main/master` and release tags only contributed to long release gaps, fix-forward pressure and defect accumulation. The `development` branch was introduced to separate active development from production state.
+The historical context: using `main/master` and release tags only contributed to long release gaps, fix-forward pressure and defect accumulation. The `development` branch was introduced to separate active development from production state.
 
-The KT sessions described a proposed target direction where `development` effectively becomes `main`, and `main` represents production/live state. That needs explicit confirmation before this document treats it as the agreed model.
+The proposed target direction is for `development` to effectively become `main`, with `main` representing production/live state. That needs explicit confirmation before this document treats it as the agreed model.
 
 ## End-To-End Flow
 
@@ -114,7 +110,7 @@ The exact flow may vary by service and environment. That is why the process shou
 
 ## Deployment Repository And Helm Scripts
 
-The deployment KT sessions suggest the current deployment focus is on the service repo and the MMA Helm repo.
+The current deployment focus is on the service repo and the MMA Helm repo.
 
 Key points:
 
@@ -135,7 +131,7 @@ Deployment script stages mentioned:
 - Uploading.
 - Deployment.
 
-Deployment parameters captured in KT sessions:
+Deployment parameters:
 
 - Target environment.
 - Deployment scope, such as live, historical or both.
@@ -260,7 +256,7 @@ Current understanding:
 - Some people have limited or no direct production deployment experience.
 - Production access is restricted.
 - B.Val/pre-production may contain more data than production in some cases.
-- The exact environment differences are not clearly documented from the available KT notes.
+- The exact environment differences are not clearly documented.
 
 Areas to document:
 
@@ -306,4 +302,4 @@ The process should be confirmed around:
 
 ---
 
-← [README](../README.md) | → [KT session findings](kt-session-findings.md)
+← [README](../README.md) | → [Deployment and release findings](deployment-and-release-findings.md)
