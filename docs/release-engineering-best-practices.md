@@ -228,4 +228,4 @@ If the pilot creates more risk than it removes, stop the pilot, revert affected 
 
 ---
 
-<- [README](../README.md)
+<- [README](../README.md) | -> [Platform engineering strategy](platform-engineering-strategy.md)

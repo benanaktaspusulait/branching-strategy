@@ -63,6 +63,7 @@ Key problems at a glance:
 | Page | What It Covers |
 | --- | --- |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
+| [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates, GitOps readiness, SBOM and supply chain security. |
 | [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 
@@ -85,6 +86,7 @@ Key problems at a glance:
 10. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
 11. [Automation and validation](docs/automation-and-validation.md)
 12. [Release engineering best practices](docs/release-engineering-best-practices.md)
+13. [Platform engineering strategy](docs/platform-engineering-strategy.md)
 
 ## Visual Overview
 
