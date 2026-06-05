@@ -1,78 +1,97 @@
 # CI/CD Deployment And Branching Strategy
 
-This folder documents the current Cerberus CI/CD, release and deployment process.
+This folder documents the current Cerberus CI/CD, release and deployment process: what exists today, what is broken, and what should change.
 
-The material is split into short pages, but it should be read as one process narrative:
-
-1. Current process: how CI/CD, release branches, tags, Helm, manifests and deployment work today.
-2. Problem areas: where the current process is manual, unclear, risky or inconsistent.
-3. Recommendations: what should be automated, standardised or decided next.
-
-## Quick Takeaway
-
-The release and deployment challenge is broader than the branch model itself.
-
-CI/CD needs to work with service branches, tags, Helm artefacts, manifests, configuration, feature flags, approvals, hotfixes, rollback, runbooks and ownership.
-
-The safest short-term direction appears to be:
+## Summary
 
 ```text
-Stabilise and automate the current release process first.
-Then decide whether to keep GitFlow, simplify it or move towards trunk-based development.
+Do not change the branching model first.
+First make the current release process visible, repeatable and auditable.
+Then decide whether the branch model should be kept, simplified or replaced.
 ```
 
-## Map At A Glance
+## Structure
+
+The documentation is organised in three layers:
+
+### Layer 1: Current State (What Exists Today)
+
+| Page | What It Covers |
+| --- | --- |
+| [Current release operating model](docs/current-release-operating-model.md) | End-to-end release flow: branches → tags → artefacts → deploy → reconciliation. |
+| [Deployment and release findings](docs/deployment-and-release-findings.md) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
+
+### Layer 2: Problems (What Is Broken Or Missing)
+
+| Page | What It Covers |
+| --- | --- |
+| [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | Problem summary table, root causes, and recommended follow-up actions. |
+
+Key problems at a glance:
+
+| Problem | Impact |
+| --- | --- |
+| Release creation is manual-heavy | Days of effort per sprint, inconsistency, audit gaps. |
+| Branch/tag timing rules unclear | Wrong artefacts, wrong manifests, unclear release state. |
+| Release scope not explicit | Automation misses secrets, config, Liquibase or runbook changes. |
+| Manifest validation too permissive | Wrong version or blocked work can reach production. |
+| Chart deployment is manual | Every chart listed by hand; no changed-chart detection. |
+| Hotfix/rollback not standardised | Drift between production, `main`, manifests and active releases. |
+| No alerting for failed automation | Failed steps leave release state unclear. |
+| Ownership not assigned | Nobody named for key decisions and approvals. |
+
+### Layer 3: Proposed Solutions
+
+| Page | What It Covers |
+| --- | --- |
+| [Proposed release automation flow](docs/proposed-release-automation-flow.md) | Target automation: auto release branches, auto chart updates, reporting, changed-chart deploy. |
+| [Branching strategy options](docs/branching-options.md) | Three branch model options compared: GitFlow, simplified, trunk-based. |
+| [Automation and validation](docs/automation-and-validation.md) | Validation rules, release reporting, commit metadata, merge strategy. |
+| [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
+| [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
+| [Rollout decision proposals](docs/rollout-decision-proposals.md) | 14 proposed decisions ready for team approval. |
+| [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
+
+## Suggested Reading Order
+
+**Quick overview (10 min):**
+1. This page.
+2. [Current release operating model](docs/current-release-operating-model.md) — how it works today.
+3. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) — what is broken.
+4. [Proposed release automation flow](docs/proposed-release-automation-flow.md) — what the solution looks like.
+
+**Full picture:**
+5. [Deployment and release findings](docs/deployment-and-release-findings.md) — technical details.
+6. [Branching strategy options](docs/branching-options.md) — branch model comparison.
+7. [Rollout decision proposals](docs/rollout-decision-proposals.md) — decisions to approve.
+
+**For approvers:**
+8. [Hotfix and rollback](docs/hotfix-and-rollback.md)
+9. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
+10. [Automation and validation](docs/automation-and-validation.md)
+
+## Visual Overview
 
 ```mermaid
 flowchart TD
-  FINDINGS["Deployment and release findings"] --> CURRENT["Current state"]
-  CURRENT --> FLOW["Release operating model"]
-  CURRENT --> TOOLING["Deployment, Helm, secrets and manifests"]
-  CURRENT --> PAIN["Problem areas"]
+  subgraph CURRENT["Layer 1: Current State"]
+    A["Release operating model"]
+    B["Deployment and release findings"]
+  end
 
-  FLOW --> PROPOSED["Proposed solution"]
-  TOOLING --> PROPOSED
-  PAIN --> PROPOSED
+  subgraph PROBLEMS["Layer 2: Problems"]
+    C["CI/CD findings and actions"]
+  end
 
-  PROPOSED --> AUTO["Release automation flow"]
-  PROPOSED --> BRANCHES["Branch model options"]
-  PROPOSED --> VALIDATION["Validation and quality gates"]
-  PROPOSED --> HOTFIX["Hotfix and rollback"]
+  subgraph SOLUTIONS["Layer 3: Solutions"]
+    D["Release automation flow"]
+    E["Branching options"]
+    F["Validation and reporting"]
+    G["Hotfix and rollback"]
+    H["Scope and ownership"]
+    I["Rollout decisions"]
+  end
 
-  AUTO --> ROLLOUT["Rollout decisions"]
-  BRANCHES --> ROLLOUT
-  VALIDATION --> ROLLOUT
-  HOTFIX --> ROLLOUT
-
-  ROLLOUT --> ACTIONS["Findings and action tracking"]
-  ROLLOUT --> BRIEF["Squad briefing summary"]
+  CURRENT --> PROBLEMS
+  PROBLEMS --> SOLUTIONS
 ```
-
-## Pages
-
-| # | Page | Purpose |
-| --- | --- | --- |
-| 1 | [Current release operating model](docs/current-release-operating-model.md) | Current-state branching, release and deployment flow. |
-| 2 | [Deployment and release findings](docs/deployment-and-release-findings.md) | Deployment, secrets, manifest and validation knowledge. |
-| 3 | [Proposed release automation flow](docs/proposed-release-automation-flow.md) | Target automation flow. |
-| 4 | [Branching strategy options](docs/branching-options.md) | GitFlow, simplified and trunk-based options. |
-| 5 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, reporting and quality gates. |
-| 6 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Hotfix flow, rollback and reconciliation. |
-| 7 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Who owns what, approval points. |
-| 8 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed answers for open decisions. |
-| 9 | [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | Problem areas and follow-up actions. |
-| 10 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads. |
-
-## Suggested Reading Path
-
-For a quick overview:
-
-1. This page → [Current release operating model](docs/current-release-operating-model.md) → [Proposed release automation flow](docs/proposed-release-automation-flow.md).
-
-For problem areas and recommendations:
-
-2. [Deployment and release findings](docs/deployment-and-release-findings.md) → [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) → [Rollout decision proposals](docs/rollout-decision-proposals.md).
-
-For process owners:
-
-3. [Automation and validation](docs/automation-and-validation.md) → [Hotfix and rollback](docs/hotfix-and-rollback.md) → [Release scope, ownership and approvals](docs/scope-ownership-approvals.md).
