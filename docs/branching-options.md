@@ -94,13 +94,21 @@ feature branch -> development -> release branch -> master
 ```
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1565c0', 'primaryTextColor': '#fff', 'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  F1["Feature branch"] --> D1["development"]
-  D1 --> R1["release branch"]
-  R1 --> M1["master / production"]
-  R1 --> D1B["back-merge to development"]
-  M1 --> H1["hotfix from production if needed"]
-  H1 --> D1B
+  F1["🌱 Feature branch"]:::feat --> D1["🔀 development"]:::dev
+  D1 --> R1["📋 release branch"]:::rel
+  R1 --> M1["🏁 master / production"]:::prod
+  R1 -.->|back-merge| D1
+  M1 -.->|hotfix| H1["🚨 hotfix branch"]:::hotfix
+  H1 -.->|back-merge| D1
+
+  classDef feat fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef dev fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef prod fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef hotfix fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
 Benefits:
@@ -135,13 +143,20 @@ feature branches -> release branches tracking live/main
 ```
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  M2["main / production baseline"] --> F2A["Feature branch A"]
-  M2 --> F2B["Feature branch B"]
-  F2A --> R2["release branch"]
+  M2["🏁 main / production"]:::prod --> F2A["🌱 Feature A"]:::feat
+  M2 --> F2B["🌱 Feature B"]:::feat
+  F2A --> R2["📋 release branch"]:::rel
   F2B --> R2
-  R2 --> PROD2["production"]
-  PROD2 --> M2
+  R2 --> PROD2["🚀 production"]:::deploy
+  PROD2 -.->|reconcile| M2
+
+  classDef prod fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef feat fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
 ```
 
 Benefits:
@@ -174,13 +189,22 @@ release control -> feature flags/config
 ```
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  S3A["Short-lived branch"] --> T3["trunk / main"]
-  S3B["Short-lived branch"] --> T3
-  T3 --> DEP3["Deployable build"]
-  DEP3 --> CFG3{"Feature flag / config"}
-  CFG3 -->|Disabled| SAFE3["Inactive code path"]
-  CFG3 -->|Enabled| LIVE3["Released capability"]
+  S3A["🌱 Short-lived branch"]:::feat --> T3["🏁 trunk / main"]:::trunk
+  S3B["🌱 Short-lived branch"]:::feat --> T3
+  T3 --> DEP3["📦 Deployable build"]:::build
+  DEP3 --> CFG3{"🚦 Feature flag"}:::flag
+  CFG3 -->|Disabled| SAFE3["💤 Inactive"]:::off
+  CFG3 -->|Enabled| LIVE3["✅ Released"]:::on
+
+  classDef feat fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef trunk fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef build fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef flag fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
+  classDef off fill:#616161,stroke:#424242,color:#fff
+  classDef on fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 Benefits:

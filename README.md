@@ -91,20 +91,38 @@ Key problems at a glance:
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#4a90d9', 'primaryTextColor': '#fff', 'primaryBorderColor': '#2c6fad', 'secondaryColor': '#f0f4f8', 'tertiaryColor': '#e8f5e9'}}}%%
 
-flowchart LR
-  A["Current state<br/>Operating model + deployment findings"]:::current
-  B["Problems<br/>CI/CD findings + system analysis"]:::problem
-  C["Solutions<br/>Automation + branching + validation + rollback"]:::solution
-  D["Decisions<br/>Rollout proposals + ownership + squad briefing"]:::decision
-  E["Reference<br/>Best practices + detailed analysis"]:::reference
+flowchart TD
+  %% Layer 1
+  A["📋 Current Release Operating Model"]:::current
+  B["🔧 Deployment & Release Findings"]:::current
 
-  A --> B --> C --> D --> E
+  %% Layer 2
+  C["⚠️ CI/CD Findings & Actions"]:::problem
+  D["🎯 System State, Problems & Solutions"]:::problem
+
+  %% Layer 3
+  E["🚀 Proposed Release Automation Flow"]:::solution
+  F["🌿 Branching Strategy Options"]:::solution
+  G["✅ Automation & Validation"]:::solution
+  H["🔄 Hotfix & Rollback"]:::solution
+
+  %% Layer 4
+  I["📝 Rollout Decision Proposals"]:::decision
+  J["👥 Scope, Ownership & Approvals"]:::decision
+  K["📢 Squad Briefing Summary"]:::decision
+
+  %% Relationships
+  A & B --> C --> D
+  D --> E & F
+  E --> G & H
+  F & G & H --> I
+  I --> J --> K
 
   classDef current fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
   classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
   classDef solution fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
   classDef decision fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
-  classDef reference fill:#4b5563,stroke:#374151,color:#fff,font-weight:bold
 ```
 
-**Color key:** current state, problems, solutions, decisions, reference.
+**Color key:**
+🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions

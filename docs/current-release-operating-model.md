@@ -57,14 +57,18 @@ The release flow currently spans source control, artefact creation, deployment s
 Compact current-state view:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1a73e8', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1557b0', 'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  A["1. Source control<br/>feature -> development -> release -> tag"]
-  B["2. Artefact creation<br/>build / test / scan<br/>image + Helm package"]
-  C["3. Deployment state<br/>manifest + Cerberus charts<br/>values / config / secrets"]
-  D["4. Promotion<br/>deploy -> technical validation<br/>QAT -> production"]
-  E["5. Reconciliation<br/>master/main reflects production<br/>development and active releases updated"]
+  A["📂 Source Control\n─────────────\nfeature → development\n→ release → tag"]:::phase
+  B["🔨 Artefact Creation\n─────────────\nbuild / test / scan\nimage + Helm package"]:::phase
+  C["📦 Deployment State\n─────────────\nmanifest + Cerberus charts\nvalues / config / secrets"]:::phase
+  D["🚀 Promotion\n─────────────\ndeploy → tech validation\nQAT → production"]:::phase
+  E["🔄 Reconciliation\n─────────────\nmain reflects production\nactive releases updated"]:::phase
 
   A --> B --> C --> D --> E
+
+  classDef phase fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
 ```
 
 Why this matters:
@@ -114,12 +118,19 @@ Creating a tag appears to trigger:
 Compact tag flow:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#0d652d', 'primaryTextColor': '#fff', 'primaryBorderColor': '#094d22', 'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  REL["Release branch"] --> TAG["Service tag"]
-  TAG --> PIPE["Tag pipeline<br/>build / test / scan"]
-  PIPE --> ART["Image + Helm artefact"]
-  ART --> MAN["Manifest / chart update"]
-  MAN --> DEPLOY["Deploy candidate"]
+  REL["🌿 Release branch"]:::node
+  TAG["🏷️ Service tag"]:::node
+  PIPE["⚙️ Tag pipeline\nbuild / test / scan"]:::node
+  ART["📦 Image + Helm artefact"]:::node
+  MAN["📋 Manifest / chart update"]:::node
+  DEPLOY["🚀 Deploy candidate"]:::node
+
+  REL --> TAG --> PIPE --> ART --> MAN --> DEPLOY
+
+  classDef node fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
 ```
 
 Risk:
@@ -169,11 +180,18 @@ Code deployed != feature enabled
 ```
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#7b1fa2', 'primaryTextColor': '#fff', 'primaryBorderColor': '#5c1680', 'lineColor': '#5f6368'}}}%%
+
 flowchart LR
-  CODE["Code deployed"] --> FLAG{"Feature enabled?"}
-  FLAG -->|No| DORMANT["Inactive code path"]
-  FLAG -->|Yes| ACTIVE["Active feature"]
-  CONFIG["Values / config / flags"] --> FLAG
+  CODE["📦 Code deployed"]:::node --> FLAG{"🚦 Feature enabled?"}:::decision
+  FLAG -->|No| DORMANT["💤 Inactive code path"]:::off
+  FLAG -->|Yes| ACTIVE["✅ Active feature"]:::on
+  CONFIG["⚙️ Values / config / flags"]:::node --> FLAG
+
+  classDef node fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
+  classDef decision fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
+  classDef off fill:#616161,stroke:#424242,color:#fff
+  classDef on fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 If feature flags are baked into Helm values, enabling or disabling a feature may require redeployment. That means trunk-based development would move some complexity from branching into configuration and deployment.
