@@ -62,7 +62,8 @@ Key problems at a glance:
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 15 proposed decisions ready for team approval. |
 | [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
-| [Transformation programme](docs/transformation-programme.md) | Root cause, maturity scorecard, roadmap, RACI, metrics, cost/benefit, top 10. |
+| [Transformation programme](docs/transformation-programme.md) | Root cause, risk, maturity scorecard, target state, control plane future. |
+| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, RACI, metrics, cost/benefit, top 10 recommendations. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
 ### Transformation Programme
@@ -76,8 +77,11 @@ Key problems at a glance:
 | Page | What It Covers |
 | --- | --- |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
-| [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates, GitOps readiness, SBOM and supply chain security. |
-| [Deployment knowledge graph](docs/deployment-knowledge-graph.md) | Future-state architecture: graph model for release intelligence, incident investigation, audit and DORA metrics. |
+| [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
+| [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md) | GitOps readiness, SBOM, supply chain security, unified control plane. |
+| [Deployment knowledge graph — design](docs/deployment-knowledge-graph-design.md) | Domain model, entity relationships, graph schema. |
+| [Deployment knowledge graph — implementation](docs/deployment-knowledge-graph-implementation.md) | Event architecture, ingestion, API, search, workflows. |
+| [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | Security, retention, integrations, technology options, roadmap. |
 | [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 

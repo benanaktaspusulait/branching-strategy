@@ -19,12 +19,18 @@ This complete document is generated from the source files listed below. Edit the
 | 11 | `docs/rollout-decision-proposals.md` | [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md) |
 | 12 | `docs/release-decision-register.md` | [Release Decision Register](docs/release-decision-register.md) |
 | 13 | `docs/transformation-programme.md` | [Transformation Programme](docs/transformation-programme.md) |
-| 14 | `docs/squad-briefing-summary.md` | [Squad Briefing Summary](docs/squad-briefing-summary.md) |
-| 15 | `docs/release-engineering-best-practices.md` | [Release Engineering Best Practices](docs/release-engineering-best-practices.md) |
-| 16 | `docs/platform-engineering-strategy.md` | [Platform Engineering Strategy](docs/platform-engineering-strategy.md) |
-| 17 | `docs/deployment-knowledge-graph.md` | [Deployment Knowledge Graph](docs/deployment-knowledge-graph.md) |
-| 18 | `docs/reference/system-state-problems-solutions-detailed.md` | [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md) |
-| 19 | `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md) |
+| 14 | `docs/transformation-programme-delivery.md` | [Transformation Programme — Delivery](docs/transformation-programme-delivery.md) |
+| 15 | `docs/squad-briefing-summary.md` | [Squad Briefing Summary](docs/squad-briefing-summary.md) |
+| 16 | `docs/release-engineering-best-practices.md` | [Release Engineering Best Practices](docs/release-engineering-best-practices.md) |
+| 17 | `docs/platform-engineering-strategy.md` | [Platform Engineering Strategy](docs/platform-engineering-strategy.md) |
+| 18 | `docs/platform-engineering-strategy-advanced.md` | [Platform Engineering Strategy — Advanced](docs/platform-engineering-strategy-advanced.md) |
+| 19 | `docs/deployment-knowledge-graph-design.md` | [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md) |
+| 20 | `docs/deployment-knowledge-graph-implementation.md` | [Deployment Knowledge Graph — Implementation And Workflows](docs/deployment-knowledge-graph-implementation.md) |
+| 21 | `docs/deployment-knowledge-graph-operations.md` | [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md) |
+| 22 | `docs/reference/system-state-problems-solutions-detailed.md` | [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md) |
+| 23 | `docs/reference/detailed-problems.md` | [Detailed Problem Analysis (P1–P12)](docs/reference/detailed-problems.md) |
+| 24 | `docs/reference/detailed-solutions.md` | [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md) |
+| 25 | `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md) |
 
 ---
 
@@ -93,7 +99,8 @@ Key problems at a glance:
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 15 proposed decisions ready for team approval. |
 | [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
-| [Transformation programme](docs/transformation-programme.md) | Root cause, maturity scorecard, roadmap, RACI, metrics, cost/benefit, top 10. |
+| [Transformation programme](docs/transformation-programme.md) | Root cause, risk, maturity scorecard, target state, control plane future. |
+| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, RACI, metrics, cost/benefit, top 10 recommendations. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
 ### Transformation Programme
@@ -107,8 +114,11 @@ Key problems at a glance:
 | Page | What It Covers |
 | --- | --- |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
-| [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates, GitOps readiness, SBOM and supply chain security. |
-| [Deployment knowledge graph](docs/deployment-knowledge-graph.md) | Future-state architecture: graph model for release intelligence, incident investigation, audit and DORA metrics. |
+| [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
+| [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md) | GitOps readiness, SBOM, supply chain security, unified control plane. |
+| [Deployment knowledge graph — design](docs/deployment-knowledge-graph-design.md) | Domain model, entity relationships, graph schema. |
+| [Deployment knowledge graph — implementation](docs/deployment-knowledge-graph-implementation.md) | Event architecture, ingestion, API, search, workflows. |
+| [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | Security, retention, integrations, technology options, roadmap. |
 | [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 
@@ -2974,6 +2984,23 @@ Before starting this future work, the team must decide:
 - What audit/export requirements exist.
 - Whether this integrates with future GitOps tooling.
 
+For roadmap, RACI, metrics, cost/benefit and recommendations, see [transformation programme — delivery](docs/transformation-programme-delivery.md).
+
+---
+
+← [System state, problems, solutions and risks](docs/system-state-problems-solutions.md) | → [Transformation programme — delivery](docs/transformation-programme-delivery.md)
+
+---
+
+> Source: `docs/transformation-programme-delivery.md`
+
+
+# Transformation Programme — Delivery
+
+This page contains the roadmap, governance structures, metrics and recommendations for the release transformation.
+
+For root cause analysis, risk assessment, maturity scorecard and target state architecture, see [transformation programme](docs/transformation-programme.md).
+
 ## Transformation Roadmap
 
 Roadmap status reflects execution readiness, not document-writing progress. Phase 0 remains active until the rollout decisions are approved, named owners/backups are assigned and exit criteria are published. See the [release decision register](docs/release-decision-register.md) for the live approval tracker.
@@ -3121,6 +3148,10 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 ---
 
 <- [System state, problems, solutions and risks](docs/system-state-problems-solutions.md) | -> [Rollout decision proposals](docs/rollout-decision-proposals.md)
+
+---
+
+← [Transformation programme](docs/transformation-programme.md) | → [Rollout decision proposals](docs/rollout-decision-proposals.md)
 
 ---
 
@@ -3712,6 +3743,23 @@ The release report should include a link to the observability dashboard filtered
 
 ---
 
+For GitOps, supply chain security and the unified control plane, see [platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md).
+
+---
+
+← [Release engineering best practices](docs/release-engineering-best-practices.md) | → [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md)
+
+---
+
+> Source: `docs/platform-engineering-strategy-advanced.md`
+
+
+# Platform Engineering Strategy — Advanced
+
+> **This section is not a blocker for the initial release automation rollout.** All items below are medium-term or long-term improvements.
+
+See [platform engineering strategy](docs/platform-engineering-strategy.md) for environment promotion, deployment strategies and observability gates.
+
 ## 4. GitOps Readiness
 
 ### Current State
@@ -3965,14 +4013,23 @@ This is a future option, subject to platform strategy approval. It is not part o
 
 ---
 
-> Source: `docs/deployment-knowledge-graph.md`
+← [Platform engineering strategy](docs/platform-engineering-strategy.md) | → [Deployment knowledge graph](docs/deployment-knowledge-graph-design.md)
+
+---
+
+> Source: `docs/deployment-knowledge-graph-design.md`
 
 
 # Deployment Knowledge Graph
 
 **Future-State Architecture for Cerberus Release Intelligence**
 
-> **Status:** Long-term architectural proposal. Not part of the initial release automation rollout. This extends the Unified Deployment and Release Control Plane described in the Transformation Programme.
+> **Status:** Long-term architectural proposal. Not part of the initial release automation rollout.
+
+This document is split into three parts:
+- Part 1: [Design and Domain Model](docs/deployment-knowledge-graph-design.md) (you are here)
+- Part 2: [Implementation and Workflows](docs/deployment-knowledge-graph-implementation.md)
+- Part 3: [Operations and Technology](docs/deployment-knowledge-graph-operations.md)
 
 ---
 
@@ -4193,6 +4250,19 @@ Relationships:
 **Rule:** The graph never writes back to source systems. It reads, correlates and serves queries.
 
 ---
+
+---
+
+→ [Part 2: Implementation and Workflows](docs/deployment-knowledge-graph-implementation.md)
+
+---
+
+> Source: `docs/deployment-knowledge-graph-implementation.md`
+
+
+# Deployment Knowledge Graph — Implementation And Workflows
+
+> Part 2 of 3. See [Part 1: Design](docs/deployment-knowledge-graph-design.md) for context.
 
 ## 8. Event-Driven Architecture
 
@@ -4544,6 +4614,19 @@ sequenceDiagram
 
 ---
 
+---
+
+← [Part 1: Design](docs/deployment-knowledge-graph-design.md) | → [Part 3: Operations](docs/deployment-knowledge-graph-operations.md)
+
+---
+
+> Source: `docs/deployment-knowledge-graph-operations.md`
+
+
+# Deployment Knowledge Graph — Operations And Technology
+
+> Part 3 of 3. See [Part 1: Design](docs/deployment-knowledge-graph-design.md) for context.
+
 ## 16. Security And RBAC Model
 
 ### Access Levels
@@ -4793,6 +4876,10 @@ It should be built incrementally, starting only after the immediate release auto
 
 ---
 
+← [Part 2: Implementation](docs/deployment-knowledge-graph-implementation.md)
+
+---
+
 > Source: `docs/reference/system-state-problems-solutions-detailed.md`
 
 
@@ -5016,6 +5103,25 @@ Experience-based note:
 
 Automation is not an owner. When automation fails, someone must decide whether to rerun, override, stop release, roll back or fix forward.
 
+For problems (P1-P12), see [detailed problems](docs/reference/detailed-problems.md).
+For solutions (S1-S7) and experience notes, see [detailed solutions](docs/reference/detailed-solutions.md).
+
+---
+
+← [README](README.md) | → [Detailed problems](docs/reference/detailed-problems.md)
+
+---
+
+> Source: `docs/reference/detailed-problems.md`
+
+
+# Detailed Problem Analysis (P1–P12)
+
+This page provides full analysis of each problem identified in the assessment.
+
+For current state detail, see [system state detailed](docs/reference/system-state-problems-solutions-detailed.md).
+For solutions, see [detailed solutions](docs/reference/detailed-solutions.md).
+
 ## 2. Main Problems
 
 ### P1 - The Problem Can Be Misframed As Branching Only
@@ -5213,6 +5319,22 @@ Impact:
 Recommendation:
 
 - Define alert content, alert channels, alert owners and safe rerun criteria before production rollout.
+
+---
+
+← [Detailed current state](docs/reference/system-state-problems-solutions-detailed.md) | → [Detailed solutions](docs/reference/detailed-solutions.md)
+
+---
+
+> Source: `docs/reference/detailed-solutions.md`
+
+
+# Detailed Solution Options And Experience Notes (S1–S7)
+
+This page provides full solution analysis with risks, mitigations and experience-based notes.
+
+For current state, see [system state detailed](docs/reference/system-state-problems-solutions-detailed.md).
+For problems, see [detailed problems](docs/reference/detailed-problems.md).
 
 ## 3. Solution Options And Risks
 
@@ -5603,6 +5725,10 @@ This path is not the fastest-looking option, but it reduces production release r
 ---
 
 <- [README](README.md) | -> [Rollout decision proposals](docs/rollout-decision-proposals.md)
+
+---
+
+← [Detailed problems](docs/reference/detailed-problems.md) | → [Rollout decision proposals](docs/rollout-decision-proposals.md)
 
 ---
 

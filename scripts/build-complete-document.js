@@ -20,11 +20,17 @@ const sources = [
   'docs/rollout-decision-proposals.md',
   'docs/release-decision-register.md',
   'docs/transformation-programme.md',
+  'docs/transformation-programme-delivery.md',
   'docs/squad-briefing-summary.md',
   'docs/release-engineering-best-practices.md',
   'docs/platform-engineering-strategy.md',
-  'docs/deployment-knowledge-graph.md',
+  'docs/platform-engineering-strategy-advanced.md',
+  'docs/deployment-knowledge-graph-design.md',
+  'docs/deployment-knowledge-graph-implementation.md',
+  'docs/deployment-knowledge-graph-operations.md',
   'docs/reference/system-state-problems-solutions-detailed.md',
+  'docs/reference/detailed-problems.md',
+  'docs/reference/detailed-solutions.md',
   'docs/reference/rollout-decision-proposals-detailed.md',
 ];
 
