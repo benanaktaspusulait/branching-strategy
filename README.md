@@ -58,6 +58,12 @@ Key problems at a glance:
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 14 proposed decisions ready for team approval. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
+### Transformation Programme
+
+| Page | What It Covers |
+| --- | --- |
+| [Transformation programme](docs/transformation-programme.md) | Executable transformation programme: strategy, roadmap (Phase 0–7), RACI, metrics, prioritisation, Go/No-Go criteria, target operating model, executive investment view and top 10 recommendations. |
+
 ### Reference
 
 | Page | What It Covers |
