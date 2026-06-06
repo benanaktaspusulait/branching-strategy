@@ -119,6 +119,181 @@ flowchart LR
 - Alerting for all automation failures.
 ```
 
+## Future State: Unified Deployment And Release Control Plane
+
+> **This is a future maturity option, not an immediate implementation requirement.**
+
+### Why This Matters
+
+The current release process is spread across: Git branches, Git tags, Docker images, Helm charts, Cerberus deployment-management, manifests, environment values, secrets, Liquibase, Jira, QAT approvals, release reports, manual runbooks and Drone pipeline execution.
+
+The current transformation plan improves these areas through automation and validation, but it still leaves teams interacting with several tools to answer basic questions like "what is in this release?" or "what is deployed where?"
+
+A unified control plane would reduce cognitive load and provide one operational view of release and deployment state. It would not replace the underlying tools — it would orchestrate and visualise them.
+
+### What The Control Plane Would Do
+
+| Capability | Description |
+| --- | --- |
+| Release inventory | Show all active, planned and historical releases. |
+| Environment state | Show what version is deployed in each environment. |
+| Deployment intent | Show what should be deployed according to deployment-management. |
+| Actual runtime state | Show what is actually running in Kubernetes. |
+| Approval workflow | Capture release owner, QAT and production approvals. |
+| Validation status | Show tag, image, chart, manifest, Jira and environment readiness validation. |
+| Rollback/fix-forward decision support | Show available rollback targets and known constraints. |
+| Audit trail | Record who approved, deployed, overrode, rolled back or excluded a chart. |
+| Release report dashboard | Expose release reports without needing to inspect pipeline logs manually. |
+| Ownership view | Show squad/service owner, release owner and platform owner. |
+| Alerting integration | Route failed automation or deployment issues to the right owners. |
+| Metrics and DORA reporting | Track deployment frequency, lead time, failure rate and recovery time. |
+
+### Current Tooling Relationship
+
+The control plane should not initially replace existing tools. It should orchestrate and visualise them:
+
+- Git remains the source of code history.
+- Deployment-management remains the source of deployment intent.
+- Drone remains the automation engine.
+- Helm remains the packaging/deployment mechanism.
+- Jira remains the work and release metadata source.
+- Kubernetes remains the runtime state.
+- Observability tools remain the health signal source.
+
+> **The control plane should not become a second source of truth. It should read from, validate and coordinate the existing sources of truth.**
+
+### Conceptual Architecture
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  CP["🖥️ Unified Deployment &\nRelease Control Plane"]:::platform
+
+  GIT["📂 Git\nbranches / commits / tags"]:::tool
+  DRONE["⚙️ Drone\nbuild / test / scan / deploy"]:::tool
+  HELM["📦 Helm\ncharts / packages / values"]:::tool
+  DM["📋 Deployment Management\nrelease intent / manifests"]:::tool
+  JIRA["🎫 Jira\nrelease scope / tickets"]:::tool
+  K8S["☸️ Kubernetes\nactual runtime state"]:::tool
+  OBS["📊 Observability\nhealth / metrics / logs"]:::tool
+  SEC["🔒 Secrets / Config\ncurrent and future management"]:::tool
+
+  USER["👤 Release Owner / Squad Lead /\nPlatform Engineer / QAT"]:::user
+
+  GIT --> CP
+  DRONE --> CP
+  HELM --> CP
+  DM --> CP
+  JIRA --> CP
+  K8S --> CP
+  OBS --> CP
+  SEC --> CP
+
+  USER --> CP
+  CP --> DRONE
+  CP --> JIRA
+  CP --> DM
+
+  classDef platform fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
+  classDef tool fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef user fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+```
+
+The platform gives a single operational view. It can trigger approved automation through Drone. It should not bypass existing validation gates. It should record decisions and overrides. It should reconcile intended state against actual state.
+
+### Example User Journeys
+
+**Release Owner Journey:**
+1. Opens release dashboard.
+2. Selects active release.
+3. Reviews included services and Jira tickets.
+4. Checks validation status.
+5. Reviews changed charts.
+6. Confirms environment readiness.
+7. Approves promotion to SIT or production.
+8. Sees deployment progress and post-deployment health.
+
+**Squad Lead Journey:**
+1. Checks whether squad services are included in release.
+2. Reviews branch/tag/image/chart status.
+3. Sees failed validations.
+4. Fixes missing Jira tag, ownership or manifest mismatch.
+5. Confirms service readiness.
+
+**Platform Engineer Journey:**
+1. Reviews failed pipeline or deployment automation.
+2. Checks Drone job, manifest, Helm chart and Kubernetes state.
+3. Determines whether rerun is safe.
+4. Records manual intervention or override.
+5. Confirms state reconciliation.
+
+**Incident / Rollback Journey:**
+1. Incident detected.
+2. Control plane shows current deployed version.
+3. Shows previous known good release.
+4. Shows whether Liquibase rollback exists.
+5. Shows whether config/secrets changed.
+6. Release owner chooses rollback or fix-forward.
+7. Decision is recorded.
+8. Branch, manifest and Jira reconciliation tasks are created.
+
+### Maturity Path
+
+| Phase | Capability | Description |
+| --- | --- | --- |
+| Phase 1 | Read-only dashboard | View release, environment, manifest and deployment state. |
+| Phase 2 | Validation dashboard | Show tag/image/chart/manifest/Jira/environment readiness status. |
+| Phase 3 | Approval workflow | Capture release owner, QAT and production approvals. |
+| Phase 4 | Controlled deployment trigger | Trigger Drone deployment jobs from the control plane after approval. |
+| Phase 5 | Rollback assistant | Show rollback candidates and required reconciliation steps. |
+| Phase 6 | Metrics and audit reporting | Provide DORA metrics, release KPIs and audit exports. |
+| Phase 7 | GitOps / progressive delivery integration | Integrate with ArgoCD, Argo Rollouts or future deployment controllers if adopted. |
+
+### Non-Goals For The First Version
+
+- Do not replace Drone initially.
+- Do not replace Helm initially.
+- Do not replace deployment-management initially.
+- Do not create a second deployment source of truth.
+- Do not allow uncontrolled production deployment.
+- Do not bypass QAT or release owner approval.
+- Do not combine this with the first branch cutover.
+- Do not implement progressive delivery at the same time as the first control-plane version.
+
+### Risks And Mitigations
+
+| Risk | Why It Matters | Mitigation |
+| --- | --- | --- |
+| Becomes another source of truth | Creates more fragmentation instead of reducing it. | Read from existing sources; write only approved decisions and audit records. |
+| Too much scope too early | Could delay immediate release automation work. | Start read-only; separate from initial rollout. |
+| Bypasses existing controls | Could weaken governance. | Integrate with existing approval gates and validation rules. |
+| Poor data quality | Dashboard is only useful if underlying metadata is reliable. | Complete validation and metadata standardisation first. |
+| Ownership unclear | Platform may become unowned tooling. | Assign product/platform ownership before build. |
+| Security exposure | Dashboard may show sensitive release, secret or environment metadata. | Apply RBAC, audit logging and avoid showing raw secrets. |
+
+### Success Criteria
+
+- Release owner can answer "what is in this release?" from one place.
+- Platform team can answer "what is deployed where?" from one place.
+- Squad leads can see validation failures without reading pipeline logs.
+- Production deployment approval is recorded in one auditable workflow.
+- Rollback candidate and constraints are visible during incidents.
+- Every production deployment links to: Git commit/tag, Docker image, Helm chart, deployment-management manifest, Jira release scope, approval record, deployment job and post-deployment health signal.
+
+### Decision Required Before Starting
+
+Before starting this future work, the team must decide:
+
+- Whether the control plane is an internal platform product.
+- Who owns it.
+- Whether deployment-management remains the source of deployment intent.
+- Whether the control plane can trigger Drone jobs or is read-only.
+- What RBAC model applies.
+- How approval records are stored.
+- What audit/export requirements exist.
+- Whether this integrates with future GitOps tooling.
+
 ## Transformation Roadmap
 
 | Phase | Timeframe | Focus | Key Deliverables |
@@ -128,8 +303,9 @@ flowchart LR
 | 2 | Month 2-3 | Release automation | Drone pilot green; auto branch/tag/chart; release reporting; alerting. |
 | 3 | Month 3-4 | Branch cutover | Controlled `main = production` cutover; branch protections; forward-merge rules active. |
 | 4 | Month 4-6 | Scale and harden | Changed-chart deployment default; shared dev auto-deploy; rerun safety; full RACI enforcement. |
-| 5 | Month 6-12 | Modernise | Runtime feature flags; External Secrets Operator; SBOM generation; observability gates evaluation. |
-| 6 | 12+ months | Optimise (if needed) | Trunk-based evaluation; GitOps (ArgoCD); progressive delivery; canary rollout. |
+| 5 | Month 6-12 | Modernise | Runtime feature flags; External Secrets Operator; SBOM generation; observability gates evaluation; read-only deployment/release dashboard feasibility. |
+| 6 | 12+ months | Optimise (if needed) | Trunk-based evaluation; GitOps (ArgoCD); progressive delivery; canary rollout; unified deployment control plane evaluation. |
+| 7 | Future | Platform maturity | Controlled deployment trigger; rollback assistant; approval workflow integration; metrics/audit reporting through control plane. |
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -257,6 +433,8 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 | 8 | Introduce release KPIs (DORA metrics + custom). | 2 |
 | 9 | Strengthen audit trail (pipeline artefacts, immutable reports). | 2-3 |
 | 10 | Re-evaluate branching strategy after maturity improvements (Phase 4+). | 4+ |
+
+**Long-term note:** After the immediate release operating model is stabilised, the team should evaluate whether a unified deployment and release control plane is justified. This should be treated as a platform product decision, not as part of the first automation rollout. See the Future State section above for the full description.
 
 ---
 

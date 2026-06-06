@@ -457,6 +457,28 @@ flowchart LR
   classDef future fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
 ```
 
+## 6. Unified Deployment Control Plane (Long-Term)
+
+This is a long-term platform capability. It sits after release automation, validation, ownership, environment readiness and rollback maturity are stable.
+
+A unified deployment and release control plane could become the single operational interface for releases — one place to view environment state, validate readiness, approve promotions, trigger deployments, track audit trails and support rollback decisions.
+
+It should start read-only (dashboarding existing state) and later integrate with approval workflow, deployment triggers, rollback assistant, metrics and GitOps/progressive delivery if those are adopted.
+
+Maturity sequence:
+
+```text
+Release automation
+  → Release state visibility
+  → Validation dashboard
+  → Approval workflow
+  → Controlled deployment trigger
+  → Rollback assistant
+  → GitOps / progressive delivery integration
+```
+
+This is a future option, subject to platform strategy approval. It is not part of the initial rollout. For the full description, see [Transformation Programme — Future State: Unified Deployment And Release Control Plane](transformation-programme.md#future-state-unified-deployment-and-release-control-plane).
+
 ---
 
 ← [Release engineering best practices](release-engineering-best-practices.md) | → [README](../README.md)

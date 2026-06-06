@@ -33,6 +33,14 @@ Cerberus currently operates a GitFlow-like branching model, but the real release
 >
 > The safer path is to make the current release state visible, repeatable, validated, owned and auditable first; then simplify the branch model after the automation proves what is actually being released.
 
+### Long-Term Direction
+
+The immediate goal is release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current transformation programme.
+
+Beyond that, a longer-term direction could be a unified deployment and release control plane — a single operational interface that sits above Git, Drone, Helm, deployment-management, Jira and environment metadata. Its purpose would be to give teams one place to view, approve, deploy, track and audit releases, rather than interacting with several disconnected tools.
+
+This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would be subject to platform strategy approval and should be treated as a platform product decision.
+
 ## Release State Is Fragmented
 
 The release process depends on multiple disconnected state areas. A problem in any one of them can invalidate the release.
