@@ -103,6 +103,8 @@ flowchart LR
   classDef target fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Red = current-state weakness · Green = proposed target control.
+
 ### Proposed Target End State - Subject To Team Validation
 
 ```text

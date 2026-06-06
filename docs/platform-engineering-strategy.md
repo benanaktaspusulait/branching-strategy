@@ -35,6 +35,8 @@ flowchart TD
   classDef prod fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Green = squad dev/test · Blue = shared dev · Orange = SIT · Purple = pre-prod / B.Val · Red = production.
+
 ### Promotion Rules
 
 | Rule | Description |
@@ -93,6 +95,8 @@ flowchart TD
   classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Grey = current rolling-update model · Blue = near-term blue-green option.
+
 ### Strategy Comparison
 
 | Strategy | Rollback Speed | Infrastructure Cost | Complexity | Best For |
@@ -144,6 +148,8 @@ flowchart LR
   classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Blue = deploy step · Grey = bake/wait period · Purple = observability gate · Yellow = SLO decision · Green = promote · Red = alert/manual rollback.
 
 ### Observability Gate Metrics
 

@@ -52,6 +52,8 @@ flowchart LR
   classDef api fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = source systems · Orange = event bus · Grey = event processors · Purple = raw event store · Teal = Knowledge Graph · Red = search index · Green = query/UI layer.
+
 ### Event Types
 
 | Event | Source | Graph Action |
@@ -272,6 +274,8 @@ flowchart TD
   classDef result fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
   classDef decision fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
 ```
+
+**Colour key:** Red = incident signal · Blue = investigation query · Grey = returned evidence · Yellow = rollback/fix-forward decision.
 
 ### Investigation Query Sequence
 

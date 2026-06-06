@@ -74,6 +74,8 @@ flowchart TD
   classDef consumer fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = existing source systems · Teal = Knowledge Graph read-model · Purple = control-plane/interface layer · Orange = API layer · Green = consuming dashboards and operational views.
+
 ### Key Principle
 
 > The Knowledge Graph is a read-model. It does not write back to source systems. It does not replace any existing tool. Its value is in connecting data that already exists but is currently siloed.
@@ -137,6 +139,8 @@ flowchart LR
   classDef api fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
   classDef ui fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Blue = source systems · Grey = gateway/audit plumbing · Orange = event/API transport · Purple = validation and entity resolution · Teal = Knowledge Graph · Red = search index · Green = dashboard/control-plane UI.
 
 ### Event Types
 

@@ -29,6 +29,8 @@ flowchart LR
   classDef benefit fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Red = current local/manual execution · Blue = audited pipeline automation · Green = expected release-control benefits.
+
 ## Automation Work Mentioned
 
 Existing scripts or automation steps appear to cover parts of the release process, including:
@@ -191,6 +193,8 @@ flowchart LR
   classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or approve override.
 
 Validation should make sure:
 

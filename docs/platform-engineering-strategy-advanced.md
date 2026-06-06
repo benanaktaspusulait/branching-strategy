@@ -57,6 +57,8 @@ flowchart TD
   classDef gitops fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = CI build pipeline · Orange = deployment-repo update · Green = GitOps cluster reconciliation.
+
 ### ArgoCD vs Flux Comparison
 
 | Feature | ArgoCD | Flux |
@@ -153,6 +155,8 @@ flowchart LR
   classDef verify fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = build step · Purple = supply-chain security controls · Green = deployment-time verification.
+
 ### Tool Recommendations
 
 | Capability | Tool Options | Integration Point |
@@ -228,6 +232,8 @@ flowchart LR
   classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef future fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Green = now / foundation work · Blue = next maturity step · Purple = future option.
 
 ## 6. Unified Deployment Control Plane (Long-Term)
 

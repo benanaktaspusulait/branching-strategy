@@ -24,6 +24,8 @@ flowchart LR
   classDef owner fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = release process · Orange = explicit release scope · Purple = named owners and approvals.
+
 ## Ownership Gap
 
 Automation cannot replace accountability. If an automated step fails, someone still needs to decide whether to rerun, override, stop, roll back or fix forward. Without named owners, decisions are delayed and escalation is unclear.
@@ -174,6 +176,8 @@ flowchart LR
   classDef step fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef gate fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Blue = release process step · Red = mandatory approval gate.
 
 ## Ownership Matrix Template
 

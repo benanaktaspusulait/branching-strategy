@@ -60,6 +60,8 @@ flowchart LR
   classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Orange = release branch · Green = feature/hotfix branch · Grey = commit/action step · Purple = temporary tag · Blue = build · Teal = chart update · Dark green = deploy handle.
+
 Important details:
 
 - Feature and hotfix branches are treated similarly by the automation.
@@ -109,6 +111,8 @@ flowchart LR
   classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef promote fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Purple = main/production · Orange = release branch · Green = feature/hotfix branches · Grey = merge step · Purple tag node = release tag/version · Teal = chart update · Blue = shared-dev deployment · Dark green = SIT+ promotion.
 
 Important details:
 

@@ -71,6 +71,8 @@ flowchart LR
   classDef phase fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = release lifecycle phase.
+
 Why this matters:
 
 ```text
@@ -133,6 +135,8 @@ flowchart LR
   classDef node fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Green = tag, artefact, manifest and deployment-candidate flow step.
+
 Risk:
 
 ```text
@@ -193,6 +197,8 @@ flowchart LR
   classDef off fill:#616161,stroke:#424242,color:#fff
   classDef on fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Purple = deployed code/config state · Yellow = feature-flag decision · Grey = inactive path · Green = active feature.
 
 If feature flags are baked into Helm values, enabling or disabling a feature may require redeployment. That means trunk-based development would move some complexity from branching into configuration and deployment.
 

@@ -41,6 +41,8 @@ flowchart LR
   classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Grey = branch/source trigger · Blue = automated Helm/package checks · Purple = release tag · Orange = manual promotion · Green = environment deployment.
+
 Important details:
 
 - Helm charts are deployed as packages, not directly from local repo files.

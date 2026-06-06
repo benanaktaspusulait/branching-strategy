@@ -79,6 +79,8 @@ flowchart LR
   classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Purple = production/main baseline · Red = hotfix branch · Blue = test step · Orange = tag/version or release branch · Green = production deployment · Grey = merge/reconciliation work.
+
 ## Hotfix Questions To Answer
 
 - Who approves a hotfix merge?
@@ -149,6 +151,8 @@ flowchart TD
   classDef action fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
   classDef done fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Red = production issue · Yellow = rollback/fix-forward decision · Purple = rollback path · Blue = fix-forward path · Grey = reconciliation actions · Green = validated closure.
 
 ## Rollback Questions To Answer
 

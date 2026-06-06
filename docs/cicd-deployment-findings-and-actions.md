@@ -59,6 +59,8 @@ flowchart LR
   classDef solution fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = recommended actions.
+
 ## Recommended Actions
 
 1. Keep the current-state flow in [current release operating model](current-release-operating-model.md) as the baseline view.

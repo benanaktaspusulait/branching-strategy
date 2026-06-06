@@ -111,6 +111,8 @@ flowchart LR
   classDef hotfix fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Green = feature branch · Blue = development branch · Orange = release branch · Purple = master/production · Red = hotfix branch.
+
 Benefits:
 
 - Keeps a familiar model.
@@ -161,6 +163,8 @@ flowchart LR
   classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Purple = main/production · Green = feature branches · Orange = release branch · Blue = production deployment.
+
 Benefits:
 
 - Fewer long-lived branches.
@@ -208,6 +212,8 @@ flowchart LR
   classDef off fill:#616161,stroke:#424242,color:#fff
   classDef on fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Green = short-lived branches · Purple = trunk/main · Blue = deployable build · Yellow = feature-flag decision · Grey = inactive code path · Dark green = enabled release.
 
 Benefits:
 
