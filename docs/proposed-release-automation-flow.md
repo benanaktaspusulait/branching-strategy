@@ -20,7 +20,7 @@ The current process is manual-heavy:
 
 The target direction is:
 
-- `development` effectively becomes `main`.
+- `development` does not become `main`. `main` is created from the confirmed production baseline. `development` is transitional and later retired.
 - `main` should represent what is live/production.
 - When something is deployed to production, it should be merged into `main`.
 - At the start of each sprint/release, release branches are automatically created from `main` for every repository that needs one.

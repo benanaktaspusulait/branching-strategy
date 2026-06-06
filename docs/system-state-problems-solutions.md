@@ -278,33 +278,15 @@ Phase 5: optimise feature flags, secrets and progressive delivery.
 
 The strongest recommendation is to avoid a big-bang branch change. The safer path is to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.
 
-## Root Cause Analysis
+For the full transformation programme including root cause analysis, maturity assessment, roadmap, RACI, metrics and cost/benefit analysis, see [transformation programme](transformation-programme.md).
 
-| Problem | Root Cause | Evidence |
-| --- | --- | --- |
-| Failed or wrong release | Environment mismatch; tag/manifest validation not enforced. | Multiple tag versions created for same release (e.g. 581, 582, 583, 584). |
-| Delayed release | Manual coordination across people, scripts and repos. | Release preparation reported to take days per sprint. |
-| Rollback uncertainty | No tested operational rollback process; Liquibase may be forward-only. | Recent practical behaviour leans towards fix-forward. |
-| Testing inconsistencies | Environment drift; lower envs deployed ad hoc while higher envs use chart releases. | Pre-prod may contain more data than production. |
-| Unclear release content | Release metadata spread across Jira, Git tags, manifests and scripts. | Tag jump checker sometimes passes when it should fail. |
-| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still shows TBD in many cells. |
+## One-Page Summary
 
-## Risk Assessment
+### Current State
 
-| # | Risk | Likelihood | Impact | Priority | Mitigation |
-| --- | --- | --- | --- | --- | --- |
-| R1 | Production outage from wrong artefact. | Medium | Critical | P1 | Strict tag/manifest validation; fail on mismatch. |
-| R2 | Extended incident due to no rollback process. | Medium | Critical | P1 | Document and test rollback flow; define time budget. |
-| R3 | Release delays from manual coordination. | High | Medium | P2 | Automation pilot; Drone as single release path. |
-| R4 | Partial release (missing secrets/config/DB). | High | High | P1 | Explicit release scope checklist per release. |
-| R5 | Audit failure from weak release trail. | Medium | High | P2 | Pipeline-generated release reports; immutable artefacts. |
-| R6 | Environment failure at deploy time. | Medium | Medium | P3 | Formal environment readiness gate. |
-| R7 | Escalation confusion during incident. | High | Medium | P2 | Named owners per RACI. |
-| R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Do not adopt trunk-based until feature flags mature. |
+Cerberus uses a GitFlow-like branching model with release branches, tags, Helm packaging and environment promotion. The release process is functional but manual-heavy, with fragmented state across branches, tags, images, charts, manifests, Jira, secrets and runbooks. Automation is being piloted on the configuration service by Gareth/Achilles.
 
-## Current Release Maturity Assessment
-
-| Area | Current Score | Target Score | Gap |
+### Top 5 Risks
 | --- | --- | --- | --- |
 | Source control and branching | 3.0 / 5 | 4.5 / 5 | Branch model clear but reconciliation and automation incomplete. |
 | CI/CD pipeline | 3.0 / 5 | 4.5 / 5 | Pipeline exists but release steps are local/manual. |

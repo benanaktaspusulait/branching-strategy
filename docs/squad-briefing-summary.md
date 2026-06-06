@@ -10,7 +10,7 @@ The target direction is to automate more of the release flow so that release bra
 
 The proposed model is:
 
-- `development` effectively becomes `main`.
+- `development` does not become `main`. `main` is created from the confirmed production baseline. `development` is transitional and later retired.
 - `main` represents production/live state.
 - Release branches are automatically created at the start of each sprint/release.
 - Feature and hotfix branches are created from the relevant release branch.
