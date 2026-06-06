@@ -2,6 +2,8 @@
 
 This page captures the release scope, ownership and approval questions that should be clarified.
 
+Open scope and ownership decisions are tracked in the [release decision register](release-decision-register.md), especially D20 and D21.
+
 ## Why Scope Matters
 
 The phrase "all services" needs a clear definition.
@@ -66,14 +68,16 @@ A production or feature change may involve more than application code.
 
 Track whether each release includes:
 
-| Change Type | Included? | Notes |
-| --- | --- | --- |
-| Application/service code | TBD | Service repository changes. |
-| Service chart changes | TBD | May remain partly manual until Drone pipelines are updated. |
-| Manifest updates | TBD | Must match generated/expected tags. |
-| Secrets/config changes | TBD | Needs careful handling and audit trail. |
-| Liquibase/database changes | TBD | Needs release sequencing and rollback consideration. |
-| Runbook steps | TBD | Needed for manual or environment-specific operations. |
+| Change Type | Proposed Inclusion Status | Decision Needed | Notes |
+| --- | --- | --- | --- |
+| Application/service code | In scope by default | Confirm repository list | Service repository changes. |
+| Service chart changes | In scope when changed | Confirm automation/manual boundary | May remain partly manual until Drone pipelines are updated. |
+| Manifest updates | In scope by default | Confirm source of truth and approval point | Must match generated/expected tags. |
+| Secrets/config changes | Needs decision per release | Confirm ownership and audit path | Needs careful handling and audit trail. |
+| Liquibase/database changes | Needs decision per release | Confirm rollback/fix-forward plan | Needs release sequencing and rollback consideration. |
+| Runbook steps | Needs decision per release | Confirm evidence and execution owner | Needed for manual or environment-specific operations. |
+
+The release report should make these statuses visible for each release. If an item is excluded, the release owner should record the reason and approver.
 
 ## New Environment Readiness
 
@@ -93,6 +97,8 @@ Before a new environment is treated as release-ready, confirm:
 - [ ] Required runbook steps are documented.
 - [ ] Access and permissions are confirmed.
 - [ ] Smoke test path is known and executable.
+
+Known setup areas to verify:
 
 - Required values files exist.
 - Environment names are configured in the relevant setup/deploy scripts.
@@ -174,18 +180,18 @@ flowchart LR
 | Activity | Owner | Approver | Backup | Evidence |
 | --- | --- | --- | --- | --- |
 | Merge to `development` | Squad developer | Squad lead / peer reviewer | Another squad member | Merge request |
-| Create release branch | Automation (Gareth/Achilles) | Release owner | TBD | Pipeline/job link |
-| Create service tag | Automation or release management | Release owner | TBD | Tag + pipeline link |
-| Update manifest | Automation (Gareth/Achilles) | Release owner | TBD | Manifest MR |
+| Create release branch | Automation (Gareth/Achilles during pilot) | Release owner | Backup owner to assign | Pipeline/job link |
+| Create service tag | Automation or release management | Release owner | Backup owner to assign | Tag + pipeline link |
+| Update manifest | Automation (Gareth/Achilles during pilot) | Release owner | Backup owner to assign | Manifest MR |
 | Deploy to lower environment | Squad developer | Squad lead | Another squad member | Deployment job |
-| Deploy to SIT and above | Release management | Release owner | TBD | Deployment job |
-| QAT approval | QAT team | QAT lead | TBD | Approval record |
-| Production release | Release management | Release owner | TBD | Release record |
-| Hotfix | Squad developer + release mgmt | Release owner | TBD | Hotfix MR/tag |
-| Rollback | Release management | Release owner + incident lead | TBD | Rollback record |
-| Post-release reconciliation | Automation + release owner | Release owner | TBD | Merge records |
+| Deploy to SIT and above | Release management | Release owner | Backup owner to assign | Deployment job |
+| QAT approval | QAT team | QAT lead | Backup owner to assign | Approval record |
+| Production release | Release management | Release owner | Backup owner to assign | Release record |
+| Hotfix | Squad developer + release mgmt | Release owner | Backup owner to assign | Hotfix MR/tag |
+| Rollback | Release management | Release owner + incident lead | Backup owner to assign | Rollback record |
+| Post-release reconciliation | Automation + release owner | Release owner | Backup owner to assign | Merge records |
 
-Note: Names marked TBD still need to be confirmed with team leads. Known automation ownership sits with Gareth/Achilles for the pilot phase.
+Note: Backup owners still need to be confirmed with team leads before rollout expansion. Known automation ownership sits with Gareth/Achilles for the pilot phase only; the long-term owner should be recorded in the [release decision register](release-decision-register.md).
 
 ## Access And Operational Constraints
 

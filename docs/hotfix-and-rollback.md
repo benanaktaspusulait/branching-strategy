@@ -4,6 +4,8 @@ This page captures the open hotfix and rollback questions.
 
 Rollback and hotfix handling need to be clear because they affect the branching model, tag strategy, manifest updates and post-release reconciliation.
 
+Open hotfix and rollback decisions are tracked in the [release decision register](release-decision-register.md), especially D16, D17 and D18.
+
 ## Hotfix Current Understanding
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
@@ -87,6 +89,19 @@ flowchart LR
 - How do CVE/Renovate hotfix branches get reviewed and prioritised during release work?
 - What is the maximum acceptable time from hotfix decision to production deployment?
 
+## Minimum Hotfix Operating Model To Approve
+
+Before production rollout, the team should approve the following minimum model or replace it with a better one:
+
+| Step | Production Hotfix Default | Release-Phase Hotfix Default | Approval / Evidence |
+| --- | --- | --- | --- |
+| Source branch | Known production baseline (`main` after cutover, current production branch before cutover). | Active release branch. | Release owner confirms source branch. |
+| Approver | Release owner plus incident lead for critical production issues. | Release owner or delegated release approver. | Approval record linked to hotfix MR. |
+| Tag timing | Tag after fix is reviewed, tested and accepted for production deployment. | Tag/version increment after merge back into release branch. | Tag and pipeline link. |
+| Manifest update | Update manifest to the hotfix tag before production deploy. | Update release manifest as part of normal release preparation. | Manifest MR or deployment-management change. |
+| Forward merge | Merge back to `main` and assess all active release branches. | Assess later active release branches before release closure. | Forward-merge checklist. |
+| Closure | Confirm production state, manifest, release record and Jira are aligned. | Confirm release branch, manifest and report are aligned. | Release/hotfix closure note. |
+
 ## Rollback Current Understanding
 
 Rollback appears to be technically possible through Helm, but it is not currently built into the automated deployment flow.
@@ -144,6 +159,29 @@ flowchart TD
 - Is rollback tested regularly?
 - How are rollback actions audited?
 - How are branches and manifests reconciled after rollback?
+
+## Rollback vs Fix-Forward Decision Guide
+
+The decision should be made by the release owner and incident lead, with input from the affected squad and platform owner.
+
+| Situation | Default Decision | Why |
+| --- | --- | --- |
+| Bad deployment with no database or irreversible config change | Rollback candidate | Environment can likely return to the previous known-good release. |
+| Defect can be fixed faster than rollback can be validated | Fix-forward candidate | Lower operational risk if the fix path is faster and clear. |
+| Liquibase/data change has no rollback block | Fix-forward candidate | Database rollback may be unsafe or impossible. |
+| Secret/config change is the failure cause | Case-by-case | May require config restore, secret rotation or both. |
+| Security incident or exposed secret | Incident process first | Rotation and containment may matter more than application rollback. |
+| Failed release partially deployed across services/charts | Stop and assess | Need manifest, chart and environment state before deciding. |
+
+Every rollback or fix-forward decision should record:
+
+- decision owner,
+- reason,
+- affected services/charts,
+- database/config/secrets impact,
+- selected rollback or fix-forward target,
+- validation result,
+- branch, manifest, release report and Jira reconciliation actions.
 
 ## What Exactly Rolls Back?
 

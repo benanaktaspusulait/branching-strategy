@@ -2,6 +2,8 @@
 
 This page captures the automation work in progress and the validation rules that should be made explicit.
 
+Open validation decisions are tracked in the [release decision register](release-decision-register.md), especially D08, D09, D13, D14, D15 and D22.
+
 ## Why Automation Matters
 
 The safest short-term improvement appears to be moving manual or locally run release scripts into centrally executed pipelines.
@@ -247,6 +249,15 @@ Do-not-deploy marker -> fail unless release owner explicitly approves an overrid
 ```
 
 Overrides may still be necessary, but they should be visible, approved and audited.
+
+Items that still need explicit approval before strict enforcement:
+
+- Whether wrong tags, missing tags and manifest/tag mismatch fail the release or only warn during a dry run.
+- Which Jira statuses are valid, blocked or invalid for release.
+- How `NA` tag entries are represented and when they are allowed.
+- Who can approve a validation override.
+- Where the override evidence is stored.
+- Where release reports are retained and how long they are kept.
 
 ## Auto Manifest And Tag Jump Follow-Up
 

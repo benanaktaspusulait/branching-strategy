@@ -103,6 +103,17 @@ Key problems at a glance:
 13. [Release engineering best practices](docs/release-engineering-best-practices.md)
 14. [Platform engineering strategy](docs/platform-engineering-strategy.md)
 
+## Maintenance Checks
+
+Before sharing a regenerated complete document, run:
+
+```bash
+node scripts/build-complete-document.js
+node scripts/validate-markdown-links.js
+```
+
+The build step rewrites local links for `COMPLETE-DOCUMENT.md`. The validation step checks local Markdown links and heading anchors across the repository.
+
 ## Visual Overview
 
 ```mermaid

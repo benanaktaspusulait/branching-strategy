@@ -13,7 +13,7 @@ It answers: "Who does what, when, how do we measure success, and what does it co
 | Rollback uncertainty | No tested operational rollback process; Liquibase may be forward-only. | Recent practical behaviour leans towards fix-forward. |
 | Testing inconsistencies | Environment drift; lower envs deployed ad hoc while higher envs use chart releases. | Pre-prod may contain more data than production. |
 | Unclear release content | Release metadata spread across Jira, Git tags, manifests and scripts. | Tag jump checker sometimes passes when it should fail. |
-| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still shows TBD in many cells. |
+| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still requires named backup owners and formal approval. |
 
 ## Risk Assessment
 
@@ -296,10 +296,12 @@ Before starting this future work, the team must decide:
 
 ## Transformation Roadmap
 
+Roadmap status reflects execution readiness, not document-writing progress. Phase 0 remains active until the rollout decisions are approved, named owners/backups are assigned and exit criteria are published. See the [release decision register](release-decision-register.md) for the live approval tracker.
+
 | Phase | Timeframe | Focus | Key Deliverables |
 | --- | --- | --- | --- |
-| 0 | Now (Week 1-2) | Decisions and ownership | Approve rollout decisions; assign named owners; publish exit criteria. |
-| 1 | Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. |
+| 0 | Now (Week 1-2) | Decisions and ownership | Approve rollout decisions; assign named owners; publish exit criteria. Status: active / not yet closed. |
+| 1 | Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. Starts after Phase 0 decisions are closed. |
 | 2 | Month 2-3 | Release automation | Drone pilot green; auto branch/tag/chart; release reporting; alerting. |
 | 3 | Month 3-4 | Branch cutover | Controlled `main = production` cutover; branch protections; forward-merge rules active. |
 | 4 | Month 4-6 | Scale and harden | Changed-chart deployment default; shared dev auto-deploy; rerun safety; full RACI enforcement. |
@@ -316,10 +318,10 @@ gantt
   axisFormat %b %Y
 
   section Phase 0
-  Decisions and ownership       :done, p0, 2026-06, 2w
+  Decisions and ownership       :active, p0, 2026-06, 2w
 
   section Phase 1
-  Quick wins                    :active, p1, after p0, 4w
+  Quick wins                    :p1, after p0, 4w
 
   section Phase 2
   Release automation (Drone)    :p2, after p1, 8w
