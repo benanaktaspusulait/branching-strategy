@@ -87,6 +87,8 @@ Key problems at a glance:
 | [Detailed problems (P1–P12)](docs/reference/detailed-problems.md) | Full problem analysis with root cause and evidence. |
 | [Detailed solutions (S1–S7)](docs/reference/detailed-solutions.md) | Full solution options with risks and experience notes. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
+| [Enterprise Knowledge Graph proposal](docs/reference/enterprise-knowledge-graph-proposal.md) | ARB-ready enterprise architecture proposal: business case, data model, security, AI enablement, roadmap. |
+| [Advanced architecture sections](docs/advanced-architecture-sections.md) | Cerberus architecture mapping, event-driven ingestion model, data trust model, engineering copilot, platform product framing. |
 
 ## Suggested Reading Order
 

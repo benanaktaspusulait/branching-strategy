@@ -29,10 +29,12 @@ const sources = [
   'docs/deployment-knowledge-graph-implementation.md',
   'docs/deployment-knowledge-graph-operations.md',
   'docs/deployment-knowledge-graph-business-case.md',
+  'docs/advanced-architecture-sections.md',
   'docs/reference/system-state-problems-solutions-detailed.md',
   'docs/reference/detailed-problems.md',
   'docs/reference/detailed-solutions.md',
   'docs/reference/rollout-decision-proposals-detailed.md',
+  'docs/reference/enterprise-knowledge-graph-proposal.md',
 ];
 
 function isExternal(href) {
