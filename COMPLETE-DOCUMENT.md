@@ -27,10 +27,11 @@ This complete document is generated from the source files listed below. Edit the
 | 19 | `docs/deployment-knowledge-graph-design.md` | [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md) |
 | 20 | `docs/deployment-knowledge-graph-implementation.md` | [Deployment Knowledge Graph — Implementation And Workflows](docs/deployment-knowledge-graph-implementation.md) |
 | 21 | `docs/deployment-knowledge-graph-operations.md` | [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md) |
-| 22 | `docs/reference/system-state-problems-solutions-detailed.md` | [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md) |
-| 23 | `docs/reference/detailed-problems.md` | [Detailed Problem Analysis (P1–P12)](docs/reference/detailed-problems.md) |
-| 24 | `docs/reference/detailed-solutions.md` | [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md) |
-| 25 | `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md) |
+| 22 | `docs/deployment-knowledge-graph-business-case.md` | [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](docs/deployment-knowledge-graph-business-case.md) |
+| 23 | `docs/reference/system-state-problems-solutions-detailed.md` | [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md) |
+| 24 | `docs/reference/detailed-problems.md` | [Detailed Problem Analysis (P1–P12)](docs/reference/detailed-problems.md) |
+| 25 | `docs/reference/detailed-solutions.md` | [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md) |
+| 26 | `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md) |
 
 ---
 
@@ -119,6 +120,7 @@ Key problems at a glance:
 | [Deployment knowledge graph — design](docs/deployment-knowledge-graph-design.md) | Domain model, entity relationships, graph schema. |
 | [Deployment knowledge graph — implementation](docs/deployment-knowledge-graph-implementation.md) | Event architecture, ingestion, API, search, workflows. |
 | [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | Security, retention, integrations, technology options, roadmap. |
+| [Deployment knowledge graph — business case](docs/deployment-knowledge-graph-business-case.md) | Strategic value, ROI, governance model, risks, NFRs, AI enablement, decision record. |
 | [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 
@@ -4876,7 +4878,255 @@ It should be built incrementally, starting only after the immediate release auto
 
 ---
 
-← [Part 2: Implementation](docs/deployment-knowledge-graph-implementation.md)
+← [Part 2: Implementation](docs/deployment-knowledge-graph-implementation.md) | → [Business case and governance](docs/deployment-knowledge-graph-business-case.md)
+
+---
+
+> Source: `docs/deployment-knowledge-graph-business-case.md`
+
+
+# Deployment Knowledge Graph — Strategic Value, Business Case And Governance
+
+> **Audience:** Directors, Enterprise Architects, Delivery Managers, Platform Leads.
+>
+> **Status:** Proposed. Not approved. Not funded. Future option subject to platform strategy approval.
+
+This page provides the strategic justification, governance model and organisational benefits for the Deployment Knowledge Graph. It is intended for non-technical decision-makers who need to understand why this investment could be justified and what the expected return would be.
+
+For technical architecture, see [design](docs/deployment-knowledge-graph-design.md), [implementation](docs/deployment-knowledge-graph-implementation.md) and [operations](docs/deployment-knowledge-graph-operations.md).
+
+---
+
+## Executive Summary
+
+The Cerberus release process generates operational data across many disconnected systems: Git, Drone, Helm, Kubernetes, Jira, deployment-management, secrets, Liquibase and observability tools. No single system can answer "what was deployed, when, by whom, with what approval, and what happened after?"
+
+Answering these questions today requires manual investigation across multiple tools, often under time pressure during incidents. This costs engineering hours, delays incident response and makes audit compliance difficult.
+
+A Deployment Knowledge Graph would create a relationship intelligence layer that reads from existing systems and enables instant operational queries. It would not replace any existing tool. It would connect their data so that humans (and eventually machines) can reason about releases, deployments and incidents without manual correlation.
+
+The expected benefits are faster incident response, reduced manual reporting effort, stronger audit compliance and better deployment decision support. The investment is incremental, starting read-only, and the platform should only be built after the immediate release automation and validation work is stable.
+
+---
+
+## Current Operational Challenges
+
+### Fragmented Release Visibility
+
+Release state is distributed across branches, tags, images, Helm charts, Cerberus deployment-management manifests, Jira tickets, environment values, secrets and runbooks. No single view exists that shows what constitutes a given release.
+
+### Manual Investigation Effort
+
+When an incident occurs, engineers must manually query Git logs, Drone jobs, Kubernetes state, Jira tickets and observability dashboards to understand what changed. This takes time that should be spent on resolution.
+
+### Delayed Incident Response
+
+Without connected data, rollback decisions are slow. Engineers cannot instantly answer "what is the previous healthy version?" or "did a database migration run between these versions?" The time spent investigating extends incident duration.
+
+### Limited Deployment Intelligence
+
+Leadership cannot easily answer portfolio-level questions: "How often do we deploy?", "What is our change failure rate?", "Which squads are deploying most frequently?", "Which services have the longest lead time?" These DORA metrics must be computed manually, if at all.
+
+---
+
+## Business Problems Being Addressed
+
+| Problem | Current Impact | Potential Benefit |
+| --- | --- | --- |
+| Release visibility gaps | Release scope cannot be confirmed from a single system. | One query shows all services, tickets, images, charts and config in a release. |
+| Slow incident investigation | Engineers spend 30-60 minutes correlating data across tools during incidents. | Graph traversal shows full change context in seconds. |
+| Manual release reporting | Release reports are generated by scripts that must be run and reviewed manually. | Reports are derived from graph state on demand. |
+| Environment drift | No automated comparison between intended state and actual deployed state. | Graph reconciles deployment-management intent against Kubernetes reality. |
+| Deployment audit complexity | Proving what was deployed, by whom, with what approval requires cross-referencing multiple systems. | Single audit query returns full provenance chain. |
+| Knowledge concentration | Only a few people can answer "what is deployed where?" from memory. | Anyone with graph access can answer operational questions self-service. |
+| Rollback uncertainty | Rollback safety (Liquibase constraints, config dependencies) requires deep investigation. | Graph shows rollback candidates with known constraints instantly. |
+| No deployment metrics | DORA metrics are not computed. Delivery performance is not measured. | Metrics are derived from graph edges automatically. |
+
+---
+
+## Expected Organisational Benefits
+
+### Engineering
+
+| Benefit | Description |
+| --- | --- |
+| Faster root cause analysis | Trace from incident to deployment to commit to ticket in seconds. |
+| Reduced deployment risk | Impact analysis shows blast radius before deploying. |
+| Better release confidence | Validation dashboard shows readiness state before promotion. |
+| Self-service operational answers | Engineers answer their own questions without escalating to specialists. |
+
+### Delivery
+
+| Benefit | Description |
+| --- | --- |
+| Improved release reporting | Reports generated from live data, not manually compiled. |
+| Reduced coordination effort | Release scope is visible without meetings or Slack threads. |
+| Predictable release cadence | Metrics show whether releases are getting faster or slower. |
+| Evidence-based planning | Lead time and failure rate data inform sprint planning. |
+
+### Operations
+
+| Benefit | Description |
+| --- | --- |
+| Faster rollback decisions | Constraints visible immediately; decision support reduces MTTR. |
+| Better operational awareness | Environment state and drift visible in one place. |
+| Reduced on-call burden | Less manual investigation during incidents. |
+| Proactive problem detection | Drift and validation failures surfaced before they cause incidents. |
+
+### Leadership
+
+| Benefit | Description |
+| --- | --- |
+| Portfolio deployment visibility | See deployment frequency, lead time, failure rate across all squads. |
+| Better governance | Approvals, overrides and decisions recorded and queryable. |
+| Audit readiness | Complete provenance chain available on demand. |
+| Investment clarity | Metrics show whether process improvements are delivering results. |
+
+---
+
+## Governance Model
+
+### Platform Ownership
+
+| Capability | Proposed Owner | Responsibility |
+| --- | --- | --- |
+| Graph platform (infrastructure, API, ingestion) | Platform team | Build, operate, scale, secure. |
+| Data sources (webhooks, event quality) | Source system owners | Ensure events are published reliably. |
+| Release model (what constitutes a release) | Release management | Define release scope and lifecycle rules. |
+| Access control (RBAC, data sensitivity) | Security team | Define and enforce access policies. |
+| Data quality (accuracy, completeness, freshness) | Shared responsibility | Platform monitors; source owners fix. |
+| Metrics and reporting (DORA, KPIs) | Engineering leadership | Define what to measure; consume outputs. |
+
+### Data Ownership Principles
+
+> **The Knowledge Graph does not become the authoritative source of record for any domain.**
+
+Source of truth remains with:
+
+| Domain | Source Of Truth |
+| --- | --- |
+| Code history and branches | Git |
+| Work items and release scope | Jira |
+| Build and pipeline execution | Drone |
+| Deployment intent and manifests | Cerberus deployment-management |
+| Actual runtime state | Kubernetes |
+| Helm chart packages | Helm registry |
+| Container images | Image registry (Artifactory) |
+| Approvals and QAT decisions | Jira / workflow system |
+| Secrets | Git-crypt / Drone secrets / future secrets manager |
+| Database migrations | Liquibase changelogs in Git |
+| Observability and health | Prometheus / OpenTelemetry / Datadog |
+
+The Knowledge Graph is a **relationship intelligence layer**. It:
+
+- Reads from sources of truth.
+- Correlates relationships between entities across sources.
+- Serves operational, audit and analytical queries.
+- Records its own decisions (rollback choices, override approvals) as events.
+- Never overwrites or contradicts a source of truth.
+
+This principle must be upheld absolutely. If the graph disagrees with a source system, the source system is correct and the graph must be re-synced.
+
+---
+
+## Risks And Constraints
+
+| Risk | Description | Likelihood | Mitigation |
+| --- | --- | --- | --- |
+| Stale data | Graph lags behind source systems due to ingestion delay or failure. | Medium | Automated freshness checks; alerting on ingestion lag; reconciliation jobs. |
+| Incomplete ingestion | Not all events reach the graph; partial view leads to wrong conclusions. | Medium | Event bus with at-least-once delivery; dead-letter queue; periodic backfill. |
+| Incorrect relationships | Graph builds wrong links due to bad metadata (missing ticket refs, wrong tags). | High initially | Depend on release metadata standardisation (Phase 1 transformation) completing first. |
+| Scaling challenges | Graph grows large as services and history accumulate. | Low-Medium | Index frequently-traversed relationships; archive old data; partition by time. |
+| User adoption | Teams do not use the graph because existing habits are sufficient. | Medium | Start with incident investigation use case (highest pain point); embed in existing workflows. |
+| Governance complexity | Unclear ownership leads to unmaintained platform. | Medium | Assign product owner before build starts; treat as internal product with backlog. |
+| Over-engineering | Building too much before release automation is stable. | High if started too early | Gate: do not start until Drone automation is green for multiple releases. |
+| Security exposure | Graph reveals production topology and deployment patterns. | Low-Medium | RBAC from day one; audit all queries; never store secret values. |
+
+---
+
+## Non-Functional Requirements
+
+These should be defined before build starts and validated during each implementation phase.
+
+| Requirement | Target | Rationale |
+| --- | --- | --- |
+| Availability | 99.9% during working hours | Operational queries are needed during incidents (which happen during working hours). |
+| Query latency | < 2 seconds for standard operational queries | Engineers must get answers faster than manual investigation. |
+| Data freshness | < 5 minutes from source event to graph update | Acceptable for operational queries; not for deployment control. |
+| Auditability | Full query and access logging | Compliance requires knowing who queried what and when. |
+| Security | Role-based access control; no raw secret storage | Sensitive deployment data requires access boundaries. |
+| Scalability | Support 500+ services, 50+ environments, 2+ years of history | Enterprise environment with growth. |
+| Recoverability | Full rebuild from raw event store within 4 hours | Graph can be regenerated from immutable event log. |
+| Extensibility | New entity types and relationships without schema migration | Requirements will evolve; schema must flex. |
+
+---
+
+## Future AI Enablement
+
+The graph could provide a future foundation for AI-assisted operational analysis.
+
+Potential future capabilities:
+
+| Capability | Description |
+| --- | --- |
+| Release impact analysis | Given a proposed change, predict which environments and services are affected. |
+| Incident investigation assistant | Given an incident, automatically traverse the graph and suggest probable causes. |
+| Deployment recommendation engine | Suggest optimal deployment order based on dependency graph and historical success. |
+| Change risk scoring | Score a release candidate based on historical failure patterns for similar changes. |
+| Natural language operational queries | "What changed in production yesterday?" answered by LLM-driven graph query generation. |
+| Anomaly detection | Identify unusual deployment patterns (unusually large releases, unexpected services, out-of-hours deployments). |
+
+> **Out of scope for initial implementation.** AI capabilities should be evaluated only after the graph platform is stable, data quality is proven and the team has operational experience with graph-based queries.
+
+---
+
+## Success Criteria
+
+| Objective | Measure | Target |
+| --- | --- | --- |
+| Reduce incident investigation time | Time from incident detection to root cause identification. | < 10 minutes (from estimated 30-60 minutes). |
+| Reduce manual release reporting effort | Hours spent per sprint on release report preparation. | < 1 hour (from estimated several hours). |
+| Improve deployment visibility | "What is deployed where?" answerable from one system. | 100% of services and environments covered. |
+| Improve rollback decision speed | Time from rollback decision to knowing available targets and constraints. | < 2 minutes (from estimated 15-30 minutes). |
+| Audit query response | Time to produce a full release provenance chain. | < 30 seconds (from estimated hours of manual work). |
+| DORA metrics availability | Automated computation of deployment frequency, lead time, CFR and MTTR. | Weekly automated reporting. |
+| User adoption | Active users querying the graph per week. | > 50% of squad leads and platform engineers within 6 months of launch. |
+
+---
+
+## Cost / Benefit Summary
+
+| Investment Area | Estimated Cost | Expected Benefit | Payback Period |
+| --- | --- | --- | --- |
+| Phase 1: Read-only dashboard (core entities) | Low-Medium | Basic "what is deployed where?" visibility. | Immediate operational value. |
+| Phase 2: Validation dashboard | Medium | Release readiness visible without pipeline log inspection. | First prevented failed release. |
+| Phase 3: Incident investigation support | Medium | Faster root cause analysis; reduced MTTR. | First major incident investigated faster. |
+| Phase 4: Rollback decision support | Medium | Confidence in rollback; reduced incident duration. | First rollback executed in minutes instead of hours. |
+| Phase 5: DORA metrics and audit | Low-Medium | Automated reporting; compliance readiness. | Ongoing (replaces manual reporting effort). |
+| Phase 6: Full platform (approval workflow, triggers) | High | Complete operational control plane. | 12+ months (compounding value). |
+
+**Note:** These are indicative estimates. Detailed costing requires architecture decisions (managed vs self-hosted, build vs buy, team allocation) that are not yet made.
+
+---
+
+## Decision Record
+
+| Field | Value |
+| --- | --- |
+| Decision | Whether to invest in a Deployment Knowledge Graph as a long-term platform capability. |
+| Status | **Proposed** |
+| Approval | Pending — requires platform strategy, architecture and delivery leadership sign-off. |
+| Implementation | Not approved — depends on release automation maturity (Phase 2-3 transformation). |
+| Funding | Not approved — requires business case acceptance and budget allocation. |
+| Target state | Future option — earliest feasible start is Month 9-12 of the transformation roadmap. |
+| Prerequisites | Release automation stable in Drone; metadata standardisation complete; named platform owner assigned. |
+| Alternatives considered | (1) Do nothing — continue manual investigation. (2) Buy a platform product. (3) Build custom. |
+| Recommended approach | Hybrid: build custom graph and ingestion layer; use managed infrastructure; use Backstage or custom UI. |
+| Review date | To be set after Phase 2 of the transformation is complete. |
+
+---
+
+← [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | → [README](README.md)
 
 ---
 

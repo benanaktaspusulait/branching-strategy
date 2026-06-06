@@ -251,4 +251,4 @@ It should be built incrementally, starting only after the immediate release auto
 
 ---
 
-← [Part 2: Implementation](deployment-knowledge-graph-implementation.md)
+← [Part 2: Implementation](deployment-knowledge-graph-implementation.md) | → [Business case and governance](deployment-knowledge-graph-business-case.md)

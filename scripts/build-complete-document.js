@@ -28,6 +28,7 @@ const sources = [
   'docs/deployment-knowledge-graph-design.md',
   'docs/deployment-knowledge-graph-implementation.md',
   'docs/deployment-knowledge-graph-operations.md',
+  'docs/deployment-knowledge-graph-business-case.md',
   'docs/reference/system-state-problems-solutions-detailed.md',
   'docs/reference/detailed-problems.md',
   'docs/reference/detailed-solutions.md',
