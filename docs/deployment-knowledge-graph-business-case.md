@@ -222,4 +222,4 @@ These should be defined before build starts and validated during each implementa
 
 - [Deployment Knowledge Graph](deployment-knowledge-graph-design.md)
 - [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
-- [ARB Package](architecture-review/arb-package.md)
+- [Potential Future Architecture Review Considerations](architecture-review/arb-package.md)

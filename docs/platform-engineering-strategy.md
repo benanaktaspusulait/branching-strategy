@@ -14,7 +14,7 @@ Squad dev/test → Shared dev → SIT → B.Val / Pre-prod → Production
 
 Promotion today is largely manual: a person triggers deployment to the next environment after the previous one passes some form of validation.
 
-### Target Promotion Model
+### Possible Promotion Model
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -45,7 +45,7 @@ flowchart TD
 | Environment-specific config only | Values files, secrets and feature flags are the only things that change between environments. |
 | Gate before promotion | Each promotion requires a defined gate to pass. No silent auto-promote to production. |
 | Audit trail | Every promotion records: who, when, which version, which gate passed, link to pipeline. |
-| No skipping | Cannot promote to production without passing through pre-prod. Exception: approved emergency hotfix with explicit release-owner sign-off. |
+| No skipping | Cannot promote to production without passing through pre-prod. Exception: confirmed emergency hotfix with explicit release-owner sign-off. |
 
 ### Promotion Gate Matrix
 
@@ -104,7 +104,7 @@ flowchart TD
 | Rolling update | Minutes (manual) | 1x | Low | Simple services, low traffic |
 | Blue-green | Instant (traffic switch) | 2x during deploy | Medium | Stateless services, critical path |
 
-### Recommended Adoption Path
+### Possible Adoption Path
 
 ```text
 Phase 1 (Now): Rolling update with documented manual rollback procedure.
@@ -124,7 +124,7 @@ The current process checks:
 
 There is no automated observability gate that validates release health against SLOs before or after promotion.
 
-### Target: Observability-Driven Release Validation
+### Possible Target: Observability-Driven Release Validation
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -170,7 +170,7 @@ flowchart LR
 | Pipeline metric query | Drone step queries Prometheus after deploy, fails if threshold breached | Medium |
 | Keptn / Dynatrace | Full SLO-based quality gate evaluation | High |
 
-### Recommended Adoption Path
+### Possible Adoption Path
 
 ```text
 Phase 1 (Now): Document key metrics and dashboards per service. Establish SLO targets.
@@ -195,4 +195,4 @@ The release report should include a link to the observability dashboard filtered
 
 - [Release Engineering Best Practices](release-engineering-best-practices.md)
 - [Automation And Validation](automation-and-validation.md)
-- [Transformation Programme](transformation-programme.md)
+- [Improvement Notes And Maturity Observations](transformation-programme.md)

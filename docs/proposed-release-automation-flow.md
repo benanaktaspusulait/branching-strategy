@@ -16,9 +16,9 @@ The current process is manual-heavy:
 - Release branches need repeated tags and chart image updates as fixes, CVEs and last-minute changes are added.
 - End-of-sprint release preparation can take several days and consume developer/senior time.
 
-## Target Branch Model
+## Possible Branch Model
 
-The target direction is:
+The possible direction under discussion is:
 
 - `development` does not become `main`. `main` is created from the confirmed production baseline. `development` is transitional and later retired.
 - `main` should represent what is live/production.
@@ -28,7 +28,7 @@ The target direction is:
 - Multiple release branches may exist at the same time.
 - If releases need to be chained, the automation should allow a release branch to be based on another release branch instead of `main`.
 
-Proposed decision:
+Working assumption to confirm:
 
 ```text
 Move to `main` as the production/live baseline after an agreed cutover release.
@@ -168,11 +168,11 @@ The proposed deployment enhancement should:
 - Keep an override option to avoid a chart if there is a specific reason.
 - Prefer deploying all updated charts in a release branch unless explicitly excluded.
 
-Proposed decision:
+Working assumption to confirm:
 
 ```text
 Deploy all changed charts by default.
-Only release owners can approve exclusions, and the reason must be recorded in the release report or release notes.
+Only release owners can confirm exclusions, and the reason should be recorded in the release report or release notes.
 ```
 
 ## CVE And Renovate Flow
@@ -183,7 +183,7 @@ CVE and Renovate-style updates should follow the same pattern as normal team cha
 - CVE fixes should use a hotfix branch.
 - Renovate MRs should target the active release branch.
 - These MRs should look similar to team-raised MRs.
-- Teams/release owners must watch, review and merge them as part of release work.
+- Teams/release owners need to watch, review and merge them as part of release work.
 
 ### Ownership And SLA
 
@@ -231,7 +231,7 @@ The release branch commit history becomes the changelog.
 
 Individual feature branch commits should ideally also follow the ticket/message pattern, because reports may be generated from long-running feature branches before they are merged and deleted.
 
-## Items Still Needing Formal Approval
+## Items Still Needing Confirmation
 
 1. When exactly is `main` created from the confirmed production baseline, and when is `development` retired?
 2. What is the final branch naming convention?

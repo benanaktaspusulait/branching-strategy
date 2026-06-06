@@ -317,11 +317,11 @@ The long-term platform vision is a unified deployment intelligence capability:
 - The **Knowledge Graph** is the relationship intelligence layer.
 - The **Control Plane** is the operational interface layer.
 
-The recommended next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph is only valuable if the underlying data is reliable — which is why the immediate transformation must come first.
+The suggested next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph is only valuable if the underlying data is reliable, which is why the immediate release-process foundation should come first.
 
 ## Related Pages
 
-- [Transformation Programme](transformation-programme.md)
+- [Improvement Notes And Maturity Observations](transformation-programme.md)
 - [Deployment Knowledge Graph — Implementation And Workflows](deployment-knowledge-graph-implementation.md)
 - [Architecture Diagrams](architecture-review/architecture-diagrams.md)
-- [Criticality Challenge Review](architecture-review/criticality-challenge-review.md)
+- [Criticality Challenge Notes](architecture-review/criticality-challenge-review.md)

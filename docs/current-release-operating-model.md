@@ -271,7 +271,7 @@ Before changing the branching model, confirm:
 
 ## Related Pages
 
-- [Cerberus Release Engineering Assessment](../README.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](../README.md)
 - [System State, Problems, Solution Options And Risks](system-state-problems-solutions.md)
 - [Deployment And Release Findings](deployment-and-release-findings.md)
 - [Proposed Release Automation Flow](proposed-release-automation-flow.md)

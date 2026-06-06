@@ -1,6 +1,6 @@
 # System State, Problems, Solution Options And Risks - Detailed Analysis
 
-This page contains the detailed analysis behind the shorter decision-ready summary.
+This page contains the detailed analysis behind the shorter current-understanding summary.
 
 Use this page when you need the rationale, operational detail and experience-based notes. Use [system state, problems, solution options and risks](../system-state-problems-solutions.md) for the short version.
 
@@ -25,7 +25,7 @@ Related pages:
 - [Release scope, ownership and approvals](../scope-ownership-approvals.md)
 - [Rollout decision proposals](../rollout-decision-proposals.md)
 
-## Detailed Executive Summary
+## Detailed Current Understanding Summary
 
 The main issue is not the branch model alone.
 
@@ -46,7 +46,7 @@ The bigger issue is that release state is distributed across several moving part
 
 That means a branch model change cannot, by itself, make releases safe.
 
-Recommended order:
+Suggested order:
 
 ```text
 1. Make the current release process visible and auditable.
@@ -226,4 +226,4 @@ For solutions (S1-S7) and experience notes, see [detailed solutions](detailed-so
 - [System State, Problems, Solution Options And Risks](../system-state-problems-solutions.md)
 - [Detailed Problem Analysis (P1–P12)](detailed-problems.md)
 - [Detailed Solution Options And Experience Notes (S1–S7)](detailed-solutions.md)
-- [Cerberus Release Engineering Assessment](../../README.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](../../README.md)

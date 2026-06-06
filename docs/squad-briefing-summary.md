@@ -39,11 +39,11 @@ The current process takes a lot of manual effort each week. The automation shoul
 - Alerting for failed automation steps is not yet defined.
 - Quality gates and human approval points still need to be confirmed.
 
-Current recommendation:
+Current working view:
 
 - Keep human approval before higher-environment promotion and production.
 - Deploy changed charts by default.
-- Allow chart deployment exclusions only with release owner approval and an audit note.
+- Allow chart deployment exclusions only with release owner confirmation and an audit note.
 - Keep ephemeral branch environments out of scope for now.
 - Treat new dev/test environments as ready only after values files, setup script entries and Drone secrets/tokens are confirmed.
 
@@ -108,4 +108,4 @@ The automation handles the plumbing between your merge and the deployment. Your 
 - [Proposed Release Automation Flow](proposed-release-automation-flow.md)
 - [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
 - [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
-- [Transformation Programme — Delivery](transformation-programme-delivery.md)
+- [Possible Improvement Path And Delivery Notes](transformation-programme-delivery.md)

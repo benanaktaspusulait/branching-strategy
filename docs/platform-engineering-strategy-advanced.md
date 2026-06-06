@@ -72,7 +72,7 @@ flowchart TD
 | Learning curve | Medium | Medium |
 | Ecosystem fit | Better if also using Argo Workflows / Rollouts | Better if purely Git-centric |
 
-### Recommended GitOps Adoption Path
+### Possible GitOps Adoption Path
 
 ```text
 Phase 1 (Now): Treat the deployment-management repo as the GitOps source of truth.
@@ -93,11 +93,11 @@ Phase 3 (Long-term): ArgoCD in production.
 
 ### Prerequisites Before GitOps Adoption
 
-- Deployment-management repo must be the single source of truth (no manual kubectl/helm overrides).
-- Secrets must be handled without putting plain values in Git (Sealed Secrets or External Secrets Operator).
-- Branch protection on deployment-management repo must prevent unauthorized changes.
-- ArgoCD RBAC must align with release ownership model.
-- Monitoring must detect sync failures and drift.
+- Deployment-management repo would need to be the single source of truth, with no manual kubectl/helm overrides.
+- Secrets would need to be handled without putting plain values in Git, for example Sealed Secrets or External Secrets Operator.
+- Branch protection on deployment-management repo would need to prevent unauthorized changes.
+- ArgoCD RBAC would need to align with release ownership model.
+- Monitoring would need to detect sync failures and drift.
 
 ---
 
@@ -135,7 +135,7 @@ SLSA (Supply-chain Levels for Software Artifacts) defines maturity levels:
 | SLSA 3 | Build platform is hardened, provenance is non-forgeable | Not met |
 | SLSA 4 | Two-party review, hermetic builds | Not met |
 
-### Recommended Supply Chain Controls
+### Possible Supply Chain Controls
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -157,7 +157,7 @@ flowchart LR
 
 **Colour key:** Blue = build step · Purple = supply-chain security controls · Green = deployment-time verification.
 
-### Tool Recommendations
+### Tool Options
 
 | Capability | Tool Options | Integration Point |
 | --- | --- | --- |
@@ -168,7 +168,7 @@ flowchart LR
 | Provenance attestation | SLSA GitHub/GitLab generators, in-toto | Build pipeline (metadata generation) |
 | Dependency pinning | Renovate (already mentioned), Dependabot | Ongoing (MR-based updates) |
 
-### Recommended Adoption Path
+### Possible Adoption Path
 
 ```text
 Phase 1 (Quick win): Generate SBOM with Trivy during existing scan step. Store as pipeline artefact.
@@ -255,11 +255,11 @@ Release automation
   → GitOps / progressive delivery integration
 ```
 
-This is a future option, subject to platform strategy approval. It is not part of the initial rollout. For the full description, see [Transformation Programme — Future State: Unified Deployment And Release Control Plane](transformation-programme.md#future-state-unified-deployment-and-release-control-plane).
+This is a future option that would need separate platform strategy review. It is not part of the initial rollout. For the short scoped note, see [Possible Future Topics - Not In Current Scope](transformation-programme.md#possible-future-topics---not-in-current-scope).
 
 ## Related Pages
 
 - [Platform Engineering Strategy](platform-engineering-strategy.md)
 - [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
 - [Advanced Architecture Sections](advanced-architecture-sections.md)
-- [Final Scorecard And Verdict](architecture-review/final-scorecard-and-verdict.md)
+- [Summary Assessment And Open Risks](architecture-review/final-scorecard-and-verdict.md)

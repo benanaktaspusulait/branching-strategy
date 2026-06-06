@@ -1,12 +1,12 @@
 # Architecture Review Source Document List
 
-Status: Completed architecture review source list.
+Status: Optional review note / working reference.
 
-Review purpose: define the document set used for the ARB / executive / border-security criticality assessment.
+Review purpose: identify the document set that could support a later formal review or border-security criticality discussion.
 
 ## Review Scope Note
 
-The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is the focused approval reader copy for release-management stabilisation. Appendix and future-vision files remain available for traceability, but they are not part of the immediate approval ask.
+The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is the focused reader copy for release-management stabilisation. Appendix and future-vision files remain available for traceability, but they are not part of the immediate discussion scope.
 
 ## Primary Architecture Package
 
@@ -14,8 +14,8 @@ These files form the core package to review.
 
 | File | Role In Review | Review Focus |
 | --- | --- | --- |
-| `README.md` | Entry point and navigation | Executive readability, structure, decision path. |
-| `docs/system-state-problems-solutions.md` | Decision-ready synthesis | Current-state framing, risks, recommendations, go/no-go logic. |
+| `README.md` | Entry point and navigation | Reader clarity, structure, discussion path. |
+| `docs/system-state-problems-solutions.md` | Current-understanding synthesis | Current-state framing, risks, discussion points, go/no-go logic. |
 | `docs/current-release-operating-model.md` | Current release model | Existing process accuracy, operational assumptions, branch/tag/deploy flow. |
 | `docs/deployment-and-release-findings.md` | Deployment findings | Helm, manifest, secrets, validation and environment constraints. |
 | `docs/cicd-deployment-findings-and-actions.md` | CI/CD problem/action summary | Root causes, prioritisation, follow-up actions. |
@@ -23,15 +23,15 @@ These files form the core package to review.
 | `docs/automation-and-validation.md` | Validation model | Strict validation, auditability, override rules, alerting. |
 | `docs/hotfix-and-rollback.md` | Hotfix and rollback model | Rollback realism, fix-forward criteria, branch/manifest reconciliation. |
 | `docs/scope-ownership-approvals.md` | Scope and ownership | Release scope, service ownership, approvals, backup owners. |
-| `docs/rollout-decision-proposals.md` | Decision summary | Proposed decisions and approval status. |
-| `docs/release-decision-register.md` | Decision register | Active approval tracker, owners, required evidence. |
+| `docs/rollout-decision-proposals.md` | Decision summary | Proposed discussion points and confirmation status. |
+| `docs/release-decision-register.md` | Decision register | Active confirmation tracker, owners, required evidence. |
 
-## Transformation And Operating Model Package
+## Improvement And Operating Model Package
 
 | File | Role In Review | Review Focus |
 | --- | --- | --- |
-| `docs/transformation-programme.md` | Transformation strategy and target state | Maturity, near-term target-state realism, sequencing. |
-| `docs/transformation-programme-delivery.md` | Delivery plan | Roadmap, RACI, metrics, cost/benefit, top recommendations. |
+| `docs/transformation-programme.md` | Improvement notes and possible target shape | Maturity, near-term target-state realism, sequencing. |
+| `docs/transformation-programme-delivery.md` | Delivery notes | Possible phases, RACI, metrics, cost/benefit, top improvement areas. |
 | `docs/platform-engineering-strategy.md` | Platform strategy | Promotion model, deployment strategy, observability gates. |
 
 ## Appendix And Future Reference Package
@@ -59,7 +59,7 @@ Use these files to validate evidence, rationale and detailed assumptions.
 | `docs/reference/detailed-solutions.md` | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
 | `docs/reference/rollout-decision-proposals-detailed.md` | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
 
-## Explicitly Out Of Scope For Architecture Review
+## Explicitly Out Of Scope For These Notes
 
 | File / Area | Reason |
 | --- | --- |
@@ -69,17 +69,17 @@ Use these files to validate evidence, rationale and detailed assumptions.
 
 ## Coverage Check
 
-The review scope covers:
+The notes cover:
 
-- Release engineering assessment.
-- Transformation programme.
+- Release-process understanding.
+- Improvement notes.
 - Platform engineering strategy for promotion, deployment and observability gates.
-- Governance, ownership, NFR, business case and ARB readiness material.
+- Governance, ownership, NFR, business case and possible review-readiness material.
 
-Knowledge Graph and unified control-plane material is appendix-only future vision and excluded from the immediate approval reader copy.
+Knowledge Graph and unified control-plane material is appendix-only future vision and excluded from the immediate reader copy.
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
-- [Architecture Review Criteria](review-criteria.md)
-- [Cerberus Release Engineering Assessment](../../README.md)
+- [Potential Architecture Review Notes](index.md)
+- [Possible Review Criteria](review-criteria.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](../../README.md)

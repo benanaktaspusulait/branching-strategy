@@ -10,7 +10,7 @@ Open hotfix and rollback decisions are tracked in the [release decision register
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
 
-There are two distinct hotfix scenarios that must be supported:
+There appear to be two distinct hotfix scenarios that need support:
 
 ### Production Hotfix (Critical Live Issue)
 
@@ -91,9 +91,9 @@ flowchart LR
 - How do CVE/Renovate hotfix branches get reviewed and prioritised during release work?
 - What is the maximum acceptable time from hotfix decision to production deployment?
 
-## Minimum Hotfix Operating Model To Approve
+## Minimum Hotfix Operating Model To Confirm
 
-Before production rollout, the team should approve the following minimum model or replace it with a better one:
+Before production rollout, the team may want to confirm the following minimum model or replace it with a better one:
 
 | Step | Production Hotfix Default | Release-Phase Hotfix Default | Approval / Evidence |
 | --- | --- | --- | --- |
@@ -221,7 +221,7 @@ Database changes require special consideration because they are often forward-on
 | Destructive data change (DROP, DELETE) | Cannot be rolled back. Fix-forward or restore from backup. Incident process applies. |
 | Additive-only change (ADD COLUMN, new table) | May not need rollback if application code handles both states. |
 
-### Recommended Practice
+### Suggested Practice
 
 ```text
 Every production Liquibase changeset should include a rollback block or a documented justification for why rollback is not supported.
@@ -252,7 +252,7 @@ The process should define:
 Useful principles to confirm:
 
 - Hotfixes start from the known production baseline.
-- `master` must stay aligned with production state.
+- `master` should stay aligned with production state.
 - Hotfixes are back-merged into `development` and relevant active release branches.
 - Rollback decisions are owned, documented and audited.
 - Rollback instructions include code, chart, manifest, config and runbook impact.

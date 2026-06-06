@@ -223,13 +223,13 @@ Mitigation:
 - Create a secret inventory.
 - Avoid combining this migration with the first release-automation rollout.
 
-## 4. Recommended Roadmap
+## 4. Possible Roadmap
 
 ### Phase 0 - Decisions And Baseline
 
 Complete:
 
-- rollout decision approval,
+- rollout decision confirmation,
 - repository scope list,
 - service ownership list,
 - hotfix/rollback owners,
@@ -376,11 +376,11 @@ Release control can gradually move from branch management toward runtime configu
 | 9 | Where are release reports stored? | Audit and incident review. |
 | 10 | When is tag jump checker retired? | Old/new validation overlap. |
 
-## 7. Final Recommendation
+## 7. Suggested Next Steps
 
-The documentation is moving in the right direction. The key remaining gap is not more technical explanation; it is turning proposed decisions into an approved operating model.
+The documentation is moving in the right direction. The key remaining gap appears to be not more technical explanation, but turning proposed decisions into a confirmed operating model.
 
-Recommended sequence:
+Suggested sequence:
 
 ```text
 Do not change the branch model immediately.
