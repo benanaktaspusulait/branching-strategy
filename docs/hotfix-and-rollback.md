@@ -269,6 +269,9 @@ The team should produce:
 
 Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liquibase forward-only migration guidance are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Automation and validation](automation-and-validation.md) | -> [Release scope, ownership and approvals](scope-ownership-approvals.md)
+- [Automation And Validation](automation-and-validation.md)
+- [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
+- [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
+- [Release Engineering Best Practices](release-engineering-best-practices.md)

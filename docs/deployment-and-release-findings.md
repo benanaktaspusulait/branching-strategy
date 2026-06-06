@@ -227,6 +227,9 @@ The new release automation must explicitly define strict validation rules for ti
 
 Helm versioning, values-file structure, umbrella chart dependency handling, mass diff usage and secrets-management options are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Current release operating model](current-release-operating-model.md) | -> [Proposed release automation flow](proposed-release-automation-flow.md)
+- [Current Release Operating Model](current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](cicd-deployment-findings-and-actions.md)
+- [Automation And Validation](automation-and-validation.md)
+- [Release Engineering Best Practices](release-engineering-best-practices.md)

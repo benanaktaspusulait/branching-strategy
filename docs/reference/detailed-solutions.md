@@ -391,10 +391,9 @@ Move toward trunk-based development only after feature flags, testing, rollback 
 
 This path is not the fastest-looking option, but it reduces production release risk in the most controlled way.
 
----
+## Related Pages
 
-<- [README](../../README.md) | -> [Rollout decision proposals](../rollout-decision-proposals.md)
-
----
-
-← [Detailed problems](detailed-problems.md) | → [Rollout decision proposals](../rollout-decision-proposals.md)
+- [System State, Problems, Solution Options And Risks](../system-state-problems-solutions.md)
+- [Detailed Problem Analysis (P1–P12)](detailed-problems.md)
+- [Rollout Decision Proposals - Detailed Rationale](rollout-decision-proposals-detailed.md)
+- [Rollout Decision Proposals - Summary](../rollout-decision-proposals.md)

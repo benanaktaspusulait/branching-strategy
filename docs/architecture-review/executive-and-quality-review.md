@@ -76,3 +76,10 @@ ARB and engineering leadership should approve the near-term controlled release-t
 ## Improved Key Message
 
 The correct near-term decision is not "change the branch model" or "build a Knowledge Graph". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, Knowledge Graph, control plane and copilot capabilities can be piloted safely as read-only intelligence layers.
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [ARB Package](arb-package.md)
+- [Business Case And Recommended Roadmap](business-case-and-roadmap.md)
+- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)

@@ -87,3 +87,10 @@ ARB should approve:
 | Metadata quality baseline measured. | Knowledge Graph pilot. |
 | RBAC, audit and SoD approved. | Control plane or graph build. |
 | Copilot prohibited actions documented. | Any AI assistant pilot. |
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Executive Summary And Architecture Quality Review](executive-and-quality-review.md)
+- [Business Case And Recommended Roadmap](business-case-and-roadmap.md)
+- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)

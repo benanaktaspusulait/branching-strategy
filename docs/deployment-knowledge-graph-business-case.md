@@ -237,6 +237,9 @@ Potential future capabilities:
 | Recommended approach | Hybrid: build custom graph and ingestion layer; use managed infrastructure; use Backstage or custom UI. |
 | Review date | To be set after Phase 2 of the transformation is complete. |
 
----
+## Related Pages
 
-← [Deployment knowledge graph — operations](deployment-knowledge-graph-operations.md) | → [README](../README.md)
+- [Deployment Knowledge Graph](deployment-knowledge-graph-design.md)
+- [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
+- [Enterprise Knowledge Graph Architecture Proposal](reference/enterprise-knowledge-graph-proposal.md)
+- [ARB Package](architecture-review/arb-package.md)

@@ -401,6 +401,9 @@ The long-term platform vision is a unified deployment intelligence capability:
 
 The recommended next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph and copilot are only valuable if the underlying data is reliable — which is why the immediate transformation must come first.
 
----
+## Related Pages
 
-← [Deployment knowledge graph — business case](deployment-knowledge-graph-business-case.md) | → [README](../README.md)
+- [Transformation Programme](transformation-programme.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](deployment-knowledge-graph-implementation.md)
+- [Architecture Diagrams](architecture-review/architecture-diagrams.md)
+- [Criticality Challenge Review](architecture-review/criticality-challenge-review.md)

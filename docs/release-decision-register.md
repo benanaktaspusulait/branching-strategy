@@ -59,6 +59,9 @@ The proposal documents describe recommended defaults. This register tracks wheth
 - [Automation and validation](automation-and-validation.md)
 - [Transformation programme](transformation-programme.md)
 
----
+## Related Pages
 
-<- [Rollout decision proposals](rollout-decision-proposals.md) | -> [Transformation programme](transformation-programme.md)
+- [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
+- [Automation And Validation](automation-and-validation.md)
+- [Hotfix And Rollback](hotfix-and-rollback.md)

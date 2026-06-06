@@ -149,10 +149,9 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 
 **Long-term note:** After the immediate release operating model is stabilised, the team should evaluate whether a unified deployment and release control plane is justified. This should be treated as a platform product decision, not as part of the first automation rollout. See the Future State section above for the full description.
 
----
+## Related Pages
 
-<- [System state, problems, solutions and risks](system-state-problems-solutions.md) | -> [Rollout decision proposals](rollout-decision-proposals.md)
-
----
-
-← [Transformation programme](transformation-programme.md) | → [Rollout decision proposals](rollout-decision-proposals.md)
+- [Transformation Programme](transformation-programme.md)
+- [Release Decision Register](release-decision-register.md)
+- [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
+- [Architecture Review Package](architecture-review/index.md)

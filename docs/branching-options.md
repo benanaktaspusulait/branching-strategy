@@ -272,6 +272,9 @@ Then reassess whether the branch model is still the main constraint.
 
 Branching model selection, staged GitFlow-to-trunk transition guidance and common rollout mistakes are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Proposed release automation flow](proposed-release-automation-flow.md) | -> [Automation and validation](automation-and-validation.md)
+- [Proposed Release Automation Flow](proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
+- [Rollout Decision Proposals - Detailed Rationale](reference/rollout-decision-proposals-detailed.md)
+- [Release Engineering Best Practices](release-engineering-best-practices.md)

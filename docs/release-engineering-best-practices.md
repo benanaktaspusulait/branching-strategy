@@ -226,6 +226,9 @@ Measure:
 
 If the pilot creates more risk than it removes, stop the pilot, revert affected services to the previous manual process, fix the root cause and restart from the last known-good phase.
 
----
+## Related Pages
 
-<- [README](../README.md) | -> [Platform engineering strategy](platform-engineering-strategy.md)
+- [Branching Strategy Options](branching-options.md)
+- [Automation And Validation](automation-and-validation.md)
+- [Hotfix And Rollback](hotfix-and-rollback.md)
+- [Platform Engineering Strategy](platform-engineering-strategy.md)

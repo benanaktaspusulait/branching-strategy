@@ -220,6 +220,9 @@ The team should produce:
 
 RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-train guidance are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Hotfix and rollback](hotfix-and-rollback.md) | -> [Rollout decision proposals](rollout-decision-proposals.md)
+- [Hotfix And Rollback](hotfix-and-rollback.md)
+- [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
+- [Release Decision Register](release-decision-register.md)
+- [Transformation Programme — Delivery](transformation-programme-delivery.md)

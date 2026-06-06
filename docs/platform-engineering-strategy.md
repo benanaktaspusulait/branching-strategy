@@ -234,6 +234,9 @@ The release report should include a link to the observability dashboard filtered
 
 For GitOps, supply chain security and the unified control plane, see [platform engineering strategy — advanced](platform-engineering-strategy-advanced.md).
 
----
+## Related Pages
 
-← [Release engineering best practices](release-engineering-best-practices.md) | → [Platform engineering strategy — advanced](platform-engineering-strategy-advanced.md)
+- [Release Engineering Best Practices](release-engineering-best-practices.md)
+- [Platform Engineering Strategy — Advanced](platform-engineering-strategy-advanced.md)
+- [Automation And Validation](automation-and-validation.md)
+- [Transformation Programme](transformation-programme.md)

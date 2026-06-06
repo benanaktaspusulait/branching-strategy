@@ -285,6 +285,9 @@ Follow-up needed:
 
 Validation gates, idempotent pipeline design, immutable artefacts, release metrics and supply-chain security considerations are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Branching strategy options](branching-options.md) | -> [Hotfix and rollback](hotfix-and-rollback.md)
+- [Proposed Release Automation Flow](proposed-release-automation-flow.md)
+- [Deployment And Release Findings](deployment-and-release-findings.md)
+- [Rollout Decision Proposals - Summary](rollout-decision-proposals.md)
+- [Release Decision Register](release-decision-register.md)

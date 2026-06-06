@@ -72,6 +72,9 @@ Before rollout, approve or amend:
 - Rollout execution practices: [release engineering best practices](release-engineering-best-practices.md)
 - Ownership model: [release scope, ownership and approvals](scope-ownership-approvals.md)
 
----
+## Related Pages
 
-<- [Release scope, ownership and approvals](scope-ownership-approvals.md) | -> [CI/CD deployment findings and actions](cicd-deployment-findings-and-actions.md)
+- [Release Decision Register](release-decision-register.md)
+- [Rollout Decision Proposals - Detailed Rationale](reference/rollout-decision-proposals-detailed.md)
+- [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
+- [Automation And Validation](automation-and-validation.md)

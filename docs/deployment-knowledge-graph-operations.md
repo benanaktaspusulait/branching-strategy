@@ -247,10 +247,9 @@ It should be built incrementally, starting only after the immediate release auto
 
 > **This is a long-term architectural investment. It creates compounding value as more events are ingested and more relationships are traversed. But it only works if the underlying data (tags, manifests, tickets, approvals) is reliable — which is why the immediate transformation must come first.**
 
----
+## Related Pages
 
-← [Platform engineering strategy](platform-engineering-strategy.md) | → [README](../README.md)
-
----
-
-← [Part 2: Implementation](deployment-knowledge-graph-implementation.md) | → [Business case and governance](deployment-knowledge-graph-business-case.md)
+- [Deployment Knowledge Graph](deployment-knowledge-graph-design.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](deployment-knowledge-graph-implementation.md)
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](deployment-knowledge-graph-business-case.md)
+- [Criticality Challenge Review](architecture-review/criticality-challenge-review.md)

@@ -58,3 +58,9 @@ This review uses two lenses at the same time:
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
 - Do not recommend AI/copilot actioning for release, rollback or deployment decisions.
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Recommendation Inventory](recommendation-inventory.md)
+- [Criticality Challenge Review](criticality-challenge-review.md)

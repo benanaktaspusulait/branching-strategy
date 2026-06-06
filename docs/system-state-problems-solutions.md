@@ -332,6 +332,10 @@ Before expanding the automation beyond the pilot:
 
 > **Validate the current-state assumptions with Gareth, Achilles, release management and one squad lead before asking for approval on the rollout decisions.**
 
----
+## Related Pages
 
-<- [README](../README.md) | -> [Transformation programme](transformation-programme.md)
+- [Cerberus Release Engineering Assessment](../README.md)
+- [Current Release Operating Model](current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](cicd-deployment-findings-and-actions.md)
+- [Proposed Release Automation Flow](proposed-release-automation-flow.md)
+- [System State, Problems, Solution Options And Risks - Detailed Analysis](reference/system-state-problems-solutions-detailed.md)

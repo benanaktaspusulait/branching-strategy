@@ -48,3 +48,10 @@ This inventory lists the major recommendations that must be challenged before AR
 ## Inventory Conclusion
 
 The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery, unified control plane trigger capability and Engineering Copilot operational decisioning. These should be deferred or limited to read-only/pilot modes.
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Architecture Review Criteria](review-criteria.md)
+- [Criticality Challenge Review](criticality-challenge-review.md)
+- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)

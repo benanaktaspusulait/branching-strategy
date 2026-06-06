@@ -106,3 +106,10 @@ Prohibited capabilities:
 - Querying or exposing secret values.
 - Presenting low-confidence graph data as fact.
 - Making change advisory decisions.
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Recommendation Inventory](recommendation-inventory.md)
+- [Missing Enterprise Concerns](missing-enterprise-concerns.md)
+- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)

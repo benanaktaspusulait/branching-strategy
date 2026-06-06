@@ -64,3 +64,10 @@ Status: Completed architecture review output.
 | Resilience | 2 / 5 | 4.5 / 5 | DR and failover are under-specified. | Define RTO/RPO and rebuild-from-event-store targets. |
 | Observability | 2.5 / 5 | 4 / 5 | Health metrics exist but not release-correlated. | Add release health dashboard and ingestion freshness alerts. |
 | Security | 2.5 / 5 | 4.5 / 5 | Security strong in graph proposal, less complete for automation/control plane. | Apply RBAC, SoD, audit and privileged access controls across all tooling. |
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Architecture Review Criteria](review-criteria.md)
+- [Recommendation Inventory](recommendation-inventory.md)
+- [Architecture Diagrams](architecture-diagrams.md)

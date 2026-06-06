@@ -39,3 +39,10 @@ Status: Completed architecture review output.
 | Service ownership at scale | Ownership map must remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
 | Separation of duties | Future control plane trigger capability could blur approver/operator roles. | Enforce SoD in workflow and audit. |
 | Operational training | New automation and reports may confuse teams without rehearsal. | Run release simulation and rollback drills before production rollout. |
+
+## Related Pages
+
+- [Architecture Review Package](index.md)
+- [Criticality Challenge Review](criticality-challenge-review.md)
+- [Operating Model And RACI](operating-model-raci.md)
+- [ARB Package](arb-package.md)

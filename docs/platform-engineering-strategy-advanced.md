@@ -251,10 +251,9 @@ Release automation
 
 This is a future option, subject to platform strategy approval. It is not part of the initial rollout. For the full description, see [Transformation Programme — Future State: Unified Deployment And Release Control Plane](transformation-programme.md#future-state-unified-deployment-and-release-control-plane).
 
----
+## Related Pages
 
-← [Release engineering best practices](release-engineering-best-practices.md) | → [README](../README.md)
-
----
-
-← [Platform engineering strategy](platform-engineering-strategy.md) | → [Deployment knowledge graph](deployment-knowledge-graph-design.md)
+- [Platform Engineering Strategy](platform-engineering-strategy.md)
+- [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
+- [Advanced Architecture Sections](advanced-architecture-sections.md)
+- [Final Scorecard And Verdict](architecture-review/final-scorecard-and-verdict.md)
