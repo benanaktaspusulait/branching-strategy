@@ -4,24 +4,26 @@ These are proposed decisions for the remaining open items, with full rationale a
 
 They are written as defaults the team can approve or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 
+Approval status, accountable owner gaps and evidence requirements are tracked in the [release decision register](../release-decision-register.md).
+
 ## Decision Summary
 
-| Area | Proposed Decision | Status |
+| Area | Proposed Decision | Decision Status |
 | --- | --- | --- |
-| Branch baseline | Move to `main` as the production/live baseline. | Proposed |
-| Production sync | Merge the released branch/state back into `main` after production validation. | Proposed |
-| Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Proposed |
-| Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Proposed |
-| Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Proposed |
-| Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Proposed |
-| Quality gates | Keep human approval before higher-environment promotion and production. | Proposed |
-| Failure handling | Make the final Git/chart/reporting step idempotent and rerunnable. | Proposed |
-| Alerting | Add Slack/email alerts for failed automation steps. | Proposed |
+| Branch baseline | Move to `main` as the production/live baseline. | Needs approval |
+| Production sync | Merge the released branch/state back into `main` after production validation. | Needs approval |
+| Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs approval |
+| Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs approval |
+| Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Needs owner |
+| Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Needs approval |
+| Quality gates | Keep human approval before higher-environment promotion and production. | Needs approval |
+| Failure handling | Make the final Git/chart/reporting step idempotent and rerunnable. | Needs approval |
+| Alerting | Add Slack/email alerts for failed automation steps. | Needs owner |
 | Shared dev | Roll out shared dev deployment in phases, starting with manual trigger. | Proposed |
 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed |
-| New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Proposed |
-| Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Proposed |
-| Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Proposed |
+| New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs approval |
+| Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs approval |
+| Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs approval |
 | Tag jump checker | Retire after the new validation is confirmed green for two consecutive releases. | Proposed |
 
 ## 1. `development` To `main`
@@ -363,6 +365,8 @@ Before rollout, approve or amend:
 ## Related Best Practices
 
 Incremental rollout, success metrics, rollout rollback and resistance/edge-case handling are summarised in [release engineering best practices](../release-engineering-best-practices.md).
+
+Decision approval status is tracked in the [release decision register](../release-decision-register.md).
 
 ---
 

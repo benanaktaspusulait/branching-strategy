@@ -23,6 +23,7 @@ The documentation is organised as a decision-ready synthesis plus three supporti
 | Page | What It Covers |
 | --- | --- |
 | [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Clear current-state summary, problem analysis, solution options, risks and experience-based recommendations. |
+| [Release decision register](docs/release-decision-register.md) | Single register for open rollout, ownership, validation, hotfix and rollback decisions. |
 
 ### Layer 1: Current State (What Exists Today)
 
@@ -60,6 +61,7 @@ Key problems at a glance:
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 15 proposed decisions ready for team approval. |
+| [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
 | [Transformation programme](docs/transformation-programme.md) | Root cause, maturity scorecard, roadmap, RACI, metrics, cost/benefit, top 10. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
@@ -92,13 +94,14 @@ Key problems at a glance:
 6. [Deployment and release findings](docs/deployment-and-release-findings.md) - technical details.
 7. [Branching strategy options](docs/branching-options.md) - branch model comparison.
 8. [Rollout decision proposals](docs/rollout-decision-proposals.md) - decisions to approve.
+9. [Release decision register](docs/release-decision-register.md) - approval tracker and closure order.
 
 **For approvers:**
-9. [Hotfix and rollback](docs/hotfix-and-rollback.md)
-10. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
-11. [Automation and validation](docs/automation-and-validation.md)
-12. [Release engineering best practices](docs/release-engineering-best-practices.md)
-13. [Platform engineering strategy](docs/platform-engineering-strategy.md)
+10. [Hotfix and rollback](docs/hotfix-and-rollback.md)
+11. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
+12. [Automation and validation](docs/automation-and-validation.md)
+13. [Release engineering best practices](docs/release-engineering-best-practices.md)
+14. [Platform engineering strategy](docs/platform-engineering-strategy.md)
 
 ## Visual Overview
 
@@ -124,6 +127,7 @@ flowchart TD
   I["📝 Rollout Decision Proposals"]:::decision
   J["👥 Scope, Ownership & Approvals"]:::decision
   K["📢 Squad Briefing Summary"]:::decision
+  M["📌 Release Decision Register"]:::decision
 
   %% Layer 5
   L["🗺️ Transformation Programme"]:::transform
@@ -133,7 +137,10 @@ flowchart TD
   D --> E & F
   E --> G & H
   F & G & H --> I
-  I --> J --> K
+  I --> M
+  J --> M
+  H --> M
+  M --> K
   K --> L
 
   classDef current fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold

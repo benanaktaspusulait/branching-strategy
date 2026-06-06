@@ -2,26 +2,28 @@
 
 These are the proposed decisions that still need release/process-owner approval.
 
+Approval status, accountable owner gaps and evidence requirements are tracked in the [release decision register](release-decision-register.md).
+
 This page is intentionally short. For rationale and detailed procedures, see [Rollout Decision Proposals - Detailed Rationale](reference/rollout-decision-proposals-detailed.md).
 
 ## Decision Summary
 
-| No | Area | Proposed Decision | Status |
+| No | Area | Proposed Decision | Decision Status |
 | --- | --- | --- | --- |
-| 1 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Proposed |
-| 2 | Production sync | No release is closed until the released state is reconciled back to `main`. | Proposed |
-| 3 | Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Proposed |
-| 4 | Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Proposed |
-| 5 | Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Proposed |
-| 6 | Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Proposed |
-| 7 | Quality gates | Keep human approval before higher-environment promotion and production. | Proposed |
-| 8 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable. | Proposed |
-| 9 | Alerting | Add Slack/email alerts for failed automation steps before production rollout. | Proposed |
+| 1 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Needs approval |
+| 2 | Production sync | No release is closed until the released state is reconciled back to `main`. | Needs approval |
+| 3 | Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs approval |
+| 4 | Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs approval |
+| 5 | Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Needs owner |
+| 6 | Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Needs approval |
+| 7 | Quality gates | Keep human approval before higher-environment promotion and production. | Needs approval |
+| 8 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable. | Needs approval |
+| 9 | Alerting | Add Slack/email alerts for failed automation steps before production rollout. | Needs owner |
 | 10 | Shared dev | Roll out shared dev deployment in phases, starting with manual trigger. | Proposed |
 | 11 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed |
-| 12 | New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Proposed |
-| 13 | Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Proposed |
-| 14 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Proposed |
+| 12 | New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs approval |
+| 13 | Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs approval |
+| 14 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs approval |
 | 15 | Tag jump checker | Retire after the new validation is green for two consecutive releases. | Proposed |
 
 ## Highest-Risk Decisions
@@ -66,6 +68,7 @@ Before rollout, approve or amend:
 ## Related Detail
 
 - Full decision rationale: [detailed rollout decision proposals](reference/rollout-decision-proposals-detailed.md)
+- Approval tracker: [release decision register](release-decision-register.md)
 - Rollout execution practices: [release engineering best practices](release-engineering-best-practices.md)
 - Ownership model: [release scope, ownership and approvals](scope-ownership-approvals.md)
 
