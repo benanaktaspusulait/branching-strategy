@@ -6,7 +6,7 @@ Review purpose: define the document set used for the ARB / executive / border-se
 
 ## Review Scope Note
 
-The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is included as a convenient consolidated reader copy; detailed findings should still reference the specific source document where possible.
+The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is the focused approval reader copy for release-management stabilisation. Appendix and future-vision files remain available for traceability, but they are not part of the immediate approval ask.
 
 ## Primary Architecture Package
 
@@ -20,7 +20,6 @@ These files form the core package to review.
 | `docs/deployment-and-release-findings.md` | Deployment findings | Helm, manifest, secrets, validation and environment constraints. |
 | `docs/cicd-deployment-findings-and-actions.md` | CI/CD problem/action summary | Root causes, prioritisation, follow-up actions. |
 | `docs/proposed-release-automation-flow.md` | Target release automation | Automation assumptions, changed-chart deployment, failure handling. |
-| `docs/branching-options.md` | Branching strategy options | Suitability of GitFlow/simplified/trunk options for critical environment. |
 | `docs/automation-and-validation.md` | Validation model | Strict validation, auditability, override rules, alerting. |
 | `docs/hotfix-and-rollback.md` | Hotfix and rollback model | Rollback realism, fix-forward criteria, branch/manifest reconciliation. |
 | `docs/scope-ownership-approvals.md` | Scope and ownership | Release scope, service ownership, approvals, backup owners. |
@@ -31,28 +30,23 @@ These files form the core package to review.
 
 | File | Role In Review | Review Focus |
 | --- | --- | --- |
-| `docs/transformation-programme.md` | Transformation strategy and target state | Maturity, future control plane, investment framing, target-state realism. |
+| `docs/transformation-programme.md` | Transformation strategy and target state | Maturity, near-term target-state realism, sequencing. |
 | `docs/transformation-programme-delivery.md` | Delivery plan | Roadmap, RACI, metrics, cost/benefit, top recommendations. |
+| `docs/platform-engineering-strategy.md` | Platform strategy | Promotion model, deployment strategy, observability gates. |
+
+## Appendix And Future Reference Package
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `docs/branching-options.md` | Branching strategy options | Branch model alternatives after stabilisation. |
 | `docs/squad-briefing-summary.md` | Squad-facing communication | Human factors, adoption readiness, clarity for engineering teams. |
 | `docs/release-engineering-best-practices.md` | Supporting practice baseline | Whether best practices are suitable for Cerberus criticality. |
-
-## Platform And Future Architecture Package
-
-| File | Role In Review | Review Focus |
-| --- | --- | --- |
-| `docs/platform-engineering-strategy.md` | Platform strategy | Promotion model, deployment strategy, observability gates. |
 | `docs/platform-engineering-strategy-advanced.md` | Advanced platform strategy | GitOps, SBOM, supply chain security, control plane direction. |
 | `docs/advanced-architecture-sections.md` | Future architecture sections | Control plane, event ingestion, data trust, engineering copilot, platform product framing. |
-
-## Knowledge Graph Package
-
-| File | Role In Review | Review Focus |
-| --- | --- | --- |
 | `docs/deployment-knowledge-graph-design.md` | Knowledge graph design | Domain model, entity relationships, graph schema. |
 | `docs/deployment-knowledge-graph-implementation.md` | Implementation and workflows | Event ingestion, APIs, search, operational use cases. |
 | `docs/deployment-knowledge-graph-operations.md` | Operations and technology | Security, retention, integrations, technology choices, roadmap. |
 | `docs/deployment-knowledge-graph-business-case.md` | Business case and governance | Strategic value, ROI, governance, NFRs, AI enablement, ADR. |
-| `docs/reference/enterprise-knowledge-graph-proposal.md` | ARB-ready enterprise proposal | Full proposal quality, business case, risk, approval readiness. |
 
 ## Detailed Reference Package
 
@@ -79,13 +73,10 @@ The review scope covers:
 
 - Release engineering assessment.
 - Transformation programme.
-- Platform engineering strategy.
-- Knowledge Graph proposal.
-- Unified deployment control plane concepts.
-- Engineering Copilot concepts.
+- Platform engineering strategy for promotion, deployment and observability gates.
 - Governance, ownership, NFR, business case and ARB readiness material.
 
-No architecture document currently present in `README.md` navigation is excluded from the review.
+Knowledge Graph, unified control-plane and Engineering Copilot material is appendix-only future vision and excluded from the immediate approval reader copy.
 
 ## Related Pages
 

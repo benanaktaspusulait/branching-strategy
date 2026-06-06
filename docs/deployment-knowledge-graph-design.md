@@ -237,4 +237,3 @@ Relationships:
 - [Deployment Knowledge Graph — Implementation And Workflows](deployment-knowledge-graph-implementation.md)
 - [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
 - [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](deployment-knowledge-graph-business-case.md)
-- [Enterprise Knowledge Graph Architecture Proposal](reference/enterprise-knowledge-graph-proposal.md)

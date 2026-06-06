@@ -13,7 +13,6 @@ const sources = [
   'docs/deployment-and-release-findings.md',
   'docs/cicd-deployment-findings-and-actions.md',
   'docs/proposed-release-automation-flow.md',
-  'docs/branching-options.md',
   'docs/automation-and-validation.md',
   'docs/hotfix-and-rollback.md',
   'docs/scope-ownership-approvals.md',
@@ -21,25 +20,7 @@ const sources = [
   'docs/release-decision-register.md',
   'docs/transformation-programme.md',
   'docs/transformation-programme-delivery.md',
-  'docs/squad-briefing-summary.md',
-  'docs/release-engineering-best-practices.md',
   'docs/platform-engineering-strategy.md',
-  'docs/platform-engineering-strategy-advanced.md',
-  'docs/deployment-knowledge-graph-design.md',
-  'docs/deployment-knowledge-graph-implementation.md',
-  'docs/deployment-knowledge-graph-operations.md',
-  'docs/deployment-knowledge-graph-business-case.md',
-  'docs/advanced-architecture-sections.md',
-  'docs/reference/system-state-problems-solutions-detailed.md',
-  'docs/reference/detailed-problems.md',
-  'docs/reference/detailed-solutions.md',
-  'docs/reference/rollout-decision-proposals-detailed.md',
-  'docs/reference/enterprise-knowledge-graph-proposal.md',
-  'docs/architecture-review/index.md',
-  'docs/architecture-review/source-document-list.md',
-  'docs/architecture-review/review-criteria.md',
-  'docs/architecture-review/recommendation-inventory.md',
-  'docs/architecture-review/executive-and-quality-review.md',
   'docs/architecture-review/alignment-and-enterprise-architecture-review.md',
   'docs/architecture-review/arb-package.md',
   'docs/architecture-review/business-case-and-roadmap.md',
@@ -88,6 +69,10 @@ function stripFirstH1(markdown) {
   return markdown.replace(/^#\s+.+\r?\n+/, '');
 }
 
+function stripRelatedPages(markdown) {
+  return markdown.replace(/\n+## Related Pages\n[\s\S]*$/m, '');
+}
+
 function sourceMarker(source) {
   return `\n---\n\n> Source: \`${source}\`\n\n`;
 }
@@ -99,7 +84,7 @@ if (missing.length > 0) {
 }
 
 const sourceData = sources.map((source) => {
-  const raw = fs.readFileSync(path.join(root, source), 'utf8').trimEnd();
+  const raw = stripRelatedPages(fs.readFileSync(path.join(root, source), 'utf8').trimEnd()).trimEnd();
   return {
     source,
     title: firstHeading(raw, source),
@@ -112,7 +97,7 @@ const [readme, ...rest] = sourceData;
 const output = [
   '# Cerberus Release Engineering Assessment',
   '',
-  'This complete document consolidates the Cerberus release engineering, platform strategy, knowledge graph and architecture review material into one reader copy.',
+  'This complete document consolidates the Cerberus release-management approval pack into one reader copy.',
   '',
   '## Complete Document Contents',
   '',

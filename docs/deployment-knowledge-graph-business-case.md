@@ -241,5 +241,4 @@ Potential future capabilities:
 
 - [Deployment Knowledge Graph](deployment-knowledge-graph-design.md)
 - [Deployment Knowledge Graph — Operations And Technology](deployment-knowledge-graph-operations.md)
-- [Enterprise Knowledge Graph Architecture Proposal](reference/enterprise-knowledge-graph-proposal.md)
 - [ARB Package](architecture-review/arb-package.md)

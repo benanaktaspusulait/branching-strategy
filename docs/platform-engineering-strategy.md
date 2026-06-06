@@ -1,10 +1,6 @@
 # Platform Engineering Strategy
 
-> **This section is not a blocker for the initial release automation rollout.** It describes the maturity roadmap after the immediate release operating model is stabilised. All items below (SBOM, ArgoCD, Argo Rollouts, canary deployment, observability gates, supply chain security) are **medium-term or long-term improvements**, not immediate required changes.
-
-This page covers the platform-level capabilities that strengthen the release process beyond branching and CI/CD pipelines: environment promotion, deployment strategies, observability gates, GitOps readiness and supply chain security.
-
-These are not immediate blockers for the release automation rollout, but they represent the maturity path that moves the team from "release automation works" to "releases are safe, observable and verifiable by design."
+This page covers the platform-level capabilities that directly strengthen the release-management proposal: environment promotion, deployment strategy and observability gates.
 
 ## 1. Environment Promotion Model
 
@@ -93,17 +89,8 @@ flowchart TD
     B1 --> B2 --> B3 --> B4
   end
 
-  subgraph FUTURE["Future: Canary / Progressive"]
-    C1["Deploy to small subset (5-10%)"]:::future
-    C2["Monitor SLOs and error rates"]:::future
-    C3["Auto-promote or auto-rollback"]:::future
-    C4["Full rollout when healthy"]:::future
-    C1 --> C2 --> C3 --> C4
-  end
-
   classDef current fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
   classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
-  classDef future fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
 ### Strategy Comparison
@@ -112,45 +99,13 @@ flowchart TD
 | --- | --- | --- | --- | --- |
 | Rolling update | Minutes (manual) | 1x | Low | Simple services, low traffic |
 | Blue-green | Instant (traffic switch) | 2x during deploy | Medium | Stateless services, critical path |
-| Canary | Instant (remove canary) | 1.1x | High | High-traffic services, gradual confidence |
-| Progressive (Argo Rollouts) | Automatic | 1.1x | High | Mature teams with observability |
 
 ### Recommended Adoption Path
 
 ```text
 Phase 1 (Now): Rolling update with documented manual rollback procedure.
 Phase 2 (After automation stable): Blue-green for critical services (API gateway, core services).
-Phase 3 (After observability gates): Canary / progressive delivery via Argo Rollouts or Flagger.
 ```
-
-### Argo Rollouts Integration (Future)
-
-If the team adopts Argo Rollouts, the deployment definition moves from standard `Deployment` to a `Rollout` resource:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: my-service
-spec:
-  strategy:
-    canary:
-      steps:
-        - setWeight: 10
-        - pause: {duration: 5m}
-        - analysis:
-            templates:
-              - templateName: success-rate
-        - setWeight: 50
-        - pause: {duration: 5m}
-        - setWeight: 100
-```
-
-This requires:
-- Argo Rollouts controller installed in the cluster.
-- Analysis templates defined (connected to Prometheus/Datadog/etc.).
-- Ingress or service mesh for traffic splitting.
-- Helm charts updated to use Rollout instead of Deployment.
 
 ---
 
@@ -176,7 +131,7 @@ flowchart LR
   CHECK["📊 Observability gate"]:::gate
   PASS{"SLOs met?"}:::decision
   PROMOTE["✅ Promote to next env"]:::pass
-  ROLLBACK["⏪ Auto-rollback or alert"]:::fail
+  ROLLBACK["⏪ Alert or manual rollback"]:::fail
 
   DEPLOY --> BAKE --> CHECK --> PASS
   PASS -->|Yes| PROMOTE
@@ -207,7 +162,6 @@ flowchart LR
 | --- | --- | --- |
 | Manual observability check | Human checks dashboards after deploy | Low (current state) |
 | Pipeline metric query | Drone step queries Prometheus after deploy, fails if threshold breached | Medium |
-| Argo Rollouts analysis | Analysis template auto-queries metrics during canary | High |
 | Keptn / Dynatrace | Full SLO-based quality gate evaluation | High |
 
 ### Recommended Adoption Path
@@ -215,7 +169,6 @@ flowchart LR
 ```text
 Phase 1 (Now): Document key metrics and dashboards per service. Establish SLO targets.
 Phase 2 (After Drone automation): Add a pipeline step that queries error rate and latency after deploy. Alert on breach.
-Phase 3 (After Argo Rollouts): Connect analysis templates to Prometheus for automated canary validation.
 ```
 
 ### OpenTelemetry Integration
@@ -232,11 +185,8 @@ The release report should include a link to the observability dashboard filtered
 
 ---
 
-For GitOps, supply chain security and the unified control plane, see [platform engineering strategy — advanced](platform-engineering-strategy-advanced.md).
-
 ## Related Pages
 
 - [Release Engineering Best Practices](release-engineering-best-practices.md)
-- [Platform Engineering Strategy — Advanced](platform-engineering-strategy-advanced.md)
 - [Automation And Validation](automation-and-validation.md)
 - [Transformation Programme](transformation-programme.md)
