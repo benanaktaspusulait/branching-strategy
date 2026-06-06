@@ -1,6 +1,6 @@
 # Architecture Review Source Document List
 
-Status: Task 1 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review source list.
 
 Review purpose: confirm the document set for the ARB / executive / border-security criticality review before starting recommendation assessment.
 
@@ -18,7 +18,6 @@ node scripts/validate-markdown-links.js
 | File | Role In Review | Include? | Notes |
 | --- | --- | --- | --- |
 | `notes.txt` | External review brief and challenge prompt | Yes | Defines ARB, executive and border-security criticality lens. |
-| `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md` | Execution checklist | Yes | Tracks task-by-task progress; not an architecture source. |
 
 ## Primary Architecture Package
 

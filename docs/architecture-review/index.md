@@ -1,6 +1,6 @@
 # Architecture Review Package
 
-This package implements the review work requested in `notes.txt` and tracked in `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`.
+This package implements the review work requested in `notes.txt`.
 
 ## Outputs
 
@@ -28,4 +28,3 @@ This package implements the review work requested in `notes.txt` and tracked in 
 5. [arb-package](arb-package.md)
 6. [business-case-and-roadmap](business-case-and-roadmap.md)
 7. [final-scorecard-and-verdict](final-scorecard-and-verdict.md)
-

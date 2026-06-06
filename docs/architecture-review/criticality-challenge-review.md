@@ -1,6 +1,6 @@
 # Criticality Challenge Review
 
-Status: Tasks 32, 33, 34, 35, 36 and 37 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Suitability Assessment
 
@@ -106,4 +106,3 @@ Prohibited capabilities:
 - Querying or exposing secret values.
 - Presenting low-confidence graph data as fact.
 - Making change advisory decisions.
-

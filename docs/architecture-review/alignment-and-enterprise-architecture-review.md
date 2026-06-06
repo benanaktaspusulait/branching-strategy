@@ -1,6 +1,6 @@
 # Architecture Alignment And Enterprise Architecture Review
 
-Status: Tasks 9, 10, 11, 12, 13, 14 and 15 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Architecture Alignment Report
 
@@ -64,4 +64,3 @@ Status: Tasks 9, 10, 11, 12, 13, 14 and 15 output from `TODO-ARCHITECTURE-REVIEW
 | Resilience | 2 / 5 | 4.5 / 5 | DR and failover are under-specified. | Define RTO/RPO and rebuild-from-event-store targets. |
 | Observability | 2.5 / 5 | 4 / 5 | Health metrics exist but not release-correlated. | Add release health dashboard and ingestion freshness alerts. |
 | Security | 2.5 / 5 | 4.5 / 5 | Security strong in graph proposal, less complete for automation/control plane. | Apply RBAC, SoD, audit and privileged access controls across all tooling. |
-

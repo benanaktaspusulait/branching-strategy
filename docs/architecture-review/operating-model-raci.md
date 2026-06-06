@@ -1,6 +1,6 @@
 # Operating Model And RACI
 
-Status: Tasks 23, 24 and 25 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Ownership Model
 
@@ -51,4 +51,3 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 | Incident command | Rollback/fix-forward decisions must be owned by incident lead with release owner consultation. |
 | Security review | Any graph, control plane or copilot pilot requires RBAC, audit logging and data classification review. |
 | Quarterly review | RACI, owner list, access rights and release metrics should be reviewed quarterly. |
-

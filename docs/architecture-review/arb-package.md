@@ -1,6 +1,6 @@
 # ARB Package
 
-Status: Tasks 16, 17 and 18 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## ADR-001: Controlled Release Transformation Before Platform Intelligence
 
@@ -87,4 +87,3 @@ ARB should approve:
 | Metadata quality baseline measured. | Knowledge Graph pilot. |
 | RBAC, audit and SoD approved. | Control plane or graph build. |
 | Copilot prohibited actions documented. | Any AI assistant pilot. |
-

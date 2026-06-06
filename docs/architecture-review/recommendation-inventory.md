@@ -1,6 +1,6 @@
 # Recommendation Inventory
 
-Status: Task 4 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 This inventory lists the major recommendations that must be challenged before ARB approval.
 
@@ -48,4 +48,3 @@ This inventory lists the major recommendations that must be challenged before AR
 ## Inventory Conclusion
 
 The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery, unified control plane trigger capability and Engineering Copilot operational decisioning. These should be deferred or limited to read-only/pilot modes.
-

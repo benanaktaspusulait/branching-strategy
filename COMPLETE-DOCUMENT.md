@@ -7622,7 +7622,7 @@ The organisation operates 10+ engineering systems containing critical data about
 
 # Architecture Review Package
 
-This package implements the review work requested in `notes.txt` and tracked in `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`.
+This package implements the review work requested in `notes.txt`.
 
 ## Outputs
 
@@ -7658,7 +7658,7 @@ This package implements the review work requested in `notes.txt` and tracked in 
 
 # Architecture Review Source Document List
 
-Status: Task 1 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review source list.
 
 Review purpose: confirm the document set for the ARB / executive / border-security criticality review before starting recommendation assessment.
 
@@ -7676,7 +7676,6 @@ node scripts/validate-markdown-links.js
 | File | Role In Review | Include? | Notes |
 | --- | --- | --- | --- |
 | `notes.txt` | External review brief and challenge prompt | Yes | Defines ARB, executive and border-security criticality lens. |
-| `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md` | Execution checklist | Yes | Tracks task-by-task progress; not an architecture source. |
 
 ## Primary Architecture Package
 
@@ -7772,7 +7771,7 @@ No architecture document currently present in `README.md` navigation is excluded
 
 # Architecture Review Criteria
 
-Status: Tasks 2 and 3 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Review Lens
 
@@ -7838,7 +7837,7 @@ This review uses two lenses at the same time:
 
 # Recommendation Inventory
 
-Status: Task 4 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 This inventory lists the major recommendations that must be challenged before ARB approval.
 
@@ -7894,7 +7893,7 @@ The strongest immediate recommendations are release metadata standardisation, st
 
 # Executive Summary And Architecture Quality Review
 
-Status: Tasks 5, 6, 7 and 8 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Executive Summary
 
@@ -7978,7 +7977,7 @@ The correct near-term decision is not "change the branch model" or "build a Know
 
 # Architecture Alignment And Enterprise Architecture Review
 
-Status: Tasks 9, 10, 11, 12, 13, 14 and 15 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Architecture Alignment Report
 
@@ -8050,7 +8049,7 @@ Status: Tasks 9, 10, 11, 12, 13, 14 and 15 output from `TODO-ARCHITECTURE-REVIEW
 
 # ARB Package
 
-Status: Tasks 16, 17 and 18 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## ADR-001: Controlled Release Transformation Before Platform Intelligence
 
@@ -8145,7 +8144,7 @@ ARB should approve:
 
 # Business Case And Recommended Roadmap
 
-Status: Tasks 19, 20, 21 and 22 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Benefits Realisation Table
 
@@ -8204,7 +8203,7 @@ Status: Tasks 19, 20, 21 and 22 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES
 
 # Operating Model And RACI
 
-Status: Tasks 23, 24 and 25 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Ownership Model
 
@@ -8263,7 +8262,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 # Architecture Diagrams
 
-Status: Tasks 26, 27, 28, 29, 30 and 31 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Current State: Systems And Dependencies
 
@@ -8380,7 +8379,7 @@ flowchart TD
 
 # Criticality Challenge Review
 
-Status: Tasks 32, 33, 34, 35, 36 and 37 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Suitability Assessment
 
@@ -8494,7 +8493,7 @@ Prohibited capabilities:
 
 # Missing Enterprise Concerns
 
-Status: Tasks 38, 39, 40 and 41 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Disaster Recovery And Operational Resilience
 
@@ -8541,7 +8540,7 @@ Status: Tasks 38, 39, 40 and 41 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES
 
 # Final Scorecard And Verdict
 
-Status: Tasks 42, 43, 44 and 45 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Architecture Scorecard
 

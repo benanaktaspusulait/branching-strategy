@@ -1,6 +1,6 @@
 # Architecture Diagrams
 
-Status: Tasks 26, 27, 28, 29, 30 and 31 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Current State: Systems And Dependencies
 
@@ -109,4 +109,3 @@ flowchart TD
   SECURITY["RBAC + classification"] --> CONSUME
   AUDIT["Access audit log"] --> GOVERN
 ```
-

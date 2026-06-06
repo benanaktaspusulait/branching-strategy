@@ -1,6 +1,6 @@
 # Architecture Review Criteria
 
-Status: Tasks 2 and 3 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Review Lens
 
@@ -58,4 +58,3 @@ This review uses two lenses at the same time:
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
 - Do not recommend AI/copilot actioning for release, rollback or deployment decisions.
-

@@ -1,6 +1,6 @@
 # Business Case And Recommended Roadmap
 
-Status: Tasks 19, 20, 21 and 22 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Benefits Realisation Table
 
@@ -51,4 +51,3 @@ Status: Tasks 19, 20, 21 and 22 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES
 | 5 | Read-only intelligence pilot. | Knowledge Graph pilot for ownership and deployment visibility. | Metadata accuracy target met; no source-of-truth conflicts. | Data quality and RBAC review passed. |
 | 6 | Platform modernisation evaluation. | Non-prod GitOps, SBOM/signing, observability gates. | Demonstrated value without production blast radius. | ARB decision for each production adoption. |
 | 7 | Controlled platform product. | Read-only control plane, approval workflow evaluation, copilot evidence retrieval. | Users can inspect release state without bypassing controls. | Separate ARB approval for any trigger/action capability. |
-

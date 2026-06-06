@@ -1,6 +1,6 @@
 # Missing Enterprise Concerns
 
-Status: Tasks 38, 39, 40 and 41 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Disaster Recovery And Operational Resilience
 
@@ -39,4 +39,3 @@ Status: Tasks 38, 39, 40 and 41 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES
 | Service ownership at scale | Ownership map must remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
 | Separation of duties | Future control plane trigger capability could blur approver/operator roles. | Enforce SoD in workflow and audit. |
 | Operational training | New automation and reports may confuse teams without rehearsal. | Run release simulation and rollback drills before production rollout. |
-

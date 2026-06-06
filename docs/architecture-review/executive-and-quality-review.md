@@ -1,6 +1,6 @@
 # Executive Summary And Architecture Quality Review
 
-Status: Tasks 5, 6, 7 and 8 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+Status: Completed architecture review output.
 
 ## Executive Summary
 
@@ -76,4 +76,3 @@ ARB and engineering leadership should approve the near-term controlled release-t
 ## Improved Key Message
 
 The correct near-term decision is not "change the branch model" or "build a Knowledge Graph". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, Knowledge Graph, control plane and copilot capabilities can be piloted safely as read-only intelligence layers.
-
