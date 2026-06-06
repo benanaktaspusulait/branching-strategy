@@ -1,20 +1,22 @@
-# Architecture Review Package
+# Potential Architecture Review Notes
 
-This package contains the architecture review outputs for executive, ARB and border-security criticality assessment.
+This section keeps optional later-stage review considerations for the Cerberus release-process notes.
 
-## Approval Outputs
+These notes are not an ARB submission, approval request or final architecture position. They are included only to make possible governance, criticality and operating-model questions visible if the team later decides that a formal review is needed.
+
+## Review Notes
 
 | Area | File |
 | --- | --- |
-| Executive summary and architecture quality review | [executive-and-quality-review](executive-and-quality-review.md) |
-| Alignment and enterprise architecture review | [alignment-and-enterprise-architecture-review](alignment-and-enterprise-architecture-review.md) |
-| ARB package, ADR and NFRs | [arb-package](arb-package.md) |
-| Business case and roadmap | [business-case-and-roadmap](business-case-and-roadmap.md) |
-| Operating model and RACI | [operating-model-raci](operating-model-raci.md) |
+| Current understanding and quality observations | [executive-and-quality-review](executive-and-quality-review.md) |
+| Alignment and architecture considerations | [alignment-and-enterprise-architecture-review](alignment-and-enterprise-architecture-review.md) |
+| Potential future architecture review considerations | [arb-package](arb-package.md) |
+| Potential benefits and roadmap notes | [business-case-and-roadmap](business-case-and-roadmap.md) |
+| Operating model and RACI notes | [operating-model-raci](operating-model-raci.md) |
 | Architecture diagrams | [architecture-diagrams](architecture-diagrams.md) |
-| Criticality challenge review | [criticality-challenge-review](criticality-challenge-review.md) |
-| Missing enterprise concerns | [missing-enterprise-concerns](missing-enterprise-concerns.md) |
-| Final scorecard and verdict | [final-scorecard-and-verdict](final-scorecard-and-verdict.md) |
+| Criticality challenge notes | [criticality-challenge-review](criticality-challenge-review.md) |
+| Additional enterprise concerns to confirm | [missing-enterprise-concerns](missing-enterprise-concerns.md) |
+| Summary assessment and open risks | [final-scorecard-and-verdict](final-scorecard-and-verdict.md) |
 
 ## Appendix Outputs
 
@@ -24,7 +26,7 @@ This package contains the architecture review outputs for executive, ARB and bor
 | Review criteria and status map | [review-criteria](review-criteria.md) |
 | Recommendation inventory | [recommendation-inventory](recommendation-inventory.md) |
 
-## Recommended Reading Order
+## Suggested Reading Order
 
 1. [executive-and-quality-review](executive-and-quality-review.md)
 2. [alignment-and-enterprise-architecture-review](alignment-and-enterprise-architecture-review.md)
@@ -37,8 +39,8 @@ This package contains the architecture review outputs for executive, ARB and bor
 
 ## Related Pages
 
-- [Cerberus Release Engineering Assessment](../../README.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](../../README.md)
 - [Architecture Review Source Document List](source-document-list.md)
 - [Architecture Review Criteria](review-criteria.md)
 - [Recommendation Inventory](recommendation-inventory.md)
-- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)
+- [Summary Assessment And Open Risks](final-scorecard-and-verdict.md)

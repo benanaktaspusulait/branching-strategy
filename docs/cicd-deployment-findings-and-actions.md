@@ -6,7 +6,7 @@ Its purpose is to show:
 
 1. How the current process works.
 2. Which parts look manual, unclear, risky or inconsistent.
-3. What should be standardised, automated or explicitly decided next.
+3. What may need to be standardised, automated or explicitly decided next.
 
 ## Analysis Frame
 
@@ -50,7 +50,7 @@ The current process should be made visible, repeatable and auditable before the 
 flowchart LR
   CURRENT["🔍 Current State Analysis"]:::input
   PROBLEMS["⚠️ Problems Identified\n─────────────\n• Manual work\n• Unclear scope\n• Validation gaps\n• Operational constraints"]:::problem
-  ACTIONS["✅ Recommended Actions\n─────────────\n• Drone automation\n• Strict validation\n• Changed-chart deploy\n• Clear ownership"]:::solution
+  ACTIONS["✅ Possible Actions\n─────────────\n• Drone automation\n• Strict validation\n• Changed-chart deploy\n• Clear ownership"]:::solution
 
   CURRENT --> PROBLEMS --> ACTIONS
 
@@ -59,24 +59,24 @@ flowchart LR
   classDef solution fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = recommended actions.
+**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = possible actions.
 
-## Recommended Actions
+## Possible Actions
 
 1. Keep the current-state flow in [current release operating model](current-release-operating-model.md) as the baseline view.
 2. Use [deployment and release findings](deployment-and-release-findings.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
 3. Move local/manual release automation into Drone once the configuration-service pilot is green.
 4. Define strict validation for wrong tags, missing tags, manifest/tag mismatch, invalid ticket status and `do not deploy` markers.
 5. Confirm repository scope for service code, Helm charts, deployment management, secrets/config, Liquibase and runbooks.
-6. Confirm changed-chart deployment behaviour and the override approval path.
+6. Confirm changed-chart deployment behaviour and the override confirmation path.
 7. Document hotfix and rollback flows including branch, manifest and release report reconciliation.
 8. Define alerting and rerun rules for failed automation steps.
 9. Confirm new environment readiness criteria before treating any dev/test environment as release-ready.
-10. Use [rollout decision proposals](rollout-decision-proposals.md) as the decision record until owners approve or amend them.
+10. Use [rollout decision proposals](rollout-decision-proposals.md) as the decision record until owners confirm or amend them.
 
-## Short-Term Recommendation
+## Suggested Short-Term Focus
 
-As stated in the [executive assessment](system-state-problems-solutions.md#executive-assessment): stabilise the release operating model before changing the branching model. The priority actions are in the Recommended Actions list above.
+As stated in the [current understanding](system-state-problems-solutions.md#current-understanding): stabilise the release operating model before changing the branching model. The priority actions are in the Possible Actions list above.
 
 ## Prioritisation: Effort vs Impact
 
@@ -109,7 +109,7 @@ Not all problems are equally important. Prioritise by impact and effort:
 | Ownership matrix sign-off | Requires management decisions and role assignment. |
 | Feature flag runtime control | Requires new tooling or infrastructure. |
 
-### Recommended Execution Order
+### Possible Execution Order
 
 ```text
 1. Quick wins (this sprint / next sprint)

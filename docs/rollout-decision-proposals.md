@@ -32,7 +32,7 @@ These decisions should be confirmed first because they control release safety:
 
 1. `main` should start from confirmed production state, not from `development`.
 2. Wrong tag, missing tag and manifest/tag mismatch should fail fast.
-3. Changed chart exclusions need release-owner approval and an audit note.
+3. Changed chart exclusions need release-owner confirmation and an audit note.
 4. Rollback should reconcile branch, manifest, release report and JIRA state.
 5. Failed automation needs an alert owner and safe rerun procedure.
 

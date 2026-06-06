@@ -33,13 +33,13 @@ Cerberus currently operates a GitFlow-like branching model, but the real release
 >
 > The safer path is to make the current release state visible, repeatable, validated, owned and auditable first; then simplify the branch model after the automation proves what is actually being released.
 
-### Long-Term Direction
+### Possible Later Direction
 
-The immediate goal is release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current transformation programme.
+The immediate focus appears to be release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current improvement discussion.
 
 Beyond that, future platform capabilities should be treated as separate product decisions after the release foundation is proven.
 
-This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would be subject to platform strategy approval and should be treated as a platform product decision.
+This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would likely need separate platform strategy review and should be treated as a platform product decision.
 
 ## Release State Is Fragmented
 
@@ -96,25 +96,25 @@ The proposed direction appears sensible, but it should be treated as a phased op
 | Deployment | Helm/package and Cerberus chart flow still has manual areas. | Medium |
 | Release reporting | Expected to cross-reference JIRA, tags, services and chart changes. | Proposed |
 | Validation | Existing scripts check some metadata, but strict fail/warn policy is not fully agreed. | Low/Medium |
-| Hotfix/rollback | Concepts exist; operational runbook and reconciliation rules need approval. | Low/Medium |
+| Hotfix/rollback | Concepts exist; operational runbook and reconciliation rules need confirmation. | Low/Medium |
 | Environment readiness | Values, secrets, tokens and parity checks need clearer gates. | Low |
 | Ownership | Templates exist; named owners and approvers are still incomplete. | Low |
 
 ## Main Problems
 
-| # | Problem | Impact | Root Cause | Recommended Action |
+| # | Problem | Impact | Root Cause | Possible Action |
 | --- | --- | --- | --- | --- |
 | P1 | The issue can be misframed as "branching only". | A branch change may move risk rather than reduce it. | Release state is distributed across many systems. | Stabilise the operating model before changing the branch model. |
-| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the mandatory central path. | Complete Drone pilot; make pipeline the only release path. |
+| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the normal central path. | Complete Drone pilot; make pipeline the agreed release path where the pilot proves safe. |
 | P3 | Branch, tag and artefact timing rules are not strict enough. | Wrong artefacts or manifests can be produced. | Branch lifecycle and artefact lifecycle are different. | Enforce strict validation: wrong/missing tag = fail. |
 | P4 | Release scope is unclear. | Secrets, config, Liquibase or runbook changes can be missed. | "All services" is not yet defined as a repo/change-type scope. | Define explicit release scope per repo and change type. |
 | P5 | Manifest and ticket validation can be too permissive. | Blocked or wrong work can reach release. | Fail vs warning policy is still proposed. | Switch from warning to fail-fast after one dry-run release. |
 | P6 | Changed-chart deployment is not yet a proven default. | Changed charts may be missed or unnecessary charts deployed. | Umbrella chart and service mapping need reliable detection. | Validate detection in pilot; deploy changed charts by default. |
 | P7 | Hotfix and rollback are not operationally standardised. | Production can drift from branch, manifest and release records. | Rollback is treated as technical capability, not full process. | Document and test both flows before next production incident. |
-| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. | Formalise environment readiness as a mandatory gate. |
+| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. | Consider formalising environment readiness as a deployment gate. |
 | P9 | Secrets/config management will get harder at scale. | Onboarding, rotation and audit risk increase. | Git-crypt/GPG is workable but operationally heavy. | Evaluate External Secrets Operator for medium-term. |
 | P10 | Trunk-based development is risky without stronger feature flags. | Incomplete work may need branch or config workarounds. | Feature flags appear deploy-time rather than dynamic runtime. | Keep current model; add runtime flags before reconsidering. |
-| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Assign named owners before expanding beyond pilot. |
+| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Confirm named owners before expanding beyond pilot. |
 | P12 | Alerting and rerun rules are incomplete. | Failed automation can leave state half-updated. | Failure modes are not yet production-readiness gates. | Define alerting channels and safe-rerun criteria. |
 
 For detailed analysis of each problem, see the [detailed system analysis appendix](reference/system-state-problems-solutions-detailed.md).
@@ -162,7 +162,7 @@ Mitigation:
 
 ### 3. Add Strict Release Validation
 
-Recommended default:
+Possible strict-validation default:
 
 ```text
 Wrong tag -> fail
@@ -183,9 +183,9 @@ Mitigation:
 
 ### 4. Consider Cutover To `main = Production`
 
-Only cut over after the pilot and validation rules are green.
+Consider cutover only after the pilot and validation rules are green.
 
-Correct cutover:
+Safer cutover may be:
 
 ```text
 Create or rename `main` from the confirmed production state.
@@ -202,7 +202,7 @@ Mitigation:
 
 ### 5. Scale Changed-Chart Deployment
 
-The default could be to deploy all changed charts, with exclusions requiring release-owner approval and an audit note.
+The default could be to deploy all changed charts, with exclusions requiring release-owner confirmation and an audit note.
 
 Risk:
 
@@ -262,7 +262,7 @@ They should come after the release pipeline, validation and ownership model are 
 - `main` branch protection is ready.
 - Automation targets the correct branch.
 - Open work on `development` is inventoried.
-- Hotfix and rollback reconciliation are approved.
+- Hotfix and rollback reconciliation are confirmed.
 - Strict validation has passed at least the pilot.
 
 ### No-Go For Branch Cutover

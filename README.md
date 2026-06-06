@@ -135,7 +135,7 @@ flowchart TD
 ```
 
 **Colour key:**
-🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Transformation
+🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Review / improvement notes
 
 ## Related Pages
 

@@ -1,35 +1,35 @@
-# ARB Package
+# Potential Future Architecture Review Considerations
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
-## ADR-001: Controlled Release Transformation Before Future Platform Capabilities
+## Possible ADR Topic: Controlled Release Foundation Before Future Platform Capabilities
 
 ### Context
 
-Cerberus release state is fragmented across Git, Drone, Helm, deployment-management, Jira, Kubernetes, secrets, Liquibase, runbooks and human approvals. The approval request is for release automation, stricter validation, clearer ownership, better evidence and tested recovery.
+Cerberus release state appears fragmented across Git, Drone, Helm, deployment-management, Jira, Kubernetes, secrets, Liquibase, runbooks and human approvals. If the team later seeks formal review, the near-term discussion would likely focus on release automation, stricter validation, clearer ownership, better evidence and tested recovery.
 
 ### Problem
 
-The package contains strong recommendations, but ARB approval would be unsafe unless immediate release controls are separated from later platform modernisation. In a border-security context, automation must not create ungoverned deployment pathways or false confidence from incomplete release metadata.
+The notes include both immediate release-control ideas and later platform-modernisation ideas. If these are treated as one approval scope, review risk increases. In a border-security context, automation must not create ungoverned deployment pathways or false confidence from incomplete release metadata.
 
 ### Options Considered
 
 | Option | Description | Strengths | Weaknesses |
 | --- | --- | --- | --- |
-| A | Approve all recommendations as one programme. | Fast alignment, ambitious target. | Too much blast radius; unclear approvals. |
-| B | Approve controlled release-foundation work only. | Reduces risk, strengthens audit and ownership. | Slower path to platform intelligence. |
+| A | Treat all improvement ideas as one programme. | Fast alignment, ambitious target. | Too much blast radius; unclear approvals. |
+| B | Discuss controlled release-foundation work first. | Reduces risk, strengthens audit and ownership. | Slower path to platform intelligence. |
 | C | Start future platform modernisation immediately. | Builds future capability early. | Data quality, ownership and governance not ready. |
 | D | Do nothing beyond current process. | Avoids change risk. | Leaves current release and audit risks unresolved. |
 
-### Recommendation
+### Suggested Position
 
-Approve Option B: controlled release-foundation work. Treat future platform modernisation as a separate decision gated by release metadata quality, ownership, security and operational evidence.
+Option B appears to be the safer discussion path: treat controlled release-foundation work separately from future platform modernisation, and gate later platform ideas on release metadata quality, ownership, security and operational evidence.
 
 ### Trade-Offs
 
 | Trade-Off | Decision |
 | --- | --- |
-| Speed vs safety | Prefer safety. |
+| Speed vs safety | Prefer controlled evolution and operational safety. |
 | Automation vs human control | Automate evidence and repeatable steps; retain human approval for high-impact environments. |
 | Centralisation vs resilience | Centralise visibility first; defer centralised control. |
 | Innovation vs audit | Permit pilots only with audit, RBAC and source-of-truth discipline. |
@@ -44,18 +44,18 @@ Approve Option B: controlled release-foundation work. Treat future platform mode
 
 | Risk | Mitigation |
 | --- | --- |
-| Teams expect immediate tooling rather than governance work. | Publish phased roadmap and approval gates. |
+| Teams expect immediate tooling rather than governance work. | Publish indicative phases and confirmation gates. |
 | Automation becomes a hidden approval bypass. | Enforce SoD, approval records and manual gates. |
 | Future-state architecture loses momentum. | Keep pilots on roadmap with measurable entry criteria. |
 | Benefits remain unproven. | Start baseline measurement in Phase 1. |
 
-### Approval Required
+### Potential Formal Review Questions
 
-ARB should approve:
+If this were reviewed formally, reviewers would likely want confirmation of:
 
 1. Near-term release-foundation scope.
 2. Explicit deferral of future platform trigger/action capabilities.
-3. NFR and governance requirements below.
+3. NFR and governance expectations below.
 4. Conditions for moving from pilot to production rollout.
 
 ## Non-Functional Requirements
@@ -69,11 +69,11 @@ ARB should approve:
 | Performance | Standard release report generated within agreed release-window target. | Reporting. | Generation metrics. |
 | Scalability | Support hundreds of services and multiple environments in release evidence and validation. | Release automation. | Capacity model and load test. |
 | Data freshness | Release report data current at generation time. | Reporting. | Freshness metrics and alerts. |
-| Data retention | Release evidence retained according to audit policy; minimum retention to be approved before rollout. | Reports, approvals, graph events. | Retention policy and purge logs. |
-| Disaster recovery | Release evidence recoverable. Target RTO/RPO to be approved. | Reports. | DR test. |
+| Data retention | Release evidence retained according to audit policy; minimum retention to be confirmed before rollout. | Reports, approvals, graph events. | Retention policy and purge logs. |
+| Disaster recovery | Release evidence recoverable. Target RTO/RPO to be confirmed. | Reports. | DR test. |
 | Compliance | Classification, SoD, privileged access, data sovereignty and change advisory alignment documented. | Whole package. | Security/architecture sign-off. |
 
-## ARB Decision Conditions
+## Possible Formal Review Conditions
 
 | Condition | Required Before |
 | --- | --- |
@@ -81,13 +81,13 @@ ARB should approve:
 | Strict validation dry-run evidence. | Fail-fast enforcement. |
 | Hotfix and rollback test completed. | Production rollout. |
 | Environment readiness gate implemented. | New environment rollout. |
-| Release report retention approved. | Drone rollout expansion. |
+| Release report retention confirmed. | Drone rollout expansion. |
 | Release metadata quality baseline measured. | Rollout expansion. |
-| RBAC, audit and SoD approved. | Release automation expansion. |
+| RBAC, audit and SoD confirmed. | Release automation expansion. |
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
-- [Executive Summary And Architecture Quality Review](executive-and-quality-review.md)
-- [Business Case And Recommended Roadmap](business-case-and-roadmap.md)
-- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)
+- [Potential Architecture Review Notes](index.md)
+- [Current Understanding And Architecture Quality Observations](executive-and-quality-review.md)
+- [Potential Benefits And Roadmap Notes](business-case-and-roadmap.md)
+- [Summary Assessment And Open Risks](final-scorecard-and-verdict.md)

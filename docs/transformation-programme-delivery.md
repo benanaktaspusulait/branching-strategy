@@ -47,7 +47,7 @@ gantt
 
 ## Prioritisation Matrix
 
-| Recommendation | Impact | Effort | Priority Quadrant |
+| Improvement Area | Impact | Effort | Priority Quadrant |
 | --- | --- | --- | --- |
 | Strict tag/manifest validation | High | Low | **Do first** |
 | Release metadata standardisation | High | Low | **Do first** |
@@ -100,7 +100,7 @@ Current values are estimates based on available notes and would need actual base
 | Change failure rate | Unknown (estimated 10-15%) | < 5% | < 2% | Incident records |
 | Mean time to restore (MTTR) | Unknown (estimated 4-8h) | < 2h | < 1h | Incident records |
 | Release preparation effort | Days per sprint | < 1 day | < 2 hours | Team time tracking |
-| Manual steps per release | 10+ (estimated) | < 5 | < 2 (approve + trigger) | Process audit |
+| Manual steps per release | 10+ (estimated) | < 5 | < 2 (confirm + trigger) | Process audit |
 | Release report accuracy | Partial / manual | Auto-generated, reviewed | Auto-generated, trusted | Pipeline artefacts |
 | Rollback test frequency | Never tested | Tested once per quarter | Tested every release cycle | Runbook execution log |
 | Environment readiness failures | Unknown | Tracked and gated | Zero (gated) | Pre-deployment checks |
@@ -149,4 +149,4 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 - [Improvement Notes And Maturity Observations](transformation-programme.md)
 - [Release Decision Register](release-decision-register.md)
 - [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
-- [Architecture Review Package](architecture-review/index.md)
+- [Potential Architecture Review Notes](architecture-review/index.md)
