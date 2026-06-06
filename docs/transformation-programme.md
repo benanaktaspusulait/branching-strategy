@@ -1,8 +1,8 @@
-# Transformation Programme
+# Improvement Notes And Maturity Observations
 
-This page contains the transformation analysis, planning and governance structures that sit alongside the assessment findings.
+This page captures maturity observations, possible improvement principles and a possible target shape for discussion.
 
-It answers: "Who does what, when, how do we measure success, and what does it cost?"
+It is not a committed transformation mandate. It is a working note to help confirm what needs to improve, who may need to be involved and which assumptions still need validation.
 
 ## Root Cause Analysis
 
@@ -26,11 +26,11 @@ It answers: "Who does what, when, how do we measure success, and what does it co
 | R5 | Audit failure from weak release trail. | Medium | High | P2 | Pipeline-generated release reports; immutable artefacts. |
 | R6 | Environment failure at deploy time. | Medium | Medium | P3 | Formal environment readiness gate. |
 | R7 | Escalation confusion during incident. | High | Medium | P2 | Named owners per RACI. |
-| R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Do not adopt trunk-based until feature flags mature. |
+| R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Avoid adopting trunk-based until feature flags mature. |
 
-## Current Release Maturity Assessment
+## Current Release Maturity Observations
 
-| Area | Current Score | Target Score | Gap |
+| Area | Current Score | Possible Target Score | Gap |
 | --- | --- | --- | --- |
 | Source control and branching | 3.0 / 5 | 4.5 / 5 | Branch model clear but reconciliation and automation incomplete. |
 | CI/CD pipeline | 3.0 / 5 | 4.5 / 5 | Pipeline exists but release steps are local/manual. |
@@ -56,18 +56,18 @@ xychart-beta
   line [4.5, 4.5, 4.5, 4.0, 4.0, 4.5, 4.0, 4.0, 4.0, 4.5]
 ```
 
-## Transformation Principles
+## Working Improvement Principles
 
-1. **Do not change the branching model first.** Stabilise the release operating model before simplifying branches.
-2. **Standardise release metadata.** Every release must be traceable from commit to production through tags, manifests, reports and Jira.
+1. **Avoid changing the branching model first.** Stabilise the release operating model before simplifying branches.
+2. **Standardise release metadata.** Every release should be traceable from commit to production through tags, manifests, reports and Jira.
 3. **Automate before reorganising.** Prove the automation works with the current model before introducing a new one.
-4. **Improve visibility before restructuring.** Release reports, dashboards and alerting make problems visible so they can be fixed.
-5. **Reduce manual release activities.** Every manual step is a consistency risk and a scaling bottleneck.
-6. **Make ownership explicit.** Unnamed responsibilities are unowned responsibilities.
-7. **Test rollback before you need it.** A rollback process that has never been tested is not a rollback process.
-8. **Treat environment readiness as a gate, not an assumption.** An existing namespace is not a ready environment.
+4. **Improve visibility before restructuring.** Release reports, dashboards and alerting can make problems visible so they can be fixed.
+5. **Reduce manual release activities where safe.** Every manual step is a consistency risk and a scaling bottleneck.
+6. **Make ownership explicit.** Unnamed responsibilities tend to become unowned responsibilities.
+7. **Test rollback before you need it.** A rollback process that has never been tested is not a reliable rollback process.
+8. **Treat environment readiness as a gate, not an assumption.** An existing namespace is not necessarily a ready environment.
 
-## Target State Architecture
+## Possible Target Operating Shape
 
 ### Current vs Target
 
@@ -105,7 +105,7 @@ flowchart LR
 
 **Colour key:** Red = current-state weakness · Green = proposed target control.
 
-### Proposed Target End State - Subject To Team Validation
+### Possible Target End State - Subject To Team Validation
 
 ```text
 - main = production baseline (always).
@@ -121,14 +121,20 @@ flowchart LR
 - Alerting for all automation failures.
 ```
 
-## Future State: Unified Deployment And Release Control Plane
+## Possible Future Topics - Not In Current Scope
 
-This is a future maturity option, not part of the immediate approval request. Once release metadata, strict validation, ownership, rollback and audit reporting are stable, Cerberus can evaluate a read-only release/deployment control plane that consolidates Git, Drone, Helm, deployment-management, Jira, Kubernetes and observability status into one operational view. The current approval should cover only the foundations that make that future option credible: reliable release state, named ownership, enforced gates, tested recovery and auditable evidence.
+After release metadata, strict validation, ownership, rollback and audit reporting are stable, the team may want to separately discuss:
+
+- read-only release/deployment visibility across Git, Drone, Helm, deployment-management, Jira and Kubernetes,
+- stronger observability links from release records to post-deploy health,
+- longer-term platform dashboards for audit and incident investigation.
+
+These topics are not part of the current KT-notes scope and would need separate ownership, evidence and review.
 
 ## Related Pages
 
-- [Cerberus Release Engineering Assessment](../README.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](../README.md)
 - [System State, Problems, Solution Options And Risks](system-state-problems-solutions.md)
-- [Transformation Programme — Delivery](transformation-programme-delivery.md)
+- [Possible Improvement Path And Delivery Notes](transformation-programme-delivery.md)
 - [Release Decision Register](release-decision-register.md)
 - [Platform Engineering Strategy](platform-engineering-strategy.md)

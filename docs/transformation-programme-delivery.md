@@ -1,17 +1,17 @@
-# Transformation Programme — Delivery
+# Possible Improvement Path And Delivery Notes
 
-This page contains the roadmap, governance structures, metrics and recommendations for the release transformation.
+This page contains an indicative improvement path, governance notes, possible metrics and discussion points for the release process.
 
-For root cause analysis, risk assessment, maturity scorecard and target state architecture, see [transformation programme](transformation-programme.md).
+For root cause notes, risk observations, maturity scorecard and possible target operating shape, see [improvement notes and maturity observations](transformation-programme.md).
 
-## Transformation Roadmap
+## Possible Phased Improvement Path
 
-Roadmap status reflects execution readiness, not document-writing progress. Phase 0 remains active until the rollout decisions are approved, named owners/backups are assigned and exit criteria are published. See the [release decision register](release-decision-register.md) for the live approval tracker.
+The phases below are indicative only. Actual timing depends on team confirmation, named owners, pilot evidence and agreement on exit criteria. Phase 0 remains open until the rollout decisions are confirmed, named owners/backups are assigned and exit criteria are published. See the [release decision register](release-decision-register.md) for the live confirmation tracker.
 
 | Phase | Timeframe | Focus | Key Deliverables |
 | --- | --- | --- | --- |
-| 0 | Now (Week 1-2) | Decisions and ownership | Approve rollout decisions; assign named owners; publish exit criteria. Status: active / not yet closed. |
-| 1 | Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. Starts after Phase 0 decisions are closed. |
+| 0 | Indicative: Week 1-2 | Decisions and ownership | Confirm rollout decisions; assign named owners; publish exit criteria. Status: active / not yet closed. |
+| 1 | Indicative: Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. Starts after Phase 0 decisions are closed. |
 | 2 | Month 2-3 | Release automation | Drone pilot green; auto branch/tag/chart; release reporting; alerting. |
 | 3 | Month 3-4 | Branch cutover | Controlled `main = production` cutover; branch protections; forward-merge rules active. |
 | 4 | Month 4-6 | Scale and harden | Changed-chart deployment default; shared dev auto-deploy; rerun safety; full RACI enforcement. |
@@ -21,7 +21,7 @@ Roadmap status reflects execution readiness, not document-writing progress. Phas
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 
 gantt
-  title Transformation Roadmap
+  title Possible Phased Improvement Path
   dateFormat YYYY-MM
   axisFormat %b %Y
 
@@ -89,9 +89,11 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 Note: Named individuals still need to be assigned. This matrix defines roles, not people. Incident Lead is the designated on-call or incident manager during an active incident. Needs confirmation with team leads.
 
-## Indicative Success Metrics - To Be Baseline Measured
+## Potential Metrics To Baseline
 
-| Metric | Current (Estimated) | Phase 2 Target | Phase 4 Target | Measurement Source |
+Current values are estimates based on available notes and would need actual baseline measurement before becoming targets.
+
+| Metric | Current (Estimated) | Possible Phase 2 Target | Possible Phase 4 Target | Measurement Source |
 | --- | --- | --- | --- | --- |
 | Deployment frequency | Monthly (approx.) | Fortnightly | Weekly | Drone pipeline history |
 | Lead time (commit to production) | 10-15 days (estimated) | 5-7 days | 2-3 days | Git + Drone timestamps |
@@ -103,7 +105,7 @@ Note: Named individuals still need to be assigned. This matrix defines roles, no
 | Rollback test frequency | Never tested | Tested once per quarter | Tested every release cycle | Runbook execution log |
 | Environment readiness failures | Unknown | Tracked and gated | Zero (gated) | Pre-deployment checks |
 
-Note: Current values are estimates based on available information. Actual baseline measurement should begin in Phase 1.
+Note: these are suggested metrics, not committed targets.
 
 ## Cost / Benefit Analysis
 
@@ -119,15 +121,15 @@ Note: Current values are estimates based on available information. Actual baseli
 | External Secrets Operator | Medium (infrastructure + migration) | Simpler rotation; better audit; easier onboarding. | 6 months |
 | Trunk-based development | Very High (culture + tooling + flags) | Uncertain until feature flags and validation mature. | Unknown |
 
-## Investment Recommendation
+## Suggested Investment Focus
 
-> **Recommended investment focus should be release governance, environment standardisation and deployment automation rather than immediate branching model replacement.**
+> **A useful investment focus may be release governance, environment standardisation and deployment automation rather than immediate branching model replacement.**
 
 The highest-return investments are low-cost, high-impact changes (strict validation, ownership, environment readiness) combined with the medium-cost automation pilot already in progress. Branch model simplification and platform modernisation should follow only once the operating model is stable and measurable.
 
-## Top 10 Recommendations
+## Top 10 Improvement Areas For Discussion
 
-| # | Recommendation | Phase |
+| # | Improvement Area | Indicative Phase |
 | --- | --- | --- |
 | 1 | Standardise release metadata (tags, manifests, Jira fields, commit format). | 0-1 |
 | 2 | Establish release governance (named owners, approval map, RACI). | 0 |
@@ -144,7 +146,7 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 
 ## Related Pages
 
-- [Transformation Programme](transformation-programme.md)
+- [Improvement Notes And Maturity Observations](transformation-programme.md)
 - [Release Decision Register](release-decision-register.md)
 - [Release Scope, Ownership And Approvals](scope-ownership-approvals.md)
 - [Architecture Review Package](architecture-review/index.md)

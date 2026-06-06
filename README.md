@@ -1,28 +1,30 @@
-# Cerberus Release Engineering Assessment
+# Cerberus Release Process Understanding, Gaps And Improvement Ideas
 
-**Current State, Problems, Risks And Improvement Roadmap**
+**KT Notes, Current Understanding, Observations And Discussion Points**
 
-This folder contains the assessment of the Cerberus CI/CD, release and deployment process: what exists today, what is broken, and what should change.
+This document captures my current understanding of the Cerberus CI/CD, release and deployment process based on KT sessions, discussions and follow-up analysis. It highlights areas that appear manual, unclear or risky, and proposes possible questions or improvement ideas for team discussion.
 
-This is an assessment and proposal, not an approved operating model. Items marked "Proposed" or "Needs confirmation" require team sign-off before implementation.
+Some assumptions may be incomplete or wrong and should be validated with Gareth, Achilles, release management, the platform team and squad leads. This is not an approved operating model, a replacement for existing team decisions or a formal architecture proposal.
+
+**Author positioning:** This is a working note from a developer currently onboarding into the Cerberus release process. It is intended to support discussion and shared understanding, not to override existing team decisions or established release management practices.
 
 ## Summary
 
 ```text
-Do not change the branching model first.
+Avoid changing the branching model first.
 First make the current release process visible, repeatable and auditable.
-Then decide whether the branch model should be kept, simplified or replaced.
+Then discuss whether the branch model should be kept, simplified or replaced.
 ```
 
 ## Structure
 
-The documentation is organised as a focused approval pack plus appendix material. The main approval pack stays on the Cerberus release-management problem: safer release flow, validation, ownership, hotfix/rollback and ARB decision conditions.
+The notes are organised as a focused discussion pack plus appendix material. The main discussion pack stays on the Cerberus release-management problem: safer release flow, validation, ownership, hotfix/rollback and areas that may need confirmation.
 
-### Main Approval Pack
+### Main Discussion Pack
 
 | Page | What It Covers |
 | --- | --- |
-| [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Clear current-state summary, problem analysis, solution options, risks and experience-based recommendations. |
+| [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Current-state summary, observed problems, possible solution options, risks and experience-based notes. |
 | [Current release operating model](docs/current-release-operating-model.md) | End-to-end release flow: branches -> tags -> artefacts -> deploy -> reconciliation. |
 | [Deployment and release findings](docs/deployment-and-release-findings.md) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
 | [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | Problem summary table, root causes, and recommended follow-up actions. |
@@ -30,12 +32,12 @@ The documentation is organised as a focused approval pack plus appendix material
 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, release reporting, commit metadata, merge strategy. |
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
-| [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed decisions ready for team approval. |
-| [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
-| [Transformation programme](docs/transformation-programme.md) | Root cause, risk assessment, maturity scorecard and near-term target state. |
-| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, prioritisation, RACI, success metrics, cost/benefit, top 10 recommendations. |
+| [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed discussion points for rollout behaviour. |
+| [Release decision register](docs/release-decision-register.md) | Open decisions, owner gaps, required evidence and possible closure order. |
+| [Improvement notes and maturity observations](docs/transformation-programme.md) | Root cause notes, risk observations, maturity scorecard and possible near-term target state. |
+| [Possible improvement path and delivery notes](docs/transformation-programme-delivery.md) | Indicative phases, prioritisation, RACI, metrics to baseline, cost/benefit and improvement areas. |
 | [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
-| [Architecture review package](docs/architecture-review/index.md) | ARB/executive review outputs, criticality challenge and final verdict. |
+| [Potential architecture review notes](docs/architecture-review/index.md) | Optional later-stage review considerations, criticality challenge notes and open risks. |
 
 Key problems at a glance:
 
@@ -71,7 +73,7 @@ Key problems at a glance:
 ## Suggested Reading Order
 
 1. This page.
-2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - decision-ready synthesis.
+2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - current understanding and discussion summary.
 3. [Current release operating model](docs/current-release-operating-model.md) - how it works today.
 4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) - what is broken.
 5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) - what the solution looks like.
@@ -79,12 +81,12 @@ Key problems at a glance:
 7. [Automation and validation](docs/automation-and-validation.md) - validation, reporting, metadata and failure handling.
 8. [Hotfix and rollback](docs/hotfix-and-rollback.md) - production recovery and reconciliation.
 9. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) - scope, owners and approval points.
-10. [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed decisions to approve or amend.
-11. [Release decision register](docs/release-decision-register.md) - approval tracker and closure order.
-12. [Transformation programme](docs/transformation-programme.md) - root cause, maturity and target release state.
-13. [Transformation programme - delivery](docs/transformation-programme-delivery.md) - roadmap, RACI, metrics and investment view.
+10. [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed discussion points to confirm or amend.
+11. [Release decision register](docs/release-decision-register.md) - open decision tracker and possible closure order.
+12. [Improvement notes and maturity observations](docs/transformation-programme.md) - root cause, maturity and possible target release state.
+13. [Possible improvement path and delivery notes](docs/transformation-programme-delivery.md) - indicative phases, RACI, metrics and investment notes.
 14. [Platform engineering strategy](docs/platform-engineering-strategy.md) - promotion model, deployment strategy and observability gates.
-15. [Architecture review package](docs/architecture-review/index.md) - ARB conditions, criticality challenge and final verdict.
+15. [Potential architecture review notes](docs/architecture-review/index.md) - optional later-stage review considerations and open risks.
 
 ## Visual Overview
 
@@ -111,8 +113,8 @@ flowchart TD
   M["📌 Release Decision Register"]:::decision
 
   %% Layer 5
-  L["🗺️ Transformation Programme"]:::transform
-  N["🏛️ ARB Package & Verdict"]:::transform
+  L["🗺️ Improvement Notes"]:::transform
+  N["🏛️ Review Considerations"]:::transform
 
   %% Relationships
   A & B --> C --> D
@@ -139,5 +141,5 @@ flowchart TD
 
 - [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
 - [Release Decision Register](docs/release-decision-register.md)
-- [Transformation Programme](docs/transformation-programme.md)
-- [Architecture Review Package](docs/architecture-review/index.md)
+- [Improvement Notes And Maturity Observations](docs/transformation-programme.md)
+- [Potential Architecture Review Notes](docs/architecture-review/index.md)

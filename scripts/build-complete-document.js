@@ -105,9 +105,9 @@ const sourceData = sources.map((source) => {
 const [readme, ...rest] = sourceData;
 
 const output = [
-  '# Cerberus Release Engineering Assessment',
+  '# Cerberus Release Process Understanding, Gaps And Improvement Ideas',
   '',
-  'This complete document consolidates the Cerberus release-management approval pack into one reader copy.',
+  'This complete document consolidates KT-based current understanding, observations, open questions and possible improvement ideas into one reader copy.',
   '',
   '## Complete Document Contents',
   '',
