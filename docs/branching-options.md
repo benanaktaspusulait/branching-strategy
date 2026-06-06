@@ -142,6 +142,8 @@ Possible direction:
 feature branches -> release branches tracking live/main
 ```
 
+Note: In this model, feature branches are created from `main` (not from the release branch). This differs from the proposed target model above, where feature branches are created from the release branch. Option 2 is presented as an alternative, not as the recommended direction.
+
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 

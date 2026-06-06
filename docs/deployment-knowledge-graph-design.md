@@ -3,11 +3,14 @@
 **Future-State Architecture for Cerberus Release Intelligence**
 
 > **Status:** Long-term architectural proposal. Not part of the initial release automation rollout.
+>
+> **Relationship to Unified Control Plane:** The Knowledge Graph is the data and intelligence layer. The [Unified Deployment and Release Control Plane](transformation-programme.md#future-state-unified-deployment-and-release-control-plane) is the operational interface layer. Together they form the long-term unified platform.
 
-This document is split into three parts:
+This document is split into four parts:
 - Part 1: [Design and Domain Model](deployment-knowledge-graph-design.md) (you are here)
 - Part 2: [Implementation and Workflows](deployment-knowledge-graph-implementation.md)
 - Part 3: [Operations and Technology](deployment-knowledge-graph-operations.md)
+- Part 4: [Strategic Value, Business Case and Governance](deployment-knowledge-graph-business-case.md)
 
 ---
 

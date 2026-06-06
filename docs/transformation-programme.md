@@ -107,7 +107,7 @@ flowchart LR
 
 ```text
 - main = production baseline (always).
-- Release branches auto-created, short-lived (1-2 weeks max).
+- Release branches auto-created, short-lived (proposed: 1-2 sprint duration — needs confirmation).
 - Feature/hotfix branches auto-generate deployable candidates.
 - Cerberus charts auto-updated on merge.
 - Changed-chart detection deploys only what changed.
@@ -122,6 +122,8 @@ flowchart LR
 ## Future State: Unified Deployment And Release Control Plane
 
 > **This is a future maturity option, not an immediate implementation requirement.**
+>
+> The technical implementation of this control plane is detailed in the [Deployment Knowledge Graph](deployment-knowledge-graph-design.md) architecture. The Knowledge Graph is the data/intelligence layer; the Control Plane is the operational interface layer. Together they form the long-term unified platform.
 
 ### Why This Matters
 

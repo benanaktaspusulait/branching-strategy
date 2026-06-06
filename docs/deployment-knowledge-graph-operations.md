@@ -186,6 +186,8 @@ Backstage is a presentation layer option, not a replacement for the knowledge gr
 | --- | --- | --- | --- | --- |
 | 0 | After release automation is stable | Define schema, agree query requirements | Design only | Documented graph schema and priority queries |
 | 1 | Month 9-12 | Core entities: Release, ServiceVersion, Deployment, Environment | PostgreSQL + simple relationships | Basic "what is deployed where?" query |
+
+Note: Knowledge Graph Phase 1 (Month 9-12) overlaps with Transformation Phase 5 (modernise). The formal "unified control plane evaluation" in Transformation Phase 6 (12+ months) determines whether the KG grows into a full operational interface or remains a read-only intelligence layer. The KG can start as a read-only data project without waiting for the control plane decision.
 | 2 | Month 12-15 | Add Jira tickets, commits, approvals | PostgreSQL + full-text search | "What is in release X?" with ticket cross-reference |
 | 3 | Month 15-18 | Add Liquibase, config changes, health signals | Migrate to Neo4j if query complexity justifies | Incident investigation support |
 | 4 | Month 18-24 | Add incident linking, rollback decision support | Neo4j + GraphQL API | Rollback safety assessment from graph |

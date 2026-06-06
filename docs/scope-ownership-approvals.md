@@ -187,8 +187,8 @@ flowchart LR
 | Deploy to SIT and above | Release management | Release owner | Backup owner to assign | Deployment job |
 | QAT approval | QAT team | QAT lead | Backup owner to assign | Approval record |
 | Production release | Release management | Release owner | Backup owner to assign | Release record |
-| Hotfix | Squad developer + release mgmt | Release owner | Backup owner to assign | Hotfix MR/tag |
-| Rollback | Release management | Release owner + incident lead | Backup owner to assign | Rollback record |
+| Hotfix | Squad developer (implements fix) | Release owner (approves) + incident lead (decides urgency) | Backup owner to assign | Hotfix MR/tag |
+| Rollback | Platform / DevOps (executes) | Release owner (approves) + incident lead (decides) | Backup owner to assign | Rollback record |
 | Post-release reconciliation | Automation + release owner | Release owner | Backup owner to assign | Merge records |
 
 Note: Backup owners still need to be confirmed with team leads before rollout expansion. Known automation ownership sits with Gareth/Achilles for the pilot phase only; the long-term owner should be recorded in the [release decision register](release-decision-register.md).

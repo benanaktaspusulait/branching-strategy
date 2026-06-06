@@ -72,27 +72,28 @@ gantt
 
 ## RACI Matrix
 
-| Activity | Dev / Squad | Tech Lead | Architect | Platform / DevOps | Release Owner | QAT |
-| --- | --- | --- | --- | --- | --- | --- |
-| Feature development | R | A | C | I | I | I |
-| Merge to release branch | R | A | I | I | I | I |
-| Release branch creation | I | I | I | R | A | I |
-| Tag and artefact build | I | I | I | R | A | I |
-| Manifest validation | I | C | C | R | A | I |
-| Deploy to lower environments | R | A | I | C | I | I |
-| Deploy to SIT and above | I | C | I | R | A | C |
-| Functional validation | C | I | I | I | I | R/A |
-| Production release approval | I | C | C | C | A | R |
-| Hotfix decision | C | C | C | R | A | I |
-| Rollback decision | C | C | C | R | A | I |
-| Post-release reconciliation | I | I | I | R | A | I |
-| Environment readiness | I | I | C | R/A | C | I |
-| Alert response | R | A | I | R | C | I |
-| Release reporting | I | I | C | R | A | I |
+| Activity | Dev / Squad | Tech Lead | Architect | Platform / DevOps | Release Owner | QAT | Incident Lead |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Feature development | R | A | C | I | I | I | I |
+| Merge to release branch | R | A | I | I | I | I | I |
+| Release branch creation | I | I | I | R | A | I | I |
+| Tag and artefact build | I | I | I | R | A | I | I |
+| Manifest validation | I | C | C | R | A | I | I |
+| Deploy to lower environments | R | A | I | C | I | I | I |
+| Deploy to SIT and above | I | C | I | R | A | C | I |
+| Functional validation | C | I | I | I | I | R/A | I |
+| Production release approval | I | C | C | C | A | R | I |
+| Hotfix decision | R (implements) | C | C | R (executes) | A | I | C (decides urgency) |
+| Rollback decision | I | C | C | R (executes) | A | I | R (decides) |
+| Post-release reconciliation | I | I | I | R | A | I | I |
+| Environment readiness | I | I | C | R/A | C | I | I |
+| Alert response | R | A | I | R | C | I | C |
+| Release reporting | I | I | C | R | A | I | I |
+| Incident investigation | C | C | I | R | C | I | A |
 
 Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
-Note: Named individuals still need to be assigned. This matrix defines roles, not people. Needs confirmation with team leads.
+Note: Named individuals still need to be assigned. This matrix defines roles, not people. Incident Lead is the designated on-call or incident manager during an active incident. Needs confirmation with team leads.
 
 ## Indicative Success Metrics - To Be Baseline Measured
 

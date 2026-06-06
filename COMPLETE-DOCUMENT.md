@@ -98,10 +98,10 @@ Key problems at a glance:
 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, release reporting, commit metadata, merge strategy. |
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
-| [Rollout decision proposals](docs/rollout-decision-proposals.md) | 15 proposed decisions ready for team approval. |
+| [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed decisions ready for team approval (summary view; 23 decisions tracked in the register). |
 | [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
-| [Transformation programme](docs/transformation-programme.md) | Root cause, risk, maturity scorecard, target state, control plane future. |
-| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, RACI, metrics, cost/benefit, top 10 recommendations. |
+| [Transformation programme](docs/transformation-programme.md) | Root cause, risk assessment, maturity scorecard, target state architecture, unified control plane future. |
+| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, prioritisation, RACI, success metrics, cost/benefit, top 10 recommendations. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
 ### Transformation Programme
@@ -121,7 +121,9 @@ Key problems at a glance:
 | [Deployment knowledge graph — implementation](docs/deployment-knowledge-graph-implementation.md) | Event architecture, ingestion, API, search, workflows. |
 | [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | Security, retention, integrations, technology options, roadmap. |
 | [Deployment knowledge graph — business case](docs/deployment-knowledge-graph-business-case.md) | Strategic value, ROI, governance model, risks, NFRs, AI enablement, decision record. |
-| [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
+| [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full current state detail. |
+| [Detailed problems (P1–P12)](docs/reference/detailed-problems.md) | Full problem analysis with root cause and evidence. |
+| [Detailed solutions (S1–S7)](docs/reference/detailed-solutions.md) | Full solution options with risks and experience notes. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 
 ## Suggested Reading Order
@@ -1593,6 +1595,8 @@ Possible direction:
 feature branches -> release branches tracking live/main
 ```
 
+Note: In this model, feature branches are created from `main` (not from the release branch). This differs from the proposed target model above, where feature branches are created from the release branch. Option 2 is presented as an alternative, not as the recommended direction.
+
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 
@@ -2495,8 +2499,8 @@ flowchart LR
 | Deploy to SIT and above | Release management | Release owner | Backup owner to assign | Deployment job |
 | QAT approval | QAT team | QAT lead | Backup owner to assign | Approval record |
 | Production release | Release management | Release owner | Backup owner to assign | Release record |
-| Hotfix | Squad developer + release mgmt | Release owner | Backup owner to assign | Hotfix MR/tag |
-| Rollback | Release management | Release owner + incident lead | Backup owner to assign | Rollback record |
+| Hotfix | Squad developer (implements fix) | Release owner (approves) + incident lead (decides urgency) | Backup owner to assign | Hotfix MR/tag |
+| Rollback | Platform / DevOps (executes) | Release owner (approves) + incident lead (decides) | Backup owner to assign | Rollback record |
 | Post-release reconciliation | Automation + release owner | Release owner | Backup owner to assign | Merge records |
 
 Note: Backup owners still need to be confirmed with team leads before rollout expansion. Known automation ownership sits with Gareth/Achilles for the pilot phase only; the long-term owner should be recorded in the [release decision register](docs/release-decision-register.md).
@@ -2799,7 +2803,7 @@ flowchart LR
 
 ```text
 - main = production baseline (always).
-- Release branches auto-created, short-lived (1-2 weeks max).
+- Release branches auto-created, short-lived (proposed: 1-2 sprint duration — needs confirmation).
 - Feature/hotfix branches auto-generate deployable candidates.
 - Cerberus charts auto-updated on merge.
 - Changed-chart detection deploys only what changed.
@@ -2814,6 +2818,8 @@ flowchart LR
 ## Future State: Unified Deployment And Release Control Plane
 
 > **This is a future maturity option, not an immediate implementation requirement.**
+>
+> The technical implementation of this control plane is detailed in the [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md) architecture. The Knowledge Graph is the data/intelligence layer; the Control Plane is the operational interface layer. Together they form the long-term unified platform.
 
 ### Why This Matters
 
@@ -3071,27 +3077,28 @@ gantt
 
 ## RACI Matrix
 
-| Activity | Dev / Squad | Tech Lead | Architect | Platform / DevOps | Release Owner | QAT |
-| --- | --- | --- | --- | --- | --- | --- |
-| Feature development | R | A | C | I | I | I |
-| Merge to release branch | R | A | I | I | I | I |
-| Release branch creation | I | I | I | R | A | I |
-| Tag and artefact build | I | I | I | R | A | I |
-| Manifest validation | I | C | C | R | A | I |
-| Deploy to lower environments | R | A | I | C | I | I |
-| Deploy to SIT and above | I | C | I | R | A | C |
-| Functional validation | C | I | I | I | I | R/A |
-| Production release approval | I | C | C | C | A | R |
-| Hotfix decision | C | C | C | R | A | I |
-| Rollback decision | C | C | C | R | A | I |
-| Post-release reconciliation | I | I | I | R | A | I |
-| Environment readiness | I | I | C | R/A | C | I |
-| Alert response | R | A | I | R | C | I |
-| Release reporting | I | I | C | R | A | I |
+| Activity | Dev / Squad | Tech Lead | Architect | Platform / DevOps | Release Owner | QAT | Incident Lead |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Feature development | R | A | C | I | I | I | I |
+| Merge to release branch | R | A | I | I | I | I | I |
+| Release branch creation | I | I | I | R | A | I | I |
+| Tag and artefact build | I | I | I | R | A | I | I |
+| Manifest validation | I | C | C | R | A | I | I |
+| Deploy to lower environments | R | A | I | C | I | I | I |
+| Deploy to SIT and above | I | C | I | R | A | C | I |
+| Functional validation | C | I | I | I | I | R/A | I |
+| Production release approval | I | C | C | C | A | R | I |
+| Hotfix decision | R (implements) | C | C | R (executes) | A | I | C (decides urgency) |
+| Rollback decision | I | C | C | R (executes) | A | I | R (decides) |
+| Post-release reconciliation | I | I | I | R | A | I | I |
+| Environment readiness | I | I | C | R/A | C | I | I |
+| Alert response | R | A | I | R | C | I | C |
+| Release reporting | I | I | C | R | A | I | I |
+| Incident investigation | C | C | I | R | C | I | A |
 
 Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
-Note: Named individuals still need to be assigned. This matrix defines roles, not people. Needs confirmation with team leads.
+Note: Named individuals still need to be assigned. This matrix defines roles, not people. Incident Lead is the designated on-call or incident manager during an active incident. Needs confirmation with team leads.
 
 ## Indicative Success Metrics - To Be Baseline Measured
 
@@ -4027,11 +4034,14 @@ This is a future option, subject to platform strategy approval. It is not part o
 **Future-State Architecture for Cerberus Release Intelligence**
 
 > **Status:** Long-term architectural proposal. Not part of the initial release automation rollout.
+>
+> **Relationship to Unified Control Plane:** The Knowledge Graph is the data and intelligence layer. The [Unified Deployment and Release Control Plane](docs/transformation-programme.md#future-state-unified-deployment-and-release-control-plane) is the operational interface layer. Together they form the long-term unified platform.
 
-This document is split into three parts:
+This document is split into four parts:
 - Part 1: [Design and Domain Model](docs/deployment-knowledge-graph-design.md) (you are here)
 - Part 2: [Implementation and Workflows](docs/deployment-knowledge-graph-implementation.md)
 - Part 3: [Operations and Technology](docs/deployment-knowledge-graph-operations.md)
+- Part 4: [Strategic Value, Business Case and Governance](docs/deployment-knowledge-graph-business-case.md)
 
 ---
 
@@ -4813,6 +4823,8 @@ Backstage is a presentation layer option, not a replacement for the knowledge gr
 | --- | --- | --- | --- | --- |
 | 0 | After release automation is stable | Define schema, agree query requirements | Design only | Documented graph schema and priority queries |
 | 1 | Month 9-12 | Core entities: Release, ServiceVersion, Deployment, Environment | PostgreSQL + simple relationships | Basic "what is deployed where?" query |
+
+Note: Knowledge Graph Phase 1 (Month 9-12) overlaps with Transformation Phase 5 (modernise). The formal "unified control plane evaluation" in Transformation Phase 6 (12+ months) determines whether the KG grows into a full operational interface or remains a read-only intelligence layer. The KG can start as a read-only data project without waiting for the control plane decision.
 | 2 | Month 12-15 | Add Jira tickets, commits, approvals | PostgreSQL + full-text search | "What is in release X?" with ticket cross-reference |
 | 3 | Month 15-18 | Add Liquibase, config changes, health signals | Migrate to Neo4j if query complexity justifies | Incident investigation support |
 | 4 | Month 18-24 | Add incident linking, rollback decision support | Neo4j + GraphQL API | Rollback safety assessment from graph |
