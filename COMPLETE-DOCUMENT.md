@@ -567,6 +567,8 @@ flowchart LR
   classDef phase fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = release lifecycle phase.
+
 Why this matters:
 
 ```text
@@ -629,6 +631,8 @@ flowchart LR
   classDef node fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Green = tag, artefact, manifest and deployment-candidate flow step.
+
 Risk:
 
 ```text
@@ -689,6 +693,8 @@ flowchart LR
   classDef off fill:#616161,stroke:#424242,color:#fff
   classDef on fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Purple = deployed code/config state · Yellow = feature-flag decision · Grey = inactive path · Green = active feature.
 
 If feature flags are baked into Helm values, enabling or disabling a feature may require redeployment. That means trunk-based development would move some complexity from branching into configuration and deployment.
 
@@ -806,6 +812,8 @@ flowchart LR
   classDef manual fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
   classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Grey = branch/source trigger · Blue = automated Helm/package checks · Purple = release tag · Orange = manual promotion · Green = environment deployment.
 
 Important details:
 
@@ -1059,6 +1067,8 @@ flowchart LR
   classDef solution fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = recommended actions.
+
 ## Recommended Actions
 
 1. Keep the current-state flow in [current release operating model](docs/current-release-operating-model.md) as the baseline view.
@@ -1186,6 +1196,8 @@ flowchart LR
   classDef deploy fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Orange = release branch · Green = feature/hotfix branch · Grey = commit/action step · Purple = temporary tag · Blue = build · Teal = chart update · Dark green = deploy handle.
+
 Important details:
 
 - Feature and hotfix branches are treated similarly by the automation.
@@ -1235,6 +1247,8 @@ flowchart LR
   classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef promote fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Purple = main/production · Orange = release branch · Green = feature/hotfix branches · Grey = merge step · Purple tag node = release tag/version · Teal = chart update · Blue = shared-dev deployment · Dark green = SIT+ promotion.
 
 Important details:
 
@@ -1403,6 +1417,8 @@ flowchart LR
   classDef benefit fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Red = current local/manual execution · Blue = audited pipeline automation · Green = expected release-control benefits.
+
 ## Automation Work Mentioned
 
 Existing scripts or automation steps appear to cover parts of the release process, including:
@@ -1565,6 +1581,8 @@ flowchart LR
   classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or approve override.
 
 Validation should make sure:
 
@@ -1745,6 +1763,8 @@ flowchart LR
   classDef rel fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Purple = production/main baseline · Red = hotfix branch · Blue = test step · Orange = tag/version or release branch · Green = production deployment · Grey = merge/reconciliation work.
+
 ## Hotfix Questions To Answer
 
 - Who approves a hotfix merge?
@@ -1815,6 +1835,8 @@ flowchart TD
   classDef action fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
   classDef done fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Red = production issue · Yellow = rollback/fix-forward decision · Purple = rollback path · Blue = fix-forward path · Grey = reconciliation actions · Green = validated closure.
 
 ## Rollback Questions To Answer
 
@@ -1966,6 +1988,8 @@ flowchart LR
   classDef owner fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Blue = release process · Orange = explicit release scope · Purple = named owners and approvals.
+
 ## Ownership Gap
 
 Automation cannot replace accountability. If an automated step fails, someone still needs to decide whether to rerun, override, stop, roll back or fix forward. Without named owners, decisions are delayed and escalation is unclear.
@@ -2116,6 +2140,8 @@ flowchart LR
   classDef step fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef gate fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Blue = release process step · Red = mandatory approval gate.
 
 ## Ownership Matrix Template
 
@@ -2417,6 +2443,8 @@ flowchart LR
   classDef target fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Red = current-state weakness · Green = proposed target control.
+
 ### Proposed Target End State - Subject To Team Validation
 
 ```text
@@ -2628,6 +2656,8 @@ flowchart TD
   classDef prod fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Green = squad dev/test · Blue = shared dev · Orange = SIT · Purple = pre-prod / B.Val · Red = production.
+
 ### Promotion Rules
 
 | Rule | Description |
@@ -2686,6 +2716,8 @@ flowchart TD
   classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
 ```
 
+**Colour key:** Grey = current rolling-update model · Blue = near-term blue-green option.
+
 ### Strategy Comparison
 
 | Strategy | Rollback Speed | Infrastructure Cost | Complexity | Best For |
@@ -2737,6 +2769,8 @@ flowchart LR
   classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
+
+**Colour key:** Blue = deploy step · Grey = bake/wait period · Purple = observability gate · Yellow = SLO decision · Green = promote · Red = alert/manual rollback.
 
 ### Observability Gate Metrics
 
