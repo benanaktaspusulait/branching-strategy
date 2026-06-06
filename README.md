@@ -75,6 +75,7 @@ Key problems at a glance:
 | --- | --- |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
 | [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates, GitOps readiness, SBOM and supply chain security. |
+| [Deployment knowledge graph](docs/deployment-knowledge-graph.md) | Future-state architecture: graph model for release intelligence, incident investigation, audit and DORA metrics. |
 | [Detailed system analysis](docs/reference/system-state-problems-solutions-detailed.md) | Full detailed version of the system state, problems, solutions and risks. |
 | [Detailed rollout decisions](docs/reference/rollout-decision-proposals-detailed.md) | Full rationale behind the short rollout decision proposal page. |
 
