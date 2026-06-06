@@ -1,6 +1,6 @@
 # Architecture Diagrams
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Current State: Systems And Dependencies
 
@@ -40,6 +40,6 @@ flowchart TD
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
-- [Architecture Alignment And Enterprise Architecture Review](alignment-and-enterprise-architecture-review.md)
-- [Criticality Challenge Review](criticality-challenge-review.md)
+- [Potential Architecture Review Notes](index.md)
+- [Architecture Alignment Considerations](alignment-and-enterprise-architecture-review.md)
+- [Criticality Challenge Notes](criticality-challenge-review.md)

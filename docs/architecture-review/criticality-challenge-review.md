@@ -1,10 +1,10 @@
-# Criticality Challenge Review
+# Criticality Challenge Notes
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Suitability Assessment
 
-| Recommendation | Suitable | Needs Modification | Not Recommended | Reason |
+| Improvement Area | Suitable | Needs Modification | Not Recommended | Reason |
 | --- | --- | --- | --- | --- |
 | Stabilise release operating model first | Yes | No | No | Reduces systemic risk before structural change. |
 | Branch strategy simplification | No | Yes | No | Good later, unsafe before validation and rollback are proven. |
@@ -12,10 +12,10 @@ Status: Completed architecture review output.
 | Drone migration for release scripts | Yes | Yes | No | Improves auditability but must not bypass approvals. |
 | Strict validation framework | Yes | Yes | No | Strong control; dry-run first to avoid surprise release blocks. |
 | Changed-chart deployment | No | Yes | No | Needs dependency analysis and audited exclusions. |
-| Release reporting | Yes | Yes | No | Must define retention, classification and evidence ownership. |
+| Release reporting | Yes | Yes | No | Needs retention, classification and evidence ownership. |
 | Release ownership model | Yes | Yes | No | Role model exists; named people/backups still required. |
 | Event-driven architecture | Yes | Yes | No | Useful, but needs replay, DLQ and reconciliation controls. |
-| Rollback recommendations | Yes | Yes | No | Must distinguish rollback from fix-forward and data constraints. |
+| Rollback recommendations | Yes | Yes | No | Needs a distinction between rollback, fix-forward and data constraints. |
 | Environment promotion model | Yes | Yes | No | Strong if approvals and readiness gates are explicit. |
 | Progressive delivery | No | Yes | No | Defer broad use; service-by-service evaluation. |
 | GitOps | No | Yes | No | Non-prod evaluation only until source-of-truth discipline is proven. |
@@ -25,7 +25,7 @@ Status: Completed architecture review output.
 
 Scores: 1 poor, 5 excellent.
 
-| Recommendation | Operational Safety | Blast Radius | Recovery Complexity | Human Factors | Auditability | Security Impact | Platform Complexity |
+| Improvement Area | Operational Safety | Blast Radius | Recovery Complexity | Human Factors | Auditability | Security Impact | Platform Complexity |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Strict validation | 5 | 4 | 4 | 4 | 5 | 4 | 3 |
 | Named ownership | 5 | 5 | 5 | 5 | 5 | 4 | 4 |
@@ -60,7 +60,7 @@ Scores: 1 poor, 5 excellent.
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
+- [Potential Architecture Review Notes](index.md)
 - [Recommendation Inventory](recommendation-inventory.md)
-- [Missing Enterprise Concerns](missing-enterprise-concerns.md)
-- [Final Scorecard And Verdict](final-scorecard-and-verdict.md)
+- [Additional Enterprise Concerns To Confirm](missing-enterprise-concerns.md)
+- [Summary Assessment And Open Risks](final-scorecard-and-verdict.md)

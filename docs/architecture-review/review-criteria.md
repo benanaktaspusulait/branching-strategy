@@ -1,12 +1,12 @@
-# Architecture Review Criteria
+# Possible Review Criteria
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Review Lens
 
-This review uses two lenses at the same time:
+If the notes are later taken into a formal review, these two lenses may be useful:
 
-1. ARB approval readiness: can the proposal be understood, governed, funded, delivered and operated safely?
+1. Formal review readiness: can the proposal be understood, governed, funded, delivered and operated safely?
 2. Border-security criticality: would the recommendation remain safe in a mission-critical, national-security-adjacent platform with strict audit, high availability and low tolerance for deployment mistakes?
 
 ## Decision Standards
@@ -38,25 +38,25 @@ This review uses two lenses at the same time:
 
 | Area | Current Status | Review Position |
 | --- | --- | --- |
-| Release operating model | Proposed / needs approval | Treat as assessment, not approved policy. |
-| Branch cutover to `main = production` | Needs approval | Defer until validation, ownership, rollback and production baseline evidence are proven. |
+| Release operating model | Proposed / needs confirmation | Treat as assessment, not approved policy. |
+| Branch cutover to `main = production` | Needs confirmation | Defer until validation, ownership, rollback and production baseline evidence are proven. |
 | Drone release automation | Pilot / proposed | Support controlled pilot; require manual approvals and rerun controls. |
-| Strict validation | Needs approval | Strongly support; dry-run first, then fail-fast after evidence. |
-| Changed-chart deployment | Needs approval | Support with audited exclusion and manifest comparison controls. |
-| Hotfix and rollback | Needs approval | Must be approved and tested before production rollout. |
-| Release scope and ownership | Needs owner / needs approval | Blocker for scale-out. |
+| Strict validation | Needs confirmation | Strongly support; dry-run first, then fail-fast after evidence. |
+| Changed-chart deployment | Needs confirmation | Support with audited exclusion and manifest comparison controls. |
+| Hotfix and rollback | Needs confirmation | Needs confirmation and testing before production rollout. |
+| Release scope and ownership | Needs owner / needs confirmation | Blocker for scale-out. |
 | GitOps / ArgoCD | Medium/long-term option | Defer production adoption; evaluate non-prod only after source-of-truth discipline is proven. |
 | Progressive delivery / auto-rollback | Future option | Defer automated production decisions; start with observability and manual gates. |
 
 ## Review Constraints
 
-- Do not mark any proposal as approved without explicit owner or ARB evidence.
+- Do not mark any proposal as approved without explicit owner or formal approval evidence.
 - Do not treat generated documentation as a source of truth.
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
+- [Potential Architecture Review Notes](index.md)
 - [Recommendation Inventory](recommendation-inventory.md)
-- [Criticality Challenge Review](criticality-challenge-review.md)
+- [Criticality Challenge Notes](criticality-challenge-review.md)

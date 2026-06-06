@@ -1,53 +1,53 @@
-# Architecture Alignment And Enterprise Architecture Review
+# Architecture Alignment Considerations
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
-## Architecture Alignment Report
+## Architecture Alignment Notes
 
-| Issue | Impact | Recommendation |
+| Issue | Impact | Possible Discussion Point |
 | --- | --- | --- |
-| Transformation roadmap, platform strategy and Knowledge Graph roadmap use different phase language. | Readers may assume future capabilities are nearer than intended. | Normalize phases into Foundation, Controlled Automation, Scale, Intelligence Pilot, Platform Control. |
+| Improvement roadmap, platform strategy and Knowledge Graph roadmap use different phase language. | Readers may assume future capabilities are nearer than intended. | Normalize phases into Foundation, Controlled Automation, Scale, Intelligence Pilot, Platform Control if these notes stay in scope. |
 | Control plane and Knowledge Graph are sometimes described together. | Responsibilities blur between data intelligence and operational action. | Define Knowledge Graph as read-model; Control Plane as interface/orchestration layer. |
 | GitOps, progressive delivery and trunk-based development are listed as improvements but not always gated by criticality. | Commercial SaaS practices may be over-applied to border-security context. | Add critical-environment prerequisites and explicit defer status. |
-| Release decision register tracks release decisions, but future architecture decisions need their own approval trail. | ARB decisions may be mixed with release-process decisions. | Add ADRs for future platform capabilities. |
-| Business case benefits differ across documents. | ARB may challenge inconsistent KPI targets. | Create one benefits realisation table with baseline, target and measurement method. |
+| Release decision register tracks release decisions, but future architecture decisions may need their own confirmation trail. | Future platform decisions may be mixed with release-process decisions. | Keep ADRs for future platform capabilities separate if they proceed. |
+| Business case benefits differ across documents. | Readers may challenge inconsistent KPI targets. | Keep one benefits table with baseline, target and measurement method. |
 | Ownership is role-based in RACI but not named. | Operational handoff remains unresolved. | Add named owner capture step before rollout expansion. |
 | Security and data classification are strong in Knowledge Graph proposal but less explicit in release automation. | Release metadata can also expose sensitive topology and operations. | Apply classification, RBAC and audit to release reports and dashboards. |
 
 ## Terminology Map
 
-| Term | Definition | Should Not Mean |
+| Term | Working Definition | Should Not Mean |
 | --- | --- | --- |
-| Release operating model | The approved process for branch, tag, artefact, manifest, approval, deploy and reconciliation. | A branch naming convention only. |
+| Release operating model | The agreed process for branch, tag, artefact, manifest, approval, deploy and reconciliation. | A branch naming convention only. |
 | Deployment Knowledge Graph | Read-model that correlates metadata from source systems. | Source of truth or deployment controller. |
-| Unified Control Plane | User interface and workflow layer over approved automation and source systems. | A bypass around Drone, Jira, approvals or change control. |
+| Unified Control Plane | User interface and workflow layer over agreed automation and source systems. | A bypass around Drone, Jira, approvals or change control. |
 | Release Intelligence | Query and reporting capability over release/deployment relationships. | Automated operational decisioning. |
 | GitOps | Pull-based reconciliation from Git source of truth. | Any deployment-management repo with pipeline deploys. |
 | Progressive delivery | Controlled traffic or rollout management with telemetry. | Faster deployment by default. |
 
 ## Business Architecture Review
 
-| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| Aspect | Current Maturity | Possible Target Maturity | Gaps | Discussion Points |
 | --- | --- | --- | --- | --- |
 | Capabilities | 2.5 / 5 | 4 / 5 | Release governance, audit reporting and rollback capability are incomplete. | Define capability map: release planning, validation, deployment, incident recovery, audit. |
 | Value streams | 2 / 5 | 4 / 5 | Commit-to-production flow is fragmented. | Map value stream from Jira ticket to production evidence. |
 | Ownership | 2 / 5 | 4.5 / 5 | Role-level RACI exists, named owners missing. | Assign named owner/backups and escalation. |
-| Governance | 2.5 / 5 | 4.5 / 5 | Decision register exists but approvals are open. | Create ARB approval conditions and release governance board cadence. |
+| Governance | 2.5 / 5 | 4.5 / 5 | Decision register exists but confirmations are open. | Define confirmation conditions and release governance cadence. |
 
 ## Application Architecture Review
 
-| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| Aspect | Current Maturity | Possible Target Maturity | Gaps | Discussion Points |
 | --- | --- | --- | --- | --- |
 | Systems involved | 3 / 5 | 4 / 5 | Source systems are identified but integration ownership varies. | Maintain source system catalogue with owner and event/API contract. |
 | Integration patterns | 2.5 / 5 | 4 / 5 | Webhooks, batch and pipeline events proposed but not prioritised. | Start with low-risk event ingestion from Git, Drone, Jira and deployment-management. |
-| APIs | 2 / 5 | 4 / 5 | GraphQL/REST ideas exist but API NFRs and auth model need approval. | Define API contracts, RBAC, throttling and audit before build. |
+| APIs | 2 / 5 | 4 / 5 | GraphQL/REST ideas exist but API NFRs and auth model need confirmation. | Define API contracts, RBAC, throttling and audit before build. |
 | Events | 2 / 5 | 4 / 5 | Event schema, idempotency and replay need formal design. | Publish canonical event envelope and reconciliation strategy. |
 
 ## Data Architecture Review
 
-| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| Aspect | Current Maturity | Possible Target Maturity | Gaps | Discussion Points |
 | --- | --- | --- | --- | --- |
-| Canonical model | 2.5 / 5 | 4 / 5 | Entities exist but release/control-plane canonical model needs versioning. | Approve canonical entity and relationship model through architecture governance. |
+| Canonical model | 2.5 / 5 | 4 / 5 | Entities exist but release/control-plane canonical model needs versioning. | Confirm canonical entity and relationship model through architecture governance if this proceeds. |
 | Lineage | 2 / 5 | 4.5 / 5 | Release provenance is manual. | Capture commit, build, artefact, manifest, approval and deploy lineage. |
 | Data quality | 2 / 5 | 4 / 5 | Metadata may be incomplete or wrong. | Add completeness, freshness and correctness SLOs. |
 | Retention | 2.5 / 5 | 4 / 5 | Retention targets vary. | Define retention by data class and audit need. |
@@ -55,7 +55,7 @@ Status: Completed architecture review output.
 
 ## Technology Architecture Review
 
-| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| Aspect | Current Maturity | Possible Target Maturity | Gaps | Discussion Points |
 | --- | --- | --- | --- | --- |
 | Hosting | 2.5 / 5 | 4 / 5 | Future platforms need HA and operational model. | Define hosting pattern, environment separation and admin access. |
 | Scalability | 2 / 5 | 4 / 5 | 5+ billion records/month assumption needs capacity model. | Add volume model before graph/control-plane build. |
@@ -65,7 +65,7 @@ Status: Completed architecture review output.
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
+- [Potential Architecture Review Notes](index.md)
 - [Architecture Review Criteria](review-criteria.md)
 - [Recommendation Inventory](recommendation-inventory.md)
 - [Architecture Diagrams](architecture-diagrams.md)

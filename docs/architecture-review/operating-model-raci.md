@@ -1,6 +1,6 @@
-# Operating Model And RACI
+# Operating Model And RACI Notes
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Ownership Model
 
@@ -9,7 +9,7 @@ Status: Completed architecture review output.
 | Release governance | Release owner | Release scope, approvals, go/no-go, closure. | Yes |
 | Platform automation | Platform / DevOps owner | Drone pipeline, validation scripts, alerting, rerun safety. | Yes |
 | Service delivery | Squad lead | Service changes, feature readiness, test evidence. | Yes |
-| Architecture | Principal / enterprise architect | Architecture guardrails, ARB submissions, ADRs. | Yes |
+| Architecture | Principal / enterprise architect | Architecture guardrails, review submissions if needed, ADRs. | Yes |
 | Release evidence quality | Release owner / platform data steward | Release report quality, freshness, classification and retention. | Yes |
 | Security | Security owner | RBAC, SoD, privileged access, classification, audit. | Yes |
 | Operations | Operations / incident lead | Incident command, rollback/fix-forward decision process. | Yes |
@@ -22,7 +22,7 @@ Status: Completed architecture review output.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Release scope definition | C | R | C | A | C | I | I |
 | Service ownership mapping | C | R/A | I | C | C | I | I |
-| Branch strategy approval | C | C | A | C | I | I | I |
+| Branch strategy confirmation | C | C | A | C | I | I | I |
 | Release branch automation | R/A | C | C | C | I | I | C |
 | Tag/manifest validation | R | C | C | A | I | I | C |
 | Environment readiness gate | R | C | C | A | I | C | C |
@@ -32,7 +32,7 @@ Status: Completed architecture review output.
 | Rollback/fix-forward decision | R | C | C | C | I | A | C |
 | Post-release reconciliation | R | C | I | A | I | C | I |
 | Release report retention | R | I | C | A | I | I | C |
-| ARB submission | C | I | A/R | C | C | C | C |
+| Formal architecture review submission if needed | C | I | A/R | C | C | C | C |
 
 Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
@@ -42,7 +42,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 | --- | --- |
 | Separation of duties | The same person should not unilaterally approve, deploy and close a production release. |
 | Privileged access | Admin access to Drone, deployment-management and secrets must be approved, logged and reviewed. |
-| Change advisory | Production deployment and emergency hotfixes must map to approved normal or emergency change process. |
+| Change advisory | Production deployment and emergency hotfixes should map to the agreed normal or emergency change process. |
 | Override control | Validation overrides, chart exclusions and rollback exceptions require named approver and reason. |
 | Evidence retention | Release report, approval, pipeline, deployment and reconciliation evidence must be retained for audit. |
 | Incident command | Rollback/fix-forward decisions must be owned by incident lead with release owner consultation. |
@@ -51,7 +51,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 ## Related Pages
 
-- [Architecture Review Package](index.md)
-- [ARB Package](arb-package.md)
-- [Missing Enterprise Concerns](missing-enterprise-concerns.md)
-- [Business Case And Recommended Roadmap](business-case-and-roadmap.md)
+- [Potential Architecture Review Notes](index.md)
+- [Potential Future Architecture Review Considerations](arb-package.md)
+- [Additional Enterprise Concerns To Confirm](missing-enterprise-concerns.md)
+- [Potential Benefits And Roadmap Notes](business-case-and-roadmap.md)
