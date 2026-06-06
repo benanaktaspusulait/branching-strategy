@@ -76,6 +76,7 @@ Key problems at a glance:
 
 | Page | What It Covers |
 | --- | --- |
+| [Architecture review package](docs/architecture-review/index.md) | ARB/executive review outputs, criticality challenge, NFRs, roadmap, RACI, diagrams and final verdict. |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
 | [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
 | [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md) | GitOps readiness, SBOM, supply chain security, unified control plane. |

@@ -34,6 +34,19 @@ This complete document is generated from the source files listed below. Edit the
 | 26 | `docs/reference/detailed-solutions.md` | [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md) |
 | 27 | `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md) |
 | 28 | `docs/reference/enterprise-knowledge-graph-proposal.md` | [Enterprise Knowledge Graph Architecture Proposal](docs/reference/enterprise-knowledge-graph-proposal.md) |
+| 29 | `docs/architecture-review/index.md` | [Architecture Review Package](docs/architecture-review/index.md) |
+| 30 | `docs/architecture-review/source-document-list.md` | [Architecture Review Source Document List](docs/architecture-review/source-document-list.md) |
+| 31 | `docs/architecture-review/review-criteria.md` | [Architecture Review Criteria](docs/architecture-review/review-criteria.md) |
+| 32 | `docs/architecture-review/recommendation-inventory.md` | [Recommendation Inventory](docs/architecture-review/recommendation-inventory.md) |
+| 33 | `docs/architecture-review/executive-and-quality-review.md` | [Executive Summary And Architecture Quality Review](docs/architecture-review/executive-and-quality-review.md) |
+| 34 | `docs/architecture-review/alignment-and-enterprise-architecture-review.md` | [Architecture Alignment And Enterprise Architecture Review](docs/architecture-review/alignment-and-enterprise-architecture-review.md) |
+| 35 | `docs/architecture-review/arb-package.md` | [ARB Package](docs/architecture-review/arb-package.md) |
+| 36 | `docs/architecture-review/business-case-and-roadmap.md` | [Business Case And Recommended Roadmap](docs/architecture-review/business-case-and-roadmap.md) |
+| 37 | `docs/architecture-review/operating-model-raci.md` | [Operating Model And RACI](docs/architecture-review/operating-model-raci.md) |
+| 38 | `docs/architecture-review/architecture-diagrams.md` | [Architecture Diagrams](docs/architecture-review/architecture-diagrams.md) |
+| 39 | `docs/architecture-review/criticality-challenge-review.md` | [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md) |
+| 40 | `docs/architecture-review/missing-enterprise-concerns.md` | [Missing Enterprise Concerns](docs/architecture-review/missing-enterprise-concerns.md) |
+| 41 | `docs/architecture-review/final-scorecard-and-verdict.md` | [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md) |
 
 ---
 
@@ -116,6 +129,7 @@ Key problems at a glance:
 
 | Page | What It Covers |
 | --- | --- |
+| [Architecture review package](docs/architecture-review/index.md) | ARB/executive review outputs, criticality challenge, NFRs, roadmap, RACI, diagrams and final verdict. |
 | [Release engineering best practices](docs/release-engineering-best-practices.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
 | [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
 | [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md) | GitOps readiness, SBOM, supply chain security, unified control plane. |
@@ -7600,3 +7614,1012 @@ The organisation operates 10+ engineering systems containing critical data about
 *Document ends.*
 
 *PROPOSED — subject to Architecture Review Board approval*
+
+---
+
+> Source: `docs/architecture-review/index.md`
+
+
+# Architecture Review Package
+
+This package implements the review work requested in `notes.txt` and tracked in `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`.
+
+## Outputs
+
+| Area | File |
+| --- | --- |
+| Source document list | [source-document-list](docs/architecture-review/source-document-list.md) |
+| Review criteria and status map | [review-criteria](docs/architecture-review/review-criteria.md) |
+| Recommendation inventory | [recommendation-inventory](docs/architecture-review/recommendation-inventory.md) |
+| Executive summary and architecture quality review | [executive-and-quality-review](docs/architecture-review/executive-and-quality-review.md) |
+| Alignment and enterprise architecture review | [alignment-and-enterprise-architecture-review](docs/architecture-review/alignment-and-enterprise-architecture-review.md) |
+| ARB package, ADR and NFRs | [arb-package](docs/architecture-review/arb-package.md) |
+| Business case and roadmap | [business-case-and-roadmap](docs/architecture-review/business-case-and-roadmap.md) |
+| Operating model and RACI | [operating-model-raci](docs/architecture-review/operating-model-raci.md) |
+| Architecture diagrams | [architecture-diagrams](docs/architecture-review/architecture-diagrams.md) |
+| Criticality challenge review | [criticality-challenge-review](docs/architecture-review/criticality-challenge-review.md) |
+| Missing enterprise concerns | [missing-enterprise-concerns](docs/architecture-review/missing-enterprise-concerns.md) |
+| Final scorecard and verdict | [final-scorecard-and-verdict](docs/architecture-review/final-scorecard-and-verdict.md) |
+
+## Recommended Reading Order
+
+1. [executive-and-quality-review](docs/architecture-review/executive-and-quality-review.md)
+2. [review-criteria](docs/architecture-review/review-criteria.md)
+3. [recommendation-inventory](docs/architecture-review/recommendation-inventory.md)
+4. [criticality-challenge-review](docs/architecture-review/criticality-challenge-review.md)
+5. [arb-package](docs/architecture-review/arb-package.md)
+6. [business-case-and-roadmap](docs/architecture-review/business-case-and-roadmap.md)
+7. [final-scorecard-and-verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
+---
+
+> Source: `docs/architecture-review/source-document-list.md`
+
+
+# Architecture Review Source Document List
+
+Status: Task 1 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+Review purpose: confirm the document set for the ARB / executive / border-security criticality review before starting recommendation assessment.
+
+## Source Of Truth Rule
+
+`COMPLETE-DOCUMENT.md` is a generated review bundle, not the source of truth. Review findings should be traced back to the source files below. When source files change, rebuild the bundle with:
+
+```bash
+node scripts/build-complete-document.js
+node scripts/validate-markdown-links.js
+```
+
+## Review Instruction Inputs
+
+| File | Role In Review | Include? | Notes |
+| --- | --- | --- | --- |
+| `notes.txt` | External review brief and challenge prompt | Yes | Defines ARB, executive and border-security criticality lens. |
+| `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md` | Execution checklist | Yes | Tracks task-by-task progress; not an architecture source. |
+
+## Primary Architecture Package
+
+These files form the core package to review.
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `README.md` | Entry point and navigation | Executive readability, structure, decision path. |
+| `docs/system-state-problems-solutions.md` | Decision-ready synthesis | Current-state framing, risks, recommendations, go/no-go logic. |
+| `docs/current-release-operating-model.md` | Current release model | Existing process accuracy, operational assumptions, branch/tag/deploy flow. |
+| `docs/deployment-and-release-findings.md` | Deployment findings | Helm, manifest, secrets, validation and environment constraints. |
+| `docs/cicd-deployment-findings-and-actions.md` | CI/CD problem/action summary | Root causes, prioritisation, follow-up actions. |
+| `docs/proposed-release-automation-flow.md` | Target release automation | Automation assumptions, changed-chart deployment, failure handling. |
+| `docs/branching-options.md` | Branching strategy options | Suitability of GitFlow/simplified/trunk options for critical environment. |
+| `docs/automation-and-validation.md` | Validation model | Strict validation, auditability, override rules, alerting. |
+| `docs/hotfix-and-rollback.md` | Hotfix and rollback model | Rollback realism, fix-forward criteria, branch/manifest reconciliation. |
+| `docs/scope-ownership-approvals.md` | Scope and ownership | Release scope, service ownership, approvals, backup owners. |
+| `docs/rollout-decision-proposals.md` | Decision summary | Proposed decisions and approval status. |
+| `docs/release-decision-register.md` | Decision register | Active approval tracker, owners, required evidence. |
+
+## Transformation And Operating Model Package
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `docs/transformation-programme.md` | Transformation strategy and target state | Maturity, future control plane, investment framing, target-state realism. |
+| `docs/transformation-programme-delivery.md` | Delivery plan | Roadmap, RACI, metrics, cost/benefit, top recommendations. |
+| `docs/squad-briefing-summary.md` | Squad-facing communication | Human factors, adoption readiness, clarity for engineering teams. |
+| `docs/release-engineering-best-practices.md` | Supporting practice baseline | Whether best practices are suitable for Cerberus criticality. |
+
+## Platform And Future Architecture Package
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `docs/platform-engineering-strategy.md` | Platform strategy | Promotion model, deployment strategy, observability gates. |
+| `docs/platform-engineering-strategy-advanced.md` | Advanced platform strategy | GitOps, SBOM, supply chain security, control plane direction. |
+| `docs/advanced-architecture-sections.md` | Future architecture sections | Control plane, event ingestion, data trust, engineering copilot, platform product framing. |
+
+## Knowledge Graph Package
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `docs/deployment-knowledge-graph-design.md` | Knowledge graph design | Domain model, entity relationships, graph schema. |
+| `docs/deployment-knowledge-graph-implementation.md` | Implementation and workflows | Event ingestion, APIs, search, operational use cases. |
+| `docs/deployment-knowledge-graph-operations.md` | Operations and technology | Security, retention, integrations, technology choices, roadmap. |
+| `docs/deployment-knowledge-graph-business-case.md` | Business case and governance | Strategic value, ROI, governance, NFRs, AI enablement, ADR. |
+| `docs/reference/enterprise-knowledge-graph-proposal.md` | ARB-ready enterprise proposal | Full proposal quality, business case, risk, approval readiness. |
+
+## Detailed Reference Package
+
+Use these files to validate evidence, rationale and detailed assumptions.
+
+| File | Role In Review | Review Focus |
+| --- | --- | --- |
+| `docs/reference/system-state-problems-solutions-detailed.md` | Detailed current-state analysis | Supporting evidence and assumptions. |
+| `docs/reference/detailed-problems.md` | Detailed problem analysis | P1-P12 problem detail, root cause and evidence. |
+| `docs/reference/detailed-solutions.md` | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
+| `docs/reference/rollout-decision-proposals-detailed.md` | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
+
+## Generated And Supporting Files
+
+| File | Role In Review | Include? | Notes |
+| --- | --- | --- | --- |
+| `COMPLETE-DOCUMENT.md` | Generated combined bundle | Yes, for navigation only | Use to read the whole package; do not treat as authoritative source text. |
+| `scripts/build-complete-document.js` | Documentation build utility | No architecture review needed | Include only for maintainability check. |
+| `scripts/validate-markdown-links.js` | Documentation validation utility | No architecture review needed | Include only for maintainability check. |
+
+## Explicitly Out Of Scope For Architecture Review
+
+| File / Area | Reason |
+| --- | --- |
+| Git history and commit messages | Not part of the architecture package unless evidence is needed later. |
+| Local editor/project metadata | Not relevant to ARB review. |
+| Runtime implementation code | This repository is documentation-focused; no service code is present. |
+
+## Coverage Check
+
+The review scope covers:
+
+- Release engineering assessment.
+- Transformation programme.
+- Platform engineering strategy.
+- Knowledge Graph proposal.
+- Unified deployment control plane concepts.
+- Engineering Copilot concepts.
+- Governance, ownership, NFR, business case and ARB readiness material.
+
+No architecture document currently present in `README.md` navigation is excluded from the review.
+
+---
+
+> Source: `docs/architecture-review/review-criteria.md`
+
+
+# Architecture Review Criteria
+
+Status: Tasks 2 and 3 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Review Lens
+
+This review uses two lenses at the same time:
+
+1. ARB approval readiness: can the proposal be understood, governed, funded, delivered and operated safely?
+2. Border-security criticality: would the recommendation remain safe in a mission-critical, national-security-adjacent platform with strict audit, high availability and low tolerance for deployment mistakes?
+
+## Decision Standards
+
+| Standard | Question |
+| --- | --- |
+| Operational safety | Does the recommendation reduce production risk, or simply move risk into automation? |
+| Blast radius control | If it fails, how many services, releases, environments or teams could be affected? |
+| Recoverability | Is there a tested recovery path, not just a theoretical rollback option? |
+| Auditability | Can the team prove who changed what, when, why and with whose approval? |
+| Human operability | Can release managers, incident leads and squads understand the process during an incident? |
+| Security and classification | Does the proposal protect sensitive topology, deployment metadata, user identities and operational evidence? |
+| Data quality | Are decisions based on complete, fresh and trustworthy metadata? |
+| Governance | Are owners, approvers, backups and escalation paths named? |
+| Incremental delivery | Can the change be piloted, measured and rolled back without a big-bang shift? |
+| Enterprise fit | Does it align with architecture, security, change management and platform strategy? |
+
+## Scoring Scale
+
+| Score | Meaning |
+| --- | --- |
+| 1 | Not acceptable for critical environment. |
+| 2 | Weak; significant controls required before use. |
+| 3 | Plausible with modification and clear guardrails. |
+| 4 | Strong, provided owners and evidence are in place. |
+| 5 | Strong and ready for controlled rollout. |
+
+## Status Map
+
+| Area | Current Status | Review Position |
+| --- | --- | --- |
+| Release operating model | Proposed / needs approval | Treat as assessment, not approved policy. |
+| Branch cutover to `main = production` | Needs approval | Defer until validation, ownership, rollback and production baseline evidence are proven. |
+| Drone release automation | Pilot / proposed | Support controlled pilot; require manual approvals and rerun controls. |
+| Strict validation | Needs approval | Strongly support; dry-run first, then fail-fast after evidence. |
+| Changed-chart deployment | Needs approval | Support with audited exclusion and manifest comparison controls. |
+| Hotfix and rollback | Needs approval | Must be approved and tested before production rollout. |
+| Release scope and ownership | Needs owner / needs approval | Blocker for scale-out. |
+| Knowledge Graph | Proposed future option | Recommend limited read-only pilot after release metadata maturity improves. |
+| Unified control plane | Long-term future option | Defer write/trigger capabilities; allow read-only feasibility exploration. |
+| Engineering Copilot | Future option | Defer operational recommendations; permit read-only evidence retrieval only after governance is proven. |
+| GitOps / ArgoCD | Medium/long-term option | Defer production adoption; evaluate non-prod only after source-of-truth discipline is proven. |
+| Progressive delivery / auto-rollback | Future option | Defer automated production decisions; start with observability and manual gates. |
+
+## Review Constraints
+
+- Do not mark any proposal as approved without explicit owner or ARB evidence.
+- Do not treat generated documentation as a source of truth.
+- Do not recommend faster deployment at the expense of traceability.
+- Do not recommend automation that bypasses human approval for high-impact environments.
+- Do not recommend AI/copilot actioning for release, rollback or deployment decisions.
+
+---
+
+> Source: `docs/architecture-review/recommendation-inventory.md`
+
+
+# Recommendation Inventory
+
+Status: Task 4 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+This inventory lists the major recommendations that must be challenged before ARB approval.
+
+| ID | Recommendation | Source Area | Current Status | Initial Review Position |
+| --- | --- | --- | --- | --- |
+| R01 | Stabilise release operating model before changing branch model. | Release assessment | Proposed | Strongly support. |
+| R02 | Keep current GitFlow-style model temporarily. | Branching options | Proposed | Support as interim control. |
+| R03 | Cut over to `main = production` after agreed release. | Rollout decisions | Needs approval | Modify: only after baseline evidence and rollback readiness. |
+| R04 | Auto-create release branches from `main`. | Proposed automation | Needs approval | Support pilot with scope controls. |
+| R05 | Create feature/hotfix branches from relevant release branch. | Proposed automation | Needs approval | Support with training and conflict rules. |
+| R06 | Forward-merge fixes into later active releases. | Rollout decisions | Needs owner | Strongly support, but owner is blocker. |
+| R07 | Move local release scripts into Drone. | CI/CD findings | Proposed / pilot | Support with idempotency and manual gates. |
+| R08 | Make final Git/chart/reporting steps rerunnable. | Automation | Needs approval | Support with state locking and audit events. |
+| R09 | Add alerts for failed automation. | Automation | Needs owner | Strongly support; production prerequisite. |
+| R10 | Enforce strict tag, artefact and manifest validation. | Validation | Needs approval | Strongly support; dry-run before enforcement. |
+| R11 | Fail on wrong tag, missing tag and manifest mismatch. | Validation | Needs approval | Strongly support with override workflow. |
+| R12 | Validate Jira ticket status and release metadata. | Validation | Needs approval | Support after status taxonomy is approved. |
+| R13 | Treat environment readiness as a gate. | Scope / platform | Needs approval | Strongly support. |
+| R14 | Deploy changed charts by default. | Proposed automation | Needs approval | Modify: require dependency and exclusion controls. |
+| R15 | Keep human approval before higher environment and production. | Rollout decisions | Needs approval | Strongly support. |
+| R16 | Document and test hotfix flow. | Hotfix / rollback | Needs approval | Strongly support; production prerequisite. |
+| R17 | Document rollback vs fix-forward guide. | Hotfix / rollback | Needs approval | Strongly support; rollback may be unrealistic for DB/data changes. |
+| R18 | Require branch, manifest and Jira reconciliation after rollback. | Rollback | Needs approval | Strongly support. |
+| R19 | Standardise release scope across code, config, secrets, Liquibase and runbooks. | Scope | Needs approval | Strongly support. |
+| R20 | Assign named owners, approvers and backups. | Ownership | Needs owner | Strongly support; scale-out blocker. |
+| R21 | Add release reporting with Jira cross-reference. | Reporting | Proposed | Support, but define retention and evidence ownership. |
+| R22 | Add release metrics and DORA visibility. | Transformation | Proposed | Support after data model is reliable. |
+| R23 | Add observability gates. | Platform strategy | Future / phased | Modify: alert-only first, then gated promotion. |
+| R24 | Evaluate blue-green deployment for critical services. | Platform strategy | Future | Support selectively; requires service readiness. |
+| R25 | Evaluate canary/progressive delivery. | Platform strategy | Future | Defer; high complexity in critical environment. |
+| R26 | Generate SBOMs with existing tooling. | Platform advanced | Future / quick win | Strongly support. |
+| R27 | Sign images and verify signatures. | Platform advanced | Medium-term | Support with rollout plan. |
+| R28 | Adopt GitOps / ArgoCD. | Platform advanced | Future | Defer production adoption; non-prod pilot only. |
+| R29 | Build Deployment Knowledge Graph. | Knowledge Graph | Proposed future option | Modify: limited read-only pilot after metadata maturity. |
+| R30 | Use Knowledge Graph for rollback decision support. | Knowledge Graph | Future | Modify: decision support only, not automated decisioning. |
+| R31 | Use graph for DORA and audit reports. | Knowledge Graph | Future | Support when data quality is measured. |
+| R32 | Build unified deployment control plane. | Transformation | Long-term | Defer; read-only dashboard first. |
+| R33 | Allow control plane to trigger Drone jobs. | Control plane | Future decision | Defer until approval workflow and SoD are proven. |
+| R34 | Add Engineering Copilot. | Advanced architecture | Future | Defer; evidence retrieval only at first. |
+| R35 | Use AI for change impact prediction. | Knowledge Graph / copilot | Future | Defer; advisory only after validation. |
+| R36 | External Secrets Operator. | Transformation / platform | Future | Support after secret ownership and rotation model are agreed. |
+| R37 | Runtime feature flags. | Transformation | Future | Support as prerequisite for trunk-based maturity. |
+| R38 | Reassess trunk-based development after maturity improvements. | Branching | Future | Support deferral. |
+
+## Inventory Conclusion
+
+The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery, unified control plane trigger capability and Engineering Copilot operational decisioning. These should be deferred or limited to read-only/pilot modes.
+
+---
+
+> Source: `docs/architecture-review/executive-and-quality-review.md`
+
+
+# Executive Summary And Architecture Quality Review
+
+Status: Tasks 5, 6, 7 and 8 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Executive Summary
+
+### Current State
+
+Cerberus release state is fragmented across Git branches, tags, Docker images, Helm artefacts, deployment-management manifests, Jira metadata, environment values, secrets, Liquibase changes, runbooks, Drone jobs and human approvals. The current process has useful automation and scripts, but release integrity still depends on manual coordination and incomplete validation.
+
+### Problems
+
+- Release preparation is manual-heavy and difficult to audit.
+- Branch, tag, artefact and manifest timing is not strict enough.
+- Release scope is not explicit across code, charts, config, secrets, database changes and runbooks.
+- Hotfix and rollback flows are not yet production-grade operating procedures.
+- Ownership and backup owners are not sufficiently named.
+- Future Knowledge Graph, control plane and copilot concepts are promising but too aggressive if treated as immediate delivery items.
+
+### Risks
+
+The main risk is not the branch model itself. The main risk is releasing the wrong artefact, missing a dependency, deploying into an unready environment, being unable to prove what changed, or making a rollback decision without trustworthy release state. In a border-security context, these are high-impact operational and audit risks.
+
+### Recommendations
+
+1. Close release scope and ownership decisions before scaling automation.
+2. Run strict validation in dry-run, then enforce fail-fast once evidence is proven.
+3. Keep human approvals for higher environments and production.
+4. Complete and test hotfix, rollback and fix-forward procedures.
+5. Use Drone automation as a controlled release path, not as an approval bypass.
+6. Defer branch simplification until release evidence, rollback and ownership are stable.
+7. Treat Knowledge Graph and control plane as read-only pilots first.
+8. Prohibit copilot actioning for production release, rollback or approval decisions.
+
+### Expected Outcomes
+
+- Lower risk of wrong artefacts reaching production.
+- Faster and more reliable release preparation.
+- Improved audit trail from commit to production.
+- Clearer incident ownership and rollback decisions.
+- Better readiness for later platform intelligence and ARB approval.
+
+### Investment Required
+
+Immediate investment is primarily process, ownership and pipeline hardening: validation rules, release report retention, environment readiness checks, alerting, runbook testing and RACI closure. Larger investments such as Knowledge Graph, control plane, GitOps and copilot should be sequenced after release metadata quality is proven.
+
+### Decision Required
+
+ARB and engineering leadership should approve the near-term controlled release-transformation scope, approve explicit guardrails, and defer high-complexity future-state capabilities until measurable readiness gates are met.
+
+## Architecture Quality Findings
+
+| Issue | Why It Matters | Business Impact | Concrete Improvement |
+| --- | --- | --- | --- |
+| Proposal mixes immediate controls with long-term platform ideas. | ARB may not know what is being approved now. | Approval confusion and funding ambiguity. | Split near-term release transformation from future platform intelligence. |
+| Ownership is still role-based, not named. | Automation failure still needs accountable humans. | Slow incident and release decisions. | Assign named owner, backup and escalation for each release activity. |
+| Branch cutover is recommended before all prerequisites are proven. | A branch model change can hide unresolved process problems. | Production drift or release confusion. | Gate cutover on validation, rollback, scope, ownership and baseline evidence. |
+| Rollback is described, but practical rollback may be impossible for data changes. | Liquibase and downstream state can make rollback unsafe. | Longer incident duration or data inconsistency. | Define rollback eligibility and fix-forward rules per release. |
+| Changed-chart deployment needs dependency safety. | Changed chart detection may miss transitive or config-only dependencies. | Partial release or hidden deployment gap. | Add dependency analysis, exclusion approval and post-deploy reconciliation. |
+| Knowledge Graph value depends on metadata quality. | Bad relationships create false confidence. | Wrong impact analysis during incidents. | Pilot only after ticket/tag/owner metadata accuracy is measured. |
+| Control plane trigger capability creates separation-of-duties risk. | A central UI could bypass release controls. | Governance and audit failure. | Keep read-only first; require approval workflow before any triggers. |
+| Copilot proposals need stricter guardrails. | AI can hallucinate or overstate confidence. | Unsafe operational decisions. | Allow evidence retrieval only; prohibit autonomous release/rollback advice. |
+| NFRs are present in places but not unified across the package. | ARB needs measurable targets. | Incomplete approval package. | Publish one NFR table with availability, freshness, DR, retention and security targets. |
+| Business case values are useful but not yet baselined. | Benefits may be challenged as speculative. | Funding challenge. | Add baseline measurement plan and confidence level for each KPI. |
+
+## Executive Readability Assessment
+
+| Audience | Can They Decide Quickly? | Assessment | Improvement |
+| --- | --- | --- | --- |
+| CTO in 5 minutes | Partially | README is clear, but future options and immediate asks blur together. | Lead with one-page executive summary and decision ask. |
+| ARB member in 15 minutes | Partially | Strong material exists, but approval boundaries are not obvious. | Add ADR, NFRs, conditions and explicit defer list. |
+| Platform lead | Yes, with effort | Implementation implications are distributed across many files. | Add roadmap and ownership package. |
+| Release manager | Partially | Operational flows are improving but still need approvals and runbooks. | Add hotfix/rollback evidence and decision guide. |
+| Security / compliance | Partially | Security is strongest in Knowledge Graph docs, weaker in release automation docs. | Add SoD, privileged access, audit and accreditation controls. |
+
+## Improved Key Message
+
+The correct near-term decision is not "change the branch model" or "build a Knowledge Graph". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, Knowledge Graph, control plane and copilot capabilities can be piloted safely as read-only intelligence layers.
+
+---
+
+> Source: `docs/architecture-review/alignment-and-enterprise-architecture-review.md`
+
+
+# Architecture Alignment And Enterprise Architecture Review
+
+Status: Tasks 9, 10, 11, 12, 13, 14 and 15 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Architecture Alignment Report
+
+| Issue | Impact | Recommendation |
+| --- | --- | --- |
+| Transformation roadmap, platform strategy and Knowledge Graph roadmap use different phase language. | Readers may assume future capabilities are nearer than intended. | Normalize phases into Foundation, Controlled Automation, Scale, Intelligence Pilot, Platform Control. |
+| Control plane and Knowledge Graph are sometimes described together. | Responsibilities blur between data intelligence and operational action. | Define Knowledge Graph as read-model; Control Plane as interface/orchestration layer. |
+| Engineering Copilot is described as future capability but appears near operational use cases. | AI readiness could be mistaken for permission to automate decisions. | Mark copilot as Phase 5+ advisory only, with prohibited capabilities. |
+| GitOps, progressive delivery and trunk-based development are listed as improvements but not always gated by criticality. | Commercial SaaS practices may be over-applied to border-security context. | Add critical-environment prerequisites and explicit defer status. |
+| Release decision register tracks release decisions, but future architecture decisions need their own approval trail. | ARB decisions may be mixed with release-process decisions. | Add ADRs for Knowledge Graph, control plane, GitOps and copilot. |
+| Business case benefits differ across documents. | ARB may challenge inconsistent KPI targets. | Create one benefits realisation table with baseline, target and measurement method. |
+| Ownership is role-based in RACI but not named. | Operational handoff remains unresolved. | Add named owner capture step before rollout expansion. |
+| Security and data classification are strong in Knowledge Graph proposal but less explicit in release automation. | Release metadata can also expose sensitive topology and operations. | Apply classification, RBAC and audit to release reports and dashboards. |
+
+## Terminology Map
+
+| Term | Definition | Should Not Mean |
+| --- | --- | --- |
+| Release operating model | The approved process for branch, tag, artefact, manifest, approval, deploy and reconciliation. | A branch naming convention only. |
+| Deployment Knowledge Graph | Read-model that correlates metadata from source systems. | Source of truth or deployment controller. |
+| Unified Control Plane | User interface and workflow layer over approved automation and source systems. | A bypass around Drone, Jira, approvals or change control. |
+| Release Intelligence | Query and reporting capability over release/deployment relationships. | Automated operational decisioning. |
+| Engineering Copilot | Future assistant that retrieves evidence and explains context. | Autonomous deployer, approver or incident commander. |
+| GitOps | Pull-based reconciliation from Git source of truth. | Any deployment-management repo with pipeline deploys. |
+| Progressive delivery | Controlled traffic or rollout management with telemetry. | Faster deployment by default. |
+
+## Business Architecture Review
+
+| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| --- | --- | --- | --- | --- |
+| Capabilities | 2.5 / 5 | 4 / 5 | Release governance, audit reporting and rollback capability are incomplete. | Define capability map: release planning, validation, deployment, incident recovery, audit. |
+| Value streams | 2 / 5 | 4 / 5 | Commit-to-production flow is fragmented. | Map value stream from Jira ticket to production evidence. |
+| Ownership | 2 / 5 | 4.5 / 5 | Role-level RACI exists, named owners missing. | Assign named owner/backups and escalation. |
+| Governance | 2.5 / 5 | 4.5 / 5 | Decision register exists but approvals are open. | Create ARB approval conditions and release governance board cadence. |
+
+## Application Architecture Review
+
+| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| --- | --- | --- | --- | --- |
+| Systems involved | 3 / 5 | 4 / 5 | Source systems are identified but integration ownership varies. | Maintain source system catalogue with owner and event/API contract. |
+| Integration patterns | 2.5 / 5 | 4 / 5 | Webhooks, batch and pipeline events proposed but not prioritised. | Start with low-risk event ingestion from Git, Drone, Jira and deployment-management. |
+| APIs | 2 / 5 | 4 / 5 | GraphQL/REST ideas exist but API NFRs and auth model need approval. | Define API contracts, RBAC, throttling and audit before build. |
+| Events | 2 / 5 | 4 / 5 | Event schema, idempotency and replay need formal design. | Publish canonical event envelope and reconciliation strategy. |
+
+## Data Architecture Review
+
+| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| --- | --- | --- | --- | --- |
+| Canonical model | 2.5 / 5 | 4 / 5 | Entities exist but release/control-plane canonical model needs versioning. | Approve canonical entity and relationship model through architecture governance. |
+| Lineage | 2 / 5 | 4.5 / 5 | Release provenance is manual. | Capture commit, build, artefact, manifest, approval and deploy lineage. |
+| Data quality | 2 / 5 | 4 / 5 | Metadata may be incomplete or wrong. | Add completeness, freshness and correctness SLOs. |
+| Retention | 2.5 / 5 | 4 / 5 | Retention targets vary. | Define retention by data class and audit need. |
+| Classification | 2.5 / 5 | 4.5 / 5 | Knowledge Graph declares OFFICIAL-SENSITIVE, release reports need same discipline. | Classify topology, release, personnel and incident metadata. |
+
+## Technology Architecture Review
+
+| Aspect | Current Maturity | Target Maturity | Gaps | Recommendations |
+| --- | --- | --- | --- | --- |
+| Hosting | 2.5 / 5 | 4 / 5 | Future platforms need HA and operational model. | Define hosting pattern, environment separation and admin access. |
+| Scalability | 2 / 5 | 4 / 5 | 5+ billion records/month assumption needs capacity model. | Add volume model before graph/control-plane build. |
+| Resilience | 2 / 5 | 4.5 / 5 | DR and failover are under-specified. | Define RTO/RPO and rebuild-from-event-store targets. |
+| Observability | 2.5 / 5 | 4 / 5 | Health metrics exist but not release-correlated. | Add release health dashboard and ingestion freshness alerts. |
+| Security | 2.5 / 5 | 4.5 / 5 | Security strong in graph proposal, less complete for automation/control plane. | Apply RBAC, SoD, audit and privileged access controls across all tooling. |
+
+---
+
+> Source: `docs/architecture-review/arb-package.md`
+
+
+# ARB Package
+
+Status: Tasks 16, 17 and 18 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## ADR-001: Controlled Release Transformation Before Platform Intelligence
+
+### Context
+
+Cerberus release state is fragmented across Git, Drone, Helm, deployment-management, Jira, Kubernetes, secrets, Liquibase, runbooks and human approvals. The documentation proposes release automation, stricter validation, branch model changes, Knowledge Graph, unified control plane and future copilot capabilities.
+
+### Problem
+
+The package contains strong recommendations, but ARB approval would be unsafe unless immediate release controls are separated from future platform capabilities. In a border-security context, automation and intelligence layers must not create ungoverned deployment pathways or false confidence from stale metadata.
+
+### Options Considered
+
+| Option | Description | Strengths | Weaknesses |
+| --- | --- | --- | --- |
+| A | Approve all recommendations as one programme. | Fast alignment, ambitious target. | Too much blast radius; unclear approvals. |
+| B | Approve controlled release-foundation work only. | Reduces risk, strengthens audit and ownership. | Slower path to platform intelligence. |
+| C | Start Knowledge Graph/control plane immediately. | Builds future capability early. | Data quality and governance not ready. |
+| D | Do nothing beyond current process. | Avoids change risk. | Leaves current release and audit risks unresolved. |
+
+### Recommendation
+
+Approve Option B: controlled release-foundation work. Treat Knowledge Graph, control plane, GitOps, progressive delivery and copilot capabilities as future options gated by release metadata quality, ownership, security and operational evidence.
+
+### Trade-Offs
+
+| Trade-Off | Decision |
+| --- | --- |
+| Speed vs safety | Prefer safety. |
+| Automation vs human control | Automate evidence and repeatable steps; retain human approval for high-impact environments. |
+| Centralisation vs resilience | Centralise visibility first; defer centralised control. |
+| Innovation vs audit | Permit pilots only with audit, RBAC and source-of-truth discipline. |
+
+### Consequences
+
+- Release governance, validation, environment readiness and rollback become near-term priorities.
+- Branch cutover is gated rather than assumed.
+- Knowledge Graph starts as read-only pilot only after metadata quality improves.
+- Control plane trigger capability is deferred.
+- Copilot is restricted to evidence retrieval and explanation.
+
+### Risks
+
+| Risk | Mitigation |
+| --- | --- |
+| Teams expect immediate tooling rather than governance work. | Publish phased roadmap and approval gates. |
+| Automation becomes a hidden approval bypass. | Enforce SoD, approval records and manual gates. |
+| Future-state architecture loses momentum. | Keep pilots on roadmap with measurable entry criteria. |
+| Benefits remain unproven. | Start baseline measurement in Phase 1. |
+
+### Approval Required
+
+ARB should approve:
+
+1. Near-term release-foundation scope.
+2. Explicit deferral of write-capable control plane and operational copilot.
+3. NFR and governance requirements below.
+4. Conditions for moving from pilot to production rollout.
+
+## Non-Functional Requirements
+
+| Category | Target | Applies To | Evidence |
+| --- | --- | --- | --- |
+| Availability | Release automation evidence systems available during release windows; Knowledge Graph pilot target 99.9% during working hours. | Drone, reports, future graph. | Availability dashboard and incident log. |
+| Reliability | Release automation rerunnable for transient failures; no duplicate tags or chart updates. | Drone automation. | Idempotency tests and rerun records. |
+| Security | RBAC, least privilege and no secret values in reports or graph. | All release/reporting/intelligence layers. | Access review and audit logs. |
+| Auditability | Every approval, override, rerun, rollback and exclusion has a durable evidence link. | Release operating model. | Release record and report retention. |
+| Performance | Standard release report and graph operational query target < 2 seconds after data is available. | Reporting / future graph. | Query metrics. |
+| Scalability | Support hundreds of services and multiple environments; graph capacity model required before build. | Future graph/control plane. | Capacity model and load test. |
+| Data freshness | Release report data current at generation time; graph pilot target < 5 minutes ingestion lag. | Reporting / future graph. | Freshness metrics and alerts. |
+| Data retention | Release evidence retained according to audit policy; minimum retention to be approved before rollout. | Reports, approvals, graph events. | Retention policy and purge logs. |
+| Disaster recovery | Release evidence recoverable; future graph rebuildable from raw event store. Target RTO/RPO to be approved. | Reports / future graph. | DR test. |
+| Compliance | Classification, SoD, privileged access, data sovereignty and change advisory alignment documented. | Whole package. | Security/architecture sign-off. |
+
+## ARB Decision Conditions
+
+| Condition | Required Before |
+| --- | --- |
+| Named release owner, platform owner, data owner and backups. | Rollout expansion. |
+| Strict validation dry-run evidence. | Fail-fast enforcement. |
+| Hotfix and rollback test completed. | Production rollout. |
+| Environment readiness gate implemented. | New environment rollout. |
+| Release report retention approved. | Drone rollout expansion. |
+| Metadata quality baseline measured. | Knowledge Graph pilot. |
+| RBAC, audit and SoD approved. | Control plane or graph build. |
+| Copilot prohibited actions documented. | Any AI assistant pilot. |
+
+---
+
+> Source: `docs/architecture-review/business-case-and-roadmap.md`
+
+
+# Business Case And Recommended Roadmap
+
+Status: Tasks 19, 20, 21 and 22 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Benefits Realisation Table
+
+| Benefit | Current State | Target State | KPI | Measurement Method |
+| --- | --- | --- | --- | --- |
+| Reduce release preparation effort | Days per sprint estimated. | Less than 1 day by Phase 2, less than 2 hours by Phase 4. | Release prep hours. | Time log plus release calendar. |
+| Reduce wrong artefact risk | Tag and manifest validation not fully enforced. | Fail-fast validation with approved override process. | Validation failures caught before deploy. | Pipeline validation logs. |
+| Improve incident investigation time | 30-60 minutes manual correlation estimated for graph use cases. | Less than 10 minutes for root-cause context. | MTTI. | Incident timeline review. |
+| Improve rollback decision speed | 15-30 minutes estimated to identify constraints. | Less than 2 minutes to identify candidate and constraints. | Time to rollback decision. | Incident command log. |
+| Improve audit readiness | Evidence spread across tools. | One release record links commit, tag, image, chart, manifest, approval and deploy. | Audit evidence retrieval time. | Audit drill. |
+| Improve DORA visibility | Unknown or manual. | Weekly automated reporting after data maturity. | Deployment frequency, lead time, CFR, MTTR. | Git, Drone, incident records, future graph. |
+| Reduce environment readiness failures | Unknown and not formally gated. | Zero deployments to unready environments. | Failed readiness checks. | Pre-deploy gate logs. |
+| Reduce ownership escalation time | Owners not fully named. | Owner and backup visible for every release activity. | Time to identify owner. | Incident/release records. |
+
+## KPI Baseline Plan
+
+| KPI | Baseline Collection Window | Confidence |
+| --- | --- | --- |
+| Release prep hours | First 2 releases after review. | Medium, based on team reporting. |
+| Validation failures | First 2 dry-run validation cycles. | High, pipeline data. |
+| Incident investigation time | Next 3 incidents or incident drills. | Medium, sample size may be small. |
+| Rollback decision time | Quarterly rollback drill. | Medium. |
+| Audit evidence retrieval time | One audit simulation per release. | High. |
+| Deployment frequency and lead time | 4 sprints of Git/Drone timestamps. | High. |
+
+## Roadmap Review
+
+| Phase | Current Plan Assessment | Hidden Risk | Recommendation |
+| --- | --- | --- | --- |
+| Phase 0 | Correct focus on decisions and ownership. | May remain open if no accountable executive sponsor. | Add exit criteria and named decision forum. |
+| Phase 1 | Good quick wins. | Strict validation may block releases unexpectedly. | Run dry-run first and publish failure taxonomy. |
+| Phase 2 | Drone automation pilot is appropriate. | Automation may encode bad assumptions. | Pilot on limited repositories with manual approval. |
+| Phase 3 | Branch cutover may be premature. | `main = production` can create confusion if production baseline is not proven. | Gate on rollback, validation, owner and open-work inventory. |
+| Phase 4 | Scale-out is valuable. | Changed-chart deployment may miss dependencies. | Add dependency validation and override governance. |
+| Phase 5 | Modernisation is sensible. | Feature flags and secrets work may expand scope. | Treat as separate platform epics. |
+| Phase 6 | GitOps/progressive delivery useful but high risk. | Tool adoption without operating model maturity. | Non-prod evaluation only. |
+| Phase 7 | Control plane platform maturity. | Central control can create critical single point of governance failure. | Read-only first; write actions only after ARB approval. |
+
+## Recommended Roadmap
+
+| Phase | Objective | Deliverables | Success Criteria | Exit Criteria |
+| --- | --- | --- | --- | --- |
+| 0 | Close governance foundation. | Decision register, named owners, release scope, approval map. | All P0 decisions assigned with owner and due date. | D20, D21, D13-D18 owner/approver identified. |
+| 1 | Prove validation and evidence. | Dry-run strict validation, environment readiness checklist, release report retention. | Dry-run catches issues without blocking release. | Failure taxonomy and override process approved. |
+| 2 | Pilot controlled Drone automation. | Auto branch/tag/chart/report for limited repositories. | Successful pilot for 2 releases with no manual correction. | Rerun and alert process tested. |
+| 3 | Production readiness controls. | Hotfix and rollback drill, incident command model, audit drill. | Rollback/fix-forward decision executed in drill. | Production rollout go/no-go approved. |
+| 4 | Scale release automation. | Changed-chart deployment with dependency checks, full RACI, reporting dashboard. | Reduced prep effort and no unapproved exclusions. | Release KPIs measured for 2 cycles. |
+| 5 | Read-only intelligence pilot. | Knowledge Graph pilot for ownership and deployment visibility. | Metadata accuracy target met; no source-of-truth conflicts. | Data quality and RBAC review passed. |
+| 6 | Platform modernisation evaluation. | Non-prod GitOps, SBOM/signing, observability gates. | Demonstrated value without production blast radius. | ARB decision for each production adoption. |
+| 7 | Controlled platform product. | Read-only control plane, approval workflow evaluation, copilot evidence retrieval. | Users can inspect release state without bypassing controls. | Separate ARB approval for any trigger/action capability. |
+
+---
+
+> Source: `docs/architecture-review/operating-model-raci.md`
+
+
+# Operating Model And RACI
+
+Status: Tasks 23, 24 and 25 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Ownership Model
+
+| Domain | Accountable Owner | Responsibilities | Backup Required |
+| --- | --- | --- | --- |
+| Release governance | Release owner | Release scope, approvals, go/no-go, closure. | Yes |
+| Platform automation | Platform / DevOps owner | Drone pipeline, validation scripts, alerting, rerun safety. | Yes |
+| Service delivery | Squad lead | Service changes, feature readiness, test evidence. | Yes |
+| Architecture | Principal / enterprise architect | Architecture guardrails, ARB submissions, ADRs. | Yes |
+| Data model and quality | Data owner / platform data steward | Graph/control-plane data quality, freshness, classification. | Yes |
+| Security | Security owner | RBAC, SoD, privileged access, classification, audit. | Yes |
+| Operations | Operations / incident lead | Incident command, rollback/fix-forward decision process. | Yes |
+| QAT | QAT lead | Functional approval and release validation evidence. | Yes |
+| Change management | Change advisory owner | CAB alignment, emergency change process, evidence. | Yes |
+
+## RACI Matrix
+
+| Activity | Platform Team | Engineering Teams | Architects | Release Managers | Product Owners | Operations | Security |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Release scope definition | C | R | C | A | C | I | I |
+| Service ownership mapping | C | R/A | I | C | C | I | I |
+| Branch strategy approval | C | C | A | C | I | I | I |
+| Release branch automation | R/A | C | C | C | I | I | C |
+| Tag/manifest validation | R | C | C | A | I | I | C |
+| Environment readiness gate | R | C | C | A | I | C | C |
+| Higher-environment promotion | R | C | I | A | I | C | C |
+| Production release approval | C | C | C | A | C | C | C |
+| Hotfix decision | R | R | C | A | C | C | C |
+| Rollback/fix-forward decision | R | C | C | C | I | A | C |
+| Post-release reconciliation | R | C | I | A | I | C | I |
+| Release report retention | R | I | C | A | I | I | C |
+| Knowledge Graph data quality | R | C | C | C | I | C | A/C |
+| Control plane product ownership | R | C | A/C | C | C | C | C |
+| Copilot guardrails | C | C | A | I | I | C | R/A |
+| ARB submission | C | I | A/R | C | C | C | C |
+
+Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
+
+## Governance Controls
+
+| Control | Requirement |
+| --- | --- |
+| Separation of duties | The same person should not unilaterally approve, deploy and close a production release. |
+| Privileged access | Admin access to Drone, deployment-management, graph/control plane and secrets must be approved, logged and reviewed. |
+| Change advisory | Production deployment and emergency hotfixes must map to approved normal or emergency change process. |
+| Override control | Validation overrides, chart exclusions and rollback exceptions require named approver and reason. |
+| Evidence retention | Release report, approval, pipeline, deployment and reconciliation evidence must be retained for audit. |
+| Incident command | Rollback/fix-forward decisions must be owned by incident lead with release owner consultation. |
+| Security review | Any graph, control plane or copilot pilot requires RBAC, audit logging and data classification review. |
+| Quarterly review | RACI, owner list, access rights and release metrics should be reviewed quarterly. |
+
+---
+
+> Source: `docs/architecture-review/architecture-diagrams.md`
+
+
+# Architecture Diagrams
+
+Status: Tasks 26, 27, 28, 29, 30 and 31 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Current State: Systems And Dependencies
+
+```mermaid
+flowchart TD
+  DEV["Engineering Teams"] --> GIT["Git branches / tags"]
+  DEV --> JIRA["Jira tickets / release metadata"]
+  GIT --> DRONE["Drone CI/CD"]
+  DRONE --> IMG["Container images"]
+  DRONE --> HELM["Helm packages"]
+  HELM --> DM["Deployment Management manifests"]
+  DM --> K8S["Kubernetes environments"]
+  JIRA --> REPORT["Release reports / changelog"]
+  SECRETS["Git-crypt / Drone secrets"] --> K8S
+  LIQ["Liquibase changes"] --> DB["Databases"]
+  RUNBOOK["Manual runbooks"] --> K8S
+  OBS["Observability tools"] --> OPS["Release / incident decisions"]
+  K8S --> OBS
+```
+
+## Future State: Knowledge Graph And Control Plane
+
+```mermaid
+flowchart TD
+  subgraph Sources["Sources of truth"]
+    GIT["Git"]
+    JIRA["Jira"]
+    DRONE["Drone"]
+    DM["Deployment Management"]
+    K8S["Kubernetes"]
+    HELM["Helm / registries"]
+    OBS["Observability"]
+    LIQ["Liquibase"]
+  end
+
+  EVT["Validated event ingestion"] --> KG["Deployment Knowledge Graph"]
+  Sources --> EVT
+  KG --> API["GraphQL / REST APIs"]
+  API --> CP["Unified Control Plane - read-only first"]
+  CP --> DASH["Release dashboard"]
+  CP --> AUDIT["Audit reports"]
+  CP --> INC["Incident investigation"]
+  CP -. future gated .-> DRONE
+```
+
+## Event Ingestion Model
+
+```mermaid
+flowchart LR
+  SRC["Source event"] --> GATE["Event gateway"]
+  GATE --> TOPIC["Kafka / event topic"]
+  TOPIC --> VAL["Validate schema + auth"]
+  VAL --> ENRICH["Enrich with release metadata"]
+  ENRICH --> RESOLVE["Resolve entity identity"]
+  RESOLVE --> GRAPH["Update graph"]
+  GRAPH --> INDEX["Update search index"]
+  GRAPH --> AUDIT["Store audit event"]
+  VAL --> DLQ["Dead-letter queue"]
+```
+
+## Release Intelligence Architecture
+
+```mermaid
+flowchart TD
+  REL["Release"] --> TICKETS["Jira tickets"]
+  REL --> TAGS["Git tags"]
+  TAGS --> BUILDS["Drone builds"]
+  BUILDS --> ARTEFACTS["Images / Helm charts"]
+  ARTEFACTS --> MANIFEST["Deployment manifest"]
+  MANIFEST --> ENV["Environment state"]
+  ENV --> HEALTH["Health signals"]
+  REL --> APPROVALS["Approvals / overrides"]
+  REL --> REPORT["Release report"]
+  HEALTH --> REPORT
+  APPROVALS --> REPORT
+```
+
+## Engineering Copilot Architecture
+
+```mermaid
+flowchart TD
+  USER["Engineer / release owner"] --> UI["Copilot UI"]
+  UI --> POLICY["Policy and permission check"]
+  POLICY --> RAG["Retrieval layer"]
+  RAG --> KG["Knowledge Graph"]
+  RAG --> DOCS["Approved docs / runbooks"]
+  RAG --> EVIDENCE["Evidence bundle"]
+  EVIDENCE --> LLM["LLM summarisation"]
+  LLM --> ANSWER["Answer with citations and confidence"]
+  ANSWER -. prohibited .-> ACTION["No deploy / approve / rollback actions"]
+```
+
+## Data Trust And Governance Model
+
+```mermaid
+flowchart TD
+  SRC["Source systems"] --> QUALITY["Quality checks"]
+  QUALITY --> FRESH["Freshness SLO"]
+  QUALITY --> COMPLETE["Completeness SLO"]
+  QUALITY --> ACCURATE["Accuracy sampling"]
+  FRESH --> TRUST["Trust score"]
+  COMPLETE --> TRUST
+  ACCURATE --> TRUST
+  TRUST --> CONSUME["Dashboards / audits / copilot"]
+  GOVERN["Data owners + stewards"] --> QUALITY
+  SECURITY["RBAC + classification"] --> CONSUME
+  AUDIT["Access audit log"] --> GOVERN
+```
+
+---
+
+> Source: `docs/architecture-review/criticality-challenge-review.md`
+
+
+# Criticality Challenge Review
+
+Status: Tasks 32, 33, 34, 35, 36 and 37 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Suitability Assessment
+
+| Recommendation | Suitable | Needs Modification | Not Recommended | Reason |
+| --- | --- | --- | --- | --- |
+| Stabilise release operating model first | Yes | No | No | Reduces systemic risk before structural change. |
+| Branch strategy simplification | No | Yes | No | Good later, unsafe before validation and rollback are proven. |
+| Release branch automation | Yes | Yes | No | Pilot only; scope and rerun controls required. |
+| Drone migration for release scripts | Yes | Yes | No | Improves auditability but must not bypass approvals. |
+| Strict validation framework | Yes | Yes | No | Strong control; dry-run first to avoid surprise release blocks. |
+| Changed-chart deployment | No | Yes | No | Needs dependency analysis and audited exclusions. |
+| Release reporting | Yes | Yes | No | Must define retention, classification and evidence ownership. |
+| Release ownership model | Yes | Yes | No | Role model exists; named people/backups still required. |
+| Unified deployment control plane | No | Yes | No | Read-only first; write actions deferred. |
+| Knowledge Graph | No | Yes | No | Limited pilot only after metadata quality improves. |
+| Engineering Copilot | No | Yes | No | Evidence retrieval only; no autonomous operational decisions. |
+| Event-driven architecture | Yes | Yes | No | Useful, but needs replay, DLQ and reconciliation controls. |
+| Rollback recommendations | Yes | Yes | No | Must distinguish rollback from fix-forward and data constraints. |
+| Environment promotion model | Yes | Yes | No | Strong if approvals and readiness gates are explicit. |
+| Progressive delivery | No | Yes | No | Defer broad use; service-by-service evaluation. |
+| GitOps | No | Yes | No | Non-prod evaluation only until source-of-truth discipline is proven. |
+| Approval workflow automation | No | Yes | No | Automate evidence, not authority, until SoD is proven. |
+
+## Scale And Criticality Scores
+
+Scores: 1 poor, 5 excellent.
+
+| Recommendation | Operational Safety | Blast Radius | Recovery Complexity | Human Factors | Auditability | Security Impact | Platform Complexity |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Strict validation | 5 | 4 | 4 | 4 | 5 | 4 | 3 |
+| Named ownership | 5 | 5 | 5 | 5 | 5 | 4 | 4 |
+| Drone automation pilot | 4 | 3 | 3 | 3 | 4 | 3 | 3 |
+| Branch cutover | 3 | 2 | 3 | 3 | 4 | 3 | 3 |
+| Changed-chart deployment | 3 | 2 | 2 | 3 | 4 | 3 | 3 |
+| Hotfix/rollback process | 5 | 4 | 3 | 4 | 5 | 4 | 3 |
+| Knowledge Graph pilot | 3 | 3 | 3 | 4 | 5 | 3 | 2 |
+| Unified control plane read-only | 3 | 3 | 3 | 4 | 5 | 3 | 2 |
+| Control plane trigger capability | 2 | 2 | 2 | 3 | 3 | 2 | 1 |
+| Engineering Copilot evidence retrieval | 3 | 4 | 4 | 3 | 4 | 3 | 2 |
+| Engineering Copilot recommendations/actions | 1 | 1 | 1 | 2 | 2 | 1 | 1 |
+| Production GitOps | 2 | 2 | 2 | 3 | 4 | 3 | 2 |
+| Progressive delivery auto-rollback | 2 | 2 | 2 | 2 | 4 | 3 | 2 |
+
+## Automation Assumption Challenge
+
+| Assumption | Why It May Be Valid | Why It May Be Dangerous | Required Safeguards |
+| --- | --- | --- | --- |
+| More automation is always better. | Removes manual inconsistency. | Automates mistakes at scale. | Pilot, dry-run, approval gates, kill switch. |
+| Fewer approvals are better. | Reduces waiting and handoffs. | Removes human accountability in high-impact releases. | Keep production approval, SoD and emergency process. |
+| Faster deployment is better. | Shorter lead time and less batching. | Can reduce review time and amplify blast radius. | Risk-based gates, scope controls, rollback drill. |
+| GitOps is always better. | Improves drift detection and audit. | Introduces new controllers and operational model. | Non-prod pilot, RBAC, drift alerts, manual sync policy. |
+| Progressive delivery is always better. | Can limit traffic exposure. | Requires high-quality telemetry and service architecture readiness. | Service eligibility, SLOs, manual review before auto-rollback. |
+| Centralisation is better. | Reduces tool switching and improves visibility. | Creates attractive target and potential single point of control. | Read-only first, least privilege, audit, no bypass. |
+
+## Rollback Assumption Challenge
+
+| Area | Challenge | Recommendation |
+| --- | --- | --- |
+| Data consistency | Application rollback can conflict with schema/data state. | Record rollback eligibility per release. |
+| Liquibase | Changesets may be forward-only or destructive. | Require rollback block or documented fix-forward plan. |
+| Cross-system dependencies | One service rollback can break downstream compatibility. | Maintain dependency map and compatibility checks. |
+| Partial rollback | Mixed versions may be worse than failed release. | Define service grouping and rollback units. |
+| Event replay | Kafka/event consumers may process incompatible events. | Include event schema compatibility and replay plan. |
+| Downstream systems | External consumers may observe already-emitted effects. | Treat rollback as operational decision, not pure technical reversal. |
+
+## Knowledge Graph Recommendation
+
+Recommendation: Run limited read-only pilot, not immediate full build.
+
+Justification:
+
+- Metadata quality is currently a known weakness.
+- Incorrect relationships could create false confidence during incidents.
+- Security classification and access control need strong design.
+- Cost and operational ownership need approval.
+- A small pilot around ownership and deployment visibility can prove value with limited blast radius.
+
+Entry criteria:
+
+- Release metadata standardisation underway.
+- Service ownership accuracy baseline measured.
+- RBAC and query audit design approved.
+- Source-of-truth principle accepted.
+- Freshness and completeness metrics defined.
+
+## Engineering Copilot Guardrails
+
+Allowed initial capabilities:
+
+- Explain release state with citations.
+- Retrieve approved runbook links.
+- Summarise graph evidence.
+- Identify missing evidence or stale data.
+- Draft investigation checklists for human review.
+
+Prohibited capabilities:
+
+- Approving releases.
+- Triggering deployments.
+- Triggering rollbacks.
+- Recommending production rollback without explicit evidence and human decision.
+- Bypassing RBAC.
+- Querying or exposing secret values.
+- Presenting low-confidence graph data as fact.
+- Making change advisory decisions.
+
+---
+
+> Source: `docs/architecture-review/missing-enterprise-concerns.md`
+
+
+# Missing Enterprise Concerns
+
+Status: Tasks 38, 39, 40 and 41 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Disaster Recovery And Operational Resilience
+
+| Concern | Gap | Recommendation |
+| --- | --- | --- |
+| Release evidence recovery | Evidence retention and recovery target not fully specified. | Define RTO/RPO for release reports, approval evidence and generated artefacts. |
+| Knowledge Graph recovery | Rebuild capability is mentioned but needs test plan. | Require full rebuild test from raw event store before production use. |
+| Control plane outage | Future platform could become operational dependency. | Keep source tools usable independently; define graceful degradation. |
+| Automation failure | Rerun guidance exists but needs incident-level playbook. | Add automation failure runbook with stop/continue criteria. |
+
+## Multi-Region And Capacity Planning
+
+| Concern | Gap | Recommendation |
+| --- | --- | --- |
+| Multi-region | Not enough discussion of deployment topology and regional resilience. | Document whether Cerberus requires active/active, active/passive or single-region controls. |
+| 5+ billion records/month | Notes assume very high data volume, but graph capacity model is not proven. | Create volume model: events/day, retention, index growth, query load. |
+| Data ingestion backpressure | Event-driven architecture needs throttling and DLQ capacity. | Add ingestion capacity, backpressure and replay strategy. |
+| Cost control | Graph/control-plane storage and compute costs could grow. | Add storage tiering, retention windows and cost guardrails. |
+
+## Data Sovereignty, Security Accreditation And Compliance
+
+| Concern | Gap | Recommendation |
+| --- | --- | --- |
+| Data sovereignty | Graph/control-plane hosting location not specified. | Confirm UK hosting, approved regions and cross-border restrictions. |
+| Security accreditation | ARB proposal mentions classification but not full accreditation path. | Define security accreditation and threat modelling steps. |
+| Sensitive topology | Release metadata can expose platform topology and operational patterns. | Classify topology, deployment and incident metadata. |
+| Personnel data | Deployer names, ownership and audit logs may contain personal data. | Define lawful basis, retention and subject access handling. |
+| Privileged access | Admin access model needs stronger controls. | Add privileged access workflow, break-glass and quarterly review. |
+
+## Incident Command, Change Advisory And Ownership At Scale
+
+| Concern | Gap | Recommendation |
+| --- | --- | --- |
+| Incident command | Rollback/fix-forward decision owner exists conceptually but not operationally. | Define incident roles, decision authority and communication channels. |
+| Change advisory | CAB/emergency change relationship not explicit. | Map normal release, emergency hotfix and rollback to change processes. |
+| Service ownership at scale | Ownership map must remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
+| Separation of duties | Future control plane trigger capability could blur approver/operator roles. | Enforce SoD in workflow and audit. |
+| Operational training | New automation and reports may confuse teams without rehearsal. | Run release simulation and rollback drills before production rollout. |
+
+---
+
+> Source: `docs/architecture-review/final-scorecard-and-verdict.md`
+
+
+# Final Scorecard And Verdict
+
+Status: Tasks 42, 43, 44 and 45 output from `TODO-ARCHITECTURE-REVIEW-FROM-NOTES.md`
+
+## Architecture Scorecard
+
+| Area | Score | Rationale |
+| --- | --- | --- |
+| Architecture Quality | 7 / 10 | Strong diagnosis and target architecture, but immediate vs future scope needs stronger gating. |
+| Technical Feasibility | 7 / 10 | Release validation and Drone automation are feasible; graph/control plane need more capacity and security design. |
+| Business Value | 8 / 10 | Clear benefits around release safety, audit and incident response. |
+| Governance | 6 / 10 | Decision register and RACI exist, but named owners and formal approvals are missing. |
+| Operational Readiness | 5 / 10 | Hotfix, rollback, DR, incident command and runbooks still need testing. |
+| Executive Readiness | 7 / 10 | Good material exists; one-page decision framing now clearer. |
+| ARB Readiness | 6 / 10 | Likely approvable with conditions for near-term scope, not for full future platform. |
+
+## Top 10 Strengths
+
+1. Correctly identifies that branching is not the root problem.
+2. Emphasises release state visibility, repeatability and auditability.
+3. Strong decision register and proposed approval flow.
+4. Practical near-term validation and Drone automation focus.
+5. Recognises hotfix and rollback as production gates.
+6. Treats Knowledge Graph as source-system read-model, not replacement.
+7. Strong future architecture vision for release intelligence.
+8. Includes business case and operational benefits.
+9. Acknowledges maturity phasing and future options.
+10. Good foundation for ARB discussion.
+
+## Top 10 Risks
+
+1. Future-state ideas may be mistaken for immediate approval scope.
+2. Named owners and backups are still missing.
+3. Branch cutover could happen before operational readiness.
+4. Rollback may be unrealistic for database/data/event changes.
+5. Changed-chart deployment could miss hidden dependencies.
+6. Knowledge Graph could produce wrong conclusions if metadata quality is poor.
+7. Control plane trigger capability could bypass separation of duties.
+8. Copilot recommendations could create unsafe reliance on AI.
+9. DR, accreditation and capacity planning need stronger treatment.
+10. Business benefits need baseline measurement.
+
+## Top 10 Improvements
+
+1. Approve near-term foundation scope separately from future platform scope.
+2. Assign named owners and backups.
+3. Add strict validation dry-run and failure taxonomy.
+4. Run rollback and fix-forward drills.
+5. Add incident command and emergency change model.
+6. Add NFR and DR targets with evidence.
+7. Add capacity model for graph/control-plane assumptions.
+8. Add security classification and RBAC model across all release metadata.
+9. Define copilot prohibited capabilities.
+10. Add ARB conditions and explicit defer list.
+
+## ARB Verdict
+
+Verdict: Approved with conditions for the near-term release-foundation programme. Not approved for full Knowledge Graph, write-capable control plane, production GitOps, progressive delivery or Engineering Copilot operational decisioning.
+
+Reasoning:
+
+The documentation has a strong understanding of the release engineering problem and the proposed near-term controls are directionally right. However, in a mature enterprise ARB, especially under border-security criticality, the full package would not receive unconditional approval because ownership, rollback testing, DR, capacity, accreditation and AI/control-plane guardrails are not yet complete.
+
+## Border-Security Reality Check
+
+| Category | Strongly Support | Modify | Defer |
+| --- | --- | --- | --- |
+| Release safety | Strict validation, release scope, named ownership, environment gates. | Changed-chart deployment with dependency controls. | Branch simplification until readiness proven. |
+| Automation | Drone pilot, rerun safety, alerting. | Automation only with human gates. | Fully automated production promotion. |
+| Recovery | Hotfix and rollback runbooks, fix-forward guide. | Rollback eligibility by release. | Automatic rollback for complex stateful services. |
+| Intelligence | Release reports, audit evidence, read-only graph pilot. | Graph decision support with trust score. | Graph-driven automated decisions. |
+| Platform control | Read-only dashboard. | Controlled workflow after SoD approval. | Central trigger control until ARB approval. |
+| AI / copilot | Evidence retrieval and summarisation. | Low-risk advisory with citations. | Approval, deploy, rollback or incident command actions. |
+| Modernisation | SBOM, image signing, observability dashboards. | GitOps in non-prod. | Production GitOps/progressive delivery at scale. |
+
+## Final Answer
+
+If Cerberus genuinely processes 5+ billion records per month and supports UK border-security operations:
+
+- Strongly support: release validation, ownership, environment readiness, hotfix/rollback testing, audit evidence, SBOM generation and controlled Drone automation.
+- Modify: branch cutover, changed-chart deployment, Knowledge Graph, control plane, GitOps and progressive delivery so they are gated, piloted and evidence-based.
+- Defer until much later: write-capable unified control plane, production-wide GitOps, auto-rollback/progressive delivery, Engineering Copilot operational recommendations and any AI-driven release decisioning.
+
+The mature enterprise answer is controlled evolution, not large architectural change. The immediate approval ask should be release safety and auditability, with future intelligence capabilities approved only after the foundation proves itself.

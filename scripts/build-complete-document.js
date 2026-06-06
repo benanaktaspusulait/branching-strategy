@@ -35,6 +35,19 @@ const sources = [
   'docs/reference/detailed-solutions.md',
   'docs/reference/rollout-decision-proposals-detailed.md',
   'docs/reference/enterprise-knowledge-graph-proposal.md',
+  'docs/architecture-review/index.md',
+  'docs/architecture-review/source-document-list.md',
+  'docs/architecture-review/review-criteria.md',
+  'docs/architecture-review/recommendation-inventory.md',
+  'docs/architecture-review/executive-and-quality-review.md',
+  'docs/architecture-review/alignment-and-enterprise-architecture-review.md',
+  'docs/architecture-review/arb-package.md',
+  'docs/architecture-review/business-case-and-roadmap.md',
+  'docs/architecture-review/operating-model-raci.md',
+  'docs/architecture-review/architecture-diagrams.md',
+  'docs/architecture-review/criticality-challenge-review.md',
+  'docs/architecture-review/missing-enterprise-concerns.md',
+  'docs/architecture-review/final-scorecard-and-verdict.md',
 ];
 
 function isExternal(href) {
