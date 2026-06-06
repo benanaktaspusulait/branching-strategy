@@ -146,25 +146,21 @@ Key problems at a glance:
 
 ## Suggested Reading Order
 
-**Quick overview (10 min):**
 1. This page.
 2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - decision-ready synthesis.
 3. [Current release operating model](docs/current-release-operating-model.md) - how it works today.
 4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) - what is broken.
 5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) - what the solution looks like.
-
-**Full picture:**
 6. [Deployment and release findings](docs/deployment-and-release-findings.md) - technical details.
-7. [Branching strategy options](docs/branching-options.md) - branch model comparison.
-8. [Rollout decision proposals](docs/rollout-decision-proposals.md) - decisions to approve.
-9. [Release decision register](docs/release-decision-register.md) - approval tracker and closure order.
-
-**For approvers:**
-10. [Hotfix and rollback](docs/hotfix-and-rollback.md)
-11. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
-12. [Automation and validation](docs/automation-and-validation.md)
-13. [Release engineering best practices](docs/release-engineering-best-practices.md)
-14. [Platform engineering strategy](docs/platform-engineering-strategy.md)
+7. [Automation and validation](docs/automation-and-validation.md) - validation, reporting, metadata and failure handling.
+8. [Hotfix and rollback](docs/hotfix-and-rollback.md) - production recovery and reconciliation.
+9. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) - scope, owners and approval points.
+10. [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed decisions to approve or amend.
+11. [Release decision register](docs/release-decision-register.md) - approval tracker and closure order.
+12. [Branching strategy options](docs/branching-options.md) - branch model comparison after the operating model is understood.
+13. [Transformation programme](docs/transformation-programme.md) - strategy, target state and future control plane.
+14. [Transformation programme - delivery](docs/transformation-programme-delivery.md) - roadmap, RACI, metrics and investment view.
+15. [Architecture review package](docs/architecture-review/index.md) - ARB/executive review, criticality challenge and final verdict.
 
 ## Visual Overview
 
