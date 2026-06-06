@@ -2,22 +2,11 @@
 
 Status: Completed architecture review source list.
 
-Review purpose: confirm the document set for the ARB / executive / border-security criticality review before starting recommendation assessment.
+Review purpose: define the document set used for the ARB / executive / border-security criticality assessment.
 
-## Source Of Truth Rule
+## Review Scope Note
 
-`COMPLETE-DOCUMENT.md` is a generated review bundle, not the source of truth. Review findings should be traced back to the source files below. When source files change, rebuild the bundle with:
-
-```bash
-node scripts/build-complete-document.js
-node scripts/validate-markdown-links.js
-```
-
-## Review Instruction Inputs
-
-| File | Role In Review | Include? | Notes |
-| --- | --- | --- | --- |
-| `notes.txt` | External review brief and challenge prompt | Yes | Defines ARB, executive and border-security criticality lens. |
+The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is included as a convenient consolidated reader copy; detailed findings should still reference the specific source document where possible.
 
 ## Primary Architecture Package
 
@@ -75,14 +64,6 @@ Use these files to validate evidence, rationale and detailed assumptions.
 | `docs/reference/detailed-problems.md` | Detailed problem analysis | P1-P12 problem detail, root cause and evidence. |
 | `docs/reference/detailed-solutions.md` | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
 | `docs/reference/rollout-decision-proposals-detailed.md` | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
-
-## Generated And Supporting Files
-
-| File | Role In Review | Include? | Notes |
-| --- | --- | --- | --- |
-| `COMPLETE-DOCUMENT.md` | Generated combined bundle | Yes, for navigation only | Use to read the whole package; do not treat as authoritative source text. |
-| `scripts/build-complete-document.js` | Documentation build utility | No architecture review needed | Include only for maintainability check. |
-| `scripts/validate-markdown-links.js` | Documentation validation utility | No architecture review needed | Include only for maintainability check. |
 
 ## Explicitly Out Of Scope For Architecture Review
 

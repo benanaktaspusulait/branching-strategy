@@ -1,6 +1,6 @@
 # Architecture Review Package
 
-This package implements the review work requested in `notes.txt`.
+This package contains the architecture review outputs for executive, ARB and border-security criticality assessment.
 
 ## Outputs
 

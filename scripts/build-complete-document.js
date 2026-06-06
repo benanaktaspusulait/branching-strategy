@@ -112,7 +112,7 @@ const [readme, ...rest] = sourceData;
 const output = [
   '# Cerberus Release Engineering Assessment',
   '',
-  'This complete document is generated from the source files listed below. Edit the source files, then rebuild this file with `node scripts/build-complete-document.js`.',
+  'This complete document consolidates the Cerberus release engineering, platform strategy, knowledge graph and architecture review material into one reader copy.',
   '',
   '## Complete Document Contents',
   '',

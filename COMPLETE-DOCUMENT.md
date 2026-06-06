@@ -1,6 +1,6 @@
 # Cerberus Release Engineering Assessment
 
-This complete document is generated from the source files listed below. Edit the source files, then rebuild this file with `node scripts/build-complete-document.js`.
+This complete document consolidates the Cerberus release engineering, platform strategy, knowledge graph and architecture review material into one reader copy.
 
 ## Complete Document Contents
 
@@ -166,17 +166,6 @@ Key problems at a glance:
 13. [Release engineering best practices](docs/release-engineering-best-practices.md)
 14. [Platform engineering strategy](docs/platform-engineering-strategy.md)
 
-## Maintenance Checks
-
-Before sharing a regenerated complete document, run:
-
-```bash
-node scripts/build-complete-document.js
-node scripts/validate-markdown-links.js
-```
-
-The build step rewrites local links for `COMPLETE-DOCUMENT.md`. The validation step checks local Markdown links and heading anchors across the repository.
-
 ## Visual Overview
 
 ```mermaid
@@ -221,7 +210,7 @@ flowchart TD
   classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
   classDef solution fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
   classDef decision fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
-  classDef transform fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
+  classDef transform fill:#795548,stroke:#5d4037,color:#fff,font-weight:bold
 ```
 
 **Colour key:**
@@ -7622,7 +7611,7 @@ The organisation operates 10+ engineering systems containing critical data about
 
 # Architecture Review Package
 
-This package implements the review work requested in `notes.txt`.
+This package contains the architecture review outputs for executive, ARB and border-security criticality assessment.
 
 ## Outputs
 
@@ -7660,22 +7649,11 @@ This package implements the review work requested in `notes.txt`.
 
 Status: Completed architecture review source list.
 
-Review purpose: confirm the document set for the ARB / executive / border-security criticality review before starting recommendation assessment.
+Review purpose: define the document set used for the ARB / executive / border-security criticality assessment.
 
-## Source Of Truth Rule
+## Review Scope Note
 
-`COMPLETE-DOCUMENT.md` is a generated review bundle, not the source of truth. Review findings should be traced back to the source files below. When source files change, rebuild the bundle with:
-
-```bash
-node scripts/build-complete-document.js
-node scripts/validate-markdown-links.js
-```
-
-## Review Instruction Inputs
-
-| File | Role In Review | Include? | Notes |
-| --- | --- | --- | --- |
-| `notes.txt` | External review brief and challenge prompt | Yes | Defines ARB, executive and border-security criticality lens. |
+The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is included as a convenient consolidated reader copy; detailed findings should still reference the specific source document where possible.
 
 ## Primary Architecture Package
 
@@ -7733,14 +7711,6 @@ Use these files to validate evidence, rationale and detailed assumptions.
 | `docs/reference/detailed-problems.md` | Detailed problem analysis | P1-P12 problem detail, root cause and evidence. |
 | `docs/reference/detailed-solutions.md` | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
 | `docs/reference/rollout-decision-proposals-detailed.md` | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
-
-## Generated And Supporting Files
-
-| File | Role In Review | Include? | Notes |
-| --- | --- | --- | --- |
-| `COMPLETE-DOCUMENT.md` | Generated combined bundle | Yes, for navigation only | Use to read the whole package; do not treat as authoritative source text. |
-| `scripts/build-complete-document.js` | Documentation build utility | No architecture review needed | Include only for maintainability check. |
-| `scripts/validate-markdown-links.js` | Documentation validation utility | No architecture review needed | Include only for maintainability check. |
 
 ## Explicitly Out Of Scope For Architecture Review
 

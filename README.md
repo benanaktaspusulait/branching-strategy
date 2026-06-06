@@ -113,17 +113,6 @@ Key problems at a glance:
 13. [Release engineering best practices](docs/release-engineering-best-practices.md)
 14. [Platform engineering strategy](docs/platform-engineering-strategy.md)
 
-## Maintenance Checks
-
-Before sharing a regenerated complete document, run:
-
-```bash
-node scripts/build-complete-document.js
-node scripts/validate-markdown-links.js
-```
-
-The build step rewrites local links for `COMPLETE-DOCUMENT.md`. The validation step checks local Markdown links and heading anchors across the repository.
-
 ## Visual Overview
 
 ```mermaid
@@ -168,7 +157,7 @@ flowchart TD
   classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
   classDef solution fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
   classDef decision fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
-  classDef transform fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
+  classDef transform fill:#795548,stroke:#5d4037,color:#fff,font-weight:bold
 ```
 
 **Colour key:**
