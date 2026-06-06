@@ -1,6 +1,10 @@
-# CI/CD Deployment And Branching Strategy
+# Cerberus Release Engineering Assessment
 
-This folder documents the current Cerberus CI/CD, release and deployment process: what exists today, what is broken, and what should change.
+**Current State, Problems, Risks And Improvement Roadmap**
+
+This folder contains the assessment of the Cerberus CI/CD, release and deployment process: what exists today, what is broken, and what should change.
+
+This is an assessment and proposal, not an approved operating model. Items marked "Proposed" or "Needs confirmation" require team sign-off before implementation.
 
 ## Summary
 

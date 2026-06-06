@@ -22,6 +22,21 @@ flowchart LR
   classDef owner fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
 ```
 
+## Ownership Gap
+
+Automation cannot replace accountability. If an automated step fails, someone still needs to decide whether to rerun, override, stop, roll back or fix forward. Without named owners, decisions are delayed and escalation is unclear.
+
+| Area | Accountable Owner Needed | Why |
+| --- | --- | --- |
+| Release readiness | Release owner | Confirms release can progress. |
+| Manifest/tag validation | Release owner / platform owner | Prevents wrong artefacts. |
+| Drone secrets/tokens | Platform owner | Prevents environment failures. |
+| Hotfix decision | Release owner / incident lead | Avoids production drift. |
+| Rollback decision | Release owner / incident lead | Ensures fast incident response. |
+| Changed-chart exclusion | Release owner | Prevents hidden deployment gaps. |
+| Environment readiness | Platform / environment owner | Confirms deployability. |
+| Alert response | Named squad/platform owner | Ensures failed automation is handled. |
+
 ## Repositories To Classify
 
 Confirm whether these are in scope for the same release process:
@@ -64,7 +79,20 @@ Track whether each release includes:
 
 Several setup points apply for new dev/test environments.
 
+**An environment existing in Kubernetes does not mean it is release-ready.**
+
 Before a new environment is treated as release-ready, confirm:
+
+- [ ] Values files exist and match naming expectations.
+- [ ] Environment name is supported by deployment scripts.
+- [ ] Drone secrets/tokens are configured.
+- [ ] Kube/robot token ownership is clear.
+- [ ] Required secrets are present and encrypted correctly.
+- [ ] Feature flag defaults are known and documented.
+- [ ] External integrations are reachable.
+- [ ] Required runbook steps are documented.
+- [ ] Access and permissions are confirmed.
+- [ ] Smoke test path is known and executable.
 
 - Required values files exist.
 - Environment names are configured in the relevant setup/deploy scripts.

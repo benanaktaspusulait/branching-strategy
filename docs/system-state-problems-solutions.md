@@ -2,14 +2,74 @@
 
 This is the decision-ready summary of the CI/CD, branching, release and deployment documentation.
 
+This is an assessment and proposal, not an approved operating model. Items marked "Proposed" or "Needs confirmation" require team sign-off before implementation.
+
 For the full detailed analysis, see [system state detailed analysis](reference/system-state-problems-solutions-detailed.md).
+
+## Executive Assessment
+
+### Current Situation In One Paragraph
+
+Cerberus currently operates a GitFlow-like branching model, but the real release state is not contained within Git alone. It is fragmented across branches, tags, Docker images, Helm artefacts, the Cerberus deployment-management repository, manifests, environment-specific values files, Jira ticket metadata, secrets (managed through Git-crypt and Drone), Liquibase database scripts and runbooks. A branch rename or branching model simplification does not address this fragmentation. The release process is manual-heavy, validation is not strict enough, ownership is not fully assigned and operational procedures (hotfix, rollback, environment readiness) are not standardised. The automation pilot (Gareth/Achilles on the configuration service) is a strong first step, but it covers only part of the problem.
+
+### Top Findings
+
+| # | Finding | Impact | Recommended Action |
+| --- | --- | --- | --- |
+| 1 | The issue is broader than branching. | Changing the branch model alone does not fix the release process. | Stabilise the operating model before simplifying branches. |
+| 2 | Release state is fragmented across multiple systems. | No single view of what constitutes a release. | Map all release state areas; validate consistency through automation. |
+| 3 | Release preparation is manual-heavy. | Days of effort per sprint; inconsistency and audit gaps. | Move local scripts into Drone; automate branch/tag/chart creation. |
+| 4 | Tag, artefact and manifest validation is not strict enough. | Wrong artefact or blocked work may reach production. | Fail fast on wrong tag, missing tag, manifest/tag mismatch. |
+| 5 | Release scope is not fully explicit. | Automation may miss secrets, config, Liquibase or runbook changes. | Define and enforce a release scope checklist per release. |
+| 6 | Hotfix and rollback are not operationally standardised. | Production fixes may drift from main, manifests and active releases. | Document and test both hotfix and rollback flows before next production incident. |
+| 7 | Environment readiness is not a formal gate. | Deployment may fail due to incomplete setup (missing values, secrets, tokens). | Treat environment readiness as a mandatory pre-deployment gate. |
+| 8 | Ownership and approval responsibilities are not fully named. | Decisions are delayed; escalation is unclear. | Assign named owners for every release activity. |
+| 9 | Failed automation alerting and rerun rules are incomplete. | A failed step can leave release state unclear and unresolved. | Define alerting channels, rerun safety rules and manual-intervention triggers. |
+| 10 | Trunk-based development would be risky without stronger feature flags, validation and rollback maturity. | Premature simplification may create instability. | Keep GitFlow-style baseline; reassess branch model after automation matures. |
+
+### Main Message
+
+> **Changing the branch model alone will not make releases safer.**
+>
+> The safer path is to make the current release state visible, repeatable, validated, owned and auditable first; then simplify the branch model after the automation proves what is actually being released.
+
+## Release State Is Fragmented
+
+The release process depends on multiple disconnected state areas. A problem in any one of them can invalidate the release.
+
+| Release State Area | Current Location / Mechanism | Risk |
+| --- | --- | --- |
+| Source state | Git branches | Branch may not equal deployed state. |
+| Release identity | Git tags / release versions | Wrong tag can create wrong artefact. |
+| Build output | Docker images / Helm packages | Artefact may not match intended commit. |
+| Deployment intent | Cerberus deployment-management / charts | Chart may not match release scope. |
+| Environment config | Values files / feature flags | Deployed code may not be active. |
+| Secrets | Git-crypt / managed secrets scripts / Drone secrets | Environment may not be ready. |
+| Database changes | Liquibase | Rollback may be unsafe or impossible. |
+| Release metadata | Jira labels / ticket fields | Release report may be incomplete. |
+| Manual actions | Runbooks / release management | Audit trail may be weak. |
+| Approval state | QAT / release owner decisions | Ownership may be unclear. |
+
+**This is why a branch rename or branch-model change is not enough. Release safety depends on all of these states agreeing.**
+
+## Business And Delivery Impact
+
+| Problem | Delivery Impact | Operational Risk |
+| --- | --- | --- |
+| Manual release work | Release preparation takes days per sprint. | Human error and weak audit trail. |
+| Weak validation | Wrong artefact may be released. | Production incident risk. |
+| Unclear release scope | Config/secrets/DB changes may be missed. | Partial or broken release. |
+| Weak rollback process | Recovery may be slow. | Longer incident duration. |
+| Ownership gaps | Decisions are delayed. | Escalation confusion. |
+| Environment readiness gaps | Late release failure. | Wasted release window. |
+| Fragmented release state | Hard to prove what was deployed. | Audit and incident investigation risk. |
 
 ## Executive Summary
 
 ```text
 Do not change the branching model first.
 First make the release process visible, repeatable, validated and owned.
-Then move to the target `main = production` model through a controlled cutover.
+Then move to the target main = production model through a controlled cutover.
 ```
 
 The current problem is broader than branching. The release state is spread across branches, tags, images, Helm packages, Cerberus charts, manifests, values, secrets, Liquibase changes, JIRA metadata, QAT approval and post-release reconciliation.
@@ -34,20 +94,22 @@ The proposed direction is good, but it should be treated as a phased operating-m
 
 ## Main Problems
 
-| Priority | Problem | Impact | Root Cause |
-| --- | --- | --- | --- |
-| P1 | The issue can be misframed as "branching only". | A branch change may move risk rather than reduce it. | Release state is distributed across many systems. |
-| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the mandatory central path. |
-| P3 | Branch, tag and artefact timing rules are not strict enough. | Wrong artefacts or manifests can be produced. | Branch lifecycle and artefact lifecycle are different. |
-| P4 | Release scope is unclear. | Secrets, config, Liquibase or runbook changes can be missed. | "All services" is not yet defined as a repo/change-type scope. |
-| P5 | Manifest and ticket validation can be too permissive. | Blocked or wrong work can reach release. | Fail vs warning policy is still proposed. |
-| P6 | Changed-chart deployment is not yet a proven default. | Changed charts may be missed or unnecessary charts deployed. | Umbrella chart and service mapping need reliable detection. |
-| P7 | Hotfix and rollback are not operationally standardised. | Production can drift from branch, manifest and release records. | Rollback is treated as technical capability, not full process. |
-| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. |
-| P9 | Secrets/config management will get harder at scale. | Onboarding, rotation and audit risk increase. | Git-crypt/GPG is workable but operationally heavy. |
-| P10 | Trunk-based development is risky without stronger feature flags. | Incomplete work may need branch or config workarounds. | Feature flags appear deploy-time rather than dynamic runtime. |
-| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. |
-| P12 | Alerting and rerun rules are incomplete. | Failed automation can leave state half-updated. | Failure modes are not yet production-readiness gates. |
+| # | Problem | Impact | Root Cause | Recommended Action |
+| --- | --- | --- | --- | --- |
+| P1 | The issue can be misframed as "branching only". | A branch change may move risk rather than reduce it. | Release state is distributed across many systems. | Stabilise the operating model before changing the branch model. |
+| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the mandatory central path. | Complete Drone pilot; make pipeline the only release path. |
+| P3 | Branch, tag and artefact timing rules are not strict enough. | Wrong artefacts or manifests can be produced. | Branch lifecycle and artefact lifecycle are different. | Enforce strict validation: wrong/missing tag = fail. |
+| P4 | Release scope is unclear. | Secrets, config, Liquibase or runbook changes can be missed. | "All services" is not yet defined as a repo/change-type scope. | Define explicit release scope per repo and change type. |
+| P5 | Manifest and ticket validation can be too permissive. | Blocked or wrong work can reach release. | Fail vs warning policy is still proposed. | Switch from warning to fail-fast after one dry-run release. |
+| P6 | Changed-chart deployment is not yet a proven default. | Changed charts may be missed or unnecessary charts deployed. | Umbrella chart and service mapping need reliable detection. | Validate detection in pilot; deploy changed charts by default. |
+| P7 | Hotfix and rollback are not operationally standardised. | Production can drift from branch, manifest and release records. | Rollback is treated as technical capability, not full process. | Document and test both flows before next production incident. |
+| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. | Formalise environment readiness as a mandatory gate. |
+| P9 | Secrets/config management will get harder at scale. | Onboarding, rotation and audit risk increase. | Git-crypt/GPG is workable but operationally heavy. | Evaluate External Secrets Operator for medium-term. |
+| P10 | Trunk-based development is risky without stronger feature flags. | Incomplete work may need branch or config workarounds. | Feature flags appear deploy-time rather than dynamic runtime. | Keep current model; add runtime flags before reconsidering. |
+| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Assign named owners before expanding beyond pilot. |
+| P12 | Alerting and rerun rules are incomplete. | Failed automation can leave state half-updated. | Failure modes are not yet production-readiness gates. | Define alerting channels and safe-rerun criteria. |
+
+For detailed analysis of each problem, see the [detailed system analysis appendix](reference/system-state-problems-solutions-detailed.md).
 
 ## Recommended Solution Path
 
@@ -215,6 +277,49 @@ Phase 5: optimise feature flags, secrets and progressive delivery.
 ```
 
 The strongest recommendation is to avoid a big-bang branch change. The safer path is to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.
+
+## One-Page Summary
+
+### Current State
+
+Cerberus uses a GitFlow-like branching model with release branches, tags, Helm packaging and environment promotion. The release process is functional but manual-heavy, with fragmented state across branches, tags, images, charts, manifests, Jira, secrets and runbooks. Automation is being piloted on the configuration service by Gareth/Achilles.
+
+### Top 5 Risks
+
+| # | Risk | Likelihood | Impact |
+| --- | --- | --- | --- |
+| 1 | Wrong artefact deployed due to weak tag/manifest validation. | Medium | High |
+| 2 | Production incident with no standardised rollback procedure. | Medium | Critical |
+| 3 | Release scope incomplete (missing secrets, config or DB changes). | High | High |
+| 4 | Ownership gaps delay decisions during incidents. | High | Medium |
+| 5 | Environment readiness failure blocks release at deploy time. | Medium | Medium |
+
+### Top 5 Recommendations
+
+| # | Recommendation | Effort | Priority |
+| --- | --- | --- | --- |
+| 1 | Move release automation scripts into Drone (complete the pilot). | Medium | Immediate |
+| 2 | Enforce strict tag/manifest validation (fail on mismatch). | Low | Immediate |
+| 3 | Document and test hotfix and rollback flows. | Medium | Before next production incident |
+| 4 | Assign named owners for all release activities. | Low | Before pilot expands |
+| 5 | Formalise environment readiness as a pre-deployment gate. | Low | Before new environments are used |
+
+### Go / No-Go Criteria For Rollout Expansion
+
+Before expanding the automation beyond the pilot:
+
+- [ ] Configuration-service pilot completes successfully in Drone.
+- [ ] Generated chart changes, versions and tags are correct.
+- [ ] Release report is produced and matches expected content.
+- [ ] Changed-chart detection identifies expected charts.
+- [ ] Alerting for failed steps is in place.
+- [ ] Rollback procedure is documented and tested.
+- [ ] Named release owner and platform owner are assigned.
+- [ ] At least one squad lead has reviewed and confirmed understanding.
+
+### Suggested Next Step
+
+> **Validate the current-state assumptions with Gareth, Achilles, release management and one squad lead before asking for approval on the rollout decisions.**
 
 ---
 
