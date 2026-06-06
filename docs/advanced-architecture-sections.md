@@ -58,7 +58,6 @@ flowchart TD
     DASH["Release Dashboard"]:::consumer
     INC["Incident Investigation"]:::consumer
     AUDIT["Audit / Compliance"]:::consumer
-    AI["Engineering Copilot\n(future)"]:::consumer
   end
 
   GL & JR & DR & HM & DM & K8 --> KF
@@ -66,7 +65,7 @@ flowchart TD
   EL & FDP & LQ & SEC & OBS --> KG
   KG --> API
   API --> CP
-  CP --> DASH & INC & AUDIT & AI
+  CP --> DASH & INC & AUDIT
 
   classDef source fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
   classDef graph fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold

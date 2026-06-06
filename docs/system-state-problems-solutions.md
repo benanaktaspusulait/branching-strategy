@@ -37,7 +37,7 @@ Cerberus currently operates a GitFlow-like branching model, but the real release
 
 The immediate goal is release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current transformation programme.
 
-Beyond that, a longer-term direction could be a unified deployment and release control plane — a single operational interface that sits above Git, Drone, Helm, deployment-management, Jira and environment metadata. Its purpose would be to give teams one place to view, approve, deploy, track and audit releases, rather than interacting with several disconnected tools.
+Beyond that, future platform capabilities should be treated as separate product decisions after the release foundation is proven.
 
 This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would be subject to platform strategy approval and should be treated as a platform product decision.
 
@@ -233,7 +233,7 @@ Mitigation:
 
 ### 7. Modernise Later, Not First
 
-Runtime feature flags, external secret management, canary rollout and progressive delivery are valuable future improvements.
+Runtime feature flags, external secret management and observability hardening are valuable future improvements.
 
 They should come after the release pipeline, validation and ownership model are stable.
 
@@ -281,7 +281,7 @@ Phase 1: quick wins and strict validation dry-run.
 Phase 2: Drone pilot.
 Phase 3: controlled `main = production` cutover.
 Phase 4: expand changed-chart deployment and shared dev.
-Phase 5: optimise feature flags, secrets and progressive delivery.
+Phase 5: optimise feature flags, secrets and observability.
 ```
 
 The strongest recommendation is to avoid a big-bang branch change. The safer path is to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.

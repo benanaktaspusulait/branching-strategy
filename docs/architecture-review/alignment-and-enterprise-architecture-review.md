@@ -8,9 +8,8 @@ Status: Completed architecture review output.
 | --- | --- | --- |
 | Transformation roadmap, platform strategy and Knowledge Graph roadmap use different phase language. | Readers may assume future capabilities are nearer than intended. | Normalize phases into Foundation, Controlled Automation, Scale, Intelligence Pilot, Platform Control. |
 | Control plane and Knowledge Graph are sometimes described together. | Responsibilities blur between data intelligence and operational action. | Define Knowledge Graph as read-model; Control Plane as interface/orchestration layer. |
-| Engineering Copilot is described as future capability but appears near operational use cases. | AI readiness could be mistaken for permission to automate decisions. | Mark copilot as Phase 5+ advisory only, with prohibited capabilities. |
 | GitOps, progressive delivery and trunk-based development are listed as improvements but not always gated by criticality. | Commercial SaaS practices may be over-applied to border-security context. | Add critical-environment prerequisites and explicit defer status. |
-| Release decision register tracks release decisions, but future architecture decisions need their own approval trail. | ARB decisions may be mixed with release-process decisions. | Add ADRs for Knowledge Graph, control plane, GitOps and copilot. |
+| Release decision register tracks release decisions, but future architecture decisions need their own approval trail. | ARB decisions may be mixed with release-process decisions. | Add ADRs for future platform capabilities. |
 | Business case benefits differ across documents. | ARB may challenge inconsistent KPI targets. | Create one benefits realisation table with baseline, target and measurement method. |
 | Ownership is role-based in RACI but not named. | Operational handoff remains unresolved. | Add named owner capture step before rollout expansion. |
 | Security and data classification are strong in Knowledge Graph proposal but less explicit in release automation. | Release metadata can also expose sensitive topology and operations. | Apply classification, RBAC and audit to release reports and dashboards. |
@@ -23,7 +22,6 @@ Status: Completed architecture review output.
 | Deployment Knowledge Graph | Read-model that correlates metadata from source systems. | Source of truth or deployment controller. |
 | Unified Control Plane | User interface and workflow layer over approved automation and source systems. | A bypass around Drone, Jira, approvals or change control. |
 | Release Intelligence | Query and reporting capability over release/deployment relationships. | Automated operational decisioning. |
-| Engineering Copilot | Future assistant that retrieves evidence and explains context. | Autonomous deployer, approver or incident commander. |
 | GitOps | Pull-based reconciliation from Git source of truth. | Any deployment-management repo with pipeline deploys. |
 | Progressive delivery | Controlled traffic or rollout management with telemetry. | Faster deployment by default. |
 
@@ -53,7 +51,7 @@ Status: Completed architecture review output.
 | Lineage | 2 / 5 | 4.5 / 5 | Release provenance is manual. | Capture commit, build, artefact, manifest, approval and deploy lineage. |
 | Data quality | 2 / 5 | 4 / 5 | Metadata may be incomplete or wrong. | Add completeness, freshness and correctness SLOs. |
 | Retention | 2.5 / 5 | 4 / 5 | Retention targets vary. | Define retention by data class and audit need. |
-| Classification | 2.5 / 5 | 4.5 / 5 | Knowledge Graph declares OFFICIAL-SENSITIVE, release reports need same discipline. | Classify topology, release, personnel and incident metadata. |
+| Classification | 2.5 / 5 | 4.5 / 5 | Release reports need classification discipline. | Classify topology, release, personnel and incident metadata. |
 
 ## Technology Architecture Review
 
@@ -63,7 +61,7 @@ Status: Completed architecture review output.
 | Scalability | 2 / 5 | 4 / 5 | 5+ billion records/month assumption needs capacity model. | Add volume model before graph/control-plane build. |
 | Resilience | 2 / 5 | 4.5 / 5 | DR and failover are under-specified. | Define RTO/RPO and rebuild-from-event-store targets. |
 | Observability | 2.5 / 5 | 4 / 5 | Health metrics exist but not release-correlated. | Add release health dashboard and ingestion freshness alerts. |
-| Security | 2.5 / 5 | 4.5 / 5 | Security strong in graph proposal, less complete for automation/control plane. | Apply RBAC, SoD, audit and privileged access controls across all tooling. |
+| Security | 2.5 / 5 | 4.5 / 5 | Security controls need to be explicit for automation and release reporting. | Apply RBAC, SoD, audit and privileged access controls across release tooling. |
 
 ## Related Pages
 

@@ -42,11 +42,11 @@ These files form the core package to review.
 | `docs/squad-briefing-summary.md` | Squad-facing communication | Human factors, adoption readiness, clarity for engineering teams. |
 | `docs/release-engineering-best-practices.md` | Supporting practice baseline | Whether best practices are suitable for Cerberus criticality. |
 | `docs/platform-engineering-strategy-advanced.md` | Advanced platform strategy | GitOps, SBOM, supply chain security, control plane direction. |
-| `docs/advanced-architecture-sections.md` | Future architecture sections | Control plane, event ingestion, data trust, engineering copilot, platform product framing. |
+| `docs/advanced-architecture-sections.md` | Future architecture sections | Control plane, event ingestion, data trust and platform product framing. |
 | `docs/deployment-knowledge-graph-design.md` | Knowledge graph design | Domain model, entity relationships, graph schema. |
 | `docs/deployment-knowledge-graph-implementation.md` | Implementation and workflows | Event ingestion, APIs, search, operational use cases. |
 | `docs/deployment-knowledge-graph-operations.md` | Operations and technology | Security, retention, integrations, technology choices, roadmap. |
-| `docs/deployment-knowledge-graph-business-case.md` | Business case and governance | Strategic value, ROI, governance, NFRs, AI enablement, ADR. |
+| `docs/deployment-knowledge-graph-business-case.md` | Business case and governance | Strategic value, ROI, governance, NFRs and ADR. |
 
 ## Detailed Reference Package
 
@@ -76,7 +76,7 @@ The review scope covers:
 - Platform engineering strategy for promotion, deployment and observability gates.
 - Governance, ownership, NFR, business case and ARB readiness material.
 
-Knowledge Graph, unified control-plane and Engineering Copilot material is appendix-only future vision and excluded from the immediate approval reader copy.
+Knowledge Graph and unified control-plane material is appendix-only future vision and excluded from the immediate approval reader copy.
 
 ## Related Pages
 

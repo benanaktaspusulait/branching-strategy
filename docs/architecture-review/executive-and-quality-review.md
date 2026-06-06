@@ -15,7 +15,7 @@ Cerberus release state is fragmented across Git branches, tags, Docker images, H
 - Release scope is not explicit across code, charts, config, secrets, database changes and runbooks.
 - Hotfix and rollback flows are not yet production-grade operating procedures.
 - Ownership and backup owners are not sufficiently named.
-- Future Knowledge Graph, control plane and copilot concepts are promising but too aggressive if treated as immediate delivery items.
+- Future platform concepts are promising but too aggressive if treated as immediate delivery items.
 
 ### Risks
 
@@ -29,8 +29,7 @@ The main risk is not the branch model itself. The main risk is releasing the wro
 4. Complete and test hotfix, rollback and fix-forward procedures.
 5. Use Drone automation as a controlled release path, not as an approval bypass.
 6. Defer branch simplification until release evidence, rollback and ownership are stable.
-7. Treat Knowledge Graph and control plane as read-only pilots first.
-8. Prohibit copilot actioning for production release, rollback or approval decisions.
+7. Treat future platform capabilities as separate decisions after release evidence is proven.
 
 ### Expected Outcomes
 
@@ -42,7 +41,7 @@ The main risk is not the branch model itself. The main risk is releasing the wro
 
 ### Investment Required
 
-Immediate investment is primarily process, ownership and pipeline hardening: validation rules, release report retention, environment readiness checks, alerting, runbook testing and RACI closure. Larger investments such as Knowledge Graph, control plane, GitOps and copilot should be sequenced after release metadata quality is proven.
+Immediate investment is primarily process, ownership and pipeline hardening: validation rules, release report retention, environment readiness checks, alerting, runbook testing and RACI closure. Larger platform investments should be sequenced after release metadata quality is proven.
 
 ### Decision Required
 
@@ -57,9 +56,8 @@ ARB and engineering leadership should approve the near-term controlled release-t
 | Branch cutover is recommended before all prerequisites are proven. | A branch model change can hide unresolved process problems. | Production drift or release confusion. | Gate cutover on validation, rollback, scope, ownership and baseline evidence. |
 | Rollback is described, but practical rollback may be impossible for data changes. | Liquibase and downstream state can make rollback unsafe. | Longer incident duration or data inconsistency. | Define rollback eligibility and fix-forward rules per release. |
 | Changed-chart deployment needs dependency safety. | Changed chart detection may miss transitive or config-only dependencies. | Partial release or hidden deployment gap. | Add dependency analysis, exclusion approval and post-deploy reconciliation. |
-| Knowledge Graph value depends on metadata quality. | Bad relationships create false confidence. | Wrong impact analysis during incidents. | Pilot only after ticket/tag/owner metadata accuracy is measured. |
-| Control plane trigger capability creates separation-of-duties risk. | A central UI could bypass release controls. | Governance and audit failure. | Keep read-only first; require approval workflow before any triggers. |
-| Copilot proposals need stricter guardrails. | AI can hallucinate or overstate confidence. | Unsafe operational decisions. | Allow evidence retrieval only; prohibit autonomous release/rollback advice. |
+| Future platform value depends on metadata quality. | Bad relationships create false confidence. | Wrong impact analysis during incidents. | Pilot only after ticket/tag/owner metadata accuracy is measured. |
+| Future trigger capability creates separation-of-duties risk. | A central UI could bypass release controls. | Governance and audit failure. | Require approval workflow before any triggers. |
 | NFRs are present in places but not unified across the package. | ARB needs measurable targets. | Incomplete approval package. | Publish one NFR table with availability, freshness, DR, retention and security targets. |
 | Business case values are useful but not yet baselined. | Benefits may be challenged as speculative. | Funding challenge. | Add baseline measurement plan and confidence level for each KPI. |
 
@@ -71,11 +69,11 @@ ARB and engineering leadership should approve the near-term controlled release-t
 | ARB member in 15 minutes | Partially | Strong material exists, but approval boundaries are not obvious. | Add ADR, NFRs, conditions and explicit defer list. |
 | Platform lead | Yes, with effort | Implementation implications are distributed across many files. | Add roadmap and ownership package. |
 | Release manager | Partially | Operational flows are improving but still need approvals and runbooks. | Add hotfix/rollback evidence and decision guide. |
-| Security / compliance | Partially | Security is strongest in Knowledge Graph docs, weaker in release automation docs. | Add SoD, privileged access, audit and accreditation controls. |
+| Security / compliance | Partially | Security controls need to be explicit in release automation docs. | Add SoD, privileged access, audit and accreditation controls. |
 
 ## Improved Key Message
 
-The correct near-term decision is not "change the branch model" or "build a Knowledge Graph". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, Knowledge Graph, control plane and copilot capabilities can be piloted safely as read-only intelligence layers.
+The correct near-term decision is not "change the branch model" or "build a platform product". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, future platform capabilities can be assessed separately.
 
 ## Related Pages
 

@@ -15,9 +15,7 @@ Roadmap status reflects execution readiness, not document-writing progress. Phas
 | 2 | Month 2-3 | Release automation | Drone pilot green; auto branch/tag/chart; release reporting; alerting. |
 | 3 | Month 3-4 | Branch cutover | Controlled `main = production` cutover; branch protections; forward-merge rules active. |
 | 4 | Month 4-6 | Scale and harden | Changed-chart deployment default; shared dev auto-deploy; rerun safety; full RACI enforcement. |
-| 5 | Month 6-12 | Modernise | Runtime feature flags; External Secrets Operator; SBOM generation; observability gates evaluation; read-only deployment/release dashboard feasibility. |
-| 6 | 12+ months | Optimise (if needed) | Trunk-based evaluation; GitOps (ArgoCD); progressive delivery; canary rollout; unified deployment control plane evaluation. |
-| 7 | Future | Platform maturity | Controlled deployment trigger; rollback assistant; approval workflow integration; metrics/audit reporting through control plane. |
+| 5 | Month 6-12 | Modernise | Runtime feature flags; External Secrets Operator; SBOM generation; observability gates evaluation. |
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -45,8 +43,6 @@ gantt
   section Phase 5
   Modernise                     :p5, after p4, 24w
 
-  section Phase 6
-  Optimise                      :p6, after p5, 24w
 ```
 
 ## Prioritisation Matrix
@@ -66,8 +62,6 @@ gantt
 | External Secrets Operator | Medium | Medium | **Plan** |
 | Runtime feature flags | Medium | High | **Defer** |
 | SBOM generation | Low-Medium | Low | **Plan** |
-| ArgoCD / GitOps | Medium | High | **Defer** |
-| Canary / progressive delivery | Medium | Very High | **Defer** |
 | Trunk-based development | Medium | Very High | **Defer** |
 
 ## RACI Matrix
@@ -123,14 +117,13 @@ Note: Current values are estimates based on available information. Actual baseli
 | Environment readiness gate | Low (checklist + pre-deploy check) | Eliminates late release failures. | First prevented failure |
 | Changed-chart deployment | Medium (detection logic + validation) | Faster deploys; no unnecessary chart pushes. | Ongoing |
 | External Secrets Operator | Medium (infrastructure + migration) | Simpler rotation; better audit; easier onboarding. | 6 months |
-| ArgoCD / GitOps | High (infrastructure + process change) | Drift detection; instant rollback via Git revert; full audit. | 12+ months |
 | Trunk-based development | Very High (culture + tooling + flags) | Uncertain until feature flags and validation mature. | Unknown |
 
 ## Investment Recommendation
 
 > **Recommended investment focus should be release governance, environment standardisation and deployment automation rather than immediate branching model replacement.**
 
-The highest-return investments are low-cost, high-impact changes (strict validation, ownership, environment readiness) combined with the medium-cost automation pilot already in progress. Branch model simplification and platform modernisation (GitOps, progressive delivery) should follow naturally once the operating model is stable and measurable.
+The highest-return investments are low-cost, high-impact changes (strict validation, ownership, environment readiness) combined with the medium-cost automation pilot already in progress. Branch model simplification and platform modernisation should follow only once the operating model is stable and measurable.
 
 ## Top 10 Recommendations
 
@@ -147,7 +140,7 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 | 9 | Strengthen audit trail (pipeline artefacts, immutable reports). | 2-3 |
 | 10 | Re-evaluate branching strategy after maturity improvements (Phase 4+). | 4+ |
 
-**Long-term note:** After the immediate release operating model is stabilised, the team should evaluate whether a unified deployment and release control plane is justified. This should be treated as a platform product decision, not as part of the first automation rollout. See the Future State section above for the full description.
+**Long-term note:** Future platform capabilities should be treated as separate product decisions, not as part of the first automation rollout.
 
 ## Related Pages
 

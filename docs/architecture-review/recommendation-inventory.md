@@ -34,20 +34,16 @@ This inventory lists the major recommendations that must be challenged before AR
 | R26 | Generate SBOMs with existing tooling. | Platform advanced | Future / quick win | Strongly support. |
 | R27 | Sign images and verify signatures. | Platform advanced | Medium-term | Support with rollout plan. |
 | R28 | Adopt GitOps / ArgoCD. | Platform advanced | Future | Defer production adoption; non-prod pilot only. |
-| R29 | Build Deployment Knowledge Graph. | Knowledge Graph | Proposed future option | Modify: limited read-only pilot after metadata maturity. |
-| R30 | Use Knowledge Graph for rollback decision support. | Knowledge Graph | Future | Modify: decision support only, not automated decisioning. |
-| R31 | Use graph for DORA and audit reports. | Knowledge Graph | Future | Support when data quality is measured. |
-| R32 | Build unified deployment control plane. | Transformation | Long-term | Defer; read-only dashboard first. |
-| R33 | Allow control plane to trigger Drone jobs. | Control plane | Future decision | Defer until approval workflow and SoD are proven. |
-| R34 | Add Engineering Copilot. | Advanced architecture | Future | Defer; evidence retrieval only at first. |
-| R35 | Use AI for change impact prediction. | Knowledge Graph / copilot | Future | Defer; advisory only after validation. |
-| R36 | External Secrets Operator. | Transformation / platform | Future | Support after secret ownership and rotation model are agreed. |
-| R37 | Runtime feature flags. | Transformation | Future | Support as prerequisite for trunk-based maturity. |
-| R38 | Reassess trunk-based development after maturity improvements. | Branching | Future | Support deferral. |
+| R29 | Build Deployment Knowledge Graph. | Knowledge Graph | Proposed future option | Move outside immediate approval pack. |
+| R30 | Build unified deployment control plane. | Transformation | Long-term | Defer until release evidence and SoD are proven. |
+| R31 | Allow control plane to trigger Drone jobs. | Control plane | Future decision | Defer until approval workflow and SoD are proven. |
+| R32 | External Secrets Operator. | Transformation / platform | Future | Support after secret ownership and rotation model are agreed. |
+| R33 | Runtime feature flags. | Transformation | Future | Support as prerequisite for trunk-based maturity. |
+| R34 | Reassess trunk-based development after maturity improvements. | Branching | Future | Support deferral. |
 
 ## Inventory Conclusion
 
-The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery, unified control plane trigger capability and Engineering Copilot operational decisioning. These should be deferred or limited to read-only/pilot modes.
+The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery and unified control plane trigger capability. These should be deferred or limited to non-production pilots.
 
 ## Related Pages
 

@@ -45,9 +45,6 @@ This review uses two lenses at the same time:
 | Changed-chart deployment | Needs approval | Support with audited exclusion and manifest comparison controls. |
 | Hotfix and rollback | Needs approval | Must be approved and tested before production rollout. |
 | Release scope and ownership | Needs owner / needs approval | Blocker for scale-out. |
-| Knowledge Graph | Proposed future option | Recommend limited read-only pilot after release metadata maturity improves. |
-| Unified control plane | Long-term future option | Defer write/trigger capabilities; allow read-only feasibility exploration. |
-| Engineering Copilot | Future option | Defer operational recommendations; permit read-only evidence retrieval only after governance is proven. |
 | GitOps / ArgoCD | Medium/long-term option | Defer production adoption; evaluate non-prod only after source-of-truth discipline is proven. |
 | Progressive delivery / auto-rollback | Future option | Defer automated production decisions; start with observability and manual gates. |
 
@@ -57,7 +54,6 @@ This review uses two lenses at the same time:
 - Do not treat generated documentation as a source of truth.
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
-- Do not recommend AI/copilot actioning for release, rollback or deployment decisions.
 
 ## Related Pages
 

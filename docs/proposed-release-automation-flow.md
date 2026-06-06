@@ -239,7 +239,7 @@ Individual feature branch commits should ideally also follow the ticket/message 
 
 ## Related Best Practices
 
-GitOps alignment, tag/version guidance, multi-repo orchestration and progressive delivery considerations are summarised in [release engineering best practices](release-engineering-best-practices.md).
+Tag/version guidance, multi-repo orchestration, validation gates and rollback considerations are summarised in [release engineering best practices](release-engineering-best-practices.md).
 
 ## Related Pages
 
