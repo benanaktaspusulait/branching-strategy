@@ -212,6 +212,13 @@ flowchart TD
 **Colour key:**
 🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Transformation
 
+## Related Pages
+
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Release Decision Register](docs/release-decision-register.md)
+- [Transformation Programme](docs/transformation-programme.md)
+- [Architecture Review Package](docs/architecture-review/index.md)
+
 ---
 
 > Source: `docs/system-state-problems-solutions.md`
@@ -551,9 +558,13 @@ Before expanding the automation beyond the pilot:
 
 > **Validate the current-state assumptions with Gareth, Achilles, release management and one squad lead before asking for approval on the rollout decisions.**
 
----
+## Related Pages
 
-<- [README](README.md) | -> [Transformation programme](docs/transformation-programme.md)
+- [Cerberus Release Engineering Assessment](README.md)
+- [Current Release Operating Model](docs/current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](docs/cicd-deployment-findings-and-actions.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md)
 
 ---
 
@@ -825,9 +836,13 @@ Before changing the branching model, confirm:
 - Proposed automation is in [proposed release automation flow](docs/proposed-release-automation-flow.md).
 - Open rollout decisions are in [rollout decision proposals](docs/rollout-decision-proposals.md).
 
----
+## Related Pages
 
-<- [README](README.md) | -> [Deployment and release findings](docs/deployment-and-release-findings.md)
+- [Cerberus Release Engineering Assessment](README.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Deployment And Release Findings](docs/deployment-and-release-findings.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [Automation And Validation](docs/automation-and-validation.md)
 
 ---
 
@@ -1063,9 +1078,12 @@ The new release automation must explicitly define strict validation rules for ti
 
 Helm versioning, values-file structure, umbrella chart dependency handling, mass diff usage and secrets-management options are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Current release operating model](docs/current-release-operating-model.md) | -> [Proposed release automation flow](docs/proposed-release-automation-flow.md)
+- [Current Release Operating Model](docs/current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](docs/cicd-deployment-findings-and-actions.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Release Engineering Best Practices](docs/release-engineering-best-practices.md)
 
 ---
 
@@ -1193,9 +1211,13 @@ Not all problems are equally important. Prioritise by impact and effort:
 7. Feature flags and environment parity (medium-term roadmap)
 ```
 
----
+## Related Pages
 
-<- [Rollout decision proposals](docs/rollout-decision-proposals.md) | -> [Squad briefing summary](docs/squad-briefing-summary.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Deployment And Release Findings](docs/deployment-and-release-findings.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Squad Briefing Summary](docs/squad-briefing-summary.md)
 
 ---
 
@@ -1445,9 +1467,12 @@ Individual feature branch commits should ideally also follow the ticket/message 
 
 GitOps alignment, tag/version guidance, multi-repo orchestration and progressive delivery considerations are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Deployment and release findings](docs/deployment-and-release-findings.md) | -> [Branching strategy options](docs/branching-options.md)
+- [Current Release Operating Model](docs/current-release-operating-model.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Hotfix And Rollback](docs/hotfix-and-rollback.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
 
 ---
 
@@ -1728,9 +1753,12 @@ Then reassess whether the branch model is still the main constraint.
 
 Branching model selection, staged GitFlow-to-trunk transition guidance and common rollout mistakes are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Proposed release automation flow](docs/proposed-release-automation-flow.md) | -> [Automation and validation](docs/automation-and-validation.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md)
+- [Release Engineering Best Practices](docs/release-engineering-best-practices.md)
 
 ---
 
@@ -2024,9 +2052,12 @@ Follow-up needed:
 
 Validation gates, idempotent pipeline design, immutable artefacts, release metrics and supply-chain security considerations are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Branching strategy options](docs/branching-options.md) | -> [Hotfix and rollback](docs/hotfix-and-rollback.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [Deployment And Release Findings](docs/deployment-and-release-findings.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Decision Register](docs/release-decision-register.md)
 
 ---
 
@@ -2304,9 +2335,12 @@ The team should produce:
 
 Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liquibase forward-only migration guidance are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Automation and validation](docs/automation-and-validation.md) | -> [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Engineering Best Practices](docs/release-engineering-best-practices.md)
 
 ---
 
@@ -2535,9 +2569,12 @@ The team should produce:
 
 RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-train guidance are summarised in [release engineering best practices](docs/release-engineering-best-practices.md).
 
----
+## Related Pages
 
-<- [Hotfix and rollback](docs/hotfix-and-rollback.md) | -> [Rollout decision proposals](docs/rollout-decision-proposals.md)
+- [Hotfix And Rollback](docs/hotfix-and-rollback.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Decision Register](docs/release-decision-register.md)
+- [Transformation Programme — Delivery](docs/transformation-programme-delivery.md)
 
 ---
 
@@ -2618,9 +2655,12 @@ Before rollout, approve or amend:
 - Rollout execution practices: [release engineering best practices](docs/release-engineering-best-practices.md)
 - Ownership model: [release scope, ownership and approvals](docs/scope-ownership-approvals.md)
 
----
+## Related Pages
 
-<- [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | -> [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md)
+- [Release Decision Register](docs/release-decision-register.md)
+- [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md)
+- [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md)
+- [Automation And Validation](docs/automation-and-validation.md)
 
 ---
 
@@ -2688,9 +2728,12 @@ The proposal documents describe recommended defaults. This register tracks wheth
 - [Automation and validation](docs/automation-and-validation.md)
 - [Transformation programme](docs/transformation-programme.md)
 
----
+## Related Pages
 
-<- [Rollout decision proposals](docs/rollout-decision-proposals.md) | -> [Transformation programme](docs/transformation-programme.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Hotfix And Rollback](docs/hotfix-and-rollback.md)
 
 ---
 
@@ -2997,9 +3040,13 @@ Before starting this future work, the team must decide:
 
 For roadmap, RACI, metrics, cost/benefit and recommendations, see [transformation programme — delivery](docs/transformation-programme-delivery.md).
 
----
+## Related Pages
 
-← [System state, problems, solutions and risks](docs/system-state-problems-solutions.md) | → [Transformation programme — delivery](docs/transformation-programme-delivery.md)
+- [Cerberus Release Engineering Assessment](README.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Transformation Programme — Delivery](docs/transformation-programme-delivery.md)
+- [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md)
+- [Advanced Architecture Sections](docs/advanced-architecture-sections.md)
 
 ---
 
@@ -3157,13 +3204,12 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 
 **Long-term note:** After the immediate release operating model is stabilised, the team should evaluate whether a unified deployment and release control plane is justified. This should be treated as a platform product decision, not as part of the first automation rollout. See the Future State section above for the full description.
 
----
+## Related Pages
 
-<- [System state, problems, solutions and risks](docs/system-state-problems-solutions.md) | -> [Rollout decision proposals](docs/rollout-decision-proposals.md)
-
----
-
-← [Transformation programme](docs/transformation-programme.md) | → [Rollout decision proposals](docs/rollout-decision-proposals.md)
+- [Transformation Programme](docs/transformation-programme.md)
+- [Release Decision Register](docs/release-decision-register.md)
+- [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md)
+- [Architecture Review Package](docs/architecture-review/index.md)
 
 ---
 
@@ -3275,9 +3321,12 @@ No squad will be switched to the new process without seeing it work first on a r
 
 The automation handles the plumbing between your merge and the deployment. Your day-to-day development workflow stays the same.
 
----
+## Related Pages
 
-<- [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | -> [README](README.md)
+- [Proposed Release Automation Flow](docs/proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md)
+- [Transformation Programme — Delivery](docs/transformation-programme-delivery.md)
 
 ---
 
@@ -3512,9 +3561,12 @@ Measure:
 
 If the pilot creates more risk than it removes, stop the pilot, revert affected services to the previous manual process, fix the root cause and restart from the last known-good phase.
 
----
+## Related Pages
 
-<- [README](README.md) | -> [Platform engineering strategy](docs/platform-engineering-strategy.md)
+- [Branching Strategy Options](docs/branching-options.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Hotfix And Rollback](docs/hotfix-and-rollback.md)
+- [Platform Engineering Strategy](docs/platform-engineering-strategy.md)
 
 ---
 
@@ -3757,9 +3809,12 @@ The release report should include a link to the observability dashboard filtered
 
 For GitOps, supply chain security and the unified control plane, see [platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md).
 
----
+## Related Pages
 
-← [Release engineering best practices](docs/release-engineering-best-practices.md) | → [Platform engineering strategy — advanced](docs/platform-engineering-strategy-advanced.md)
+- [Release Engineering Best Practices](docs/release-engineering-best-practices.md)
+- [Platform Engineering Strategy — Advanced](docs/platform-engineering-strategy-advanced.md)
+- [Automation And Validation](docs/automation-and-validation.md)
+- [Transformation Programme](docs/transformation-programme.md)
 
 ---
 
@@ -4019,13 +4074,12 @@ Release automation
 
 This is a future option, subject to platform strategy approval. It is not part of the initial rollout. For the full description, see [Transformation Programme — Future State: Unified Deployment And Release Control Plane](docs/transformation-programme.md#future-state-unified-deployment-and-release-control-plane).
 
----
+## Related Pages
 
-← [Release engineering best practices](docs/release-engineering-best-practices.md) | → [README](README.md)
-
----
-
-← [Platform engineering strategy](docs/platform-engineering-strategy.md) | → [Deployment knowledge graph](docs/deployment-knowledge-graph-design.md)
+- [Platform Engineering Strategy](docs/platform-engineering-strategy.md)
+- [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md)
+- [Advanced Architecture Sections](docs/advanced-architecture-sections.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
 
 ---
 
@@ -4266,9 +4320,12 @@ Relationships:
 
 ---
 
----
+## Related Pages
 
-→ [Part 2: Implementation and Workflows](docs/deployment-knowledge-graph-implementation.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](docs/deployment-knowledge-graph-implementation.md)
+- [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md)
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](docs/deployment-knowledge-graph-business-case.md)
+- [Enterprise Knowledge Graph Architecture Proposal](docs/reference/enterprise-knowledge-graph-proposal.md)
 
 ---
 
@@ -4629,9 +4686,12 @@ sequenceDiagram
 
 ---
 
----
+## Related Pages
 
-← [Part 1: Design](docs/deployment-knowledge-graph-design.md) | → [Part 3: Operations](docs/deployment-knowledge-graph-operations.md)
+- [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md)
+- [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md)
+- [Advanced Architecture Sections](docs/advanced-architecture-sections.md)
+- [Architecture Diagrams](docs/architecture-review/architecture-diagrams.md)
 
 ---
 
@@ -4887,13 +4947,12 @@ It should be built incrementally, starting only after the immediate release auto
 
 > **This is a long-term architectural investment. It creates compounding value as more events are ingested and more relationships are traversed. But it only works if the underlying data (tags, manifests, tickets, approvals) is reliable — which is why the immediate transformation must come first.**
 
----
+## Related Pages
 
-← [Platform engineering strategy](docs/platform-engineering-strategy.md) | → [README](README.md)
-
----
-
-← [Part 2: Implementation](docs/deployment-knowledge-graph-implementation.md) | → [Business case and governance](docs/deployment-knowledge-graph-business-case.md)
+- [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](docs/deployment-knowledge-graph-implementation.md)
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](docs/deployment-knowledge-graph-business-case.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
 
 ---
 
@@ -5139,9 +5198,12 @@ Potential future capabilities:
 | Recommended approach | Hybrid: build custom graph and ingestion layer; use managed infrastructure; use Backstage or custom UI. |
 | Review date | To be set after Phase 2 of the transformation is complete. |
 
----
+## Related Pages
 
-← [Deployment knowledge graph — operations](docs/deployment-knowledge-graph-operations.md) | → [README](README.md)
+- [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md)
+- [Deployment Knowledge Graph — Operations And Technology](docs/deployment-knowledge-graph-operations.md)
+- [Enterprise Knowledge Graph Architecture Proposal](docs/reference/enterprise-knowledge-graph-proposal.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
 
 ---
 
@@ -5551,9 +5613,12 @@ The long-term platform vision is a unified deployment intelligence capability:
 
 The recommended next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph and copilot are only valuable if the underlying data is reliable — which is why the immediate transformation must come first.
 
----
+## Related Pages
 
-← [Deployment knowledge graph — business case](docs/deployment-knowledge-graph-business-case.md) | → [README](README.md)
+- [Transformation Programme](docs/transformation-programme.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](docs/deployment-knowledge-graph-implementation.md)
+- [Architecture Diagrams](docs/architecture-review/architecture-diagrams.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
 
 ---
 
@@ -5783,9 +5848,12 @@ Automation is not an owner. When automation fails, someone must decide whether t
 For problems (P1-P12), see [detailed problems](docs/reference/detailed-problems.md).
 For solutions (S1-S7) and experience notes, see [detailed solutions](docs/reference/detailed-solutions.md).
 
----
+## Related Pages
 
-← [README](README.md) | → [Detailed problems](docs/reference/detailed-problems.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Detailed Problem Analysis (P1–P12)](docs/reference/detailed-problems.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md)
+- [Cerberus Release Engineering Assessment](README.md)
 
 ---
 
@@ -5997,9 +6065,12 @@ Recommendation:
 
 - Define alert content, alert channels, alert owners and safe rerun criteria before production rollout.
 
----
+## Related Pages
 
-← [Detailed current state](docs/reference/system-state-problems-solutions-detailed.md) | → [Detailed solutions](docs/reference/detailed-solutions.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [System State, Problems, Solution Options And Risks - Detailed Analysis](docs/reference/system-state-problems-solutions-detailed.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md)
+- [CI/CD Deployment Findings And Actions](docs/cicd-deployment-findings-and-actions.md)
 
 ---
 
@@ -6399,13 +6470,12 @@ Move toward trunk-based development only after feature flags, testing, rollback 
 
 This path is not the fastest-looking option, but it reduces production release risk in the most controlled way.
 
----
+## Related Pages
 
-<- [README](README.md) | -> [Rollout decision proposals](docs/rollout-decision-proposals.md)
-
----
-
-← [Detailed problems](docs/reference/detailed-problems.md) | → [Rollout decision proposals](docs/rollout-decision-proposals.md)
+- [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md)
+- [Detailed Problem Analysis (P1–P12)](docs/reference/detailed-problems.md)
+- [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
 
 ---
 
@@ -6782,9 +6852,12 @@ Incremental rollout, success metrics, rollout rollback and resistance/edge-case 
 
 Decision approval status is tracked in the [release decision register](docs/release-decision-register.md).
 
----
+## Related Pages
 
-<- [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | -> [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md)
+- [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md)
+- [Release Decision Register](docs/release-decision-register.md)
+- [Branching Strategy Options](docs/branching-options.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](docs/reference/detailed-solutions.md)
 
 ---
 
@@ -7600,6 +7673,13 @@ The organisation operates 10+ engineering systems containing critical data about
 
 *PROPOSED — subject to Architecture Review Board approval*
 
+## Related Pages
+
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](docs/deployment-knowledge-graph-business-case.md)
+- [Deployment Knowledge Graph](docs/deployment-knowledge-graph-design.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
 ---
 
 > Source: `docs/architecture-review/index.md`
@@ -7635,6 +7715,14 @@ This package contains the architecture review outputs for executive, ARB and bor
 5. [arb-package](docs/architecture-review/arb-package.md)
 6. [business-case-and-roadmap](docs/architecture-review/business-case-and-roadmap.md)
 7. [final-scorecard-and-verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
+## Related Pages
+
+- [Cerberus Release Engineering Assessment](README.md)
+- [Architecture Review Source Document List](docs/architecture-review/source-document-list.md)
+- [Architecture Review Criteria](docs/architecture-review/review-criteria.md)
+- [Recommendation Inventory](docs/architecture-review/recommendation-inventory.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
 
 ---
 
@@ -7730,6 +7818,12 @@ The review scope covers:
 
 No architecture document currently present in `README.md` navigation is excluded from the review.
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Architecture Review Criteria](docs/architecture-review/review-criteria.md)
+- [Cerberus Release Engineering Assessment](README.md)
+
 ---
 
 > Source: `docs/architecture-review/review-criteria.md`
@@ -7796,6 +7890,12 @@ This review uses two lenses at the same time:
 - Do not recommend automation that bypasses human approval for high-impact environments.
 - Do not recommend AI/copilot actioning for release, rollback or deployment decisions.
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Recommendation Inventory](docs/architecture-review/recommendation-inventory.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
+
 ---
 
 > Source: `docs/architecture-review/recommendation-inventory.md`
@@ -7851,6 +7951,13 @@ This inventory lists the major recommendations that must be challenged before AR
 ## Inventory Conclusion
 
 The strongest immediate recommendations are release metadata standardisation, strict validation, ownership, environment readiness, hotfix/rollback process and controlled Drone automation. The most aggressive recommendations are production GitOps, progressive delivery, unified control plane trigger capability and Engineering Copilot operational decisioning. These should be deferred or limited to read-only/pilot modes.
+
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Architecture Review Criteria](docs/architecture-review/review-criteria.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
 
 ---
 
@@ -7936,6 +8043,13 @@ ARB and engineering leadership should approve the near-term controlled release-t
 
 The correct near-term decision is not "change the branch model" or "build a Knowledge Graph". The correct near-term decision is to make release state trustworthy: explicit scope, named ownership, strict validation, audited approvals, tested rollback/fix-forward and controlled automation. Once that foundation is stable, Knowledge Graph, control plane and copilot capabilities can be piloted safely as read-only intelligence layers.
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
+- [Business Case And Recommended Roadmap](docs/architecture-review/business-case-and-roadmap.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
 ---
 
 > Source: `docs/architecture-review/alignment-and-enterprise-architecture-review.md`
@@ -8007,6 +8121,13 @@ Status: Completed architecture review output.
 | Resilience | 2 / 5 | 4.5 / 5 | DR and failover are under-specified. | Define RTO/RPO and rebuild-from-event-store targets. |
 | Observability | 2.5 / 5 | 4 / 5 | Health metrics exist but not release-correlated. | Add release health dashboard and ingestion freshness alerts. |
 | Security | 2.5 / 5 | 4.5 / 5 | Security strong in graph proposal, less complete for automation/control plane. | Apply RBAC, SoD, audit and privileged access controls across all tooling. |
+
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Architecture Review Criteria](docs/architecture-review/review-criteria.md)
+- [Recommendation Inventory](docs/architecture-review/recommendation-inventory.md)
+- [Architecture Diagrams](docs/architecture-review/architecture-diagrams.md)
 
 ---
 
@@ -8103,6 +8224,13 @@ ARB should approve:
 | RBAC, audit and SoD approved. | Control plane or graph build. |
 | Copilot prohibited actions documented. | Any AI assistant pilot. |
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Executive Summary And Architecture Quality Review](docs/architecture-review/executive-and-quality-review.md)
+- [Business Case And Recommended Roadmap](docs/architecture-review/business-case-and-roadmap.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
 ---
 
 > Source: `docs/architecture-review/business-case-and-roadmap.md`
@@ -8162,6 +8290,13 @@ Status: Completed architecture review output.
 | 6 | Platform modernisation evaluation. | Non-prod GitOps, SBOM/signing, observability gates. | Demonstrated value without production blast radius. | ARB decision for each production adoption. |
 | 7 | Controlled platform product. | Read-only control plane, approval workflow evaluation, copilot evidence retrieval. | Users can inspect release state without bypassing controls. | Separate ARB approval for any trigger/action capability. |
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
+- [Operating Model And RACI](docs/architecture-review/operating-model-raci.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
 ---
 
 > Source: `docs/architecture-review/operating-model-raci.md`
@@ -8220,6 +8355,13 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 | Incident command | Rollback/fix-forward decisions must be owned by incident lead with release owner consultation. |
 | Security review | Any graph, control plane or copilot pilot requires RBAC, audit logging and data classification review. |
 | Quarterly review | RACI, owner list, access rights and release metrics should be reviewed quarterly. |
+
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
+- [Missing Enterprise Concerns](docs/architecture-review/missing-enterprise-concerns.md)
+- [Business Case And Recommended Roadmap](docs/architecture-review/business-case-and-roadmap.md)
 
 ---
 
@@ -8338,6 +8480,13 @@ flowchart TD
   AUDIT["Access audit log"] --> GOVERN
 ```
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Architecture Alignment And Enterprise Architecture Review](docs/architecture-review/alignment-and-enterprise-architecture-review.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
+- [Advanced Architecture Sections](docs/advanced-architecture-sections.md)
+
 ---
 
 > Source: `docs/architecture-review/criticality-challenge-review.md`
@@ -8452,6 +8601,13 @@ Prohibited capabilities:
 - Presenting low-confidence graph data as fact.
 - Making change advisory decisions.
 
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Recommendation Inventory](docs/architecture-review/recommendation-inventory.md)
+- [Missing Enterprise Concerns](docs/architecture-review/missing-enterprise-concerns.md)
+- [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md)
+
 ---
 
 > Source: `docs/architecture-review/missing-enterprise-concerns.md`
@@ -8498,6 +8654,13 @@ Status: Completed architecture review output.
 | Service ownership at scale | Ownership map must remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
 | Separation of duties | Future control plane trigger capability could blur approver/operator roles. | Enforce SoD in workflow and audit. |
 | Operational training | New automation and reports may confuse teams without rehearsal. | Run release simulation and rollback drills before production rollout. |
+
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
+- [Operating Model And RACI](docs/architecture-review/operating-model-raci.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
 
 ---
 
@@ -8588,3 +8751,10 @@ If Cerberus genuinely processes 5+ billion records per month and supports UK bor
 - Defer until much later: write-capable unified control plane, production-wide GitOps, auto-rollback/progressive delivery, Engineering Copilot operational recommendations and any AI-driven release decisioning.
 
 The mature enterprise answer is controlled evolution, not large architectural change. The immediate approval ask should be release safety and auditability, with future intelligence capabilities approved only after the foundation proves itself.
+
+## Related Pages
+
+- [Architecture Review Package](docs/architecture-review/index.md)
+- [Executive Summary And Architecture Quality Review](docs/architecture-review/executive-and-quality-review.md)
+- [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md)
+- [ARB Package](docs/architecture-review/arb-package.md)
