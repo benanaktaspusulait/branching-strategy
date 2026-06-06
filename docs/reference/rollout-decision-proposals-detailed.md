@@ -345,7 +345,7 @@ Recommended transition:
 
 Before rollout, approve or amend:
 
-1. `development -> main` cutover release.
+1. `main` creation from confirmed production baseline.
 2. `main` branch protection and production reconciliation rule.
 3. Release branch naming.
 4. Repository scope for auto-created release branches.

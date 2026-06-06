@@ -59,7 +59,7 @@ Key problems at a glance:
 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, release reporting, commit metadata, merge strategy. |
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
-| [Rollout decision proposals](docs/rollout-decision-proposals.md) | 14 proposed decisions ready for team approval. |
+| [Rollout decision proposals](docs/rollout-decision-proposals.md) | 15 proposed decisions ready for team approval. |
 | [Transformation programme](docs/transformation-programme.md) | Root cause, maturity scorecard, roadmap, RACI, metrics, cost/benefit, top 10. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
@@ -124,18 +124,23 @@ flowchart TD
   J["👥 Scope, Ownership & Approvals"]:::decision
   K["📢 Squad Briefing Summary"]:::decision
 
+  %% Layer 5
+  L["🗺️ Transformation Programme"]:::transform
+
   %% Relationships
   A & B --> C --> D
   D --> E & F
   E --> G & H
   F & G & H --> I
   I --> J --> K
+  K --> L
 
   classDef current fill:#1a73e8,stroke:#1557b0,color:#fff,font-weight:bold
   classDef problem fill:#e8710a,stroke:#c45d08,color:#fff,font-weight:bold
   classDef solution fill:#0d652d,stroke:#094d22,color:#fff,font-weight:bold
   classDef decision fill:#7b1fa2,stroke:#5c1680,color:#fff,font-weight:bold
+  classDef transform fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
 ```
 
-**Color key:**
-🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions
+**Colour key:**
+🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Transformation

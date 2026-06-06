@@ -229,7 +229,7 @@ Individual feature branch commits should ideally also follow the ticket/message 
 
 ## Items Still Needing Formal Approval
 
-1. When exactly does `development` become `main`?
+1. When exactly is `main` created from the confirmed production baseline, and when is `development` retired?
 2. What is the final branch naming convention?
 3. Which release is the first rollout candidate?
 4. Which repos get auto-created release branches?
