@@ -1,6 +1,6 @@
-# Rollout Decision Proposals
+# Rollout Decision Proposals - Detailed Rationale
 
-These are proposed decisions for the remaining open items.
+These are proposed decisions for the remaining open items, with full rationale and detailed procedures.
 
 They are written as defaults the team can approve or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 

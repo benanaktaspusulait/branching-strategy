@@ -1,8 +1,8 @@
-# Rollout Decision Proposals
+# Rollout Decision Proposals - Summary
 
 These are the proposed decisions that still need release/process-owner approval.
 
-This page is intentionally short. For rationale and detailed procedures, see [detailed rollout decision proposals](reference/rollout-decision-proposals-detailed.md).
+This page is intentionally short. For rationale and detailed procedures, see [Rollout Decision Proposals - Detailed Rationale](reference/rollout-decision-proposals-detailed.md).
 
 ## Decision Summary
 

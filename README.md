@@ -60,6 +60,7 @@ Key problems at a glance:
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
 | [Rollout decision proposals](docs/rollout-decision-proposals.md) | 14 proposed decisions ready for team approval. |
+| [Transformation programme](docs/transformation-programme.md) | Root cause, maturity scorecard, roadmap, RACI, metrics, cost/benefit, top 10. |
 | [Squad briefing summary](docs/squad-briefing-summary.md) | Short update for squad leads: what changes, what to expect. |
 
 ### Transformation Programme

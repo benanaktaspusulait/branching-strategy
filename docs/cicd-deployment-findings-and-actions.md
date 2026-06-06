@@ -74,20 +74,7 @@ flowchart LR
 
 ## Short-Term Recommendation
 
-```text
-Do not change the branching model first.
-
-First make the current CI/CD and deployment process visible, repeatable and auditable:
-- release flow
-- release scope
-- branch/tag timing
-- tag and manifest validation
-- hotfix flow
-- rollback flow
-- ownership and approvals
-
-Then decide whether the branching model should be kept, simplified or replaced.
-```
+As stated in the [executive assessment](system-state-problems-solutions.md#executive-assessment): stabilise the release operating model before changing the branching model. The priority actions are in the Recommended Actions list above.
 
 ## Prioritisation: Effort vs Impact
 
