@@ -13,7 +13,7 @@ It is not a committed transformation mandate. It is a working note to help confi
 | Rollback uncertainty | No tested operational rollback process; Liquibase may be forward-only. | Recent practical behaviour leans towards fix-forward. |
 | Testing inconsistencies | Environment drift; lower envs deployed ad hoc while higher envs use chart releases. | Pre-prod may contain more data than production. |
 | Unclear release content | Release metadata spread across Jira, Git tags, manifests and scripts. | Tag jump checker sometimes passes when it should fail. |
-| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still requires named backup owners and formal approval. |
+| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still requires named backup owners and formal confirmation. |
 
 ## Risk Assessment
 
@@ -21,10 +21,10 @@ It is not a committed transformation mandate. It is a working note to help confi
 | --- | --- | --- | --- | --- | --- |
 | R1 | Production outage from wrong artefact. | Medium | Critical | P1 | Strict tag/manifest validation; fail on mismatch. |
 | R2 | Extended incident due to no rollback process. | Medium | Critical | P1 | Document and test rollback flow; define time budget. |
-| R3 | Release delays from manual coordination. | High | Medium | P2 | Automation pilot; Drone as single release path. |
+| R3 | Release delays from manual coordination. | High | Medium | P2 | Automation pilot; Drone as agreed release path once proven. |
 | R4 | Partial release (missing secrets/config/DB). | High | High | P1 | Explicit release scope checklist per release. |
 | R5 | Audit failure from weak release trail. | Medium | High | P2 | Pipeline-generated release reports; immutable artefacts. |
-| R6 | Environment failure at deploy time. | Medium | Medium | P3 | Formal environment readiness gate. |
+| R6 | Environment failure at deploy time. | Medium | Medium | P3 | Explicit environment readiness gate. |
 | R7 | Escalation confusion during incident. | High | Medium | P2 | Named owners per RACI. |
 | R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Avoid adopting trunk-based until feature flags mature. |
 
@@ -37,19 +37,19 @@ It is not a committed transformation mandate. It is a working note to help confi
 | Release validation | 2.0 / 5 | 4.5 / 5 | Scripts exist but fail/warn policy not enforced. |
 | Deployment automation | 2.5 / 5 | 4.0 / 5 | Helm/Drone works but manual chart updates and triggers remain. |
 | Observability and monitoring | 2.0 / 5 | 4.0 / 5 | Health checks exist; no release-correlated observability gates. |
-| Release governance and ownership | 2.0 / 5 | 4.5 / 5 | Templates exist; named owners and approval map incomplete. |
+| Release governance and ownership | 2.0 / 5 | 4.5 / 5 | Templates exist; named owners and approval map need confirmation. |
 | Hotfix and rollback | 1.5 / 5 | 4.0 / 5 | Technical capability exists; no tested operational process. |
 | Environment management | 2.5 / 5 | 4.0 / 5 | Environments exist but readiness is not gated. |
 | Secrets and config management | 2.5 / 5 | 4.0 / 5 | Git-crypt works but onboarding and rotation are heavy. |
 | Release reporting and audit | 2.0 / 5 | 4.5 / 5 | Scripts generate some metadata; not yet pipeline-driven or mandatory. |
 
-**Overall: Current 2.3 / 5 → Target 4.3 / 5**
+**Overall: Current 2.3 / 5 -> Possible target 4.3 / 5**
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 
 xychart-beta
-  title "Release Maturity: Current vs Target"
+  title "Release Maturity: Current vs Possible Target"
   x-axis ["Source Control", "CI/CD", "Validation", "Deployment", "Observability", "Governance", "Hotfix/Rollback", "Environments", "Secrets", "Reporting"]
   y-axis "Score" 0 --> 5
   bar [3.0, 3.0, 2.0, 2.5, 2.0, 2.0, 1.5, 2.5, 2.5, 2.0]
@@ -103,7 +103,7 @@ flowchart LR
   classDef target fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Red = current-state weakness · Green = proposed target control.
+**Colour key:** Red = current-state weakness · Green = possible target control.
 
 ### Possible Target End State - Subject To Team Validation
 

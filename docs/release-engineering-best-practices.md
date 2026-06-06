@@ -206,7 +206,7 @@ Use CODEOWNERS and branch protection to enforce approvals where possible.
 
 Avoid big-bang process rollout.
 
-Recommended phases:
+Suggested phases:
 
 ```text
 Phase 1: one service, one squad, one release cycle.

@@ -1,12 +1,12 @@
-# Cerberus Release Engineering Assessment
+# Cerberus Release Process Understanding, Gaps And Improvement Ideas
 
-This complete document consolidates the Cerberus release-management approval pack into one reader copy.
+This complete document consolidates KT-based current understanding, observations, open questions and possible improvement ideas into one reader copy.
 
 ## Complete Document Contents
 
 | # | Source | Section |
 | --- | --- | --- |
-| 1 | `README.md` | [Cerberus Release Engineering Assessment](README.md) |
+| 1 | `README.md` | [Cerberus Release Process Understanding, Gaps And Improvement Ideas](README.md) |
 | 2 | `docs/system-state-problems-solutions.md` | [System State, Problems, Solution Options And Risks](docs/system-state-problems-solutions.md) |
 | 3 | `docs/current-release-operating-model.md` | [Current Release Operating Model](docs/current-release-operating-model.md) |
 | 4 | `docs/deployment-and-release-findings.md` | [Deployment And Release Findings](docs/deployment-and-release-findings.md) |
@@ -17,45 +17,47 @@ This complete document consolidates the Cerberus release-management approval pac
 | 9 | `docs/scope-ownership-approvals.md` | [Release Scope, Ownership And Approvals](docs/scope-ownership-approvals.md) |
 | 10 | `docs/rollout-decision-proposals.md` | [Rollout Decision Proposals - Summary](docs/rollout-decision-proposals.md) |
 | 11 | `docs/release-decision-register.md` | [Release Decision Register](docs/release-decision-register.md) |
-| 12 | `docs/transformation-programme.md` | [Transformation Programme](docs/transformation-programme.md) |
-| 13 | `docs/transformation-programme-delivery.md` | [Transformation Programme — Delivery](docs/transformation-programme-delivery.md) |
+| 12 | `docs/transformation-programme.md` | [Improvement Notes And Maturity Observations](docs/transformation-programme.md) |
+| 13 | `docs/transformation-programme-delivery.md` | [Possible Improvement Path And Delivery Notes](docs/transformation-programme-delivery.md) |
 | 14 | `docs/platform-engineering-strategy.md` | [Platform Engineering Strategy](docs/platform-engineering-strategy.md) |
-| 15 | `docs/architecture-review/arb-package.md` | [ARB Package](docs/architecture-review/arb-package.md) |
-| 16 | `docs/architecture-review/business-case-and-roadmap.md` | [Business Case And Recommended Roadmap](docs/architecture-review/business-case-and-roadmap.md) |
-| 17 | `docs/architecture-review/operating-model-raci.md` | [Operating Model And RACI](docs/architecture-review/operating-model-raci.md) |
+| 15 | `docs/architecture-review/arb-package.md` | [Potential Future Architecture Review Considerations](docs/architecture-review/arb-package.md) |
+| 16 | `docs/architecture-review/business-case-and-roadmap.md` | [Potential Benefits And Roadmap Notes](docs/architecture-review/business-case-and-roadmap.md) |
+| 17 | `docs/architecture-review/operating-model-raci.md` | [Operating Model And RACI Notes](docs/architecture-review/operating-model-raci.md) |
 | 18 | `docs/architecture-review/architecture-diagrams.md` | [Architecture Diagrams](docs/architecture-review/architecture-diagrams.md) |
-| 19 | `docs/architecture-review/criticality-challenge-review.md` | [Criticality Challenge Review](docs/architecture-review/criticality-challenge-review.md) |
-| 20 | `docs/architecture-review/missing-enterprise-concerns.md` | [Missing Enterprise Concerns](docs/architecture-review/missing-enterprise-concerns.md) |
-| 21 | `docs/architecture-review/final-scorecard-and-verdict.md` | [Final Scorecard And Verdict](docs/architecture-review/final-scorecard-and-verdict.md) |
+| 19 | `docs/architecture-review/criticality-challenge-review.md` | [Criticality Challenge Notes](docs/architecture-review/criticality-challenge-review.md) |
+| 20 | `docs/architecture-review/missing-enterprise-concerns.md` | [Additional Enterprise Concerns To Confirm](docs/architecture-review/missing-enterprise-concerns.md) |
+| 21 | `docs/architecture-review/final-scorecard-and-verdict.md` | [Summary Assessment And Open Risks](docs/architecture-review/final-scorecard-and-verdict.md) |
 
 ---
 
 > Source: `README.md`
 
 
-**Current State, Problems, Risks And Improvement Roadmap**
+**KT Notes, Current Understanding, Observations And Discussion Points**
 
-This folder contains the assessment of the Cerberus CI/CD, release and deployment process: what exists today, what is broken, and what should change.
+This document captures my current understanding of the Cerberus CI/CD, release and deployment process based on KT sessions, discussions and follow-up analysis. It highlights areas that appear manual, unclear or risky, and proposes possible questions or improvement ideas for team discussion.
 
-This is an assessment and proposal, not an approved operating model. Items marked "Proposed" or "Needs confirmation" require team sign-off before implementation.
+Some assumptions may be incomplete or wrong and should be validated with Gareth, Achilles, release management, the platform team and squad leads. This is not an approved operating model, a replacement for existing team decisions or a formal architecture proposal.
+
+**Author positioning:** This is a working note from a developer currently onboarding into the Cerberus release process. It is intended to support discussion and shared understanding, not to override existing team decisions or established release management practices.
 
 ## Summary
 
 ```text
-Do not change the branching model first.
+Avoid changing the branching model first.
 First make the current release process visible, repeatable and auditable.
-Then decide whether the branch model should be kept, simplified or replaced.
+Then discuss whether the branch model should be kept, simplified or replaced.
 ```
 
 ## Structure
 
-The documentation is organised as a focused approval pack plus appendix material. The main approval pack stays on the Cerberus release-management problem: safer release flow, validation, ownership, hotfix/rollback and ARB decision conditions.
+The notes are organised as a focused discussion pack plus appendix material. The main discussion pack stays on the Cerberus release-management problem: safer release flow, validation, ownership, hotfix/rollback and areas that may need confirmation.
 
-### Main Approval Pack
+### Main Discussion Pack
 
 | Page | What It Covers |
 | --- | --- |
-| [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Clear current-state summary, problem analysis, solution options, risks and experience-based recommendations. |
+| [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) | Current-state summary, observed problems, possible solution options, risks and experience-based notes. |
 | [Current release operating model](docs/current-release-operating-model.md) | End-to-end release flow: branches -> tags -> artefacts -> deploy -> reconciliation. |
 | [Deployment and release findings](docs/deployment-and-release-findings.md) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
 | [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) | Problem summary table, root causes, and recommended follow-up actions. |
@@ -63,12 +65,12 @@ The documentation is organised as a focused approval pack plus appendix material
 | [Automation and validation](docs/automation-and-validation.md) | Validation rules, release reporting, commit metadata, merge strategy. |
 | [Hotfix and rollback](docs/hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
 | [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) | Repository scope, service ownership, approval matrix. |
-| [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed decisions ready for team approval. |
-| [Release decision register](docs/release-decision-register.md) | Approval status, owner gaps, required evidence and closure order for open decisions. |
-| [Transformation programme](docs/transformation-programme.md) | Root cause, risk assessment, maturity scorecard and near-term target state. |
-| [Transformation programme — delivery](docs/transformation-programme-delivery.md) | Roadmap, prioritisation, RACI, success metrics, cost/benefit, top 10 recommendations. |
+| [Rollout decision proposals](docs/rollout-decision-proposals.md) | Proposed discussion points for rollout behaviour. |
+| [Release decision register](docs/release-decision-register.md) | Open decisions, owner gaps, required evidence and possible closure order. |
+| [Improvement notes and maturity observations](docs/transformation-programme.md) | Root cause notes, risk observations, maturity scorecard and possible near-term target state. |
+| [Possible improvement path and delivery notes](docs/transformation-programme-delivery.md) | Indicative phases, prioritisation, RACI, metrics to baseline, cost/benefit and improvement areas. |
 | [Platform engineering strategy](docs/platform-engineering-strategy.md) | Environment promotion model, deployment strategies, observability gates. |
-| [Architecture review package](docs/architecture-review/index.md) | ARB/executive review outputs, criticality challenge and final verdict. |
+| [Potential architecture review notes](docs/architecture-review/index.md) | Optional later-stage review considerations, criticality challenge notes and open risks. |
 
 Key problems at a glance:
 
@@ -86,7 +88,7 @@ Key problems at a glance:
 ## Suggested Reading Order
 
 1. This page.
-2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - decision-ready synthesis.
+2. [System state, problems, solution options and risks](docs/system-state-problems-solutions.md) - current understanding and discussion summary.
 3. [Current release operating model](docs/current-release-operating-model.md) - how it works today.
 4. [CI/CD deployment findings and actions](docs/cicd-deployment-findings-and-actions.md) - what is broken.
 5. [Proposed release automation flow](docs/proposed-release-automation-flow.md) - what the solution looks like.
@@ -94,12 +96,12 @@ Key problems at a glance:
 7. [Automation and validation](docs/automation-and-validation.md) - validation, reporting, metadata and failure handling.
 8. [Hotfix and rollback](docs/hotfix-and-rollback.md) - production recovery and reconciliation.
 9. [Release scope, ownership and approvals](docs/scope-ownership-approvals.md) - scope, owners and approval points.
-10. [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed decisions to approve or amend.
-11. [Release decision register](docs/release-decision-register.md) - approval tracker and closure order.
-12. [Transformation programme](docs/transformation-programme.md) - root cause, maturity and target release state.
-13. [Transformation programme - delivery](docs/transformation-programme-delivery.md) - roadmap, RACI, metrics and investment view.
+10. [Rollout decision proposals](docs/rollout-decision-proposals.md) - proposed discussion points to confirm or amend.
+11. [Release decision register](docs/release-decision-register.md) - open decision tracker and possible closure order.
+12. [Improvement notes and maturity observations](docs/transformation-programme.md) - root cause, maturity and possible target release state.
+13. [Possible improvement path and delivery notes](docs/transformation-programme-delivery.md) - indicative phases, RACI, metrics and investment notes.
 14. [Platform engineering strategy](docs/platform-engineering-strategy.md) - promotion model, deployment strategy and observability gates.
-15. [Architecture review package](docs/architecture-review/index.md) - ARB conditions, criticality challenge and final verdict.
+15. [Potential architecture review notes](docs/architecture-review/index.md) - optional later-stage review considerations and open risks.
 
 ## Visual Overview
 
@@ -126,8 +128,8 @@ flowchart TD
   M["📌 Release Decision Register"]:::decision
 
   %% Layer 5
-  L["🗺️ Transformation Programme"]:::transform
-  N["🏛️ ARB Package & Verdict"]:::transform
+  L["🗺️ Improvement Notes"]:::transform
+  N["🏛️ Review Considerations"]:::transform
 
   %% Relationships
   A & B --> C --> D
@@ -148,7 +150,7 @@ flowchart TD
 ```
 
 **Colour key:**
-🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Transformation
+🔵 Current state · 🟠 Problems · 🟢 Solutions · 🟣 Decisions · 🟤 Review / improvement notes
 
 ---
 
@@ -157,32 +159,32 @@ flowchart TD
 
 # System State, Problems, Solution Options And Risks
 
-This is the decision-ready summary of the CI/CD, branching, release and deployment documentation.
+This is a KT-based current-understanding summary of the CI/CD, branching, release and deployment notes.
 
-This is an assessment and proposal, not an approved operating model. Items marked "Proposed" or "Needs confirmation" require team sign-off before implementation.
+It reflects my current understanding from KT sessions and follow-up analysis. Some assumptions may be incomplete and should be confirmed with Gareth, Achilles, release management, the platform team and squad leads before being treated as agreed process.
 
 For the full detailed analysis, see [system state detailed analysis](docs/reference/system-state-problems-solutions-detailed.md).
 
-## Executive Assessment
+## Current Understanding
 
 ### Current Situation In One Paragraph
 
 Cerberus currently operates a GitFlow-like branching model, but the real release state is not contained within Git alone. It is fragmented across branches, tags, Docker images, Helm artefacts, the Cerberus deployment-management repository, manifests, environment-specific values files, Jira ticket metadata, secrets (managed through Git-crypt and Drone), Liquibase database scripts and runbooks. A branch rename or branching model simplification does not address this fragmentation. The release process is manual-heavy, validation is not strict enough, ownership is not fully assigned and operational procedures (hotfix, rollback, environment readiness) are not standardised. The automation pilot (Gareth/Achilles on the configuration service) is a strong first step, but it covers only part of the problem.
 
-### Top Findings
+### Top Observations
 
-| # | Finding | Impact | Recommended Action |
-| --- | --- | --- | --- |
-| 1 | The issue is broader than branching. | Changing the branch model alone does not fix the release process. | Stabilise the operating model before simplifying branches. |
-| 2 | Release state is fragmented across multiple systems. | No single view of what constitutes a release. | Map all release state areas; validate consistency through automation. |
-| 3 | Release preparation is manual-heavy. | Days of effort per sprint; inconsistency and audit gaps. | Move local scripts into Drone; automate branch/tag/chart creation. |
-| 4 | Tag, artefact and manifest validation is not strict enough. | Wrong artefact or blocked work may reach production. | Fail fast on wrong tag, missing tag, manifest/tag mismatch. |
-| 5 | Release scope is not fully explicit. | Automation may miss secrets, config, Liquibase or runbook changes. | Define and enforce a release scope checklist per release. |
-| 6 | Hotfix and rollback are not operationally standardised. | Production fixes may drift from main, manifests and active releases. | Document and test both hotfix and rollback flows before next production incident. |
-| 7 | Environment readiness is not a formal gate. | Deployment may fail due to incomplete setup (missing values, secrets, tokens). | Treat environment readiness as a mandatory pre-deployment gate. |
-| 8 | Ownership and approval responsibilities are not fully named. | Decisions are delayed; escalation is unclear. | Assign named owners for every release activity. |
-| 9 | Failed automation alerting and rerun rules are incomplete. | A failed step can leave release state unclear and unresolved. | Define alerting channels, rerun safety rules and manual-intervention triggers. |
-| 10 | Trunk-based development would be risky without stronger feature flags, validation and rollback maturity. | Premature simplification may create instability. | Keep GitFlow-style baseline; reassess branch model after automation matures. |
+| # | Observation | Impact | Possible Discussion Point | Confidence |
+| --- | --- | --- | --- | --- |
+| 1 | The issue appears broader than branching. | Changing the branch model alone would not fix the release process. | Stabilise the operating model before simplifying branches. | High |
+| 2 | Release state appears fragmented across multiple systems. | No single view of what constitutes a release. | Map all release state areas; validate consistency through automation. | High |
+| 3 | Release preparation appears manual-heavy. | Days of effort per sprint; inconsistency and audit gaps. | Move local scripts into Drone; automate branch/tag/chart creation where safe. | Medium |
+| 4 | Tag, artefact and manifest validation may not be strict enough. | Wrong artefact or blocked work may reach production. | Consider fail-fast rules for wrong tag, missing tag and manifest/tag mismatch. | Medium |
+| 5 | Release scope is not fully explicit. | Automation may miss secrets, config, Liquibase or runbook changes. | Confirm a release scope checklist per release. | Medium |
+| 6 | Hotfix and rollback do not yet appear operationally standardised. | Production fixes may drift from main, manifests and active releases. | Confirm and test both hotfix and rollback flows. | Low / needs confirmation |
+| 7 | Environment readiness does not appear to be a formal gate. | Deployment may fail due to incomplete setup. | Confirm readiness checks for values, secrets, tokens and access. | Low / needs confirmation |
+| 8 | Ownership and approval responsibilities are not fully named in the notes. | Decisions may be delayed; escalation may be unclear. | Confirm named owners for key release activities. | Medium |
+| 9 | Failed automation alerting and rerun rules appear incomplete. | A failed step can leave release state unclear and unresolved. | Confirm alerting channels, rerun safety rules and manual-intervention triggers. | Low / needs confirmation |
+| 10 | Trunk-based development would likely be risky without stronger feature flags, validation and rollback maturity. | Premature simplification may create instability. | Keep the current baseline while release controls mature; reassess later. | Medium |
 
 ### Main Message
 
@@ -190,13 +192,13 @@ Cerberus currently operates a GitFlow-like branching model, but the real release
 >
 > The safer path is to make the current release state visible, repeatable, validated, owned and auditable first; then simplify the branch model after the automation proves what is actually being released.
 
-### Long-Term Direction
+### Possible Later Direction
 
-The immediate goal is release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current transformation programme.
+The immediate focus appears to be release operating model maturity: validation, ownership, automation and rollback. This is the focus of the current improvement discussion.
 
 Beyond that, future platform capabilities should be treated as separate product decisions after the release foundation is proven.
 
-This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would be subject to platform strategy approval and should be treated as a platform product decision.
+This is a future maturity option, not part of the initial rollout. It should only be considered after release state visibility, strict validation, named ownership and tested rollback are stable. The feasibility and scope of such a platform would likely need separate platform strategy review and should be treated as a platform product decision.
 
 ## Release State Is Fragmented
 
@@ -229,17 +231,17 @@ The release process depends on multiple disconnected state areas. A problem in a
 | Environment readiness gaps | Late release failure. | Wasted release window. |
 | Fragmented release state | Hard to prove what was deployed. | Audit and incident investigation risk. |
 
-## Executive Summary
+## Current Understanding Summary
 
 ```text
-Do not change the branching model first.
+Avoid changing the branching model first.
 First make the release process visible, repeatable, validated and owned.
-Then move to the target main = production model through a controlled cutover.
+Then discuss moving to the target main = production model through a controlled cutover.
 ```
 
 The current problem is broader than branching. The release state is spread across branches, tags, images, Helm packages, Cerberus charts, manifests, values, secrets, Liquibase changes, JIRA metadata, QAT approval and post-release reconciliation.
 
-The proposed direction is good, but it should be treated as a phased operating-model change, not only a branch rename.
+The proposed direction appears sensible, but it should be treated as a phased operating-model discussion, not only a branch rename.
 
 ## Current System State
 
@@ -253,38 +255,38 @@ The proposed direction is good, but it should be treated as a phased operating-m
 | Deployment | Helm/package and Cerberus chart flow still has manual areas. | Medium |
 | Release reporting | Expected to cross-reference JIRA, tags, services and chart changes. | Proposed |
 | Validation | Existing scripts check some metadata, but strict fail/warn policy is not fully agreed. | Low/Medium |
-| Hotfix/rollback | Concepts exist; operational runbook and reconciliation rules need approval. | Low/Medium |
+| Hotfix/rollback | Concepts exist; operational runbook and reconciliation rules need confirmation. | Low/Medium |
 | Environment readiness | Values, secrets, tokens and parity checks need clearer gates. | Low |
 | Ownership | Templates exist; named owners and approvers are still incomplete. | Low |
 
 ## Main Problems
 
-| # | Problem | Impact | Root Cause | Recommended Action |
+| # | Problem | Impact | Root Cause | Possible Action |
 | --- | --- | --- | --- | --- |
 | P1 | The issue can be misframed as "branching only". | A branch change may move risk rather than reduce it. | Release state is distributed across many systems. | Stabilise the operating model before changing the branch model. |
-| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the mandatory central path. | Complete Drone pilot; make pipeline the only release path. |
+| P2 | Release work is too manual and locally executed. | Slow releases, inconsistent execution, weak audit trail. | Automation is not yet the normal central path. | Complete Drone pilot; make pipeline the agreed release path where the pilot proves safe. |
 | P3 | Branch, tag and artefact timing rules are not strict enough. | Wrong artefacts or manifests can be produced. | Branch lifecycle and artefact lifecycle are different. | Enforce strict validation: wrong/missing tag = fail. |
 | P4 | Release scope is unclear. | Secrets, config, Liquibase or runbook changes can be missed. | "All services" is not yet defined as a repo/change-type scope. | Define explicit release scope per repo and change type. |
 | P5 | Manifest and ticket validation can be too permissive. | Blocked or wrong work can reach release. | Fail vs warning policy is still proposed. | Switch from warning to fail-fast after one dry-run release. |
 | P6 | Changed-chart deployment is not yet a proven default. | Changed charts may be missed or unnecessary charts deployed. | Umbrella chart and service mapping need reliable detection. | Validate detection in pilot; deploy changed charts by default. |
 | P7 | Hotfix and rollback are not operationally standardised. | Production can drift from branch, manifest and release records. | Rollback is treated as technical capability, not full process. | Document and test both flows before next production incident. |
-| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. | Formalise environment readiness as a mandatory gate. |
+| P8 | Environment readiness and parity are not explicit gates. | Release day failures can appear late. | Values, secrets, data, access and tokens are not centrally confirmed. | Consider formalising environment readiness as a deployment gate. |
 | P9 | Secrets/config management will get harder at scale. | Onboarding, rotation and audit risk increase. | Git-crypt/GPG is workable but operationally heavy. | Evaluate External Secrets Operator for medium-term. |
 | P10 | Trunk-based development is risky without stronger feature flags. | Incomplete work may need branch or config workarounds. | Feature flags appear deploy-time rather than dynamic runtime. | Keep current model; add runtime flags before reconsidering. |
-| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Assign named owners before expanding beyond pilot. |
+| P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Confirm named owners before expanding beyond pilot. |
 | P12 | Alerting and rerun rules are incomplete. | Failed automation can leave state half-updated. | Failure modes are not yet production-readiness gates. | Define alerting channels and safe-rerun criteria. |
 
 For detailed analysis of each problem, see the [detailed system analysis appendix](docs/reference/system-state-problems-solutions-detailed.md).
 
-## Recommended Solution Path
+## Possible Improvement Path
 
 ### 1. Stabilise The Current Operating Model
 
 Keep the current GitFlow-style model temporarily while the release process is made explicit.
 
-Do now:
+Possible near-term discussion points:
 
-- Approve or amend the rollout decisions.
+- Confirm or amend the rollout decisions.
 - Define release scope across repos and change types.
 - Decide fail vs warning validation rules.
 - Name release, hotfix, rollback, environment and alert owners.
@@ -302,7 +304,7 @@ Mitigation:
 
 Make Drone the central path for release branch, tag, chart update and report generation.
 
-Do next:
+Possible next steps:
 
 - Complete the configuration-service pilot.
 - Test reruns and partial-failure recovery.
@@ -319,7 +321,7 @@ Mitigation:
 
 ### 3. Add Strict Release Validation
 
-Recommended default:
+Possible strict-validation default:
 
 ```text
 Wrong tag -> fail
@@ -338,15 +340,15 @@ Mitigation:
 
 - Start with dry-run/report-only for one release, then switch to enforced fail-fast.
 
-### 4. Cut Over To `main = Production`
+### 4. Consider Cutover To `main = Production`
 
-Only cut over after the pilot and validation rules are green.
+Consider cutover only after the pilot and validation rules are green.
 
-Correct cutover:
+Safer cutover may be:
 
 ```text
 Create or rename `main` from the confirmed production state.
-Do not rename `development` to `main`.
+Avoid renaming `development` to `main`.
 ```
 
 Risk:
@@ -359,7 +361,7 @@ Mitigation:
 
 ### 5. Scale Changed-Chart Deployment
 
-Default to deploying all changed charts, with exclusions requiring release-owner approval and an audit note.
+The default could be to deploy all changed charts, with exclusions requiring release-owner confirmation and an audit note.
 
 Risk:
 
@@ -371,7 +373,7 @@ Mitigation:
 
 ### 6. Make Hotfix And Rollback A Production Gate
 
-Production release should not proceed without:
+Production release would likely need:
 
 - hotfix flow,
 - rollback vs fix-forward decision guide,
@@ -419,7 +421,7 @@ They should come after the release pipeline, validation and ownership model are 
 - `main` branch protection is ready.
 - Automation targets the correct branch.
 - Open work on `development` is inventoried.
-- Hotfix and rollback reconciliation are approved.
+- Hotfix and rollback reconciliation are confirmed.
 - Strict validation has passed at least the pilot.
 
 ### No-Go For Branch Cutover
@@ -430,10 +432,10 @@ They should come after the release pipeline, validation and ownership model are 
 - Rollback reconciliation is unclear.
 - Forward-merge ownership is missing.
 
-## Final Recommendation
+## Suggested Next Steps
 
 ```text
-Phase 0: approve decisions and ownership.
+Phase 0: confirm decisions and ownership.
 Phase 1: quick wins and strict validation dry-run.
 Phase 2: Drone pilot.
 Phase 3: controlled `main = production` cutover.
@@ -441,9 +443,9 @@ Phase 4: expand changed-chart deployment and shared dev.
 Phase 5: optimise feature flags, secrets and observability.
 ```
 
-The strongest recommendation is to avoid a big-bang branch change. The safer path is to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.
+The strongest suggested direction is to avoid a big-bang branch change. A safer path may be to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.
 
-For the full transformation programme including root cause analysis, maturity assessment, roadmap, RACI, metrics and cost/benefit analysis, see [transformation programme](docs/transformation-programme.md).
+For root cause notes, maturity observations, possible phases, RACI and metrics to baseline, see [improvement notes and maturity observations](docs/transformation-programme.md).
 
 
 ## One-Page Summary
@@ -462,9 +464,9 @@ Cerberus uses a GitFlow-like branching model with release branches, tags, Helm p
 | 4 | Ownership gaps delay decisions during incidents. | High | Medium |
 | 5 | Environment readiness failure blocks release at deploy time. | Medium | Medium |
 
-### Top 5 Recommendations
+### Top 5 Improvement Areas For Discussion
 
-| # | Recommendation | Effort | Priority |
+| # | Improvement Area | Effort | Priority |
 | --- | --- | --- | --- |
 | 1 | Move release automation scripts into Drone (complete the pilot). | Medium | Immediate |
 | 2 | Enforce strict tag/manifest validation (fail on mismatch). | Low | Immediate |
@@ -485,9 +487,9 @@ Before expanding the automation beyond the pilot:
 - [ ] Named release owner and platform owner are assigned.
 - [ ] At least one squad lead has reviewed and confirmed understanding.
 
-### Suggested Next Step
+### Suggested Immediate Next Step
 
-> **Validate the current-state assumptions with Gareth, Achilles, release management and one squad lead before asking for approval on the rollout decisions.**
+> **Validate the current-state assumptions with Gareth, Achilles, release management and one squad lead before asking the team to confirm or amend the rollout decisions.**
 
 ---
 
@@ -1014,7 +1016,7 @@ Its purpose is to show:
 
 1. How the current process works.
 2. Which parts look manual, unclear, risky or inconsistent.
-3. What should be standardised, automated or explicitly decided next.
+3. What may need to be standardised, automated or explicitly decided next.
 
 ## Analysis Frame
 
@@ -1058,7 +1060,7 @@ The current process should be made visible, repeatable and auditable before the 
 flowchart LR
   CURRENT["🔍 Current State Analysis"]:::input
   PROBLEMS["⚠️ Problems Identified\n─────────────\n• Manual work\n• Unclear scope\n• Validation gaps\n• Operational constraints"]:::problem
-  ACTIONS["✅ Recommended Actions\n─────────────\n• Drone automation\n• Strict validation\n• Changed-chart deploy\n• Clear ownership"]:::solution
+  ACTIONS["✅ Possible Actions\n─────────────\n• Drone automation\n• Strict validation\n• Changed-chart deploy\n• Clear ownership"]:::solution
 
   CURRENT --> PROBLEMS --> ACTIONS
 
@@ -1067,24 +1069,24 @@ flowchart LR
   classDef solution fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = recommended actions.
+**Colour key:** Grey = current-state analysis · Orange = problems identified · Green = possible actions.
 
-## Recommended Actions
+## Possible Actions
 
 1. Keep the current-state flow in [current release operating model](docs/current-release-operating-model.md) as the baseline view.
 2. Use [deployment and release findings](docs/deployment-and-release-findings.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
 3. Move local/manual release automation into Drone once the configuration-service pilot is green.
 4. Define strict validation for wrong tags, missing tags, manifest/tag mismatch, invalid ticket status and `do not deploy` markers.
 5. Confirm repository scope for service code, Helm charts, deployment management, secrets/config, Liquibase and runbooks.
-6. Confirm changed-chart deployment behaviour and the override approval path.
+6. Confirm changed-chart deployment behaviour and the override confirmation path.
 7. Document hotfix and rollback flows including branch, manifest and release report reconciliation.
 8. Define alerting and rerun rules for failed automation steps.
 9. Confirm new environment readiness criteria before treating any dev/test environment as release-ready.
-10. Use [rollout decision proposals](docs/rollout-decision-proposals.md) as the decision record until owners approve or amend them.
+10. Use [rollout decision proposals](docs/rollout-decision-proposals.md) as the decision record until owners confirm or amend them.
 
-## Short-Term Recommendation
+## Suggested Short-Term Focus
 
-As stated in the [executive assessment](docs/system-state-problems-solutions.md#executive-assessment): stabilise the release operating model before changing the branching model. The priority actions are in the Recommended Actions list above.
+As stated in the [current understanding](docs/system-state-problems-solutions.md#current-understanding): stabilise the release operating model before changing the branching model. The priority actions are in the Possible Actions list above.
 
 ## Prioritisation: Effort vs Impact
 
@@ -1117,7 +1119,7 @@ Not all problems are equally important. Prioritise by impact and effort:
 | Ownership matrix sign-off | Requires management decisions and role assignment. |
 | Feature flag runtime control | Requires new tooling or infrastructure. |
 
-### Recommended Execution Order
+### Possible Execution Order
 
 ```text
 1. Quick wins (this sprint / next sprint)
@@ -1152,9 +1154,9 @@ The current process is manual-heavy:
 - Release branches need repeated tags and chart image updates as fixes, CVEs and last-minute changes are added.
 - End-of-sprint release preparation can take several days and consume developer/senior time.
 
-## Target Branch Model
+## Possible Branch Model
 
-The target direction is:
+The possible direction under discussion is:
 
 - `development` does not become `main`. `main` is created from the confirmed production baseline. `development` is transitional and later retired.
 - `main` should represent what is live/production.
@@ -1164,7 +1166,7 @@ The target direction is:
 - Multiple release branches may exist at the same time.
 - If releases need to be chained, the automation should allow a release branch to be based on another release branch instead of `main`.
 
-Proposed decision:
+Working assumption to confirm:
 
 ```text
 Move to `main` as the production/live baseline after an agreed cutover release.
@@ -1304,11 +1306,11 @@ The proposed deployment enhancement should:
 - Keep an override option to avoid a chart if there is a specific reason.
 - Prefer deploying all updated charts in a release branch unless explicitly excluded.
 
-Proposed decision:
+Working assumption to confirm:
 
 ```text
 Deploy all changed charts by default.
-Only release owners can approve exclusions, and the reason must be recorded in the release report or release notes.
+Only release owners can confirm exclusions, and the reason should be recorded in the release report or release notes.
 ```
 
 ## CVE And Renovate Flow
@@ -1319,7 +1321,7 @@ CVE and Renovate-style updates should follow the same pattern as normal team cha
 - CVE fixes should use a hotfix branch.
 - Renovate MRs should target the active release branch.
 - These MRs should look similar to team-raised MRs.
-- Teams/release owners must watch, review and merge them as part of release work.
+- Teams/release owners need to watch, review and merge them as part of release work.
 
 ### Ownership And SLA
 
@@ -1356,7 +1358,7 @@ The preferred approach is a squash-style pattern to reduce noisy release branch 
 The key requirement is:
 
 ```text
-The merge commit into the release branch must include the ticket number and a meaningful message.
+The merge commit into the release branch should include the ticket number and a meaningful message.
 ```
 
 Reason:
@@ -1367,7 +1369,7 @@ The release branch commit history becomes the changelog.
 
 Individual feature branch commits should ideally also follow the ticket/message pattern, because reports may be generated from long-running feature branches before they are merged and deleted.
 
-## Items Still Needing Formal Approval
+## Items Still Needing Confirmation
 
 1. When exactly is `main` created from the confirmed production baseline, and when is `development` retired?
 2. What is the final branch naming convention?
@@ -1460,7 +1462,7 @@ The proposed direction is:
 - Automatically identify what is in or out of a branch/release.
 - Automate start-of-sprint and end-of-sprint release tasks.
 - Reduce release work to one or two standard pipeline runs where practical.
-- Roll the improved process out iteratively after review and sign-off.
+- Roll the improved process out iteratively after review and team confirmation.
 
 ## Proposed Drone Rollout Checklist
 
@@ -1544,7 +1546,7 @@ If the final Git/chart/reporting step fails because of a transient system issue,
 There is not currently an alerting model for failed automation steps.
 ```
 
-Recommended policy:
+Suggested policy:
 
 - Send Slack/email alert for failed automation steps before production rollout.
 - Include repository, branch, release version, failed step, Drone job link and rerun guidance.
@@ -1569,7 +1571,7 @@ flowchart LR
   TICKET["🎫 Check tickets &\nrelease metadata"]:::check
   GATE{"✅ Validation\npassed?"}:::decision
   MR["📝 Create / update\nmanifest MR"]:::pass
-  STOP["🛑 Stop: fix or\napproved override"]:::fail
+  STOP["🛑 Stop: fix or\nconfirmed override"]:::fail
 
   START --> DIFF --> TAG --> MAN --> TICKET --> GATE
   GATE -->|Yes| MR
@@ -1582,7 +1584,7 @@ flowchart LR
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or approve override.
+**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or confirmed override.
 
 Validation should make sure:
 
@@ -1627,7 +1629,7 @@ Observed script responsibilities include:
 
 The team should decide which cases are warnings and which cases must fail the pipeline.
 
-## Recommended Validation Policy
+## Possible Strict Validation Policy
 
 Use a strict policy for release integrity:
 
@@ -1636,24 +1638,24 @@ Wrong tag -> fail.
 Missing tag -> fail.
 Manifest/tag mismatch -> fail.
 Invalid ticket status -> fail or require explicit override.
-Unknown service ownership -> fail or require explicit release-owner approval.
-Do-not-deploy marker -> fail unless release owner explicitly approves an override.
+Unknown service ownership -> fail or require explicit release-owner confirmation.
+Do-not-deploy marker -> fail unless release owner explicitly confirms an override.
 ```
 
-Overrides may still be necessary, but they should be visible, approved and audited.
+Overrides may still be necessary, but they should be visible, confirmed and audited.
 
-Items that still need explicit approval before strict enforcement:
+Items that still need explicit confirmation before strict enforcement:
 
 - Whether wrong tags, missing tags and manifest/tag mismatch fail the release or only warn during a dry run.
 - Which Jira statuses are valid, blocked or invalid for release.
 - How `NA` tag entries are represented and when they are allowed.
-- Who can approve a validation override.
+- Who can confirm a validation override.
 - Where the override evidence is stored.
 - Where release reports are retained and how long they are kept.
 
 ## Auto Manifest And Tag Jump Follow-Up
 
-Auto manifest and tag jump tooling must be reassessed against the proposed non-linear release branch model.
+Auto manifest and tag jump tooling should be reassessed against the proposed non-linear release branch model.
 
 Follow-up needed:
 
@@ -1671,7 +1673,7 @@ Follow-up needed:
 - Which pipeline steps require approval gates?
 - How will the automation detect services with actual changes?
 - What information should be included in the audit trail?
-- What should fail immediately vs require manual approval?
+- What should fail immediately vs require manual approval or confirmed override?
 
 ## Related Best Practices
 
@@ -1694,7 +1696,7 @@ Open hotfix and rollback decisions are tracked in the [release decision register
 
 Hotfixes should be possible from the production state, but the detailed flow still needs to be clarified.
 
-There are two distinct hotfix scenarios that must be supported:
+There appear to be two distinct hotfix scenarios that need support:
 
 ### Production Hotfix (Critical Live Issue)
 
@@ -1775,9 +1777,9 @@ flowchart LR
 - How do CVE/Renovate hotfix branches get reviewed and prioritised during release work?
 - What is the maximum acceptable time from hotfix decision to production deployment?
 
-## Minimum Hotfix Operating Model To Approve
+## Minimum Hotfix Operating Model To Confirm
 
-Before production rollout, the team should approve the following minimum model or replace it with a better one:
+Before production rollout, the team may want to confirm the following minimum model or replace it with a better one:
 
 | Step | Production Hotfix Default | Release-Phase Hotfix Default | Approval / Evidence |
 | --- | --- | --- | --- |
@@ -1905,7 +1907,7 @@ Database changes require special consideration because they are often forward-on
 | Destructive data change (DROP, DELETE) | Cannot be rolled back. Fix-forward or restore from backup. Incident process applies. |
 | Additive-only change (ADD COLUMN, new table) | May not need rollback if application code handles both states. |
 
-### Recommended Practice
+### Suggested Practice
 
 ```text
 Every production Liquibase changeset should include a rollback block or a documented justification for why rollback is not supported.
@@ -1936,7 +1938,7 @@ The process should define:
 Useful principles to confirm:
 
 - Hotfixes start from the known production baseline.
-- `master` must stay aligned with production state.
+- `master` should stay aligned with production state.
 - Hotfixes are back-merged into `development` and relevant active release branches.
 - Rollback decisions are owned, documented and audited.
 - Rollback instructions include code, chart, manifest, config and runbook impact.
@@ -2195,56 +2197,56 @@ RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-tra
 
 # Rollout Decision Proposals - Summary
 
-These are the proposed decisions that still need release/process-owner approval.
+These are proposed discussion points that still need release/process-owner confirmation.
 
-Approval status, accountable owner gaps and evidence requirements are tracked in the [release decision register](docs/release-decision-register.md).
+Confirmation status, accountable owner gaps and evidence requirements are tracked in the [release decision register](docs/release-decision-register.md).
 
 This page is intentionally short. For rationale and detailed procedures, see [Rollout Decision Proposals - Detailed Rationale](docs/reference/rollout-decision-proposals-detailed.md).
 
 ## Decision Summary
 
-| No | Area | Proposed Decision | Decision Status |
+| No | Area | Proposed Discussion Point | Confirmation Status |
 | --- | --- | --- | --- |
-| 1 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Needs approval |
-| 2 | Production sync | No release is closed until the released state is reconciled back to `main`. | Needs approval |
-| 3 | Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs approval |
-| 4 | Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs approval |
+| 1 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Needs confirmation |
+| 2 | Production sync | No release is closed until the released state is reconciled back to `main`. | Needs confirmation |
+| 3 | Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs confirmation |
+| 4 | Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs confirmation |
 | 5 | Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Needs owner |
-| 6 | Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Needs approval |
-| 7 | Quality gates | Keep human approval before higher-environment promotion and production. | Needs approval |
-| 8 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable. | Needs approval |
+| 6 | Changed-chart deployment | Deploy changed charts by default; require confirmed override to exclude one. | Needs confirmation |
+| 7 | Quality gates | Keep human approval before higher-environment promotion and production. | Needs confirmation |
+| 8 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable. | Needs confirmation |
 | 9 | Alerting | Add Slack/email alerts for failed automation steps before production rollout. | Needs owner |
 | 10 | Shared dev | Roll out shared dev deployment in phases, starting with manual trigger. | Proposed |
 | 11 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed |
-| 12 | New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs approval |
-| 13 | Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs approval |
-| 14 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs approval |
+| 12 | New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs confirmation |
+| 13 | Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs confirmation |
+| 14 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs confirmation |
 | 15 | Tag jump checker | Retire after the new validation is green for two consecutive releases. | Proposed |
 
 ## Highest-Risk Decisions
 
-These decisions should be approved first because they control release safety:
+These decisions should be confirmed first because they control release safety:
 
-1. `main` must start from confirmed production state, not from `development`.
+1. `main` should start from confirmed production state, not from `development`.
 2. Wrong tag, missing tag and manifest/tag mismatch should fail fast.
-3. Changed chart exclusions need release-owner approval and an audit note.
-4. Rollback must reconcile branch, manifest, release report and JIRA state.
+3. Changed chart exclusions need release-owner confirmation and an audit note.
+4. Rollback should reconcile branch, manifest, release report and JIRA state.
 5. Failed automation needs an alert owner and safe rerun procedure.
 
 ## Cutover Guardrails
 
-Do not cut over to `main = production` until:
+Avoid cutting over to `main = production` until:
 
 - production state is tied to a known branch/tag/manifest,
 - Drone pilot is green,
 - branch protections are ready,
 - open work on `development` is inventoried,
-- hotfix and rollback reconciliation are approved,
+- hotfix and rollback reconciliation are confirmed,
 - release owner and backup owner are named.
 
-## Approval Checklist
+## Confirmation Checklist
 
-Before rollout, approve or amend:
+Before rollout, the team may want to confirm or amend:
 
 - cutover release and `main` branch protection,
 - release branch naming and source branch,
@@ -2263,7 +2265,7 @@ Before rollout, approve or amend:
 ## Related Detail
 
 - Full decision rationale: [detailed rollout decision proposals](docs/reference/rollout-decision-proposals-detailed.md)
-- Approval tracker: [release decision register](docs/release-decision-register.md)
+- Confirmation tracker: [release decision register](docs/release-decision-register.md)
 - Rollout execution practices: [release engineering best practices](docs/release-engineering-best-practices.md)
 - Ownership model: [release scope, ownership and approvals](docs/scope-ownership-approvals.md)
 
@@ -2274,56 +2276,56 @@ Before rollout, approve or amend:
 
 # Release Decision Register
 
-This page is the single register for decisions that must be approved, rejected or explicitly deferred before the release transformation is treated as an approved operating model.
+This page is a working register for decisions that appear to need confirmation, rejection or explicit deferral before rollout behaviour changes.
 
-The proposal documents describe recommended defaults. This register tracks whether those defaults have actually been agreed.
+The notes describe possible defaults. This register tracks whether those defaults have actually been discussed and agreed by the relevant owners.
 
 ## Status Definitions
 
 | Status | Meaning |
 | --- | --- |
-| Proposed | A recommended default exists, but the decision is not approved. |
-| Needs approval | The decision must be approved before rollout expansion or branch cutover. |
+| Proposed | A possible default exists, but the decision is not confirmed. |
+| Needs confirmation | The decision needs confirmation before rollout expansion or branch cutover. |
 | Needs owner | The decision cannot be executed until a named accountable owner and backup are assigned. |
-| Approved | The relevant owner has approved the decision and evidence is recorded. |
+| Confirmed | The relevant owner has confirmed the decision and evidence is recorded. |
 | Deferred | The decision is intentionally out of scope for the current rollout. |
-| Rejected | The proposal was not accepted; the replacement decision must be recorded. |
+| Rejected | The proposal was not accepted; the replacement decision should be recorded. |
 
 ## Decision Register
 
-| ID | Decision Area | Recommended Default | Current Status | Accountable Owner Needed | Approver Needed | Required Before | Evidence To Record |
+| ID | Decision Area | Possible Default / Working Assumption | Current Status | Accountable Owner Needed | Confirmer Needed | Required Before | Evidence To Record |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| D01 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Needs approval | Release owner | Release/process owner + repo owners | Branch cutover | Cutover release, source branch/tag, branch protection record |
-| D02 | Production sync | Do not close a release until production state is reconciled back to `main`. | Needs approval | Release owner | Release/process owner | First production rollout under new model | Merge record, release report, manifest state |
-| D03 | Release branch creation | Auto-create release branches from `main` for every in-scope repository that needs one. | Needs approval | Automation owner | Release owner | Drone rollout expansion | Pipeline job link, repository scope list |
-| D04 | Feature and hotfix branch source | Create feature and release-phase hotfix branches from the relevant release branch. | Needs approval | Squad lead / release owner | Release owner | Pilot squad briefing | Branch naming rule, squad guidance |
+| D01 | Branch baseline | Move to `main` as the production/live baseline after an agreed cutover release. | Needs confirmation | Release owner | Release/process owner + repo owners | Branch cutover | Cutover release, source branch/tag, branch protection record |
+| D02 | Production sync | Avoid closing a release until production state is reconciled back to `main`. | Needs confirmation | Release owner | Release/process owner | First production rollout under new model | Merge record, release report, manifest state |
+| D03 | Release branch creation | Auto-create release branches from `main` for every in-scope repository that needs one. | Needs confirmation | Automation owner | Release owner | Drone rollout expansion | Pipeline job link, repository scope list |
+| D04 | Feature and hotfix branch source | Create feature and release-phase hotfix branches from the relevant release branch. | Needs confirmation | Squad lead / release owner | Release owner | Pilot squad briefing | Branch naming rule, squad guidance |
 | D05 | Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Needs owner | Release owner | Engineering managers | Before multiple active release branches are used | Forward-merge checklist and owner |
-| D06 | Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Needs approval | Release owner | Release owner + platform owner | Changed-chart deployment rollout | Override record with reason and approver |
-| D07 | Quality gates | Keep human approval before higher-environment promotion and production. | Needs approval | Release owner | Release/process owner + QAT lead | Production rollout | Approval workflow and evidence location |
-| D08 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable after transient failures. | Needs approval | Automation owner | Platform owner | Drone rollout expansion | Rerun procedure, pipeline evidence |
+| D06 | Changed-chart deployment | Deploy changed charts by default; require confirmed override to exclude one. | Needs confirmation | Release owner | Release owner + platform owner | Changed-chart deployment rollout | Override record with reason and approver |
+| D07 | Quality gates | Keep human approval before higher-environment promotion and production. | Needs confirmation | Release owner | Release/process owner + QAT lead | Production rollout | Approval workflow and evidence location |
+| D08 | Failure handling | Make final Git/chart/reporting steps idempotent and rerunnable after transient failures. | Needs confirmation | Automation owner | Platform owner | Drone rollout expansion | Rerun procedure, pipeline evidence |
 | D09 | Alerting | Add Slack/email alerts for failed automation steps before production rollout. | Needs owner | Platform owner | Release owner | Production rollout | Alert channel, owner rota, sample alert |
 | D10 | Shared dev rollout | Roll out shared dev deployment in phases, starting with manual trigger. | Proposed | Platform owner | Release/process owner | Shared dev automation rollout | Rollout phase plan |
-| D11 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed | Platform owner | Engineering leadership | Current transformation scope approval | Scope note |
-| D12 | New environment readiness | Treat environments as ready only after values, secrets/tokens and setup scripts are confirmed. | Needs approval | Platform/environment owner | Platform owner | Any new dev/test environment rollout | Completed readiness checklist |
-| D13 | Manifest/tag validation | Fail on wrong tag, missing tag, manifest/tag mismatch and `do not deploy` markers unless explicitly overridden. | Needs approval | Platform / DevOps | Release owner + platform owner | Strict validation rollout | Validation rules, override record |
-| D14 | `NA` tag entries | Do not let `NA` tag entries silently hide release-impacting changes; define when they are allowed. | Needs approval | Platform / DevOps | Release owner | Strict validation rollout | `NA` handling rule |
-| D15 | Ticket status validation | Define which Jira statuses are valid, blocked or invalid for release. | Needs approval | Release owner | Release/process owner | Strict validation rollout | Status mapping |
-| D16 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and Jira tickets to actual production state. | Needs approval | Release owner + incident lead | Release/process owner | Production rollout | Rollback record, reconciliation checklist |
-| D17 | Rollback vs fix-forward | Define when rollback is standard, when fix-forward is safer, and who decides. | Needs approval | Incident lead | Release owner + incident lead | Production rollout | Decision guide |
-| D18 | Hotfix approval and tagging | Define hotfix approver, tag timing, manifest update and forward-merge route. | Needs approval | Release owner | Release/process owner | Production hotfix readiness | Hotfix runbook |
+| D11 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed | Platform owner | Engineering leadership | Current scope confirmation | Scope note |
+| D12 | New environment readiness | Treat environments as ready only after values, secrets/tokens and setup scripts are confirmed. | Needs confirmation | Platform/environment owner | Platform owner | Any new dev/test environment rollout | Completed readiness checklist |
+| D13 | Manifest/tag validation | Fail on wrong tag, missing tag, manifest/tag mismatch and `do not deploy` markers unless explicitly overridden. | Needs confirmation | Platform / DevOps | Release owner + platform owner | Strict validation rollout | Validation rules, override record |
+| D14 | `NA` tag entries | Avoid letting `NA` tag entries silently hide release-impacting changes; define when they are allowed. | Needs confirmation | Platform / DevOps | Release owner | Strict validation rollout | `NA` handling rule |
+| D15 | Ticket status validation | Define which Jira statuses are valid, blocked or invalid for release. | Needs confirmation | Release owner | Release/process owner | Strict validation rollout | Status mapping |
+| D16 | Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and Jira tickets to actual production state. | Needs confirmation | Release owner + incident lead | Release/process owner | Production rollout | Rollback record, reconciliation checklist |
+| D17 | Rollback vs fix-forward | Define when rollback is standard, when fix-forward is safer, and who decides. | Needs confirmation | Incident lead | Release owner + incident lead | Production rollout | Decision guide |
+| D18 | Hotfix confirmation, approval route and tagging | Define hotfix confirmer/approver, tag timing, manifest update and forward-merge route. | Needs confirmation | Release owner | Release/process owner | Production hotfix readiness | Hotfix runbook |
 | D19 | Tag jump checker retirement | Retire the tag jump checker only after new validation is green for two consecutive releases. | Proposed | Platform / DevOps | Release owner + platform owner | Tool retirement | Two green release records |
-| D20 | Release scope | Define what "all services" means and which repositories/change types are included. | Needs approval | Release owner | Engineering managers | Rollout expansion | Repository and change-type scope list |
+| D20 | Release scope | Define what "all services" means and which repositories/change types are included. | Needs confirmation | Release owner | Engineering managers | Rollout expansion | Repository and change-type scope list |
 | D21 | Ownership matrix | Replace placeholders with named owners, approvers and backups. | Needs owner | Engineering managers | Release/process owner | Rollout expansion | Signed ownership matrix |
-| D22 | Release report location | Define where release reports are published, retained and linked from. | Needs approval | Release owner | Release/process owner | Drone rollout expansion | Retention rule, report location |
-| D23 | First rollout candidate | Confirm the first release/repository set that will use the new process. | Needs approval | Release owner | Engineering managers | Pilot start | Pilot scope and go/no-go result |
+| D22 | Release report location | Define where release reports are published, retained and linked from. | Needs confirmation | Release owner | Release/process owner | Drone rollout expansion | Retention rule, report location |
+| D23 | First rollout candidate | Confirm the first release/repository set that will use the new process. | Needs confirmation | Release owner | Engineering managers | Pilot start | Pilot scope and go/no-go result |
 
 ## Immediate Closure Order
 
-1. Close D20 and D21 so scope and ownership are known.
-2. Close D13, D14 and D15 before strict validation moves from dry-run to enforcement.
-3. Close D16, D17 and D18 before production rollout.
-4. Close D01, D02 and D05 before branch cutover.
-5. Close D08, D09 and D22 before automation is used as the normal release path.
+1. Confirm D20 and D21 so scope and ownership are known.
+2. Confirm D13, D14 and D15 before strict validation moves from dry-run to enforcement.
+3. Confirm D16, D17 and D18 before production rollout.
+4. Confirm D01, D02 and D05 before branch cutover.
+5. Confirm D08, D09 and D22 before automation is used as the normal release path.
 
 ## Related Documents
 
@@ -2331,18 +2333,18 @@ The proposal documents describe recommended defaults. This register tracks wheth
 - [Release scope, ownership and approvals](docs/scope-ownership-approvals.md)
 - [Hotfix and rollback](docs/hotfix-and-rollback.md)
 - [Automation and validation](docs/automation-and-validation.md)
-- [Transformation programme](docs/transformation-programme.md)
+- [Improvement notes and maturity observations](docs/transformation-programme.md)
 
 ---
 
 > Source: `docs/transformation-programme.md`
 
 
-# Transformation Programme
+# Improvement Notes And Maturity Observations
 
-This page contains the transformation analysis, planning and governance structures that sit alongside the assessment findings.
+This page captures maturity observations, possible improvement principles and a possible target shape for discussion.
 
-It answers: "Who does what, when, how do we measure success, and what does it cost?"
+It is not a committed transformation mandate. It is a working note to help confirm what needs to improve, who may need to be involved and which assumptions still need validation.
 
 ## Root Cause Analysis
 
@@ -2353,7 +2355,7 @@ It answers: "Who does what, when, how do we measure success, and what does it co
 | Rollback uncertainty | No tested operational rollback process; Liquibase may be forward-only. | Recent practical behaviour leans towards fix-forward. |
 | Testing inconsistencies | Environment drift; lower envs deployed ad hoc while higher envs use chart releases. | Pre-prod may contain more data than production. |
 | Unclear release content | Release metadata spread across Jira, Git tags, manifests and scripts. | Tag jump checker sometimes passes when it should fail. |
-| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still requires named backup owners and formal approval. |
+| Ownership confusion | RACI not assigned; "release management" is a function, not a named person per release. | Ownership matrix still requires named backup owners and formal confirmation. |
 
 ## Risk Assessment
 
@@ -2361,53 +2363,53 @@ It answers: "Who does what, when, how do we measure success, and what does it co
 | --- | --- | --- | --- | --- | --- |
 | R1 | Production outage from wrong artefact. | Medium | Critical | P1 | Strict tag/manifest validation; fail on mismatch. |
 | R2 | Extended incident due to no rollback process. | Medium | Critical | P1 | Document and test rollback flow; define time budget. |
-| R3 | Release delays from manual coordination. | High | Medium | P2 | Automation pilot; Drone as single release path. |
+| R3 | Release delays from manual coordination. | High | Medium | P2 | Automation pilot; Drone as agreed release path once proven. |
 | R4 | Partial release (missing secrets/config/DB). | High | High | P1 | Explicit release scope checklist per release. |
 | R5 | Audit failure from weak release trail. | Medium | High | P2 | Pipeline-generated release reports; immutable artefacts. |
-| R6 | Environment failure at deploy time. | Medium | Medium | P3 | Formal environment readiness gate. |
+| R6 | Environment failure at deploy time. | Medium | Medium | P3 | Explicit environment readiness gate. |
 | R7 | Escalation confusion during incident. | High | Medium | P2 | Named owners per RACI. |
-| R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Do not adopt trunk-based until feature flags mature. |
+| R8 | Trunk-based instability. | Low (if deferred) | High | P3 | Avoid adopting trunk-based until feature flags mature. |
 
-## Current Release Maturity Assessment
+## Current Release Maturity Observations
 
-| Area | Current Score | Target Score | Gap |
+| Area | Current Score | Possible Target Score | Gap |
 | --- | --- | --- | --- |
 | Source control and branching | 3.0 / 5 | 4.5 / 5 | Branch model clear but reconciliation and automation incomplete. |
 | CI/CD pipeline | 3.0 / 5 | 4.5 / 5 | Pipeline exists but release steps are local/manual. |
 | Release validation | 2.0 / 5 | 4.5 / 5 | Scripts exist but fail/warn policy not enforced. |
 | Deployment automation | 2.5 / 5 | 4.0 / 5 | Helm/Drone works but manual chart updates and triggers remain. |
 | Observability and monitoring | 2.0 / 5 | 4.0 / 5 | Health checks exist; no release-correlated observability gates. |
-| Release governance and ownership | 2.0 / 5 | 4.5 / 5 | Templates exist; named owners and approval map incomplete. |
+| Release governance and ownership | 2.0 / 5 | 4.5 / 5 | Templates exist; named owners and approval map need confirmation. |
 | Hotfix and rollback | 1.5 / 5 | 4.0 / 5 | Technical capability exists; no tested operational process. |
 | Environment management | 2.5 / 5 | 4.0 / 5 | Environments exist but readiness is not gated. |
 | Secrets and config management | 2.5 / 5 | 4.0 / 5 | Git-crypt works but onboarding and rotation are heavy. |
 | Release reporting and audit | 2.0 / 5 | 4.5 / 5 | Scripts generate some metadata; not yet pipeline-driven or mandatory. |
 
-**Overall: Current 2.3 / 5 → Target 4.3 / 5**
+**Overall: Current 2.3 / 5 -> Possible target 4.3 / 5**
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 
 xychart-beta
-  title "Release Maturity: Current vs Target"
+  title "Release Maturity: Current vs Possible Target"
   x-axis ["Source Control", "CI/CD", "Validation", "Deployment", "Observability", "Governance", "Hotfix/Rollback", "Environments", "Secrets", "Reporting"]
   y-axis "Score" 0 --> 5
   bar [3.0, 3.0, 2.0, 2.5, 2.0, 2.0, 1.5, 2.5, 2.5, 2.0]
   line [4.5, 4.5, 4.5, 4.0, 4.0, 4.5, 4.0, 4.0, 4.0, 4.5]
 ```
 
-## Transformation Principles
+## Working Improvement Principles
 
-1. **Do not change the branching model first.** Stabilise the release operating model before simplifying branches.
-2. **Standardise release metadata.** Every release must be traceable from commit to production through tags, manifests, reports and Jira.
+1. **Avoid changing the branching model first.** Stabilise the release operating model before simplifying branches.
+2. **Standardise release metadata.** Every release should be traceable from commit to production through tags, manifests, reports and Jira.
 3. **Automate before reorganising.** Prove the automation works with the current model before introducing a new one.
-4. **Improve visibility before restructuring.** Release reports, dashboards and alerting make problems visible so they can be fixed.
-5. **Reduce manual release activities.** Every manual step is a consistency risk and a scaling bottleneck.
-6. **Make ownership explicit.** Unnamed responsibilities are unowned responsibilities.
-7. **Test rollback before you need it.** A rollback process that has never been tested is not a rollback process.
-8. **Treat environment readiness as a gate, not an assumption.** An existing namespace is not a ready environment.
+4. **Improve visibility before restructuring.** Release reports, dashboards and alerting can make problems visible so they can be fixed.
+5. **Reduce manual release activities where safe.** Every manual step is a consistency risk and a scaling bottleneck.
+6. **Make ownership explicit.** Unnamed responsibilities tend to become unowned responsibilities.
+7. **Test rollback before you need it.** A rollback process that has never been tested is not a reliable rollback process.
+8. **Treat environment readiness as a gate, not an assumption.** An existing namespace is not necessarily a ready environment.
 
-## Target State Architecture
+## Possible Target Operating Shape
 
 ### Current vs Target
 
@@ -2443,9 +2445,9 @@ flowchart LR
   classDef target fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Red = current-state weakness · Green = proposed target control.
+**Colour key:** Red = current-state weakness · Green = possible target control.
 
-### Proposed Target End State - Subject To Team Validation
+### Possible Target End State - Subject To Team Validation
 
 ```text
 - main = production baseline (always).
@@ -2461,29 +2463,35 @@ flowchart LR
 - Alerting for all automation failures.
 ```
 
-## Future State: Unified Deployment And Release Control Plane
+## Possible Future Topics - Not In Current Scope
 
-This is a future maturity option, not part of the immediate approval request. Once release metadata, strict validation, ownership, rollback and audit reporting are stable, Cerberus can evaluate a read-only release/deployment control plane that consolidates Git, Drone, Helm, deployment-management, Jira, Kubernetes and observability status into one operational view. The current approval should cover only the foundations that make that future option credible: reliable release state, named ownership, enforced gates, tested recovery and auditable evidence.
+After release metadata, strict validation, ownership, rollback and audit reporting are stable, the team may want to separately discuss:
+
+- read-only release/deployment visibility across Git, Drone, Helm, deployment-management, Jira and Kubernetes,
+- stronger observability links from release records to post-deploy health,
+- longer-term platform dashboards for audit and incident investigation.
+
+These topics are not part of the current KT-notes scope and would need separate ownership, evidence and review.
 
 ---
 
 > Source: `docs/transformation-programme-delivery.md`
 
 
-# Transformation Programme — Delivery
+# Possible Improvement Path And Delivery Notes
 
-This page contains the roadmap, governance structures, metrics and recommendations for the release transformation.
+This page contains an indicative improvement path, governance notes, possible metrics and discussion points for the release process.
 
-For root cause analysis, risk assessment, maturity scorecard and target state architecture, see [transformation programme](docs/transformation-programme.md).
+For root cause notes, risk observations, maturity scorecard and possible target operating shape, see [improvement notes and maturity observations](docs/transformation-programme.md).
 
-## Transformation Roadmap
+## Possible Phased Improvement Path
 
-Roadmap status reflects execution readiness, not document-writing progress. Phase 0 remains active until the rollout decisions are approved, named owners/backups are assigned and exit criteria are published. See the [release decision register](docs/release-decision-register.md) for the live approval tracker.
+The phases below are indicative only. Actual timing depends on team confirmation, named owners, pilot evidence and agreement on exit criteria. Phase 0 remains open until the rollout decisions are confirmed, named owners/backups are assigned and exit criteria are published. See the [release decision register](docs/release-decision-register.md) for the live confirmation tracker.
 
 | Phase | Timeframe | Focus | Key Deliverables |
 | --- | --- | --- | --- |
-| 0 | Now (Week 1-2) | Decisions and ownership | Approve rollout decisions; assign named owners; publish exit criteria. Status: active / not yet closed. |
-| 1 | Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. Starts after Phase 0 decisions are closed. |
+| 0 | Indicative: Week 1-2 | Decisions and ownership | Confirm rollout decisions; assign named owners; publish exit criteria. Status: active / not yet closed. |
+| 1 | Indicative: Month 1 | Quick wins | Pre-commit hook; strict validation dry-run; environment readiness checklist; rollback documentation. Starts after Phase 0 decisions are closed. |
 | 2 | Month 2-3 | Release automation | Drone pilot green; auto branch/tag/chart; release reporting; alerting. |
 | 3 | Month 3-4 | Branch cutover | Controlled `main = production` cutover; branch protections; forward-merge rules active. |
 | 4 | Month 4-6 | Scale and harden | Changed-chart deployment default; shared dev auto-deploy; rerun safety; full RACI enforcement. |
@@ -2493,7 +2501,7 @@ Roadmap status reflects execution readiness, not document-writing progress. Phas
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
 
 gantt
-  title Transformation Roadmap
+  title Possible Phased Improvement Path
   dateFormat YYYY-MM
   axisFormat %b %Y
 
@@ -2519,7 +2527,7 @@ gantt
 
 ## Prioritisation Matrix
 
-| Recommendation | Impact | Effort | Priority Quadrant |
+| Improvement Area | Impact | Effort | Priority Quadrant |
 | --- | --- | --- | --- |
 | Strict tag/manifest validation | High | Low | **Do first** |
 | Release metadata standardisation | High | Low | **Do first** |
@@ -2561,21 +2569,23 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 Note: Named individuals still need to be assigned. This matrix defines roles, not people. Incident Lead is the designated on-call or incident manager during an active incident. Needs confirmation with team leads.
 
-## Indicative Success Metrics - To Be Baseline Measured
+## Potential Metrics To Baseline
 
-| Metric | Current (Estimated) | Phase 2 Target | Phase 4 Target | Measurement Source |
+Current values are estimates based on available notes and would need actual baseline measurement before becoming targets.
+
+| Metric | Current (Estimated) | Possible Phase 2 Target | Possible Phase 4 Target | Measurement Source |
 | --- | --- | --- | --- | --- |
 | Deployment frequency | Monthly (approx.) | Fortnightly | Weekly | Drone pipeline history |
 | Lead time (commit to production) | 10-15 days (estimated) | 5-7 days | 2-3 days | Git + Drone timestamps |
 | Change failure rate | Unknown (estimated 10-15%) | < 5% | < 2% | Incident records |
 | Mean time to restore (MTTR) | Unknown (estimated 4-8h) | < 2h | < 1h | Incident records |
 | Release preparation effort | Days per sprint | < 1 day | < 2 hours | Team time tracking |
-| Manual steps per release | 10+ (estimated) | < 5 | < 2 (approve + trigger) | Process audit |
+| Manual steps per release | 10+ (estimated) | < 5 | < 2 (confirm + trigger) | Process audit |
 | Release report accuracy | Partial / manual | Auto-generated, reviewed | Auto-generated, trusted | Pipeline artefacts |
 | Rollback test frequency | Never tested | Tested once per quarter | Tested every release cycle | Runbook execution log |
 | Environment readiness failures | Unknown | Tracked and gated | Zero (gated) | Pre-deployment checks |
 
-Note: Current values are estimates based on available information. Actual baseline measurement should begin in Phase 1.
+Note: these are suggested metrics, not committed targets.
 
 ## Cost / Benefit Analysis
 
@@ -2591,15 +2601,15 @@ Note: Current values are estimates based on available information. Actual baseli
 | External Secrets Operator | Medium (infrastructure + migration) | Simpler rotation; better audit; easier onboarding. | 6 months |
 | Trunk-based development | Very High (culture + tooling + flags) | Uncertain until feature flags and validation mature. | Unknown |
 
-## Investment Recommendation
+## Suggested Investment Focus
 
-> **Recommended investment focus should be release governance, environment standardisation and deployment automation rather than immediate branching model replacement.**
+> **A useful investment focus may be release governance, environment standardisation and deployment automation rather than immediate branching model replacement.**
 
 The highest-return investments are low-cost, high-impact changes (strict validation, ownership, environment readiness) combined with the medium-cost automation pilot already in progress. Branch model simplification and platform modernisation should follow only once the operating model is stable and measurable.
 
-## Top 10 Recommendations
+## Top 10 Improvement Areas For Discussion
 
-| # | Recommendation | Phase |
+| # | Improvement Area | Indicative Phase |
 | --- | --- | --- |
 | 1 | Standardise release metadata (tags, manifests, Jira fields, commit format). | 0-1 |
 | 2 | Establish release governance (named owners, approval map, RACI). | 0 |
@@ -2635,7 +2645,7 @@ Squad dev/test → Shared dev → SIT → B.Val / Pre-prod → Production
 
 Promotion today is largely manual: a person triggers deployment to the next environment after the previous one passes some form of validation.
 
-### Target Promotion Model
+### Possible Promotion Model
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -2666,7 +2676,7 @@ flowchart TD
 | Environment-specific config only | Values files, secrets and feature flags are the only things that change between environments. |
 | Gate before promotion | Each promotion requires a defined gate to pass. No silent auto-promote to production. |
 | Audit trail | Every promotion records: who, when, which version, which gate passed, link to pipeline. |
-| No skipping | Cannot promote to production without passing through pre-prod. Exception: approved emergency hotfix with explicit release-owner sign-off. |
+| No skipping | Cannot promote to production without passing through pre-prod. Exception: confirmed emergency hotfix with explicit release-owner sign-off. |
 
 ### Promotion Gate Matrix
 
@@ -2725,7 +2735,7 @@ flowchart TD
 | Rolling update | Minutes (manual) | 1x | Low | Simple services, low traffic |
 | Blue-green | Instant (traffic switch) | 2x during deploy | Medium | Stateless services, critical path |
 
-### Recommended Adoption Path
+### Possible Adoption Path
 
 ```text
 Phase 1 (Now): Rolling update with documented manual rollback procedure.
@@ -2745,7 +2755,7 @@ The current process checks:
 
 There is no automated observability gate that validates release health against SLOs before or after promotion.
 
-### Target: Observability-Driven Release Validation
+### Possible Target: Observability-Driven Release Validation
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
@@ -2791,7 +2801,7 @@ flowchart LR
 | Pipeline metric query | Drone step queries Prometheus after deploy, fails if threshold breached | Medium |
 | Keptn / Dynatrace | Full SLO-based quality gate evaluation | High |
 
-### Recommended Adoption Path
+### Possible Adoption Path
 
 ```text
 Phase 1 (Now): Document key metrics and dashboards per service. Establish SLO targets.
@@ -2817,38 +2827,38 @@ The release report should include a link to the observability dashboard filtered
 > Source: `docs/architecture-review/arb-package.md`
 
 
-# ARB Package
+# Potential Future Architecture Review Considerations
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
-## ADR-001: Controlled Release Transformation Before Future Platform Capabilities
+## Possible ADR Topic: Controlled Release Foundation Before Future Platform Capabilities
 
 ### Context
 
-Cerberus release state is fragmented across Git, Drone, Helm, deployment-management, Jira, Kubernetes, secrets, Liquibase, runbooks and human approvals. The approval request is for release automation, stricter validation, clearer ownership, better evidence and tested recovery.
+Cerberus release state appears fragmented across Git, Drone, Helm, deployment-management, Jira, Kubernetes, secrets, Liquibase, runbooks and human approvals. If the team later seeks formal review, the near-term discussion would likely focus on release automation, stricter validation, clearer ownership, better evidence and tested recovery.
 
 ### Problem
 
-The package contains strong recommendations, but ARB approval would be unsafe unless immediate release controls are separated from later platform modernisation. In a border-security context, automation must not create ungoverned deployment pathways or false confidence from incomplete release metadata.
+The notes include both immediate release-control ideas and later platform-modernisation ideas. If these are treated as one approval scope, review risk increases. In a border-security context, automation must not create ungoverned deployment pathways or false confidence from incomplete release metadata.
 
 ### Options Considered
 
 | Option | Description | Strengths | Weaknesses |
 | --- | --- | --- | --- |
-| A | Approve all recommendations as one programme. | Fast alignment, ambitious target. | Too much blast radius; unclear approvals. |
-| B | Approve controlled release-foundation work only. | Reduces risk, strengthens audit and ownership. | Slower path to platform intelligence. |
+| A | Treat all improvement ideas as one programme. | Fast alignment, ambitious target. | Too much blast radius; unclear approvals. |
+| B | Discuss controlled release-foundation work first. | Reduces risk, strengthens audit and ownership. | Slower path to platform intelligence. |
 | C | Start future platform modernisation immediately. | Builds future capability early. | Data quality, ownership and governance not ready. |
 | D | Do nothing beyond current process. | Avoids change risk. | Leaves current release and audit risks unresolved. |
 
-### Recommendation
+### Suggested Position
 
-Approve Option B: controlled release-foundation work. Treat future platform modernisation as a separate decision gated by release metadata quality, ownership, security and operational evidence.
+Option B appears to be the safer discussion path: treat controlled release-foundation work separately from future platform modernisation, and gate later platform ideas on release metadata quality, ownership, security and operational evidence.
 
 ### Trade-Offs
 
 | Trade-Off | Decision |
 | --- | --- |
-| Speed vs safety | Prefer safety. |
+| Speed vs safety | Prefer controlled evolution and operational safety. |
 | Automation vs human control | Automate evidence and repeatable steps; retain human approval for high-impact environments. |
 | Centralisation vs resilience | Centralise visibility first; defer centralised control. |
 | Innovation vs audit | Permit pilots only with audit, RBAC and source-of-truth discipline. |
@@ -2863,18 +2873,18 @@ Approve Option B: controlled release-foundation work. Treat future platform mode
 
 | Risk | Mitigation |
 | --- | --- |
-| Teams expect immediate tooling rather than governance work. | Publish phased roadmap and approval gates. |
+| Teams expect immediate tooling rather than governance work. | Publish indicative phases and confirmation gates. |
 | Automation becomes a hidden approval bypass. | Enforce SoD, approval records and manual gates. |
 | Future-state architecture loses momentum. | Keep pilots on roadmap with measurable entry criteria. |
 | Benefits remain unproven. | Start baseline measurement in Phase 1. |
 
-### Approval Required
+### Potential Formal Review Questions
 
-ARB should approve:
+If this were reviewed formally, reviewers would likely want confirmation of:
 
 1. Near-term release-foundation scope.
 2. Explicit deferral of future platform trigger/action capabilities.
-3. NFR and governance requirements below.
+3. NFR and governance expectations below.
 4. Conditions for moving from pilot to production rollout.
 
 ## Non-Functional Requirements
@@ -2888,11 +2898,11 @@ ARB should approve:
 | Performance | Standard release report generated within agreed release-window target. | Reporting. | Generation metrics. |
 | Scalability | Support hundreds of services and multiple environments in release evidence and validation. | Release automation. | Capacity model and load test. |
 | Data freshness | Release report data current at generation time. | Reporting. | Freshness metrics and alerts. |
-| Data retention | Release evidence retained according to audit policy; minimum retention to be approved before rollout. | Reports, approvals, graph events. | Retention policy and purge logs. |
-| Disaster recovery | Release evidence recoverable. Target RTO/RPO to be approved. | Reports. | DR test. |
+| Data retention | Release evidence retained according to audit policy; minimum retention to be confirmed before rollout. | Reports, approvals, graph events. | Retention policy and purge logs. |
+| Disaster recovery | Release evidence recoverable. Target RTO/RPO to be confirmed. | Reports. | DR test. |
 | Compliance | Classification, SoD, privileged access, data sovereignty and change advisory alignment documented. | Whole package. | Security/architecture sign-off. |
 
-## ARB Decision Conditions
+## Possible Formal Review Conditions
 
 | Condition | Required Before |
 | --- | --- |
@@ -2900,25 +2910,27 @@ ARB should approve:
 | Strict validation dry-run evidence. | Fail-fast enforcement. |
 | Hotfix and rollback test completed. | Production rollout. |
 | Environment readiness gate implemented. | New environment rollout. |
-| Release report retention approved. | Drone rollout expansion. |
+| Release report retention confirmed. | Drone rollout expansion. |
 | Release metadata quality baseline measured. | Rollout expansion. |
-| RBAC, audit and SoD approved. | Release automation expansion. |
+| RBAC, audit and SoD confirmed. | Release automation expansion. |
 
 ---
 
 > Source: `docs/architecture-review/business-case-and-roadmap.md`
 
 
-# Business Case And Recommended Roadmap
+# Potential Benefits And Roadmap Notes
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
-## Benefits Realisation Table
+## Potential Benefits To Validate
 
-| Benefit | Current State | Target State | KPI | Measurement Method |
+The values below are working assumptions and would need baseline measurement before being used as committed targets.
+
+| Benefit | Current State | Possible Target State | KPI | Measurement Method |
 | --- | --- | --- | --- | --- |
 | Reduce release preparation effort | Days per sprint estimated. | Less than 1 day by Phase 2, less than 2 hours by Phase 4. | Release prep hours. | Time log plus release calendar. |
-| Reduce wrong artefact risk | Tag and manifest validation not fully enforced. | Fail-fast validation with approved override process. | Validation failures caught before deploy. | Pipeline validation logs. |
+| Reduce wrong artefact risk | Tag and manifest validation not fully enforced. | Fail-fast validation with confirmed override process. | Validation failures caught before deploy. | Pipeline validation logs. |
 | Improve incident investigation time | 30-60 minutes manual correlation estimated. | Less than 15 minutes for release-context evidence. | MTTI. | Incident timeline review. |
 | Improve rollback decision speed | 15-30 minutes estimated to identify constraints. | Less than 5 minutes to identify rollback/fix-forward constraints. | Time to rollback decision. | Incident command log. |
 | Improve audit readiness | Evidence spread across tools. | One release record links commit, tag, image, chart, manifest, approval and deploy. | Audit evidence retrieval time. | Audit drill. |
@@ -2939,34 +2951,36 @@ Status: Completed architecture review output.
 
 ## Roadmap Review
 
-| Phase | Current Plan Assessment | Hidden Risk | Recommendation |
+| Phase | Current Plan Assessment | Hidden Risk | Discussion Point |
 | --- | --- | --- | --- |
-| Phase 0 | Correct focus on decisions and ownership. | May remain open if no accountable executive sponsor. | Add exit criteria and named decision forum. |
+| Phase 0 | Useful focus on decisions and ownership. | May remain open if no accountable sponsor. | Add exit criteria and named decision forum. |
 | Phase 1 | Good quick wins. | Strict validation may block releases unexpectedly. | Run dry-run first and publish failure taxonomy. |
 | Phase 2 | Drone automation pilot is appropriate. | Automation may encode bad assumptions. | Pilot on limited repositories with manual approval. |
 | Phase 3 | Branch cutover may be premature. | `main = production` can create confusion if production baseline is not proven. | Gate on rollback, validation, owner and open-work inventory. |
 | Phase 4 | Scale-out is valuable. | Changed-chart deployment may miss dependencies. | Add dependency validation and override governance. |
 | Phase 5 | Modernisation is sensible. | Feature flags and secrets work may expand scope. | Treat as separate platform epics. |
 
-## Recommended Roadmap
+## Possible Roadmap
 
-| Phase | Objective | Deliverables | Success Criteria | Exit Criteria |
+The phases are indicative only and should not be read as a committed delivery plan.
+
+| Phase | Objective | Deliverables | Possible Success Criteria | Possible Exit Criteria |
 | --- | --- | --- | --- | --- |
 | 0 | Close governance foundation. | Decision register, named owners, release scope, approval map. | All P0 decisions assigned with owner and due date. | D20, D21, D13-D18 owner/approver identified. |
-| 1 | Prove validation and evidence. | Dry-run strict validation, environment readiness checklist, release report retention. | Dry-run catches issues without blocking release. | Failure taxonomy and override process approved. |
+| 1 | Prove validation and evidence. | Dry-run strict validation, environment readiness checklist, release report retention. | Dry-run catches issues without blocking release. | Failure taxonomy and override process confirmed. |
 | 2 | Pilot controlled Drone automation. | Auto branch/tag/chart/report for limited repositories. | Successful pilot for 2 releases with no manual correction. | Rerun and alert process tested. |
-| 3 | Production readiness controls. | Hotfix and rollback drill, incident command model, audit drill. | Rollback/fix-forward decision executed in drill. | Production rollout go/no-go approved. |
-| 4 | Scale release automation. | Changed-chart deployment with dependency checks, full RACI, reporting dashboard. | Reduced prep effort and no unapproved exclusions. | Release KPIs measured for 2 cycles. |
-| 5 | Platform hardening. | Observability gates, SBOM/signing assessment, release metric reporting. | Demonstrated value without production blast radius. | ARB decision for each production adoption. |
+| 3 | Production readiness controls. | Hotfix and rollback drill, incident command model, audit drill. | Rollback/fix-forward decision executed in drill. | Production rollout go/no-go confirmed. |
+| 4 | Scale release automation. | Changed-chart deployment with dependency checks, full RACI, reporting dashboard. | Reduced prep effort and no unconfirmed exclusions. | Release KPIs measured for 2 cycles. |
+| 5 | Platform hardening. | Observability gates, SBOM/signing assessment, release metric reporting. | Demonstrated value without production blast radius. | Separate review for each production adoption. |
 
 ---
 
 > Source: `docs/architecture-review/operating-model-raci.md`
 
 
-# Operating Model And RACI
+# Operating Model And RACI Notes
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Ownership Model
 
@@ -2975,7 +2989,7 @@ Status: Completed architecture review output.
 | Release governance | Release owner | Release scope, approvals, go/no-go, closure. | Yes |
 | Platform automation | Platform / DevOps owner | Drone pipeline, validation scripts, alerting, rerun safety. | Yes |
 | Service delivery | Squad lead | Service changes, feature readiness, test evidence. | Yes |
-| Architecture | Principal / enterprise architect | Architecture guardrails, ARB submissions, ADRs. | Yes |
+| Architecture | Principal / enterprise architect | Architecture guardrails, review submissions if needed, ADRs. | Yes |
 | Release evidence quality | Release owner / platform data steward | Release report quality, freshness, classification and retention. | Yes |
 | Security | Security owner | RBAC, SoD, privileged access, classification, audit. | Yes |
 | Operations | Operations / incident lead | Incident command, rollback/fix-forward decision process. | Yes |
@@ -2988,7 +3002,7 @@ Status: Completed architecture review output.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Release scope definition | C | R | C | A | C | I | I |
 | Service ownership mapping | C | R/A | I | C | C | I | I |
-| Branch strategy approval | C | C | A | C | I | I | I |
+| Branch strategy confirmation | C | C | A | C | I | I | I |
 | Release branch automation | R/A | C | C | C | I | I | C |
 | Tag/manifest validation | R | C | C | A | I | I | C |
 | Environment readiness gate | R | C | C | A | I | C | C |
@@ -2998,7 +3012,7 @@ Status: Completed architecture review output.
 | Rollback/fix-forward decision | R | C | C | C | I | A | C |
 | Post-release reconciliation | R | C | I | A | I | C | I |
 | Release report retention | R | I | C | A | I | I | C |
-| ARB submission | C | I | A/R | C | C | C | C |
+| Formal architecture review submission if needed | C | I | A/R | C | C | C | C |
 
 Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
@@ -3008,7 +3022,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 | --- | --- |
 | Separation of duties | The same person should not unilaterally approve, deploy and close a production release. |
 | Privileged access | Admin access to Drone, deployment-management and secrets must be approved, logged and reviewed. |
-| Change advisory | Production deployment and emergency hotfixes must map to approved normal or emergency change process. |
+| Change advisory | Production deployment and emergency hotfixes should map to the agreed normal or emergency change process. |
 | Override control | Validation overrides, chart exclusions and rollback exceptions require named approver and reason. |
 | Evidence retention | Release report, approval, pipeline, deployment and reconciliation evidence must be retained for audit. |
 | Incident command | Rollback/fix-forward decisions must be owned by incident lead with release owner consultation. |
@@ -3022,7 +3036,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 # Architecture Diagrams
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Current State: Systems And Dependencies
 
@@ -3065,13 +3079,13 @@ flowchart TD
 > Source: `docs/architecture-review/criticality-challenge-review.md`
 
 
-# Criticality Challenge Review
+# Criticality Challenge Notes
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Suitability Assessment
 
-| Recommendation | Suitable | Needs Modification | Not Recommended | Reason |
+| Improvement Area | Suitable | Needs Modification | Not Recommended | Reason |
 | --- | --- | --- | --- | --- |
 | Stabilise release operating model first | Yes | No | No | Reduces systemic risk before structural change. |
 | Branch strategy simplification | No | Yes | No | Good later, unsafe before validation and rollback are proven. |
@@ -3079,10 +3093,10 @@ Status: Completed architecture review output.
 | Drone migration for release scripts | Yes | Yes | No | Improves auditability but must not bypass approvals. |
 | Strict validation framework | Yes | Yes | No | Strong control; dry-run first to avoid surprise release blocks. |
 | Changed-chart deployment | No | Yes | No | Needs dependency analysis and audited exclusions. |
-| Release reporting | Yes | Yes | No | Must define retention, classification and evidence ownership. |
+| Release reporting | Yes | Yes | No | Needs retention, classification and evidence ownership. |
 | Release ownership model | Yes | Yes | No | Role model exists; named people/backups still required. |
 | Event-driven architecture | Yes | Yes | No | Useful, but needs replay, DLQ and reconciliation controls. |
-| Rollback recommendations | Yes | Yes | No | Must distinguish rollback from fix-forward and data constraints. |
+| Rollback recommendations | Yes | Yes | No | Needs a distinction between rollback, fix-forward and data constraints. |
 | Environment promotion model | Yes | Yes | No | Strong if approvals and readiness gates are explicit. |
 | Progressive delivery | No | Yes | No | Defer broad use; service-by-service evaluation. |
 | GitOps | No | Yes | No | Non-prod evaluation only until source-of-truth discipline is proven. |
@@ -3092,7 +3106,7 @@ Status: Completed architecture review output.
 
 Scores: 1 poor, 5 excellent.
 
-| Recommendation | Operational Safety | Blast Radius | Recovery Complexity | Human Factors | Auditability | Security Impact | Platform Complexity |
+| Improvement Area | Operational Safety | Blast Radius | Recovery Complexity | Human Factors | Auditability | Security Impact | Platform Complexity |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Strict validation | 5 | 4 | 4 | 4 | 5 | 4 | 3 |
 | Named ownership | 5 | 5 | 5 | 5 | 5 | 4 | 4 |
@@ -3130,22 +3144,22 @@ Scores: 1 poor, 5 excellent.
 > Source: `docs/architecture-review/missing-enterprise-concerns.md`
 
 
-# Missing Enterprise Concerns
+# Additional Enterprise Concerns To Confirm
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
 ## Disaster Recovery And Operational Resilience
 
-| Concern | Gap | Recommendation |
+| Concern | Gap | Possible Discussion Point |
 | --- | --- | --- |
 | Release evidence recovery | Evidence retention and recovery target not fully specified. | Define RTO/RPO for release reports, approval evidence and generated artefacts. |
-| Release evidence recovery | Generated reports, approvals and pipeline evidence need recovery targets. | Require restore test for release evidence before production rollout. |
-| Automation outage | Release automation could become operational dependency. | Keep manual break-glass path documented and approved. |
+| Release evidence recovery | Generated reports, approvals and pipeline evidence need recovery targets. | Consider a restore test for release evidence before production rollout. |
+| Automation outage | Release automation could become operational dependency. | Keep manual break-glass path documented and confirmed. |
 | Automation failure | Rerun guidance exists but needs incident-level playbook. | Add automation failure runbook with stop/continue criteria. |
 
 ## Multi-Region And Capacity Planning
 
-| Concern | Gap | Recommendation |
+| Concern | Gap | Possible Discussion Point |
 | --- | --- | --- |
 | Multi-region | Not enough discussion of deployment topology and regional resilience. | Document whether Cerberus requires active/active, active/passive or single-region controls. |
 | Release evidence volume | Report, pipeline and audit evidence retention volume is not yet modelled. | Create volume model: releases/month, artefacts, retention window and audit exports. |
@@ -3153,21 +3167,21 @@ Status: Completed architecture review output.
 
 ## Data Sovereignty, Security Accreditation And Compliance
 
-| Concern | Gap | Recommendation |
+| Concern | Gap | Possible Discussion Point |
 | --- | --- | --- |
 | Data sovereignty | Release evidence hosting location not specified. | Confirm UK hosting, approved regions and cross-border restrictions. |
-| Security accreditation | ARB proposal mentions classification but not full accreditation path. | Define security accreditation and threat modelling steps. |
+| Security accreditation | Review notes mention classification but not full accreditation path. | Define security accreditation and threat modelling steps if the scope proceeds. |
 | Sensitive topology | Release metadata can expose platform topology and operational patterns. | Classify topology, deployment and incident metadata. |
 | Personnel data | Deployer names, ownership and audit logs may contain personal data. | Define lawful basis, retention and subject access handling. |
 | Privileged access | Admin access model needs stronger controls. | Add privileged access workflow, break-glass and quarterly review. |
 
 ## Incident Command, Change Advisory And Ownership At Scale
 
-| Concern | Gap | Recommendation |
+| Concern | Gap | Possible Discussion Point |
 | --- | --- | --- |
 | Incident command | Rollback/fix-forward decision owner exists conceptually but not operationally. | Define incident roles, decision authority and communication channels. |
 | Change advisory | CAB/emergency change relationship not explicit. | Map normal release, emergency hotfix and rollback to change processes. |
-| Service ownership at scale | Ownership map must remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
+| Service ownership at scale | Ownership map needs to remain current across hundreds of services. | Add owner attestation cadence and stale-owner alerts. |
 | Separation of duties | Automation expansion could blur approver/operator roles. | Enforce SoD in workflow and audit. |
 | Operational training | New automation and reports may confuse teams without rehearsal. | Run release simulation and rollback drills before production rollout. |
 
@@ -3176,38 +3190,38 @@ Status: Completed architecture review output.
 > Source: `docs/architecture-review/final-scorecard-and-verdict.md`
 
 
-# Final Scorecard And Verdict
+# Summary Assessment And Open Risks
 
-Status: Completed architecture review output.
+Status: Optional review note / working reference.
 
-## Architecture Scorecard
+## Working Architecture Scorecard
 
 | Area | Score | Rationale |
 | --- | --- | --- |
-| Architecture Quality | 7 / 10 | Strong diagnosis and target architecture, but immediate vs future scope needs stronger gating. |
+| Architecture Quality | 7 / 10 | Strong diagnosis and possible target shape, but immediate vs future scope needs stronger gating. |
 | Technical Feasibility | 7 / 10 | Release validation and Drone automation are feasible; automation expansion needs capacity and security design. |
 | Business Value | 8 / 10 | Clear benefits around release safety, audit and incident response. |
-| Governance | 6 / 10 | Decision register and RACI exist, but named owners and formal approvals are missing. |
+| Governance | 6 / 10 | Decision register and RACI exist, but named owners and formal confirmations are missing. |
 | Operational Readiness | 5 / 10 | Hotfix, rollback, DR, incident command and runbooks still need testing. |
-| Executive Readiness | 7 / 10 | Good material exists; one-page decision framing now clearer. |
-| ARB Readiness | 6 / 10 | Likely approvable with conditions for near-term scope, not for full future platform. |
+| Reader Readiness | 7 / 10 | Good material exists; one-page framing is clearer. |
+| Formal Review Readiness | 6 / 10 | Near-term scope may be discussable; full future platform scope would need separate evidence and ownership. |
 
 ## Top 10 Strengths
 
 1. Correctly identifies that branching is not the root problem.
 2. Emphasises release state visibility, repeatability and auditability.
-3. Strong decision register and proposed approval flow.
+3. Strong decision register and proposed confirmation flow.
 4. Practical near-term validation and Drone automation focus.
 5. Recognises hotfix and rollback as production gates.
 6. Treats release reports as auditable evidence, not informal notes.
-7. Strong future architecture vision for release intelligence.
+7. Future architecture ideas are clearly separated from immediate release controls.
 8. Includes business case and operational benefits.
 9. Acknowledges maturity phasing and future options.
-10. Good foundation for ARB discussion.
+10. Good foundation for team discussion and possible later review.
 
 ## Top 10 Risks
 
-1. Future-state ideas may be mistaken for immediate approval scope.
+1. Future-state ideas may be mistaken for immediate implementation scope.
 2. Named owners and backups are still missing.
 3. Branch cutover could happen before operational readiness.
 4. Rollback may be unrealistic for database/data/event changes.
@@ -3218,9 +3232,9 @@ Status: Completed architecture review output.
 9. DR, accreditation and capacity planning need stronger treatment.
 10. Business benefits need baseline measurement.
 
-## Top 10 Improvements
+## Top 10 Improvement Areas
 
-1. Approve near-term foundation scope separately from future platform scope.
+1. Confirm near-term foundation scope separately from future platform scope.
 2. Assign named owners and backups.
 3. Add strict validation dry-run and failure taxonomy.
 4. Run rollback and fix-forward drills.
@@ -3229,15 +3243,15 @@ Status: Completed architecture review output.
 7. Add capacity model for graph/control-plane assumptions.
 8. Add security classification and RBAC model across all release metadata.
 9. Define prohibited automation behaviours.
-10. Add ARB conditions and explicit defer list.
+10. Keep formal review conditions and deferred items explicit.
 
-## ARB Verdict
+## Formal Review Considerations
 
-Verdict: Approved with conditions for the near-term release-foundation programme. Not approved for production GitOps, progressive delivery or any future platform trigger capability.
+If this were reviewed formally, the near-term release-foundation items would likely be more suitable for discussion than the future-state platform items. Formal approval would require named owners, evidence, clear guardrails and team agreement.
 
 Reasoning:
 
-The documentation has a strong understanding of the release engineering problem and the proposed near-term controls are directionally right. However, in a mature enterprise ARB, especially under border-security criticality, the package would not receive unconditional approval because ownership, rollback testing, DR, capacity, accreditation and separation-of-duties controls are not yet complete.
+The documentation has a strong understanding of the release engineering problem and the proposed near-term controls appear directionally sensible. However, under border-security criticality, ownership, rollback testing, DR, capacity, accreditation and separation-of-duties controls would likely need confirmation before the material could be treated as an agreed operating model.
 
 ## Border-Security Reality Check
 
@@ -3247,10 +3261,10 @@ The documentation has a strong understanding of the release engineering problem 
 | Automation | Drone pilot, rerun safety, alerting. | Automation only with human gates. | Fully automated production promotion. |
 | Recovery | Hotfix and rollback runbooks, fix-forward guide. | Rollback eligibility by release. | Automatic rollback for complex stateful services. |
 | Intelligence | Release reports and audit evidence. | Release-context dashboards after evidence quality is proven. | Automated release decisions. |
-| Platform control | Existing Drone/deployment-management controls. | Controlled workflow after SoD approval. | Central trigger control until ARB approval. |
+| Platform control | Existing Drone/deployment-management controls. | Controlled workflow after SoD confirmation. | Central trigger control until separate formal review. |
 | Modernisation | SBOM, image signing, observability dashboards. | Tooling pilots in non-prod. | Production GitOps/progressive delivery at scale. |
 
-## Final Answer
+## Summary Position
 
 If Cerberus genuinely processes 5+ billion records per month and supports UK border-security operations:
 
@@ -3258,4 +3272,4 @@ If Cerberus genuinely processes 5+ billion records per month and supports UK bor
 - Modify: branch cutover, changed-chart deployment, GitOps and progressive delivery so they are gated, piloted and evidence-based.
 - Defer until much later: central trigger control, production-wide GitOps, auto-rollback and progressive delivery.
 
-The mature enterprise answer is controlled evolution, not large architectural change. The immediate approval ask should be release safety and auditability, with future intelligence capabilities approved only after the foundation proves itself.
+Given the criticality and scale of the platform, any change should prefer controlled evolution, auditability and operational safety over rapid restructuring. The immediate discussion should stay on release safety and auditability, with future intelligence capabilities considered only after the foundation proves itself.

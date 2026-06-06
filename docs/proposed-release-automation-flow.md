@@ -220,7 +220,7 @@ The preferred approach is a squash-style pattern to reduce noisy release branch 
 The key requirement is:
 
 ```text
-The merge commit into the release branch must include the ticket number and a meaningful message.
+The merge commit into the release branch should include the ticket number and a meaningful message.
 ```
 
 Reason:

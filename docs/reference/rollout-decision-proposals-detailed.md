@@ -2,28 +2,28 @@
 
 These are proposed decisions for the remaining open items, with full rationale and detailed procedures.
 
-They are written as defaults the team can approve or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
+They are written as defaults the team can confirm or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 
-Approval status, accountable owner gaps and evidence requirements are tracked in the [release decision register](../release-decision-register.md).
+Confirmation status, accountable owner gaps and evidence requirements are tracked in the [release decision register](../release-decision-register.md).
 
 ## Decision Summary
 
 | Area | Proposed Decision | Decision Status |
 | --- | --- | --- |
-| Branch baseline | Move to `main` as the production/live baseline. | Needs approval |
-| Production sync | Merge the released branch/state back into `main` after production validation. | Needs approval |
-| Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs approval |
-| Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs approval |
+| Branch baseline | Move to `main` as the production/live baseline. | Needs confirmation |
+| Production sync | Merge the released branch/state back into `main` after production validation. | Needs confirmation |
+| Release branches | Auto-create release branches at the start of each sprint/release from `main`. | Needs confirmation |
+| Feature/hotfix branches | Create feature and release-phase hotfix branches from the relevant release branch. | Needs confirmation |
 | Multiple active releases | Forward-merge production/release fixes into later active release branches before closure. | Needs owner |
-| Changed-chart deployment | Deploy changed charts by default; require approved override to exclude one. | Needs approval |
-| Quality gates | Keep human approval before higher-environment promotion and production. | Needs approval |
-| Failure handling | Make the final Git/chart/reporting step idempotent and rerunnable. | Needs approval |
+| Changed-chart deployment | Deploy changed charts by default; require confirmed override to exclude one. | Needs confirmation |
+| Quality gates | Keep human approval before higher-environment promotion and production. | Needs confirmation |
+| Failure handling | Make the final Git/chart/reporting step idempotent and rerunnable. | Needs confirmation |
 | Alerting | Add Slack/email alerts for failed automation steps. | Needs owner |
 | Shared dev | Roll out shared dev deployment in phases, starting with manual trigger. | Proposed |
 | Ephemeral environments | Keep ephemeral branch environments out of scope for now. | Proposed |
-| New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs approval |
-| Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs approval |
-| Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs approval |
+| New environments | Treat new dev/test environments as ready only after values, Drone secrets/tokens and setup scripts are confirmed. | Needs confirmation |
+| Auto manifest validation | Fail on wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers unless explicitly overridden. | Needs confirmation |
+| Rollback reconciliation | After rollback, reconcile `main`, manifests, release records and JIRA tickets to match actual production state. | Needs confirmation |
 | Tag jump checker | Retire after the new validation is confirmed green for two consecutive releases. | Proposed |
 
 ## 1. `development` To `main`
@@ -47,7 +47,7 @@ The transition means:
 
 This is not a rename of `development` to `main`. It is a fresh start where `main` represents the actual production release state at cutover time.
 
-Recommended rollout:
+Suggested rollout:
 
 1. Confirm the cutover release.
 2. Freeze new process changes on `development`.
@@ -56,10 +56,10 @@ Recommended rollout:
 5. Update automation, documentation and team guidance to use `main`.
 6. Archive `development` and old `master` after transition is stable.
 
-Minimum approval needed:
+Minimum confirmation needed:
 
-- Release/process owner approval.
-- Repo owner approval.
+- Release/process owner confirmation.
+- Repo owner confirmation.
 - Automation owner confirmation that Drone jobs target the right branch.
 
 ## 2. Keeping `main` Aligned With Production
@@ -67,11 +67,11 @@ Minimum approval needed:
 Proposed decision:
 
 ```text
-`main` must represent production/live state.
+`main` should represent production/live state.
 No release is closed until the released state has been reconciled back to `main`.
 ```
 
-Recommended rule:
+Suggested rule:
 
 1. Release branch is deployed to production.
 2. Production smoke/technical validation passes.
@@ -96,7 +96,7 @@ Create release branches automatically at the start of each sprint/release for ev
 Default source branch is `main`.
 ```
 
-Recommended naming:
+Suggested naming:
 
 ```text
 release/<major.minor>
@@ -119,13 +119,13 @@ If releases need to be chained, explicitly configure the release branch source i
 Proposed decision:
 
 ```text
-Any fix merged into an earlier active release must be assessed for forward-merge into later active release branches.
+Any fix merged into an earlier active release should be assessed for forward-merge into later active release branches.
 ```
 
-Recommended rule:
+Suggested rule:
 
 - If a hotfix goes into `release/5.14`, check whether `release/5.15` also needs it.
-- If a delayed feature branch continues across releases, the feature owner must regularly merge in the relevant active release branch.
+- If a delayed feature branch continues across releases, the feature owner should regularly merge in the relevant active release branch.
 - Before opening or updating an MR, the feature owner should merge the current target release branch into the feature branch to expose conflicts early.
 - Release closure should include a forward-merge check.
 
@@ -140,7 +140,7 @@ Proposed decision:
 
 ```text
 Deploy all changed charts by default.
-Allow exclusions only with explicit release owner approval and an audit note.
+Allow exclusions only with explicit release owner confirmation and an audit note.
 ```
 
 Override should record:
@@ -151,10 +151,10 @@ Override should record:
 - Impact/risk.
 - Follow-up action or release where it will be included.
 
-Recommended default:
+Suggested default:
 
 ```text
-If the chart changed and there is no approved exclusion, deploy it.
+If the chart changed and there is no confirmed exclusion, deploy it.
 ```
 
 ## 6. Quality Gates And Human Approval
@@ -165,7 +165,7 @@ Proposed decision:
 Automation can prepare release artefacts and reports, but higher-environment promotion and production release still require human approval.
 ```
 
-Recommended gates:
+Suggested gates:
 
 | Stage | Gate |
 | --- | --- |
@@ -175,7 +175,7 @@ Recommended gates:
 | SIT / higher environment | Release owner reviews report and changed charts. |
 | Production | QAT/release approval, rollback/fix-forward plan, final report check. |
 
-Recommended fail-fast items:
+Suggested fail-fast items:
 
 - Image build failure.
 - Helm chart upload failure.
@@ -192,7 +192,7 @@ Proposed decision:
 The final Git/chart/reporting step should be idempotent and safe to rerun after transient failures.
 ```
 
-Recommended rerun procedure:
+Suggested rerun procedure:
 
 1. Identify the failed step.
 2. Confirm image and Helm artefact were built/uploaded successfully.
@@ -226,7 +226,7 @@ Alert should include:
 - Link to failed Drone job.
 - Suggested owner/action.
 
-Recommended channels:
+Suggested channels:
 
 - Release channel for release branch failures.
 - Squad/team channel for feature branch failures.
@@ -241,7 +241,7 @@ Roll out shared dev deployment in phases.
 Keep squad dev test environments separate.
 ```
 
-Recommended phases:
+Suggested phases:
 
 1. Manual trigger: deploy active release branch to shared dev on demand.
 2. Scheduled trigger: deploy active release branch to shared dev on a regular cadence.
@@ -268,7 +268,7 @@ Proposed decision:
 Store release reports as pipeline artefacts and attach/link them from the release record.
 ```
 
-Recommended retention:
+Suggested retention:
 
 - Keep reports at least through production release, post-release validation and any incident review window.
 - Prefer keeping release reports with the release record permanently if storage is cheap and access-controlled.
@@ -285,7 +285,7 @@ Rollback is an operational path that must leave source control, manifests and re
 
 | Item | Action |
 | --- | --- |
-| `main` | Must still reflect production state. If rollback reverts production to an earlier release, `main` should be updated to match that state (revert commit or reset to earlier release tag). |
+| `main` | Should still reflect production state. If rollback reverts production to an earlier release, `main` should be updated to match that state (revert commit or reset to earlier release tag). |
 | Manifest | Revert manifest to the version that matches the rolled-back production state. |
 | Failed release branch | Keep open for investigation. Close only after the fix-forward or abandonment decision is made. |
 | Active future release branches | Forward-merge the rollback state if they depended on the failed release. |
@@ -315,7 +315,7 @@ Rules:
 - If the DB change is destructive or causes data corruption, the incident process takes over.
 - Liquibase rollback scripts should be written proactively for any release that includes schema changes to production.
 
-Recommended practice:
+Suggested practice:
 
 ```text
 Every production Liquibase changeset should have a corresponding rollback block or a documented reason why rollback is not possible.
@@ -336,16 +336,16 @@ Rationale:
 - Its core responsibilities (detecting missing tags, wrong tags, blocked tickets, do-not-deploy cases) are being absorbed into the new automation validation rules.
 - Rollback version comparisons in the old script are awkward because it prefers higher versions.
 
-Recommended transition:
+Suggested transition:
 
 1. Keep the tag jump checker active during the transition period alongside the new validation.
 2. Once the new automation validation is confirmed green for two consecutive releases, retire the tag jump checker.
-3. Archive the script for reference but do not maintain it.
+3. Archive the script for reference but avoid maintaining it.
 4. Ensure the new validation covers: wrong tag, missing tag, manifest/tag mismatch, invalid ticket status, do-not-deploy markers and `NA` entries.
 
-## Approval Checklist
+## Confirmation Checklist
 
-Before rollout, approve or amend:
+Before rollout, confirm or amend:
 
 1. `main` creation from confirmed production baseline.
 2. `main` branch protection and production reconciliation rule.
@@ -366,7 +366,7 @@ Before rollout, approve or amend:
 
 Incremental rollout, success metrics, rollout rollback and resistance/edge-case handling are summarised in [release engineering best practices](../release-engineering-best-practices.md).
 
-Decision approval status is tracked in the [release decision register](../release-decision-register.md).
+Decision confirmation status is tracked in the [release decision register](../release-decision-register.md).
 
 ## Related Pages
 

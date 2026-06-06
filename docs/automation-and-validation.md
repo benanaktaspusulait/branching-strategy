@@ -72,7 +72,7 @@ The proposed direction is:
 - Automatically identify what is in or out of a branch/release.
 - Automate start-of-sprint and end-of-sprint release tasks.
 - Reduce release work to one or two standard pipeline runs where practical.
-- Roll the improved process out iteratively after review and sign-off.
+- Roll the improved process out iteratively after review and team confirmation.
 
 ## Proposed Drone Rollout Checklist
 
@@ -156,7 +156,7 @@ If the final Git/chart/reporting step fails because of a transient system issue,
 There is not currently an alerting model for failed automation steps.
 ```
 
-Recommended policy:
+Suggested policy:
 
 - Send Slack/email alert for failed automation steps before production rollout.
 - Include repository, branch, release version, failed step, Drone job link and rerun guidance.
@@ -181,7 +181,7 @@ flowchart LR
   TICKET["🎫 Check tickets &\nrelease metadata"]:::check
   GATE{"✅ Validation\npassed?"}:::decision
   MR["📝 Create / update\nmanifest MR"]:::pass
-  STOP["🛑 Stop: fix or\napproved override"]:::fail
+  STOP["🛑 Stop: fix or\nconfirmed override"]:::fail
 
   START --> DIFF --> TAG --> MAN --> TICKET --> GATE
   GATE -->|Yes| MR
@@ -194,7 +194,7 @@ flowchart LR
   classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
 ```
 
-**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or approve override.
+**Colour key:** Grey = release request/start · Blue = validation checks · Yellow = pass/fail decision · Green = continue/update manifest · Red = stop, fix or confirmed override.
 
 Validation should make sure:
 
@@ -239,7 +239,7 @@ Observed script responsibilities include:
 
 The team should decide which cases are warnings and which cases must fail the pipeline.
 
-## Recommended Validation Policy
+## Possible Strict Validation Policy
 
 Use a strict policy for release integrity:
 
@@ -248,24 +248,24 @@ Wrong tag -> fail.
 Missing tag -> fail.
 Manifest/tag mismatch -> fail.
 Invalid ticket status -> fail or require explicit override.
-Unknown service ownership -> fail or require explicit release-owner approval.
-Do-not-deploy marker -> fail unless release owner explicitly approves an override.
+Unknown service ownership -> fail or require explicit release-owner confirmation.
+Do-not-deploy marker -> fail unless release owner explicitly confirms an override.
 ```
 
-Overrides may still be necessary, but they should be visible, approved and audited.
+Overrides may still be necessary, but they should be visible, confirmed and audited.
 
-Items that still need explicit approval before strict enforcement:
+Items that still need explicit confirmation before strict enforcement:
 
 - Whether wrong tags, missing tags and manifest/tag mismatch fail the release or only warn during a dry run.
 - Which Jira statuses are valid, blocked or invalid for release.
 - How `NA` tag entries are represented and when they are allowed.
-- Who can approve a validation override.
+- Who can confirm a validation override.
 - Where the override evidence is stored.
 - Where release reports are retained and how long they are kept.
 
 ## Auto Manifest And Tag Jump Follow-Up
 
-Auto manifest and tag jump tooling must be reassessed against the proposed non-linear release branch model.
+Auto manifest and tag jump tooling should be reassessed against the proposed non-linear release branch model.
 
 Follow-up needed:
 
@@ -283,7 +283,7 @@ Follow-up needed:
 - Which pipeline steps require approval gates?
 - How will the automation detect services with actual changes?
 - What information should be included in the audit trail?
-- What should fail immediately vs require manual approval?
+- What should fail immediately vs require manual approval or confirmed override?
 
 ## Related Best Practices
 

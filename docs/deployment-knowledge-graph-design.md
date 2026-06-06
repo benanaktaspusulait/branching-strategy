@@ -4,7 +4,7 @@
 
 > **Status:** Long-term architectural proposal. Not part of the initial release automation rollout.
 >
-> **Relationship to Unified Control Plane:** The Knowledge Graph is the data and intelligence layer. The [Unified Deployment and Release Control Plane](transformation-programme.md#future-state-unified-deployment-and-release-control-plane) is the operational interface layer. Together they form the long-term unified platform.
+> **Relationship to Unified Control Plane:** The Knowledge Graph is a future data and intelligence layer. The related control-plane idea is now only a short note under [Possible Future Topics - Not In Current Scope](transformation-programme.md#possible-future-topics---not-in-current-scope).
 
 This document is split into four parts:
 - Part 1: [Design and Domain Model](deployment-knowledge-graph-design.md) (you are here)
