@@ -174,25 +174,6 @@ These should be defined before build starts and validated during each implementa
 
 ---
 
-## Future AI Enablement
-
-The graph could provide a future foundation for AI-assisted operational analysis.
-
-Potential future capabilities:
-
-| Capability | Description |
-| --- | --- |
-| Release impact analysis | Given a proposed change, predict which environments and services are affected. |
-| Incident investigation assistant | Given an incident, automatically traverse the graph and suggest probable causes. |
-| Deployment recommendation engine | Suggest optimal deployment order based on dependency graph and historical success. |
-| Change risk scoring | Score a release candidate based on historical failure patterns for similar changes. |
-| Natural language operational queries | "What changed in production yesterday?" answered by LLM-driven graph query generation. |
-| Anomaly detection | Identify unusual deployment patterns (unusually large releases, unexpected services, out-of-hours deployments). |
-
-> **Out of scope for initial implementation.** AI capabilities should be evaluated only after the graph platform is stable, data quality is proven and the team has operational experience with graph-based queries.
-
----
-
 ## Success Criteria
 
 | Objective | Measure | Target |

@@ -215,85 +215,6 @@ If a graph answer has low confidence or stale data, the UI must surface this cle
 
 ---
 
-## Engineering Copilot And AI-Assisted Release Intelligence
-
-> **This is a future option only.** It depends on the Knowledge Graph, access controls, data quality and audit model being mature. It is not part of the initial release automation rollout.
-
-The Knowledge Graph could become the trusted retrieval layer for an engineering copilot — an AI assistant that helps engineers, release owners and incident leads answer operational questions by traversing the graph and presenting cited evidence.
-
-### Use Cases
-
-| Use Case | Example Question | Required Evidence From Graph |
-| --- | --- | --- |
-| Release impact analysis | "What services and environments are affected by release 5.15?" | Release → ServiceVersions → Environments → Squads |
-| Incident investigation | "What changed before this incident?" | Incident → Deployment → Commits → Tickets + Config changes |
-| Rollback recommendation | "Can service X be rolled back in production?" | Previous healthy Deployment + Liquibase constraints + Config reversibility |
-| Ownership discovery | "Which services owned by Squad A are deployed to SIT?" | Squad → Services → Deployments → Environments |
-| Deployment audit | "Show the full provenance chain for this production deployment" | Deployment → Build → Pipeline → Commit → Ticket → Approval |
-| Change risk scoring | "How risky is this release based on historical patterns?" | Release scope + historical failure rates for similar changes |
-| Environment drift | "Why is production different from deployment-management?" | Compare Deployment state vs manifest intent |
-| Post-deployment health | "How is the release performing after 30 minutes?" | Deployment → HealthSignals → SLO status |
-
-### Copilot Architecture
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
-
-flowchart LR
-  USER["👤 Engineer / Release Owner\n/ Incident Lead"]:::user
-  COPILOT["🤖 Engineering Copilot"]:::copilot
-  POLICY["🔒 RBAC + Policy Check"]:::security
-  PLAN["🧠 Query Planner"]:::plan
-  GRAPH["📊 Knowledge Graph"]:::graph
-  SEARCH["🔍 Search Index"]:::search
-  EVIDENCE["📋 Evidence Pack"]:::evidence
-  ANSWER["✅ Cited Answer /\nRecommendation"]:::answer
-
-  USER --> COPILOT --> POLICY --> PLAN
-  PLAN --> GRAPH
-  PLAN --> SEARCH
-  GRAPH --> EVIDENCE
-  SEARCH --> EVIDENCE
-  EVIDENCE --> ANSWER --> USER
-
-  classDef user fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
-  classDef copilot fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
-  classDef security fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold
-  classDef plan fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
-  classDef graph fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
-  classDef search fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
-  classDef evidence fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
-  classDef answer fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
-```
-
-### Query Processing Flow
-
-```text
-User question
-  → Policy and RBAC check
-  → Intent classification
-  → Graph query planning
-  → Graph traversal / search retrieval
-  → Evidence collection
-  → Response generation (with citations)
-  → Audit trail recorded
-```
-
-### Guardrails
-
-The copilot must operate within strict boundaries:
-
-1. **The copilot must not deploy directly.** It can recommend, but execution requires human action through existing pipelines.
-2. **The copilot must not approve releases.** Approval remains a human decision recorded through existing workflows.
-3. **The copilot must not expose secrets.** It accesses secret change metadata only — never secret values.
-4. **The copilot must cite source evidence.** Every answer must link to the graph nodes and source systems that support it.
-5. **The copilot must respect RBAC.** Users only see answers based on data they are authorised to access.
-6. **The copilot must show uncertainty.** Where graph data is stale, unreconciled or incomplete, the response must state this explicitly.
-7. **The copilot must record audit logs.** All queries, answers and recommendations are logged for compliance and review.
-8. **Human approval remains mandatory** for production deployment, rollback and override decisions.
-
----
-
 ## Platform Product Framing
 
 The Knowledge Graph and Control Plane should be treated as an internal platform product, not a one-off tool or project deliverable. Without ownership, support and adoption planning, the platform risks becoming another untrusted dashboard.
@@ -322,13 +243,12 @@ The Knowledge Graph and Control Plane should be treated as an internal platform 
 
 ## Additional Risks
 
-These risks apply to the Knowledge Graph, Control Plane and Copilot capabilities:
+These risks apply to the Knowledge Graph and future control-plane capabilities:
 
 | Risk | Why It Matters | Mitigation |
 | --- | --- | --- |
 | Graph becomes stale | Engineers lose trust; stale data is worse than no data. | Automated freshness scoring; reconciliation jobs; confidence indicators in UI. |
 | Wrong relationships lead to wrong operational conclusions | Incorrect dependency or ownership links could misdirect incident response. | Reconciliation against source systems; human review for high-confidence relationships; flag unverified links. |
-| AI gives unsupported recommendations | Copilot may hallucinate or present uncertain data as authoritative. | Require citations; show confidence scores; flag stale data; human-in-the-loop for all decisions. |
 | Graph technology choice is challenged by ARB | Neo4j or selected product may not pass procurement or security review. | Present architecture pattern, not product choice. Validate pattern first; select product later. |
 | Source systems have poor metadata quality | Graph quality depends on source quality. Garbage in, garbage out. | Complete metadata standardisation (Phase 0-1 transformation) before starting graph. |
 | Teams do not adopt the platform | Investment wasted if engineers continue using existing manual methods. | Demonstrate value via incident response (highest pain); embed in existing workflows; avoid mandating adoption. |
@@ -373,10 +293,6 @@ These capabilities map to later transformation phases only:
 | Phase 7 (Future) | Rollback assistant | Future option |
 | Phase 7 (Future) | Approval visibility | Future option |
 | Phase 7 (Future) | Metrics and audit reporting through platform | Future option |
-| Future | Engineering Copilot | Long-term future option |
-| Future | AI-assisted incident investigation | Long-term future option |
-| Future | Change risk scoring | Long-term future option |
-| Future | Natural language graph queries | Long-term future option |
 
 > **None of these items are part of Phase 0–4.** The immediate priority remains release operating model maturity.
 
@@ -397,9 +313,8 @@ The long-term platform vision is a unified deployment intelligence capability:
 
 - The **Knowledge Graph** is the relationship intelligence layer.
 - The **Control Plane** is the operational interface layer.
-- The **Engineering Copilot** is a future consumer of that trusted graph.
 
-The recommended next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph and copilot are only valuable if the underlying data is reliable — which is why the immediate transformation must come first.
+The recommended next step is not to build everything, but to validate the operating model, metadata quality and event sources first. The graph is only valuable if the underlying data is reliable — which is why the immediate transformation must come first.
 
 ## Related Pages
 

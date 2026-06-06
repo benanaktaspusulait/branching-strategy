@@ -14,9 +14,6 @@ Status: Completed architecture review output.
 | Changed-chart deployment | No | Yes | No | Needs dependency analysis and audited exclusions. |
 | Release reporting | Yes | Yes | No | Must define retention, classification and evidence ownership. |
 | Release ownership model | Yes | Yes | No | Role model exists; named people/backups still required. |
-| Unified deployment control plane | No | Yes | No | Read-only first; write actions deferred. |
-| Knowledge Graph | No | Yes | No | Limited pilot only after metadata quality improves. |
-| Engineering Copilot | No | Yes | No | Evidence retrieval only; no autonomous operational decisions. |
 | Event-driven architecture | Yes | Yes | No | Useful, but needs replay, DLQ and reconciliation controls. |
 | Rollback recommendations | Yes | Yes | No | Must distinguish rollback from fix-forward and data constraints. |
 | Environment promotion model | Yes | Yes | No | Strong if approvals and readiness gates are explicit. |
@@ -36,11 +33,6 @@ Scores: 1 poor, 5 excellent.
 | Branch cutover | 3 | 2 | 3 | 3 | 4 | 3 | 3 |
 | Changed-chart deployment | 3 | 2 | 2 | 3 | 4 | 3 | 3 |
 | Hotfix/rollback process | 5 | 4 | 3 | 4 | 5 | 4 | 3 |
-| Knowledge Graph pilot | 3 | 3 | 3 | 4 | 5 | 3 | 2 |
-| Unified control plane read-only | 3 | 3 | 3 | 4 | 5 | 3 | 2 |
-| Control plane trigger capability | 2 | 2 | 2 | 3 | 3 | 2 | 1 |
-| Engineering Copilot evidence retrieval | 3 | 4 | 4 | 3 | 4 | 3 | 2 |
-| Engineering Copilot recommendations/actions | 1 | 1 | 1 | 2 | 2 | 1 | 1 |
 | Production GitOps | 2 | 2 | 2 | 3 | 4 | 3 | 2 |
 | Progressive delivery auto-rollback | 2 | 2 | 2 | 2 | 4 | 3 | 2 |
 
@@ -65,47 +57,6 @@ Scores: 1 poor, 5 excellent.
 | Partial rollback | Mixed versions may be worse than failed release. | Define service grouping and rollback units. |
 | Event replay | Kafka/event consumers may process incompatible events. | Include event schema compatibility and replay plan. |
 | Downstream systems | External consumers may observe already-emitted effects. | Treat rollback as operational decision, not pure technical reversal. |
-
-## Knowledge Graph Recommendation
-
-Recommendation: Run limited read-only pilot, not immediate full build.
-
-Justification:
-
-- Metadata quality is currently a known weakness.
-- Incorrect relationships could create false confidence during incidents.
-- Security classification and access control need strong design.
-- Cost and operational ownership need approval.
-- A small pilot around ownership and deployment visibility can prove value with limited blast radius.
-
-Entry criteria:
-
-- Release metadata standardisation underway.
-- Service ownership accuracy baseline measured.
-- RBAC and query audit design approved.
-- Source-of-truth principle accepted.
-- Freshness and completeness metrics defined.
-
-## Engineering Copilot Guardrails
-
-Allowed initial capabilities:
-
-- Explain release state with citations.
-- Retrieve approved runbook links.
-- Summarise graph evidence.
-- Identify missing evidence or stale data.
-- Draft investigation checklists for human review.
-
-Prohibited capabilities:
-
-- Approving releases.
-- Triggering deployments.
-- Triggering rollbacks.
-- Recommending production rollback without explicit evidence and human decision.
-- Bypassing RBAC.
-- Querying or exposing secret values.
-- Presenting low-confidence graph data as fact.
-- Making change advisory decisions.
 
 ## Related Pages
 

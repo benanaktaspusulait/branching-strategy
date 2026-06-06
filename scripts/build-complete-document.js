@@ -21,7 +21,6 @@ const sources = [
   'docs/transformation-programme.md',
   'docs/transformation-programme-delivery.md',
   'docs/platform-engineering-strategy.md',
-  'docs/architecture-review/alignment-and-enterprise-architecture-review.md',
   'docs/architecture-review/arb-package.md',
   'docs/architecture-review/business-case-and-roadmap.md',
   'docs/architecture-review/operating-model-raci.md',
@@ -73,6 +72,14 @@ function stripRelatedPages(markdown) {
   return markdown.replace(/\n+## Related Pages\n[\s\S]*$/m, '');
 }
 
+function stripReaderAppendix(markdown, source) {
+  if (source !== 'README.md') {
+    return markdown;
+  }
+
+  return markdown.replace(/\n+### Appendix And Reference Material\n[\s\S]*?(?=\n## Suggested Reading Order)/m, '\n');
+}
+
 function sourceMarker(source) {
   return `\n---\n\n> Source: \`${source}\`\n\n`;
 }
@@ -84,7 +91,10 @@ if (missing.length > 0) {
 }
 
 const sourceData = sources.map((source) => {
-  const raw = stripRelatedPages(fs.readFileSync(path.join(root, source), 'utf8').trimEnd()).trimEnd();
+  const raw = stripReaderAppendix(
+    stripRelatedPages(fs.readFileSync(path.join(root, source), 'utf8').trimEnd()).trimEnd(),
+    source,
+  ).trimEnd();
   return {
     source,
     title: firstHeading(raw, source),
