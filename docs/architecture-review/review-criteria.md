@@ -51,7 +51,7 @@ If the notes are later taken into a formal review, these two lenses may be usefu
 ## Review Constraints
 
 - Do not mark any proposal as approved without explicit owner or formal approval evidence.
-- Do not treat generated documentation as a source of truth.
+- Use the source files for detailed traceability if a question needs deeper evidence.
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
 
