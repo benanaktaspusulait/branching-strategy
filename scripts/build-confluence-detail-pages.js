@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const root = process.cwd();
+const coveragePage = 'confluence/09-page-coverage-index.md';
 
 const pageMappings = [
   {
@@ -99,7 +100,7 @@ const pageTitles = new Map([
   ['confluence/06-ownership-and-approvals.md', 'Ownership And Approvals'],
   ['confluence/07-transformation-programme.md', 'Improvement Path And Maturity Observations'],
   ['confluence/08-platform-and-knowledge-graph.md', 'Future Platform Topics'],
-  ['confluence/09-source-coverage-index.md', 'Source Coverage Index'],
+  [coveragePage, 'Page Coverage Index'],
 ]);
 
 const relatedPages = new Map([
@@ -114,7 +115,7 @@ const relatedPages = new Map([
       'confluence/06-ownership-and-approvals.md',
       'confluence/07-transformation-programme.md',
       'confluence/08-platform-and-knowledge-graph.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
@@ -124,7 +125,7 @@ const relatedPages = new Map([
       'confluence/02-current-release-operating-model.md',
       'confluence/03-proposed-release-automation-flow.md',
       'confluence/05-hotfix-and-rollback.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
@@ -135,7 +136,7 @@ const relatedPages = new Map([
       'confluence/03-proposed-release-automation-flow.md',
       'confluence/04-rollout-decision-proposals.md',
       'confluence/06-ownership-and-approvals.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
@@ -155,7 +156,7 @@ const relatedPages = new Map([
       'confluence/03-proposed-release-automation-flow.md',
       'confluence/05-hotfix-and-rollback.md',
       'confluence/06-ownership-and-approvals.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
@@ -184,7 +185,7 @@ const relatedPages = new Map([
       'confluence/02-current-release-operating-model.md',
       'confluence/06-ownership-and-approvals.md',
       'confluence/08-platform-and-knowledge-graph.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
@@ -193,11 +194,11 @@ const relatedPages = new Map([
       'confluence/00-parent-release-engineering-assessment.md',
       'confluence/03-proposed-release-automation-flow.md',
       'confluence/07-transformation-programme.md',
-      'confluence/09-source-coverage-index.md',
+      coveragePage,
     ],
   ],
   [
-    'confluence/09-source-coverage-index.md',
+    coveragePage,
     [
       'confluence/00-parent-release-engineering-assessment.md',
       'confluence/01-cicd-findings-and-actions.md',
@@ -216,9 +217,29 @@ function read(file) {
   return fs.readFileSync(path.join(root, file), 'utf8').trimEnd();
 }
 
+const sourceToPage = new Map(
+  pageMappings.flatMap((mapping) => mapping.sources.map((source) => [source, mapping.page])),
+);
+
+const sourceTitleCache = new Map();
+
 function firstHeading(markdown, fallback) {
   const match = markdown.match(/^#\s+(.+)$/m);
   return match ? match[1].trim() : fallback;
+}
+
+function cleanTitle(title) {
+  return title
+    .replace(/Source Document List/g, 'Material List')
+    .replace(/Source Coverage Index/g, 'Page Coverage Index');
+}
+
+function sourceTitle(source) {
+  if (!sourceTitleCache.has(source)) {
+    sourceTitleCache.set(source, cleanTitle(firstHeading(read(source), source)));
+  }
+
+  return sourceTitleCache.get(source);
 }
 
 function stripFirstH1(markdown) {
@@ -243,6 +264,21 @@ function normaliseLocalPath(source, href) {
   return fragment ? `${posix}#${fragment}` : posix;
 }
 
+function pageForSourceReference(sourceReference) {
+  const [filePart] = sourceReference.split('#');
+  return sourceToPage.get(filePart);
+}
+
+function confluenceReference(sourceReference) {
+  const page = pageForSourceReference(sourceReference);
+
+  if (page) {
+    return pageLink(page);
+  }
+
+  return sourceReference;
+}
+
 function rewriteLocalMarkdownLinks(markdown, source) {
   return markdown.replace(/(!?\[([^\]]*)\]\(([^)]+)\))/g, (full, _whole, label, rawHref) => {
     const href = rawHref.trim().replace(/^<|>$/g, '');
@@ -250,8 +286,40 @@ function rewriteLocalMarkdownLinks(markdown, source) {
       return full;
     }
 
-    return `${label} (\`${normaliseLocalPath(source, href)}\`)`;
+    const page = pageForSourceReference(normaliseLocalPath(source, href));
+    return page ? `[${label}](${path.basename(page)})` : label;
   });
+}
+
+function rewriteKnownSourcePaths(markdown) {
+  return markdown
+    .replace(/`(README\.md|docs\/[^`]+?\.md(?:#[^`]+)?)`/g, (_match, sourceReference) =>
+      confluenceReference(sourceReference),
+    )
+    .replace(/\b(README\.md|docs\/[A-Za-z0-9_./-]+\.md(?:#[A-Za-z0-9_-]+)?)\b/g, (_match, sourceReference) =>
+      confluenceReference(sourceReference),
+    );
+}
+
+function removeRepositoryOnlyReferences(markdown) {
+  return markdown
+    .replace(/^\| Source \| branching-strategy repository \(GitLab\) \|\r?\n/gm, '')
+    .replace(/^- Source repository:.*(?:\r?\n)?/gm, '')
+    .replace(/repository conversion/gi, 'Confluence page set')
+    .replace(
+      /The review scope is based on the document set below\. `COMPLETE-DOCUMENT\.md` is the focused reader copy for release-management stabilisation\. Appendix and future-vision files remain available for traceability, but they are not part of the immediate discussion scope\./g,
+      'The review scope is based on the Confluence page set below. The main assessment page is the focused reader copy for release-management stabilisation. Appendix and future-vision topics remain available for traceability, but they are not part of the immediate discussion scope.',
+    )
+    .replace(/\bdocument set below\b/gi, 'Confluence page set below')
+    .replace(/\bThese files form\b/g, 'These pages form')
+    .replace(/\bthese files form\b/g, 'these pages form')
+    .replace(/\bAppendix and future-vision files\b/g, 'Appendix and future-vision topics')
+    .replace(/\| File \| Role In Review \| Review Focus \|/g, '| Page / Topic | Role In Review | Review Focus |')
+    .replace(/\bsource files\b/gi, 'Confluence pages')
+    .replace(/\bsource file\b/gi, 'Confluence page')
+    .replace(/\bsource material\b/gi, 'detailed material')
+    .replace(/\bsource document list\b/gi, 'material list')
+    .replace(/\bsource documents\b/gi, 'Confluence pages');
 }
 
 function softenLegacyHeadings(markdown) {
@@ -271,15 +339,13 @@ function softenLegacyHeadings(markdown) {
 function detailedSourceSection(sources) {
   const sections = sources.map((source) => {
     const markdown = read(source);
-    const title = firstHeading(markdown, source);
-    const body = softenLegacyHeadings(
+    const title = sourceTitle(source);
+    const body = removeRepositoryOnlyReferences(rewriteKnownSourcePaths(softenLegacyHeadings(
       shiftHeadings(rewriteLocalMarkdownLinks(stripFirstH1(markdown), source)),
-    ).trim();
+    ))).trim();
 
     return [
-      `### Source: ${title}`,
-      '',
-      `Source file: \`${source}\``,
+      `### ${title}`,
       '',
       body,
     ].join('\n');
@@ -288,9 +354,9 @@ function detailedSourceSection(sources) {
   return [
     '---',
     '',
-    '## Detailed Source Material',
+    '## Detailed Supporting Material',
     '',
-    'This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.',
+    'This section keeps the detailed supporting content for readers who need more than the summary above.',
     '',
     sections.join('\n\n'),
   ].join('\n');
@@ -313,7 +379,7 @@ function relatedPagesSection(page) {
 }
 
 function stripExistingDetail(pageMarkdown) {
-  return pageMarkdown.replace(/\n+---\n+(?:[ \t]*\n+)*## Detailed Source Material\b[\s\S]*$/m, '').trimEnd();
+  return pageMarkdown.replace(/\n+---\n+(?:[ \t]*\n+)*## Detailed (?:Source|Supporting) Material\b[\s\S]*$/m, '').trimEnd();
 }
 
 function stripExistingRelatedPages(pageMarkdown) {
@@ -323,18 +389,18 @@ function stripExistingRelatedPages(pageMarkdown) {
 function updatePage(mapping) {
   const pagePath = path.join(root, mapping.page);
   const pageMarkdown = fs.readFileSync(pagePath, 'utf8');
-  const base = stripExistingRelatedPages(stripExistingDetail(pageMarkdown));
+  const base = removeRepositoryOnlyReferences(rewriteKnownSourcePaths(stripExistingRelatedPages(stripExistingDetail(pageMarkdown))));
   const next = `${base}\n\n${relatedPagesSection(mapping.page)}\n\n${detailedSourceSection(mapping.sources)}\n`;
   fs.writeFileSync(pagePath, next);
 }
 
 function writeCoverageIndex() {
   const rows = pageMappings.flatMap((mapping) =>
-    mapping.sources.map((source) => `| \`${source}\` | ${pageLink(mapping.page)} |`),
+    mapping.sources.map((source) => `| ${sourceTitle(source)} | ${pageLink(mapping.page)} |`),
   );
 
   const content = [
-    '# Confluence Source Coverage Index',
+    '# Confluence Page Coverage Index',
     '',
     '| Field | Value |',
     '| --- | --- |',
@@ -342,27 +408,27 @@ function writeCoverageIndex() {
     '| Status | In Review |',
     '| Created | 2026-06-09 |',
     '| Last updated | 2026-06-09 |',
-    '| Labels | confluence, source-coverage, release-engineering, cerberus |',
+    '| Labels | confluence, page-coverage, release-engineering, cerberus |',
     '',
     '---',
     '',
     '## Summary',
     '',
-    'This page shows which repository source files are preserved in each Confluence conversion page. The overview pages remain readable, while their detailed source material sections retain the original technical content.',
+    'This page shows how detailed content areas are grouped across the Confluence page set.',
     '',
-    relatedPagesSection('confluence/09-source-coverage-index.md'),
+    relatedPagesSection(coveragePage),
     '',
     '---',
     '',
     '## Coverage Mapping',
     '',
-    '| Source File | Confluence Page |',
+    '| Content Area | Confluence Page |',
     '| --- | --- |',
     ...rows,
     '',
   ].join('\n');
 
-  fs.writeFileSync(path.join(root, 'confluence/09-source-coverage-index.md'), content);
+  fs.writeFileSync(path.join(root, coveragePage), content);
 }
 
 const missing = pageMappings.flatMap((mapping) => [mapping.page, ...mapping.sources])
@@ -376,4 +442,4 @@ if (missing.length > 0) {
 pageMappings.forEach(updatePage);
 writeCoverageIndex();
 
-console.log(`Updated ${pageMappings.length} Confluence pages and wrote confluence/09-source-coverage-index.md.`);
+console.log(`Updated ${pageMappings.length} Confluence pages and wrote ${coveragePage}.`);

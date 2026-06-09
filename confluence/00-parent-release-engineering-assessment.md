@@ -7,7 +7,6 @@
 | Created | 2026-06-09 |
 | Last updated | 2026-06-09 |
 | Last reviewed | 2026-06-09 |
-| Source | branching-strategy repository (GitLab) |
 | Labels | kt-notes, ci-cd, release-engineering, cerberus |
 
 ---
@@ -169,7 +168,6 @@ The approach is phased and incremental:
 
 ## 11. References
 
-- Source repository: `branching-strategy` (GitLab) (requires GitLab access)
 - Release decision register: see child page Rollout Decision Proposals.
 
 ---
@@ -190,17 +188,15 @@ Feedback or questions? Contact the page owner or comment below.
 - [Ownership And Approvals](06-ownership-and-approvals.md)
 - [Improvement Path And Maturity Observations](07-transformation-programme.md)
 - [Future Platform Topics](08-platform-and-knowledge-graph.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Cerberus Release Process Understanding, Gaps And Improvement Ideas
-
-Source file: `README.md`
+### Cerberus Release Process Understanding, Gaps And Improvement Ideas
 
 **KT Notes, Current Understanding, Observations And Discussion Points**
 
@@ -226,20 +222,20 @@ The notes are organised as a focused discussion pack plus appendix material. The
 
 | Page | What It Covers |
 | --- | --- |
-| System state, problems, solution options and risks (`docs/system-state-problems-solutions.md`) | Current-state summary, observed problems, possible solution options, risks and experience-based notes. |
-| Current release operating model (`docs/current-release-operating-model.md`) | End-to-end release flow: branches -> tags -> artefacts -> deploy -> reconciliation. |
-| Deployment and release findings (`docs/deployment-and-release-findings.md`) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
-| CI/CD deployment findings and actions (`docs/cicd-deployment-findings-and-actions.md`) | Problem summary table, root causes, and recommended follow-up actions. |
-| Proposed release automation flow (`docs/proposed-release-automation-flow.md`) | Target automation: auto release branches, auto chart updates, reporting, changed-chart deploy. |
-| Automation and validation (`docs/automation-and-validation.md`) | Validation rules, release reporting, commit metadata, merge strategy. |
-| Hotfix and rollback (`docs/hotfix-and-rollback.md`) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
-| Release scope, ownership and approvals (`docs/scope-ownership-approvals.md`) | Repository scope, service ownership, approval matrix. |
-| Rollout decision proposals (`docs/rollout-decision-proposals.md`) | Proposed discussion points for rollout behaviour. |
-| Release decision register (`docs/release-decision-register.md`) | Open decisions, owner gaps, required evidence and possible closure order. |
-| Improvement notes and maturity observations (`docs/transformation-programme.md`) | Root cause notes, risk observations, maturity scorecard and possible near-term target state. |
-| Possible improvement path and delivery notes (`docs/transformation-programme-delivery.md`) | Indicative phases, prioritisation, RACI, metrics to baseline, cost/benefit and improvement areas. |
-| Platform engineering strategy (`docs/platform-engineering-strategy.md`) | Environment promotion model, deployment strategies, observability gates. |
-| Potential architecture review notes (`docs/architecture-review/index.md`) | Optional later-stage review considerations, criticality challenge notes and open risks. |
+| [System state, problems, solution options and risks](07-transformation-programme.md) | Current-state summary, observed problems, possible solution options, risks and experience-based notes. |
+| [Current release operating model](02-current-release-operating-model.md) | End-to-end release flow: branches -> tags -> artefacts -> deploy -> reconciliation. |
+| [Deployment and release findings](01-cicd-findings-and-actions.md) | How Helm scripts, secrets, manifests, umbrella charts and validation scripts actually work. |
+| [CI/CD deployment findings and actions](01-cicd-findings-and-actions.md) | Problem summary table, root causes, and recommended follow-up actions. |
+| [Proposed release automation flow](03-proposed-release-automation-flow.md) | Target automation: auto release branches, auto chart updates, reporting, changed-chart deploy. |
+| [Automation and validation](03-proposed-release-automation-flow.md) | Validation rules, release reporting, commit metadata, merge strategy. |
+| [Hotfix and rollback](05-hotfix-and-rollback.md) | Production hotfix flow, release-phase hotfix, rollback process, Liquibase rollback. |
+| [Release scope, ownership and approvals](06-ownership-and-approvals.md) | Repository scope, service ownership, approval matrix. |
+| [Rollout decision proposals](04-rollout-decision-proposals.md) | Proposed discussion points for rollout behaviour. |
+| [Release decision register](04-rollout-decision-proposals.md) | Open decisions, owner gaps, required evidence and possible closure order. |
+| [Improvement notes and maturity observations](07-transformation-programme.md) | Root cause notes, risk observations, maturity scorecard and possible near-term target state. |
+| [Possible improvement path and delivery notes](07-transformation-programme.md) | Indicative phases, prioritisation, RACI, metrics to baseline, cost/benefit and improvement areas. |
+| [Platform engineering strategy](08-platform-and-knowledge-graph.md) | Environment promotion model, deployment strategies, observability gates. |
+| [Potential architecture review notes](08-platform-and-knowledge-graph.md) | Optional later-stage review considerations, criticality challenge notes and open risks. |
 
 Key problems at a glance:
 
@@ -258,37 +254,37 @@ Key problems at a glance:
 
 | Page | What It Covers |
 | --- | --- |
-| Branching strategy options (`docs/branching-options.md`) | Branch model comparison after the operating model is understood. |
-| Release engineering best practices (`docs/release-engineering-best-practices.md`) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
-| Squad briefing summary (`docs/squad-briefing-summary.md`) | Squad-facing communication material. |
-| Detailed system analysis (`docs/reference/system-state-problems-solutions-detailed.md`) | Full current state detail. |
-| Detailed problems (P1–P12) (`docs/reference/detailed-problems.md`) | Full problem analysis with root cause and evidence. |
-| Detailed solutions (S1–S7) (`docs/reference/detailed-solutions.md`) | Full solution options with risks and experience notes. |
-| Detailed rollout decisions (`docs/reference/rollout-decision-proposals-detailed.md`) | Full rationale behind the short rollout decision proposal page. |
-| Platform engineering strategy — advanced (`docs/platform-engineering-strategy-advanced.md`) | Future GitOps, SBOM, supply chain security and control-plane considerations. |
-| Deployment knowledge graph — design (`docs/deployment-knowledge-graph-design.md`) | Future option: domain model, entity relationships, graph schema. |
-| Deployment knowledge graph — implementation (`docs/deployment-knowledge-graph-implementation.md`) | Future option: event architecture, ingestion, API, search, workflows. |
-| Deployment knowledge graph — operations (`docs/deployment-knowledge-graph-operations.md`) | Future option: security, retention, integrations, technology options, roadmap. |
-| Deployment knowledge graph — business case (`docs/deployment-knowledge-graph-business-case.md`) | Future option: strategic value, governance model, risks, NFRs and decision record. |
-| Advanced architecture sections (`docs/advanced-architecture-sections.md`) | Future option: architecture mapping, event-driven ingestion, data trust and platform framing. |
+| [Branching strategy options](02-current-release-operating-model.md) | Branch model comparison after the operating model is understood. |
+| [Release engineering best practices](07-transformation-programme.md) | Supporting industry guidance for branching, validation, Helm, rollback, ownership and rollout. |
+| [Squad briefing summary](02-current-release-operating-model.md) | Squad-facing communication material. |
+| [Detailed system analysis](07-transformation-programme.md) | Full current state detail. |
+| [Detailed problems (P1–P12)](07-transformation-programme.md) | Full problem analysis with root cause and evidence. |
+| [Detailed solutions (S1–S7)](07-transformation-programme.md) | Full solution options with risks and experience notes. |
+| [Detailed rollout decisions](04-rollout-decision-proposals.md) | Full rationale behind the short rollout decision proposal page. |
+| [Platform engineering strategy — advanced](08-platform-and-knowledge-graph.md) | Future GitOps, SBOM, supply chain security and control-plane considerations. |
+| [Deployment knowledge graph — design](08-platform-and-knowledge-graph.md) | Future option: domain model, entity relationships, graph schema. |
+| [Deployment knowledge graph — implementation](08-platform-and-knowledge-graph.md) | Future option: event architecture, ingestion, API, search, workflows. |
+| [Deployment knowledge graph — operations](08-platform-and-knowledge-graph.md) | Future option: security, retention, integrations, technology options, roadmap. |
+| [Deployment knowledge graph — business case](08-platform-and-knowledge-graph.md) | Future option: strategic value, governance model, risks, NFRs and decision record. |
+| [Advanced architecture sections](08-platform-and-knowledge-graph.md) | Future option: architecture mapping, event-driven ingestion, data trust and platform framing. |
 
 ### Suggested Reading Order
 
 1. This page.
-2. System state, problems, solution options and risks (`docs/system-state-problems-solutions.md`) - current understanding and discussion summary.
-3. Current release operating model (`docs/current-release-operating-model.md`) - how it works today.
-4. CI/CD deployment findings and actions (`docs/cicd-deployment-findings-and-actions.md`) - what is broken.
-5. Proposed release automation flow (`docs/proposed-release-automation-flow.md`) - what the solution looks like.
-6. Deployment and release findings (`docs/deployment-and-release-findings.md`) - technical details.
-7. Automation and validation (`docs/automation-and-validation.md`) - validation, reporting, metadata and failure handling.
-8. Hotfix and rollback (`docs/hotfix-and-rollback.md`) - production recovery and reconciliation.
-9. Release scope, ownership and approvals (`docs/scope-ownership-approvals.md`) - scope, owners and approval points.
-10. Rollout decision proposals (`docs/rollout-decision-proposals.md`) - proposed discussion points to confirm or amend.
-11. Release decision register (`docs/release-decision-register.md`) - open decision tracker and possible closure order.
-12. Improvement notes and maturity observations (`docs/transformation-programme.md`) - root cause, maturity and possible target release state.
-13. Possible improvement path and delivery notes (`docs/transformation-programme-delivery.md`) - indicative phases, RACI, metrics and investment notes.
-14. Platform engineering strategy (`docs/platform-engineering-strategy.md`) - promotion model, deployment strategy and observability gates.
-15. Potential architecture review notes (`docs/architecture-review/index.md`) - optional later-stage review considerations and open risks.
+2. [System state, problems, solution options and risks](07-transformation-programme.md) - current understanding and discussion summary.
+3. [Current release operating model](02-current-release-operating-model.md) - how it works today.
+4. [CI/CD deployment findings and actions](01-cicd-findings-and-actions.md) - what is broken.
+5. [Proposed release automation flow](03-proposed-release-automation-flow.md) - what the solution looks like.
+6. [Deployment and release findings](01-cicd-findings-and-actions.md) - technical details.
+7. [Automation and validation](03-proposed-release-automation-flow.md) - validation, reporting, metadata and failure handling.
+8. [Hotfix and rollback](05-hotfix-and-rollback.md) - production recovery and reconciliation.
+9. [Release scope, ownership and approvals](06-ownership-and-approvals.md) - scope, owners and approval points.
+10. [Rollout decision proposals](04-rollout-decision-proposals.md) - proposed discussion points to confirm or amend.
+11. [Release decision register](04-rollout-decision-proposals.md) - open decision tracker and possible closure order.
+12. [Improvement notes and maturity observations](07-transformation-programme.md) - root cause, maturity and possible target release state.
+13. [Possible improvement path and delivery notes](07-transformation-programme.md) - indicative phases, RACI, metrics and investment notes.
+14. [Platform engineering strategy](08-platform-and-knowledge-graph.md) - promotion model, deployment strategy and observability gates.
+15. [Potential architecture review notes](08-platform-and-knowledge-graph.md) - optional later-stage review considerations and open risks.
 
 ### Visual Overview
 
@@ -341,7 +337,7 @@ flowchart TD
 
 ### Related Pages
 
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
-- Improvement Notes And Maturity Observations (`docs/transformation-programme.md`)
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Improvement Notes And Maturity Observations](07-transformation-programme.md)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)

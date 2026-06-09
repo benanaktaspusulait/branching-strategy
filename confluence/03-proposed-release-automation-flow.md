@@ -161,19 +161,17 @@ Feedback or questions? Contact the page owner or comment below.
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Proposed Release Automation Flow
-
-Source file: `docs/proposed-release-automation-flow.md`
+### Proposed Release Automation Flow
 
 This page summarises the proposed release automation flow.
 
 It is still a proposal until the team confirms rollout timing, branch naming, quality gates and ownership.
 
-For proposed answers to the open rollout decisions, see rollout decision proposals (`docs/rollout-decision-proposals.md`).
+For proposed answers to the open rollout decisions, see [rollout decision proposals](04-rollout-decision-proposals.md).
 
 ### Current Pain
 
@@ -412,22 +410,20 @@ Individual feature branch commits should ideally also follow the ticket/message 
 
 ### Related Best Practices
 
-Tag/version guidance, multi-repo orchestration, validation gates and rollback considerations are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Tag/version guidance, multi-repo orchestration, validation gates and rollback considerations are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Current Release Operating Model (`docs/current-release-operating-model.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Hotfix And Rollback (`docs/hotfix-and-rollback.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
+- [Current Release Operating Model](02-current-release-operating-model.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Hotfix And Rollback](05-hotfix-and-rollback.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
 
-### Source: Automation And Validation
-
-Source file: `docs/automation-and-validation.md`
+### Automation And Validation
 
 This page captures the automation work in progress and the validation rules that should be made explicit.
 
-Open validation decisions are tracked in the release decision register (`docs/release-decision-register.md`), especially D08, D09, D13, D14, D15 and D22.
+Open validation decisions are tracked in the [release decision register](04-rollout-decision-proposals.md), especially D08, D09, D13, D14, D15 and D22.
 
 ### Why Automation Matters
 
@@ -484,9 +480,9 @@ The current automation status is:
 - A Git pre-commit hook is in progress to reduce commits without MMA ticket references.
 - Rollout may be possible within the next release or two, subject to confirmation.
 
-For the end-to-end proposed flow, see proposed release automation flow (`docs/proposed-release-automation-flow.md`).
+For the end-to-end proposed flow, see [proposed release automation flow](03-proposed-release-automation-flow.md).
 
-For detailed findings around current Helm scripts and auto manifest tooling, see deployment and release findings (`docs/deployment-and-release-findings.md`).
+For detailed findings around current Helm scripts and auto manifest tooling, see [deployment and release findings](01-cicd-findings-and-actions.md).
 
 ### Intended Direction
 
@@ -589,7 +585,7 @@ Suggested policy:
 - Require manual intervention when rerun would conflict with a manual chart edit or unknown repository state.
 - Keep human approval before higher-environment promotion and production.
 
-For the full proposed policy, see rollout decision proposals (`docs/rollout-decision-proposals.md`).
+For the full proposed policy, see [rollout decision proposals](04-rollout-decision-proposals.md).
 
 ### Tag And Artefact Validation
 
@@ -712,11 +708,11 @@ Follow-up needed:
 
 ### Related Best Practices
 
-Validation gates, idempotent pipeline design, immutable artefacts, release metrics and supply-chain security considerations are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Validation gates, idempotent pipeline design, immutable artefacts, release metrics and supply-chain security considerations are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- Deployment And Release Findings (`docs/deployment-and-release-findings.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Deployment And Release Findings](01-cicd-findings-and-actions.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)

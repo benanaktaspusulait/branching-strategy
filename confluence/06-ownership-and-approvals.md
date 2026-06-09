@@ -152,17 +152,15 @@ Feedback or questions? Contact the page owner or comment below.
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Release Scope, Ownership And Approvals
-
-Source file: `docs/scope-ownership-approvals.md`
+### Release Scope, Ownership And Approvals
 
 This page captures the release scope, ownership and approval questions that should be clarified.
 
-Open scope and ownership decisions are tracked in the release decision register (`docs/release-decision-register.md`), especially D20 and D21.
+Open scope and ownership decisions are tracked in the [release decision register](04-rollout-decision-proposals.md), especially D20 and D21.
 
 ### Why Scope Matters
 
@@ -355,7 +353,7 @@ flowchart LR
 | Rollback | Platform / DevOps (executes) | Release owner (approves) + incident lead (decides) | Backup owner to assign | Rollback record |
 | Post-release reconciliation | Automation + release owner | Release owner | Backup owner to assign | Merge records |
 
-Note: Backup owners still need to be confirmed with team leads before rollout expansion. Known automation ownership sits with Gareth/Achilles for the pilot phase only; the long-term owner should be recorded in the release decision register (`docs/release-decision-register.md`).
+Note: Backup owners still need to be confirmed with team leads before rollout expansion. Known automation ownership sits with Gareth/Achilles for the pilot phase only; the long-term owner should be recorded in the [release decision register](04-rollout-decision-proposals.md).
 
 ### Access And Operational Constraints
 
@@ -382,18 +380,16 @@ The team should produce:
 
 ### Related Best Practices
 
-RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-train guidance are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+RACI, CODEOWNERS, branch protection, platform-vs-squad ownership and release-train guidance are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Hotfix And Rollback (`docs/hotfix-and-rollback.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
-- Possible Improvement Path And Delivery Notes (`docs/transformation-programme-delivery.md`)
+- [Hotfix And Rollback](05-hotfix-and-rollback.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Possible Improvement Path And Delivery Notes](07-transformation-programme.md)
 
-### Source: Operating Model And RACI Notes
-
-Source file: `docs/architecture-review/operating-model-raci.md`
+### Operating Model And RACI Notes
 
 Status: Optional review note / working reference.
 
@@ -446,7 +442,7 @@ Legend: R = Responsible, A = Accountable, C = Consulted, I = Informed.
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
-- Additional Enterprise Concerns To Confirm (`docs/architecture-review/missing-enterprise-concerns.md`)
-- Potential Benefits And Roadmap Notes (`docs/architecture-review/business-case-and-roadmap.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)
+- [Additional Enterprise Concerns To Confirm](08-platform-and-knowledge-graph.md)
+- [Potential Benefits And Roadmap Notes](08-platform-and-knowledge-graph.md)

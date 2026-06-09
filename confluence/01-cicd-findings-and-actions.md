@@ -122,17 +122,15 @@ Feedback or questions? Contact the page owner or comment below.
 - [Current Release Operating Model](02-current-release-operating-model.md)
 - [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
 - [Hotfix And Rollback](05-hotfix-and-rollback.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: CI/CD Deployment Findings And Actions
-
-Source file: `docs/cicd-deployment-findings-and-actions.md`
+### CI/CD Deployment Findings And Actions
 
 This page summarises the CI/CD and deployment findings.
 
@@ -197,8 +195,8 @@ flowchart LR
 
 ### Possible Actions
 
-1. Keep the current-state flow in current release operating model (`docs/current-release-operating-model.md`) as the baseline view.
-2. Use deployment and release findings (`docs/deployment-and-release-findings.md`) as the detailed source for deployment scripts, secrets, manifests and tag validation.
+1. Keep the current-state flow in [current release operating model](02-current-release-operating-model.md) as the baseline view.
+2. Use [deployment and release findings](01-cicd-findings-and-actions.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
 3. Move local/manual release automation into Drone once the configuration-service pilot is green.
 4. Define strict validation for wrong tags, missing tags, manifest/tag mismatch, invalid ticket status and `do not deploy` markers.
 5. Confirm repository scope for service code, Helm charts, deployment management, secrets/config, Liquibase and runbooks.
@@ -206,11 +204,11 @@ flowchart LR
 7. Document hotfix and rollback flows including branch, manifest and release report reconciliation.
 8. Define alerting and rerun rules for failed automation steps.
 9. Confirm new environment readiness criteria before treating any dev/test environment as release-ready.
-10. Use rollout decision proposals (`docs/rollout-decision-proposals.md`) as the decision record until owners confirm or amend them.
+10. Use [rollout decision proposals](04-rollout-decision-proposals.md) as the decision record until owners confirm or amend them.
 
 ### Suggested Short-Term Focus
 
-As stated in the current understanding (`docs/system-state-problems-solutions.md#current-understanding`): stabilise the release operating model before changing the branching model. The priority actions are in the Possible Actions list above.
+As stated in the [current understanding](07-transformation-programme.md): stabilise the release operating model before changing the branching model. The priority actions are in the Possible Actions list above.
 
 ### Prioritisation: Effort vs Impact
 
@@ -257,23 +255,21 @@ Not all problems are equally important. Prioritise by impact and effort:
 
 ### Related Pages
 
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Deployment And Release Findings (`docs/deployment-and-release-findings.md`)
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Squad Briefing Summary (`docs/squad-briefing-summary.md`)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Deployment And Release Findings](01-cicd-findings-and-actions.md)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Squad Briefing Summary](02-current-release-operating-model.md)
 
-### Source: Deployment And Release Findings
-
-Source file: `docs/deployment-and-release-findings.md`
+### Deployment And Release Findings
 
 This page covers the current deployment, secrets, manifest and validation mechanisms that the proposed solution must either reuse, automate or replace.
 
 Read this page together with:
 
-- Current release operating model (`docs/current-release-operating-model.md`) for the current end-to-end flow.
-- Proposed release automation flow (`docs/proposed-release-automation-flow.md`) for the target solution.
-- Rollout decision proposals (`docs/rollout-decision-proposals.md`) for decisions that still need team sign-off.
+- [Current release operating model](02-current-release-operating-model.md) for the current end-to-end flow.
+- [Proposed release automation flow](03-proposed-release-automation-flow.md) for the target solution.
+- [Rollout decision proposals](04-rollout-decision-proposals.md) for decisions that still need team sign-off.
 
 ### 1. Deployment Scripts And Helm Flow
 
@@ -494,11 +490,11 @@ The new release automation must explicitly define strict validation rules for ti
 
 ### Related Best Practices
 
-Helm versioning, values-file structure, umbrella chart dependency handling, mass diff usage and secrets-management options are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Helm versioning, values-file structure, umbrella chart dependency handling, mass diff usage and secrets-management options are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Current Release Operating Model (`docs/current-release-operating-model.md`)
-- CI/CD Deployment Findings And Actions (`docs/cicd-deployment-findings-and-actions.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Release Engineering Best Practices (`docs/release-engineering-best-practices.md`)
+- [Current Release Operating Model](02-current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](01-cicd-findings-and-actions.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Release Engineering Best Practices](07-transformation-programme.md)

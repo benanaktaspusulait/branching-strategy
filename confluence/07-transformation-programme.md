@@ -192,23 +192,21 @@ Feedback or questions? Contact the page owner or comment below.
 - [Current Release Operating Model](02-current-release-operating-model.md)
 - [Ownership And Approvals](06-ownership-and-approvals.md)
 - [Future Platform Topics](08-platform-and-knowledge-graph.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: System State, Problems, Solution Options And Risks
-
-Source file: `docs/system-state-problems-solutions.md`
+### System State, Problems, Solution Options And Risks
 
 This is a KT-based current-understanding summary of the CI/CD, branching, release and deployment notes.
 
 It reflects my current understanding from KT sessions and follow-up analysis. Some assumptions may be incomplete and should be confirmed with Gareth, Achilles, release management, the platform team and squad leads before being treated as agreed process.
 
-For the full detailed analysis, see system state detailed analysis (`docs/reference/system-state-problems-solutions-detailed.md`).
+For the full detailed analysis, see [system state detailed analysis](07-transformation-programme.md).
 
 ### Current Understanding
 
@@ -321,7 +319,7 @@ The proposed direction appears sensible, but it should be treated as a phased op
 | P11 | Ownership and approval gaps can break the rollout. | Failures, overrides and rollback decisions become slow. | RACI is not yet fully named. | Confirm named owners before expanding beyond pilot. |
 | P12 | Alerting and rerun rules are incomplete. | Failed automation can leave state half-updated. | Failure modes are not yet production-readiness gates. | Define alerting channels and safe-rerun criteria. |
 
-For detailed analysis of each problem, see the detailed system analysis appendix (`docs/reference/system-state-problems-solutions-detailed.md`).
+For detailed analysis of each problem, see the [detailed system analysis appendix](07-transformation-programme.md).
 
 ### Possible Improvement Path
 
@@ -490,7 +488,7 @@ Phase 5: optimise feature flags, secrets and observability.
 
 The strongest suggested direction is to avoid a big-bang branch change. A safer path may be to make the release state auditable first, then simplify the branch model once the automation can prove what is actually being released.
 
-For root cause notes, maturity observations, possible phases, RACI and metrics to baseline, see improvement notes and maturity observations (`docs/transformation-programme.md`).
+For root cause notes, maturity observations, possible phases, RACI and metrics to baseline, see [improvement notes and maturity observations](07-transformation-programme.md).
 
 
 ### One-Page Summary
@@ -538,19 +536,17 @@ Before expanding the automation beyond the pilot:
 
 ### Related Pages
 
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
-- Current Release Operating Model (`docs/current-release-operating-model.md`)
-- CI/CD Deployment Findings And Actions (`docs/cicd-deployment-findings-and-actions.md`)
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- System State, Problems, Solution Options And Risks - Detailed Analysis (`docs/reference/system-state-problems-solutions-detailed.md`)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
+- [Current Release Operating Model](02-current-release-operating-model.md)
+- [CI/CD Deployment Findings And Actions](01-cicd-findings-and-actions.md)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [System State, Problems, Solution Options And Risks - Detailed Analysis](07-transformation-programme.md)
 
-### Source: System State, Problems, Solution Options And Risks - Detailed Analysis
-
-Source file: `docs/reference/system-state-problems-solutions-detailed.md`
+### System State, Problems, Solution Options And Risks - Detailed Analysis
 
 This page contains the detailed analysis behind the shorter current-understanding summary.
 
-Use this page when you need the rationale, operational detail and experience-based notes. Use system state, problems, solution options and risks (`docs/system-state-problems-solutions.md`) for the short version.
+Use this page when you need the rationale, operational detail and experience-based notes. Use [system state, problems, solution options and risks](07-transformation-programme.md) for the short version.
 
 ### Purpose
 
@@ -563,15 +559,15 @@ This analysis answers four questions:
 
 Related pages:
 
-- Current release operating model (`docs/current-release-operating-model.md`)
-- Deployment and release findings (`docs/deployment-and-release-findings.md`)
-- CI/CD deployment findings and actions (`docs/cicd-deployment-findings-and-actions.md`)
-- Proposed release automation flow (`docs/proposed-release-automation-flow.md`)
-- Branching strategy options (`docs/branching-options.md`)
-- Automation and validation (`docs/automation-and-validation.md`)
-- Hotfix and rollback (`docs/hotfix-and-rollback.md`)
-- Release scope, ownership and approvals (`docs/scope-ownership-approvals.md`)
-- Rollout decision proposals (`docs/rollout-decision-proposals.md`)
+- [Current release operating model](02-current-release-operating-model.md)
+- [Deployment and release findings](01-cicd-findings-and-actions.md)
+- [CI/CD deployment findings and actions](01-cicd-findings-and-actions.md)
+- [Proposed release automation flow](03-proposed-release-automation-flow.md)
+- [Branching strategy options](02-current-release-operating-model.md)
+- [Automation and validation](03-proposed-release-automation-flow.md)
+- [Hotfix and rollback](05-hotfix-and-rollback.md)
+- [Release scope, ownership and approvals](06-ownership-and-approvals.md)
+- [Rollout decision proposals](04-rollout-decision-proposals.md)
 
 ### Detailed Current Understanding Summary
 
@@ -766,24 +762,22 @@ Experience-based note:
 
 Automation is not an owner. When automation fails, someone must decide whether to rerun, override, stop release, roll back or fix forward.
 
-For problems (P1-P12), see detailed problems (`docs/reference/detailed-problems.md`).
-For solutions (S1-S7) and experience notes, see detailed solutions (`docs/reference/detailed-solutions.md`).
+For problems (P1-P12), see [detailed problems](07-transformation-programme.md).
+For solutions (S1-S7) and experience notes, see [detailed solutions](07-transformation-programme.md).
 
 ### Related Pages
 
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Detailed Problem Analysis (P1–P12) (`docs/reference/detailed-problems.md`)
-- Detailed Solution Options And Experience Notes (S1–S7) (`docs/reference/detailed-solutions.md`)
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Detailed Problem Analysis (P1–P12)](07-transformation-programme.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](07-transformation-programme.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
 
-### Source: Detailed Problem Analysis (P1–P12)
-
-Source file: `docs/reference/detailed-problems.md`
+### Detailed Problem Analysis (P1–P12)
 
 This page provides full analysis of each problem identified in the assessment.
 
-For current state detail, see system state detailed (`docs/reference/system-state-problems-solutions-detailed.md`).
-For solutions, see detailed solutions (`docs/reference/detailed-solutions.md`).
+For current state detail, see [system state detailed](07-transformation-programme.md).
+For solutions, see [detailed solutions](07-transformation-programme.md).
 
 ### 2. Main Problems
 
@@ -985,19 +979,17 @@ Recommendation:
 
 ### Related Pages
 
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- System State, Problems, Solution Options And Risks - Detailed Analysis (`docs/reference/system-state-problems-solutions-detailed.md`)
-- Detailed Solution Options And Experience Notes (S1–S7) (`docs/reference/detailed-solutions.md`)
-- CI/CD Deployment Findings And Actions (`docs/cicd-deployment-findings-and-actions.md`)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [System State, Problems, Solution Options And Risks - Detailed Analysis](07-transformation-programme.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](07-transformation-programme.md)
+- [CI/CD Deployment Findings And Actions](01-cicd-findings-and-actions.md)
 
-### Source: Detailed Solution Options And Experience Notes (S1–S7)
-
-Source file: `docs/reference/detailed-solutions.md`
+### Detailed Solution Options And Experience Notes (S1–S7)
 
 This page provides full solution analysis with risks, mitigations and experience-based notes.
 
-For current state, see system state detailed (`docs/reference/system-state-problems-solutions-detailed.md`).
-For problems, see detailed problems (`docs/reference/detailed-problems.md`).
+For current state, see [system state detailed](07-transformation-programme.md).
+For problems, see [detailed problems](07-transformation-programme.md).
 
 ### 3. Solution Options And Risks
 
@@ -1387,14 +1379,12 @@ This path is not the fastest-looking option, but it reduces production release r
 
 ### Related Pages
 
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Detailed Problem Analysis (P1–P12) (`docs/reference/detailed-problems.md`)
-- Rollout Decision Proposals - Detailed Rationale (`docs/reference/rollout-decision-proposals-detailed.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Detailed Problem Analysis (P1–P12)](07-transformation-programme.md)
+- [Rollout Decision Proposals - Detailed Rationale](04-rollout-decision-proposals.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
 
-### Source: Improvement Notes And Maturity Observations
-
-Source file: `docs/transformation-programme.md`
+### Improvement Notes And Maturity Observations
 
 This page captures maturity observations, possible improvement principles and a possible target shape for discussion.
 
@@ -1529,23 +1519,21 @@ These topics are not part of the current KT-notes scope and would need separate 
 
 ### Related Pages
 
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Possible Improvement Path And Delivery Notes (`docs/transformation-programme-delivery.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
-- Platform Engineering Strategy (`docs/platform-engineering-strategy.md`)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Possible Improvement Path And Delivery Notes](07-transformation-programme.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Platform Engineering Strategy](08-platform-and-knowledge-graph.md)
 
-### Source: Possible Improvement Path And Delivery Notes
-
-Source file: `docs/transformation-programme-delivery.md`
+### Possible Improvement Path And Delivery Notes
 
 This page contains an indicative improvement path, governance notes, possible metrics and discussion points for the release process.
 
-For root cause notes, risk observations, maturity scorecard and possible target operating shape, see improvement notes and maturity observations (`docs/transformation-programme.md`).
+For root cause notes, risk observations, maturity scorecard and possible target operating shape, see [improvement notes and maturity observations](07-transformation-programme.md).
 
 ### Possible Phased Improvement Path
 
-The phases below are indicative only. Actual timing depends on team confirmation, named owners, pilot evidence and agreement on exit criteria. Phase 0 remains open until the rollout decisions are confirmed, named owners/backups are assigned and exit criteria are published. See the release decision register (`docs/release-decision-register.md`) for the live confirmation tracker.
+The phases below are indicative only. Actual timing depends on team confirmation, named owners, pilot evidence and agreement on exit criteria. Phase 0 remains open until the rollout decisions are confirmed, named owners/backups are assigned and exit criteria are published. See the [release decision register](04-rollout-decision-proposals.md) for the live confirmation tracker.
 
 | Phase | Timeframe | Focus | Key Deliverables |
 | --- | --- | --- | --- |
@@ -1685,14 +1673,12 @@ The highest-return investments are low-cost, high-impact changes (strict validat
 
 ### Related Pages
 
-- Improvement Notes And Maturity Observations (`docs/transformation-programme.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
-- Release Scope, Ownership And Approvals (`docs/scope-ownership-approvals.md`)
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
+- [Improvement Notes And Maturity Observations](07-transformation-programme.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](06-ownership-and-approvals.md)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
 
-### Source: Release Engineering Best Practices
-
-Source file: `docs/release-engineering-best-practices.md`
+### Release Engineering Best Practices
 
 This page keeps industry/practice guidance out of the main operating-model pages.
 
@@ -1922,7 +1908,7 @@ If the pilot creates more risk than it removes, stop the pilot, revert affected 
 
 ### Related Pages
 
-- Branching Strategy Options (`docs/branching-options.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Hotfix And Rollback (`docs/hotfix-and-rollback.md`)
-- Platform Engineering Strategy (`docs/platform-engineering-strategy.md`)
+- [Branching Strategy Options](02-current-release-operating-model.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Hotfix And Rollback](05-hotfix-and-rollback.md)
+- [Platform Engineering Strategy](08-platform-and-knowledge-graph.md)

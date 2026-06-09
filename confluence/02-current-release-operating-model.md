@@ -144,17 +144,15 @@ Feedback or questions? Contact the page owner or comment below.
 - [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
 - [Rollout Decision Proposals](04-rollout-decision-proposals.md)
 - [Ownership And Approvals](06-ownership-and-approvals.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Current Release Operating Model
-
-Source file: `docs/current-release-operating-model.md`
+### Current Release Operating Model
 
 This page captures the current understanding of how branching, release and deployment fit together.
 
@@ -174,9 +172,9 @@ Current status:
 - Changes may include service code, secrets, config, Liquibase/database changes and runbook work.
 - The proposed target has `main` representing production/live state, with release branches auto-created at the start of each sprint/release.
 
-For the proposed target flow, see proposed release automation flow (`docs/proposed-release-automation-flow.md`).
+For the proposed target flow, see [proposed release automation flow](03-proposed-release-automation-flow.md).
 
-For Helm, manifest, secrets and validation detail, see deployment and release findings (`docs/deployment-and-release-findings.md`).
+For Helm, manifest, secrets and validation detail, see [deployment and release findings](01-cicd-findings-and-actions.md).
 
 ### Current Branching Model
 
@@ -320,7 +318,7 @@ Open policy:
 Wrong tag, missing tag, manifest/tag mismatch and do-not-deploy markers should fail fast unless an explicit release-owner override is recorded.
 ```
 
-See automation and validation (`docs/automation-and-validation.md`).
+See [automation and validation](03-proposed-release-automation-flow.md).
 
 ### Configuration, Feature Flags And Activation
 
@@ -421,21 +419,19 @@ Before changing the branching model, confirm:
 
 ### Related Detail
 
-- Feature flag and environment management best practices are in release engineering best practices (`docs/release-engineering-best-practices.md`).
-- Proposed automation is in proposed release automation flow (`docs/proposed-release-automation-flow.md`).
-- Open rollout decisions are in rollout decision proposals (`docs/rollout-decision-proposals.md`).
+- Feature flag and environment management best practices are in [release engineering best practices](07-transformation-programme.md).
+- Proposed automation is in [proposed release automation flow](03-proposed-release-automation-flow.md).
+- Open rollout decisions are in [rollout decision proposals](04-rollout-decision-proposals.md).
 
 ### Related Pages
 
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
-- System State, Problems, Solution Options And Risks (`docs/system-state-problems-solutions.md`)
-- Deployment And Release Findings (`docs/deployment-and-release-findings.md`)
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
+- [System State, Problems, Solution Options And Risks](07-transformation-programme.md)
+- [Deployment And Release Findings](01-cicd-findings-and-actions.md)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
 
-### Source: Branching Strategy Options
-
-Source file: `docs/branching-options.md`
+### Branching Strategy Options
 
 This page compares the branching options discussed so far.
 
@@ -500,7 +496,7 @@ After cutover:
 Both models should not run simultaneously. The cutover date marks the switch.
 ```
 
-For more detail, see proposed release automation flow (`docs/proposed-release-automation-flow.md`).
+For more detail, see [proposed release automation flow](03-proposed-release-automation-flow.md).
 
 Proposed decision:
 
@@ -509,7 +505,7 @@ Move to `main` as the production/live baseline after an agreed cutover release.
 Keep `development` transitional only until the automation pilot and branch protections are ready.
 ```
 
-For the full proposal, see rollout decision proposals (`docs/rollout-decision-proposals.md`).
+For the full proposal, see [rollout decision proposals](04-rollout-decision-proposals.md).
 
 ### Multiple Active Release Branches
 
@@ -713,18 +709,16 @@ Then reassess whether the branch model is still the main constraint.
 
 ### Related Best Practices
 
-Branching model selection, staged GitFlow-to-trunk transition guidance and common rollout mistakes are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Branching model selection, staged GitFlow-to-trunk transition guidance and common rollout mistakes are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Rollout Decision Proposals - Detailed Rationale (`docs/reference/rollout-decision-proposals-detailed.md`)
-- Release Engineering Best Practices (`docs/release-engineering-best-practices.md`)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Rollout Decision Proposals - Detailed Rationale](04-rollout-decision-proposals.md)
+- [Release Engineering Best Practices](07-transformation-programme.md)
 
-### Source: Squad Briefing Summary
-
-Source file: `docs/squad-briefing-summary.md`
+### Squad Briefing Summary
 
 This is a short CI/CD and deployment summary for squad leads.
 
@@ -742,7 +736,7 @@ The proposed model is:
 - Feature and hotfix branches are created from the relevant release branch.
 - Commits on those branches generate deployable candidate tags and update matching Cerberus chart branches.
 
-The proposed decision set is captured in rollout decision proposals (`docs/rollout-decision-proposals.md`).
+The proposed decision set is captured in [rollout decision proposals](04-rollout-decision-proposals.md).
 
 ### Why It Matters
 
@@ -831,7 +825,7 @@ The automation handles the plumbing between your merge and the deployment. Your 
 
 ### Related Pages
 
-- Proposed Release Automation Flow (`docs/proposed-release-automation-flow.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Scope, Ownership And Approvals (`docs/scope-ownership-approvals.md`)
-- Possible Improvement Path And Delivery Notes (`docs/transformation-programme-delivery.md`)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](06-ownership-and-approvals.md)
+- [Possible Improvement Path And Delivery Notes](07-transformation-programme.md)

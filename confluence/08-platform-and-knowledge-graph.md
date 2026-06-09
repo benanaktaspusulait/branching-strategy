@@ -8,7 +8,7 @@
 | Last updated | 2026-06-09 |
 | Labels | future-topics, platform-engineering, knowledge-graph, cerberus, release-engineering |
 
-This page keeps the longer future-platform reference material that came out of the repository conversion.
+This page keeps the longer future-platform reference material that came out of the Confluence page set.
 
 Important: this is not part of the current Phase 0-4 release-process improvement scope. The immediate priority remains release operating model maturity: visible release state, strict validation, named ownership, Drone automation, rollback readiness, environment readiness and audit evidence.
 
@@ -214,7 +214,7 @@ Without ownership, support and adoption planning, a future platform risks becomi
 
 - Immediate priorities: see 07 - Improvement Path And Maturity Observations.
 - Current automation proposal: see 03 - Proposed Release Automation Flow.
-- Source architecture detail, if needed later: `docs/platform-engineering-strategy.md`, `docs/deployment-knowledge-graph-design.md`, `docs/advanced-architecture-sections.md`.
+- Source architecture detail, if needed later: [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md).
 
 ---
 
@@ -227,17 +227,15 @@ Feedback or questions? Contact the page owner or comment below.
 - [Main Assessment And Reading Order](00-parent-release-engineering-assessment.md)
 - [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
 - [Improvement Path And Maturity Observations](07-transformation-programme.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Platform Engineering Strategy
-
-Source file: `docs/platform-engineering-strategy.md`
+### Platform Engineering Strategy
 
 This page covers the platform-level capabilities that directly strengthen the release-management proposal: environment promotion, deployment strategy and observability gates.
 
@@ -432,17 +430,15 @@ The release report should include a link to the observability dashboard filtered
 
 ### Related Pages
 
-- Release Engineering Best Practices (`docs/release-engineering-best-practices.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Improvement Notes And Maturity Observations (`docs/transformation-programme.md`)
+- [Release Engineering Best Practices](07-transformation-programme.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Improvement Notes And Maturity Observations](07-transformation-programme.md)
 
-### Source: Platform Engineering Strategy — Advanced
-
-Source file: `docs/platform-engineering-strategy-advanced.md`
+### Platform Engineering Strategy — Advanced
 
 > **This section is not a blocker for the initial release automation rollout.** All items below are medium-term or long-term improvements.
 
-See platform engineering strategy (`docs/platform-engineering-strategy.md`) for environment promotion, deployment strategies and observability gates.
+See [platform engineering strategy](08-platform-and-knowledge-graph.md) for environment promotion, deployment strategies and observability gates.
 
 ### 4. GitOps Readiness
 
@@ -695,18 +691,16 @@ Release automation
   → GitOps / progressive delivery integration
 ```
 
-This is a future option that would need separate platform strategy review. It is not part of the initial rollout. For the short scoped note, see Possible Future Topics - Not In Current Scope (`docs/transformation-programme.md#possible-future-topics---not-in-current-scope`).
+This is a future option that would need separate platform strategy review. It is not part of the initial rollout. For the short scoped note, see [Possible Future Topics - Not In Current Scope](07-transformation-programme.md).
 
 ### Related Pages
 
-- Platform Engineering Strategy (`docs/platform-engineering-strategy.md`)
-- Deployment Knowledge Graph — Operations And Technology (`docs/deployment-knowledge-graph-operations.md`)
-- Advanced Architecture Sections (`docs/advanced-architecture-sections.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Platform Engineering Strategy](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Operations And Technology](08-platform-and-knowledge-graph.md)
+- [Advanced Architecture Sections](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Advanced Architecture Sections
-
-Source file: `docs/advanced-architecture-sections.md`
+### Advanced Architecture Sections
 
 > **Status:** Long-term future-state architecture. Not part of the initial release automation rollout (Phases 0–4). These sections describe capabilities for Phase 5+ evaluation only.
 
@@ -1029,26 +1023,24 @@ The suggested next step is not to build everything, but to validate the operatin
 
 ### Related Pages
 
-- Improvement Notes And Maturity Observations (`docs/transformation-programme.md`)
-- Deployment Knowledge Graph — Implementation And Workflows (`docs/deployment-knowledge-graph-implementation.md`)
-- Architecture Diagrams (`docs/architecture-review/architecture-diagrams.md`)
-- Criticality Challenge Notes (`docs/architecture-review/criticality-challenge-review.md`)
+- [Improvement Notes And Maturity Observations](07-transformation-programme.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](08-platform-and-knowledge-graph.md)
+- [Architecture Diagrams](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Notes](08-platform-and-knowledge-graph.md)
 
-### Source: Deployment Knowledge Graph
-
-Source file: `docs/deployment-knowledge-graph-design.md`
+### Deployment Knowledge Graph
 
 **Future-State Architecture for Cerberus Release Intelligence**
 
 > **Status:** Long-term architectural proposal. Not part of the initial release automation rollout.
 >
-> **Relationship to Unified Control Plane:** The Knowledge Graph is a future data and intelligence layer. The related control-plane idea is now only a short note under Possible Future Topics - Not In Current Scope (`docs/transformation-programme.md#possible-future-topics---not-in-current-scope`).
+> **Relationship to Unified Control Plane:** The Knowledge Graph is a future data and intelligence layer. The related control-plane idea is now only a short note under [Possible Future Topics - Not In Current Scope](07-transformation-programme.md).
 
 This document is split into four parts:
-- Part 1: Design and Domain Model (`docs/deployment-knowledge-graph-design.md`) (you are here)
-- Part 2: Implementation and Workflows (`docs/deployment-knowledge-graph-implementation.md`)
-- Part 3: Operations and Technology (`docs/deployment-knowledge-graph-operations.md`)
-- Part 4: Strategic Value, Business Case and Governance (`docs/deployment-knowledge-graph-business-case.md`)
+- Part 1: [Design and Domain Model](08-platform-and-knowledge-graph.md) (you are here)
+- Part 2: [Implementation and Workflows](08-platform-and-knowledge-graph.md)
+- Part 3: [Operations and Technology](08-platform-and-knowledge-graph.md)
+- Part 4: [Strategic Value, Business Case and Governance](08-platform-and-knowledge-graph.md)
 
 ---
 
@@ -1272,15 +1264,13 @@ Relationships:
 
 ### Related Pages
 
-- Deployment Knowledge Graph — Implementation And Workflows (`docs/deployment-knowledge-graph-implementation.md`)
-- Deployment Knowledge Graph — Operations And Technology (`docs/deployment-knowledge-graph-operations.md`)
-- Deployment Knowledge Graph — Strategic Value, Business Case And Governance (`docs/deployment-knowledge-graph-business-case.md`)
+- [Deployment Knowledge Graph — Implementation And Workflows](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Operations And Technology](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](08-platform-and-knowledge-graph.md)
 
-### Source: Deployment Knowledge Graph — Implementation And Workflows
+### Deployment Knowledge Graph — Implementation And Workflows
 
-Source file: `docs/deployment-knowledge-graph-implementation.md`
-
-> Part 2 of 3. See Part 1: Design (`docs/deployment-knowledge-graph-design.md`) for context.
+> Part 2 of 3. See [Part 1: Design](08-platform-and-knowledge-graph.md) for context.
 
 ### 8. Event-Driven Architecture
 
@@ -1638,16 +1628,14 @@ sequenceDiagram
 
 ### Related Pages
 
-- Deployment Knowledge Graph (`docs/deployment-knowledge-graph-design.md`)
-- Deployment Knowledge Graph — Operations And Technology (`docs/deployment-knowledge-graph-operations.md`)
-- Advanced Architecture Sections (`docs/advanced-architecture-sections.md`)
-- Architecture Diagrams (`docs/architecture-review/architecture-diagrams.md`)
+- [Deployment Knowledge Graph](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Operations And Technology](08-platform-and-knowledge-graph.md)
+- [Advanced Architecture Sections](08-platform-and-knowledge-graph.md)
+- [Architecture Diagrams](08-platform-and-knowledge-graph.md)
 
-### Source: Deployment Knowledge Graph — Operations And Technology
+### Deployment Knowledge Graph — Operations And Technology
 
-Source file: `docs/deployment-knowledge-graph-operations.md`
-
-> Part 3 of 3. See Part 1: Design (`docs/deployment-knowledge-graph-design.md`) for context.
+> Part 3 of 3. See [Part 1: Design](08-platform-and-knowledge-graph.md) for context.
 
 ### 16. Security And RBAC Model
 
@@ -1896,14 +1884,12 @@ It should be built incrementally, starting only after the immediate release auto
 
 ### Related Pages
 
-- Deployment Knowledge Graph (`docs/deployment-knowledge-graph-design.md`)
-- Deployment Knowledge Graph — Implementation And Workflows (`docs/deployment-knowledge-graph-implementation.md`)
-- Deployment Knowledge Graph — Strategic Value, Business Case And Governance (`docs/deployment-knowledge-graph-business-case.md`)
-- Criticality Challenge Review (`docs/architecture-review/criticality-challenge-review.md`)
+- [Deployment Knowledge Graph](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Implementation And Workflows](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Strategic Value, Business Case And Governance](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Review](08-platform-and-knowledge-graph.md)
 
-### Source: Deployment Knowledge Graph — Strategic Value, Business Case And Governance
-
-Source file: `docs/deployment-knowledge-graph-business-case.md`
+### Deployment Knowledge Graph — Strategic Value, Business Case And Governance
 
 > **Audience:** Directors, Enterprise Architects, Delivery Managers, Platform Leads.
 >
@@ -1911,7 +1897,7 @@ Source file: `docs/deployment-knowledge-graph-business-case.md`
 
 This page provides the strategic justification, governance model and organisational benefits for the Deployment Knowledge Graph. It is intended for non-technical decision-makers who need to understand why this investment could be justified and what the expected return would be.
 
-For technical architecture, see design (`docs/deployment-knowledge-graph-design.md`), implementation (`docs/deployment-knowledge-graph-implementation.md`) and operations (`docs/deployment-knowledge-graph-operations.md`).
+For technical architecture, see [design](08-platform-and-knowledge-graph.md), [implementation](08-platform-and-knowledge-graph.md) and [operations](08-platform-and-knowledge-graph.md).
 
 ---
 
@@ -2125,13 +2111,11 @@ These should be defined before build starts and validated during each implementa
 
 ### Related Pages
 
-- Deployment Knowledge Graph (`docs/deployment-knowledge-graph-design.md`)
-- Deployment Knowledge Graph — Operations And Technology (`docs/deployment-knowledge-graph-operations.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
+- [Deployment Knowledge Graph](08-platform-and-knowledge-graph.md)
+- [Deployment Knowledge Graph — Operations And Technology](08-platform-and-knowledge-graph.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)
 
-### Source: Potential Architecture Review Notes
-
-Source file: `docs/architecture-review/index.md`
+### Potential Architecture Review Notes
 
 This section keeps optional later-stage review considerations for the Cerberus release-process notes.
 
@@ -2141,46 +2125,44 @@ These notes are not an ARB submission, approval request or final architecture po
 
 | Area | File |
 | --- | --- |
-| Current understanding and quality observations | executive-and-quality-review (`docs/architecture-review/executive-and-quality-review.md`) |
-| Alignment and architecture considerations | alignment-and-enterprise-architecture-review (`docs/architecture-review/alignment-and-enterprise-architecture-review.md`) |
-| Potential future architecture review considerations | arb-package (`docs/architecture-review/arb-package.md`) |
-| Potential benefits and roadmap notes | business-case-and-roadmap (`docs/architecture-review/business-case-and-roadmap.md`) |
-| Operating model and RACI notes | operating-model-raci (`docs/architecture-review/operating-model-raci.md`) |
-| Architecture diagrams | architecture-diagrams (`docs/architecture-review/architecture-diagrams.md`) |
-| Criticality challenge notes | criticality-challenge-review (`docs/architecture-review/criticality-challenge-review.md`) |
-| Additional enterprise concerns to confirm | missing-enterprise-concerns (`docs/architecture-review/missing-enterprise-concerns.md`) |
-| Summary assessment and open risks | final-scorecard-and-verdict (`docs/architecture-review/final-scorecard-and-verdict.md`) |
+| Current understanding and quality observations | [executive-and-quality-review](08-platform-and-knowledge-graph.md) |
+| Alignment and architecture considerations | [alignment-and-enterprise-architecture-review](08-platform-and-knowledge-graph.md) |
+| Potential future architecture review considerations | [arb-package](08-platform-and-knowledge-graph.md) |
+| Potential benefits and roadmap notes | [business-case-and-roadmap](08-platform-and-knowledge-graph.md) |
+| Operating model and RACI notes | [operating-model-raci](06-ownership-and-approvals.md) |
+| Architecture diagrams | [architecture-diagrams](08-platform-and-knowledge-graph.md) |
+| Criticality challenge notes | [criticality-challenge-review](08-platform-and-knowledge-graph.md) |
+| Additional enterprise concerns to confirm | [missing-enterprise-concerns](08-platform-and-knowledge-graph.md) |
+| Summary assessment and open risks | [final-scorecard-and-verdict](08-platform-and-knowledge-graph.md) |
 
 ### Appendix Outputs
 
 | Area | File |
 | --- | --- |
-| Source document list | source-document-list (`docs/architecture-review/source-document-list.md`) |
-| Review criteria and status map | review-criteria (`docs/architecture-review/review-criteria.md`) |
-| Recommendation inventory | recommendation-inventory (`docs/architecture-review/recommendation-inventory.md`) |
+| material list | [source-document-list](08-platform-and-knowledge-graph.md) |
+| Review criteria and status map | [review-criteria](08-platform-and-knowledge-graph.md) |
+| Recommendation inventory | [recommendation-inventory](08-platform-and-knowledge-graph.md) |
 
 ### Suggested Reading Order
 
-1. executive-and-quality-review (`docs/architecture-review/executive-and-quality-review.md`)
-2. alignment-and-enterprise-architecture-review (`docs/architecture-review/alignment-and-enterprise-architecture-review.md`)
-3. arb-package (`docs/architecture-review/arb-package.md`)
-4. business-case-and-roadmap (`docs/architecture-review/business-case-and-roadmap.md`)
-5. operating-model-raci (`docs/architecture-review/operating-model-raci.md`)
-6. criticality-challenge-review (`docs/architecture-review/criticality-challenge-review.md`)
-7. missing-enterprise-concerns (`docs/architecture-review/missing-enterprise-concerns.md`)
-8. final-scorecard-and-verdict (`docs/architecture-review/final-scorecard-and-verdict.md`)
+1. [executive-and-quality-review](08-platform-and-knowledge-graph.md)
+2. [alignment-and-enterprise-architecture-review](08-platform-and-knowledge-graph.md)
+3. [arb-package](08-platform-and-knowledge-graph.md)
+4. [business-case-and-roadmap](08-platform-and-knowledge-graph.md)
+5. [operating-model-raci](06-ownership-and-approvals.md)
+6. [criticality-challenge-review](08-platform-and-knowledge-graph.md)
+7. [missing-enterprise-concerns](08-platform-and-knowledge-graph.md)
+8. [final-scorecard-and-verdict](08-platform-and-knowledge-graph.md)
 
 ### Related Pages
 
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
-- Architecture Review Source Document List (`docs/architecture-review/source-document-list.md`)
-- Architecture Review Criteria (`docs/architecture-review/review-criteria.md`)
-- Recommendation Inventory (`docs/architecture-review/recommendation-inventory.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
+- [Architecture Review material list](08-platform-and-knowledge-graph.md)
+- [Architecture Review Criteria](08-platform-and-knowledge-graph.md)
+- [Recommendation Inventory](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Architecture Alignment Considerations
-
-Source file: `docs/architecture-review/alignment-and-enterprise-architecture-review.md`
+### Architecture Alignment Considerations
 
 Status: Optional review note / working reference.
 
@@ -2247,14 +2229,12 @@ Status: Optional review note / working reference.
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Architecture Review Criteria (`docs/architecture-review/review-criteria.md`)
-- Recommendation Inventory (`docs/architecture-review/recommendation-inventory.md`)
-- Architecture Diagrams (`docs/architecture-review/architecture-diagrams.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Architecture Review Criteria](08-platform-and-knowledge-graph.md)
+- [Recommendation Inventory](08-platform-and-knowledge-graph.md)
+- [Architecture Diagrams](08-platform-and-knowledge-graph.md)
 
-### Source: Possible Review Criteria
-
-Source file: `docs/architecture-review/review-criteria.md`
+### Possible Review Criteria
 
 Status: Optional review note / working reference.
 
@@ -2307,19 +2287,17 @@ If the notes are later taken into a formal review, these two lenses may be usefu
 ### Review Constraints
 
 - Do not mark any proposal as approved without explicit owner or formal approval evidence.
-- Use the source files for detailed traceability if a question needs deeper evidence.
+- Use the Confluence pages for detailed traceability if a question needs deeper evidence.
 - Do not recommend faster deployment at the expense of traceability.
 - Do not recommend automation that bypasses human approval for high-impact environments.
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Recommendation Inventory (`docs/architecture-review/recommendation-inventory.md`)
-- Criticality Challenge Notes (`docs/architecture-review/criticality-challenge-review.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Recommendation Inventory](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Notes](08-platform-and-knowledge-graph.md)
 
-### Source: Improvement Area Inventory
-
-Source file: `docs/architecture-review/recommendation-inventory.md`
+### Improvement Area Inventory
 
 Status: Optional review note / working reference.
 
@@ -2368,14 +2346,12 @@ The strongest immediate improvement areas appear to be release metadata standard
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Possible Review Criteria (`docs/architecture-review/review-criteria.md`)
-- Criticality Challenge Review (`docs/architecture-review/criticality-challenge-review.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Possible Review Criteria](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Review](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Architecture Review Source Document List
-
-Source file: `docs/architecture-review/source-document-list.md`
+### Architecture Review Material List
 
 Status: Optional review note / working reference.
 
@@ -2383,58 +2359,58 @@ Review purpose: identify the document set that could support a later formal revi
 
 ### Review Scope Note
 
-The review scope is based on the document set below. `COMPLETE-DOCUMENT.md` is the focused reader copy for release-management stabilisation. Appendix and future-vision files remain available for traceability, but they are not part of the immediate discussion scope.
+The review scope is based on the Confluence page set below. The main assessment page is the focused reader copy for release-management stabilisation. Appendix and future-vision topics remain available for traceability, but they are not part of the immediate discussion scope.
 
 ### Primary Architecture Package
 
-These files form the core package to review.
+These pages form the core package to review.
 
-| File | Role In Review | Review Focus |
+| Page / Topic | Role In Review | Review Focus |
 | --- | --- | --- |
-| `README.md` | Entry point and navigation | Reader clarity, structure, discussion path. |
-| `docs/system-state-problems-solutions.md` | Current-understanding synthesis | Current-state framing, risks, discussion points, go/no-go logic. |
-| `docs/current-release-operating-model.md` | Current release model | Existing process accuracy, operational assumptions, branch/tag/deploy flow. |
-| `docs/deployment-and-release-findings.md` | Deployment findings | Helm, manifest, secrets, validation and environment constraints. |
-| `docs/cicd-deployment-findings-and-actions.md` | CI/CD problem/action summary | Root causes, prioritisation, follow-up actions. |
-| `docs/proposed-release-automation-flow.md` | Target release automation | Automation assumptions, changed-chart deployment, failure handling. |
-| `docs/automation-and-validation.md` | Validation model | Strict validation, auditability, override rules, alerting. |
-| `docs/hotfix-and-rollback.md` | Hotfix and rollback model | Rollback realism, fix-forward criteria, branch/manifest reconciliation. |
-| `docs/scope-ownership-approvals.md` | Scope and ownership | Release scope, service ownership, approvals, backup owners. |
-| `docs/rollout-decision-proposals.md` | Decision summary | Proposed discussion points and confirmation status. |
-| `docs/release-decision-register.md` | Decision register | Active confirmation tracker, owners, required evidence. |
+| [Main Assessment And Reading Order](00-parent-release-engineering-assessment.md) | Entry point and navigation | Reader clarity, structure, discussion path. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Current-understanding synthesis | Current-state framing, risks, discussion points, go/no-go logic. |
+| [Current Release Operating Model](02-current-release-operating-model.md) | Current release model | Existing process accuracy, operational assumptions, branch/tag/deploy flow. |
+| [CI/CD Findings And Actions](01-cicd-findings-and-actions.md) | Deployment findings | Helm, manifest, secrets, validation and environment constraints. |
+| [CI/CD Findings And Actions](01-cicd-findings-and-actions.md) | CI/CD problem/action summary | Root causes, prioritisation, follow-up actions. |
+| [Proposed Release Automation Flow](03-proposed-release-automation-flow.md) | Target release automation | Automation assumptions, changed-chart deployment, failure handling. |
+| [Proposed Release Automation Flow](03-proposed-release-automation-flow.md) | Validation model | Strict validation, auditability, override rules, alerting. |
+| [Hotfix And Rollback](05-hotfix-and-rollback.md) | Hotfix and rollback model | Rollback realism, fix-forward criteria, branch/manifest reconciliation. |
+| [Ownership And Approvals](06-ownership-and-approvals.md) | Scope and ownership | Release scope, service ownership, approvals, backup owners. |
+| [Rollout Decision Proposals](04-rollout-decision-proposals.md) | Decision summary | Proposed discussion points and confirmation status. |
+| [Rollout Decision Proposals](04-rollout-decision-proposals.md) | Decision register | Active confirmation tracker, owners, required evidence. |
 
 ### Improvement And Operating Model Package
 
-| File | Role In Review | Review Focus |
+| Page / Topic | Role In Review | Review Focus |
 | --- | --- | --- |
-| `docs/transformation-programme.md` | Improvement notes and possible target shape | Maturity, near-term target-state realism, sequencing. |
-| `docs/transformation-programme-delivery.md` | Delivery notes | Possible phases, RACI, metrics, cost/benefit, top improvement areas. |
-| `docs/platform-engineering-strategy.md` | Platform strategy | Promotion model, deployment strategy, observability gates. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Improvement notes and possible target shape | Maturity, near-term target-state realism, sequencing. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Delivery notes | Possible phases, RACI, metrics, cost/benefit, top improvement areas. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Platform strategy | Promotion model, deployment strategy, observability gates. |
 
 ### Appendix And Future Reference Package
 
-| File | Role In Review | Review Focus |
+| Page / Topic | Role In Review | Review Focus |
 | --- | --- | --- |
-| `docs/branching-options.md` | Branching strategy options | Branch model alternatives after stabilisation. |
-| `docs/squad-briefing-summary.md` | Squad-facing communication | Human factors, adoption readiness, clarity for engineering teams. |
-| `docs/release-engineering-best-practices.md` | Supporting practice baseline | Whether best practices are suitable for Cerberus criticality. |
-| `docs/platform-engineering-strategy-advanced.md` | Advanced platform strategy | GitOps, SBOM, supply chain security, control plane direction. |
-| `docs/advanced-architecture-sections.md` | Future architecture sections | Control plane, event ingestion, data trust and platform product framing. |
-| `docs/deployment-knowledge-graph-design.md` | Knowledge graph design | Domain model, entity relationships, graph schema. |
-| `docs/deployment-knowledge-graph-implementation.md` | Implementation and workflows | Event ingestion, APIs, search, operational use cases. |
-| `docs/deployment-knowledge-graph-operations.md` | Operations and technology | Security, retention, integrations, technology choices, roadmap. |
-| `docs/deployment-knowledge-graph-business-case.md` | Business case and governance | Strategic value, ROI, governance, NFRs and ADR. |
+| [Current Release Operating Model](02-current-release-operating-model.md) | Branching strategy options | Branch model alternatives after stabilisation. |
+| [Current Release Operating Model](02-current-release-operating-model.md) | Squad-facing communication | Human factors, adoption readiness, clarity for engineering teams. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Supporting practice baseline | Whether best practices are suitable for Cerberus criticality. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Advanced platform strategy | GitOps, SBOM, supply chain security, control plane direction. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Future architecture sections | Control plane, event ingestion, data trust and platform product framing. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Knowledge graph design | Domain model, entity relationships, graph schema. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Implementation and workflows | Event ingestion, APIs, search, operational use cases. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Operations and technology | Security, retention, integrations, technology choices, roadmap. |
+| [Future Platform Topics](08-platform-and-knowledge-graph.md) | Business case and governance | Strategic value, ROI, governance, NFRs and ADR. |
 
 ### Detailed Reference Package
 
 Use these files to validate evidence, rationale and detailed assumptions.
 
-| File | Role In Review | Review Focus |
+| Page / Topic | Role In Review | Review Focus |
 | --- | --- | --- |
-| `docs/reference/system-state-problems-solutions-detailed.md` | Detailed current-state analysis | Supporting evidence and assumptions. |
-| `docs/reference/detailed-problems.md` | Detailed problem analysis | P1-P12 problem detail, root cause and evidence. |
-| `docs/reference/detailed-solutions.md` | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
-| `docs/reference/rollout-decision-proposals-detailed.md` | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Detailed current-state analysis | Supporting evidence and assumptions. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Detailed problem analysis | P1-P12 problem detail, root cause and evidence. |
+| [Improvement Path And Maturity Observations](07-transformation-programme.md) | Detailed solution analysis | S1-S7 solution options, risks and experience notes. |
+| [Rollout Decision Proposals](04-rollout-decision-proposals.md) | Detailed rollout decision rationale | Decision logic, guardrails, operational consequences. |
 
 ### Explicitly Out Of Scope For These Notes
 
@@ -2457,13 +2433,11 @@ Knowledge Graph and unified control-plane material is appendix-only future visio
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Possible Review Criteria (`docs/architecture-review/review-criteria.md`)
-- Cerberus Release Process Understanding, Gaps And Improvement Ideas (`README.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Possible Review Criteria](08-platform-and-knowledge-graph.md)
+- [Cerberus Release Process Understanding, Gaps And Improvement Ideas](00-parent-release-engineering-assessment.md)
 
-### Source: Current Understanding And Architecture Quality Observations
-
-Source file: `docs/architecture-review/executive-and-quality-review.md`
+### Current Understanding And Architecture Quality Observations
 
 Status: Optional review note / working reference.
 
@@ -2542,14 +2516,12 @@ A safer near-term focus may be neither "change the branch model" nor "build a pl
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
-- Potential Benefits And Roadmap Notes (`docs/architecture-review/business-case-and-roadmap.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)
+- [Potential Benefits And Roadmap Notes](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Potential Future Architecture Review Considerations
-
-Source file: `docs/architecture-review/arb-package.md`
+### Potential Future Architecture Review Considerations
 
 Status: Optional review note / working reference.
 
@@ -2638,14 +2610,12 @@ If this were reviewed formally, reviewers would likely want confirmation of:
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Current Understanding And Architecture Quality Observations (`docs/architecture-review/executive-and-quality-review.md`)
-- Potential Benefits And Roadmap Notes (`docs/architecture-review/business-case-and-roadmap.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Current Understanding And Architecture Quality Observations](08-platform-and-knowledge-graph.md)
+- [Potential Benefits And Roadmap Notes](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Potential Benefits And Roadmap Notes
-
-Source file: `docs/architecture-review/business-case-and-roadmap.md`
+### Potential Benefits And Roadmap Notes
 
 Status: Optional review note / working reference.
 
@@ -2701,14 +2671,12 @@ The phases are indicative only and should not be read as a committed delivery pl
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
-- Operating Model And RACI Notes (`docs/architecture-review/operating-model-raci.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)
+- [Operating Model And RACI Notes](06-ownership-and-approvals.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Architecture Diagrams
-
-Source file: `docs/architecture-review/architecture-diagrams.md`
+### Architecture Diagrams
 
 Status: Optional review note / working reference.
 
@@ -2750,13 +2718,11 @@ flowchart TD
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Architecture Alignment Considerations (`docs/architecture-review/alignment-and-enterprise-architecture-review.md`)
-- Criticality Challenge Notes (`docs/architecture-review/criticality-challenge-review.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Architecture Alignment Considerations](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Notes](08-platform-and-knowledge-graph.md)
 
-### Source: Criticality Challenge Notes
-
-Source file: `docs/architecture-review/criticality-challenge-review.md`
+### Criticality Challenge Notes
 
 Status: Optional review note / working reference.
 
@@ -2818,14 +2784,12 @@ Scores: 1 poor, 5 excellent.
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Recommendation Inventory (`docs/architecture-review/recommendation-inventory.md`)
-- Additional Enterprise Concerns To Confirm (`docs/architecture-review/missing-enterprise-concerns.md`)
-- Summary Assessment And Open Risks (`docs/architecture-review/final-scorecard-and-verdict.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Recommendation Inventory](08-platform-and-knowledge-graph.md)
+- [Additional Enterprise Concerns To Confirm](08-platform-and-knowledge-graph.md)
+- [Summary Assessment And Open Risks](08-platform-and-knowledge-graph.md)
 
-### Source: Additional Enterprise Concerns To Confirm
-
-Source file: `docs/architecture-review/missing-enterprise-concerns.md`
+### Additional Enterprise Concerns To Confirm
 
 Status: Optional review note / working reference.
 
@@ -2868,14 +2832,12 @@ Status: Optional review note / working reference.
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Criticality Challenge Notes (`docs/architecture-review/criticality-challenge-review.md`)
-- Operating Model And RACI Notes (`docs/architecture-review/operating-model-raci.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Notes](08-platform-and-knowledge-graph.md)
+- [Operating Model And RACI Notes](06-ownership-and-approvals.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)
 
-### Source: Summary Assessment And Open Risks
-
-Source file: `docs/architecture-review/final-scorecard-and-verdict.md`
+### Summary Assessment And Open Risks
 
 Status: Optional review note / working reference.
 
@@ -2961,7 +2923,7 @@ Given the criticality and scale of the platform, any change should prefer contro
 
 ### Related Pages
 
-- Potential Architecture Review Notes (`docs/architecture-review/index.md`)
-- Current Understanding And Architecture Quality Observations (`docs/architecture-review/executive-and-quality-review.md`)
-- Criticality Challenge Review (`docs/architecture-review/criticality-challenge-review.md`)
-- Potential Future Architecture Review Considerations (`docs/architecture-review/arb-package.md`)
+- [Potential Architecture Review Notes](08-platform-and-knowledge-graph.md)
+- [Current Understanding And Architecture Quality Observations](08-platform-and-knowledge-graph.md)
+- [Criticality Challenge Review](08-platform-and-knowledge-graph.md)
+- [Potential Future Architecture Review Considerations](08-platform-and-knowledge-graph.md)

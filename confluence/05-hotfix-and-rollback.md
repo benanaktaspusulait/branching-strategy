@@ -156,19 +156,17 @@ Feedback or questions? Contact the page owner or comment below.
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Hotfix And Rollback
-
-Source file: `docs/hotfix-and-rollback.md`
+### Hotfix And Rollback
 
 This page captures the open hotfix and rollback questions.
 
 Rollback and hotfix handling need to be clear because they affect the branching model, tag strategy, manifest updates and post-release reconciliation.
 
-Open hotfix and rollback decisions are tracked in the release decision register (`docs/release-decision-register.md`), especially D16, D17 and D18.
+Open hotfix and rollback decisions are tracked in the [release decision register](04-rollout-decision-proposals.md), especially D16, D17 and D18.
 
 ### Hotfix Current Understanding
 
@@ -435,11 +433,11 @@ The team should produce:
 
 ### Related Best Practices
 
-Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liquibase forward-only migration guidance are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Helm rollback limits, rollback runbook structure, hotfix time budgeting and Liquibase forward-only migration guidance are summarised in [release engineering best practices](07-transformation-programme.md).
 
 ### Related Pages
 
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Release Scope, Ownership And Approvals (`docs/scope-ownership-approvals.md`)
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Engineering Best Practices (`docs/release-engineering-best-practices.md`)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Release Scope, Ownership And Approvals](06-ownership-and-approvals.md)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Engineering Best Practices](07-transformation-programme.md)

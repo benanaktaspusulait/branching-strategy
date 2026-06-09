@@ -107,8 +107,8 @@ Before rollout, confirm or amend:
 
 ## References
 
-- Full decision register with evidence requirements: source `docs/release-decision-register.md`
-- Detailed rationale: source `docs/reference/rollout-decision-proposals-detailed.md`
+- Full decision register with evidence requirements: source [Rollout Decision Proposals](04-rollout-decision-proposals.md)
+- Detailed rationale: source [Rollout Decision Proposals](04-rollout-decision-proposals.md)
 - Ownership model: see 06 — Ownership and Approvals
 - Automation detail: see 03 — Proposed Release Automation Flow
 
@@ -124,23 +124,21 @@ Feedback or questions? Contact the page owner or comment below.
 - [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
 - [Hotfix And Rollback](05-hotfix-and-rollback.md)
 - [Ownership And Approvals](06-ownership-and-approvals.md)
-- [Source Coverage Index](09-source-coverage-index.md)
+- [Page Coverage Index](09-page-coverage-index.md)
 
 ---
 
-## Detailed Source Material
+## Detailed Supporting Material
 
-This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.
+This section keeps the detailed supporting content for readers who need more than the summary above.
 
-### Source: Rollout Decision Proposals - Summary
-
-Source file: `docs/rollout-decision-proposals.md`
+### Rollout Decision Proposals - Summary
 
 These are proposed discussion points that still need release/process-owner confirmation.
 
-Confirmation status, accountable owner gaps and evidence requirements are tracked in the release decision register (`docs/release-decision-register.md`).
+Confirmation status, accountable owner gaps and evidence requirements are tracked in the [release decision register](04-rollout-decision-proposals.md).
 
-This page is intentionally short. For rationale and detailed procedures, see Rollout Decision Proposals - Detailed Rationale (`docs/reference/rollout-decision-proposals-detailed.md`).
+This page is intentionally short. For rationale and detailed procedures, see [Rollout Decision Proposals - Detailed Rationale](04-rollout-decision-proposals.md).
 
 ### Decision Summary
 
@@ -203,21 +201,19 @@ Before rollout, the team may want to confirm or amend:
 
 ### Related Detail
 
-- Full decision rationale: detailed rollout decision proposals (`docs/reference/rollout-decision-proposals-detailed.md`)
-- Confirmation tracker: release decision register (`docs/release-decision-register.md`)
-- Rollout execution practices: release engineering best practices (`docs/release-engineering-best-practices.md`)
-- Ownership model: release scope, ownership and approvals (`docs/scope-ownership-approvals.md`)
+- Full decision rationale: [detailed rollout decision proposals](04-rollout-decision-proposals.md)
+- Confirmation tracker: [release decision register](04-rollout-decision-proposals.md)
+- Rollout execution practices: [release engineering best practices](07-transformation-programme.md)
+- Ownership model: [release scope, ownership and approvals](06-ownership-and-approvals.md)
 
 ### Related Pages
 
-- Release Decision Register (`docs/release-decision-register.md`)
-- Rollout Decision Proposals - Detailed Rationale (`docs/reference/rollout-decision-proposals-detailed.md`)
-- Release Scope, Ownership And Approvals (`docs/scope-ownership-approvals.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Rollout Decision Proposals - Detailed Rationale](04-rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](06-ownership-and-approvals.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
 
-### Source: Release Decision Register
-
-Source file: `docs/release-decision-register.md`
+### Release Decision Register
 
 This page is a working register for decisions that appear to need confirmation, rejection or explicit deferral before rollout behaviour changes.
 
@@ -272,28 +268,26 @@ The notes describe possible defaults. This register tracks whether those default
 
 ### Related Documents
 
-- Rollout decision proposals (`docs/rollout-decision-proposals.md`)
-- Release scope, ownership and approvals (`docs/scope-ownership-approvals.md`)
-- Hotfix and rollback (`docs/hotfix-and-rollback.md`)
-- Automation and validation (`docs/automation-and-validation.md`)
-- Improvement notes and maturity observations (`docs/transformation-programme.md`)
+- [Rollout decision proposals](04-rollout-decision-proposals.md)
+- [Release scope, ownership and approvals](06-ownership-and-approvals.md)
+- [Hotfix and rollback](05-hotfix-and-rollback.md)
+- [Automation and validation](03-proposed-release-automation-flow.md)
+- [Improvement notes and maturity observations](07-transformation-programme.md)
 
 ### Related Pages
 
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Scope, Ownership And Approvals (`docs/scope-ownership-approvals.md`)
-- Automation And Validation (`docs/automation-and-validation.md`)
-- Hotfix And Rollback (`docs/hotfix-and-rollback.md`)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Scope, Ownership And Approvals](06-ownership-and-approvals.md)
+- [Automation And Validation](03-proposed-release-automation-flow.md)
+- [Hotfix And Rollback](05-hotfix-and-rollback.md)
 
-### Source: Rollout Decision Proposals - Detailed Rationale
-
-Source file: `docs/reference/rollout-decision-proposals-detailed.md`
+### Rollout Decision Proposals - Detailed Rationale
 
 These are proposed decisions for the remaining open items, with full rationale and detailed procedures.
 
 They are written as defaults the team can confirm or amend. They should not be treated as formally agreed until the relevant release/process owners confirm them.
 
-Confirmation status, accountable owner gaps and evidence requirements are tracked in the release decision register (`docs/release-decision-register.md`).
+Confirmation status, accountable owner gaps and evidence requirements are tracked in the [release decision register](04-rollout-decision-proposals.md).
 
 ### Decision Summary
 
@@ -653,13 +647,13 @@ Before rollout, confirm or amend:
 
 ### Related Best Practices
 
-Incremental rollout, success metrics, rollout rollback and resistance/edge-case handling are summarised in release engineering best practices (`docs/release-engineering-best-practices.md`).
+Incremental rollout, success metrics, rollout rollback and resistance/edge-case handling are summarised in [release engineering best practices](07-transformation-programme.md).
 
-Decision confirmation status is tracked in the release decision register (`docs/release-decision-register.md`).
+Decision confirmation status is tracked in the [release decision register](04-rollout-decision-proposals.md).
 
 ### Related Pages
 
-- Rollout Decision Proposals - Summary (`docs/rollout-decision-proposals.md`)
-- Release Decision Register (`docs/release-decision-register.md`)
-- Branching Strategy Options (`docs/branching-options.md`)
-- Detailed Solution Options And Experience Notes (S1–S7) (`docs/reference/detailed-solutions.md`)
+- [Rollout Decision Proposals - Summary](04-rollout-decision-proposals.md)
+- [Release Decision Register](04-rollout-decision-proposals.md)
+- [Branching Strategy Options](02-current-release-operating-model.md)
+- [Detailed Solution Options And Experience Notes (S1–S7)](07-transformation-programme.md)
