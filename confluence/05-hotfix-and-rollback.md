@@ -1,16 +1,16 @@
 # Hotfix and Rollback
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: hotfix, rollback, production-safety, cerberus, proposal
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | hotfix, rollback, production-safety, cerberus, proposal |
 
 ---
 
-## Executive Summary
+## Summary
 
 Hotfix and rollback flows directly affect production safety. Two distinct hotfix scenarios exist (production critical and release-phase). Rollback is technically possible via Helm but is not operationally standardised — the practical response today is fix-forward.
 
@@ -45,7 +45,7 @@ active release branch
 
 ---
 
-## Minimum Hotfix Operating Model
+## Minimum Hotfix Operating Model To Confirm
 
 | Step | Production Hotfix | Release-Phase Hotfix | Evidence |
 |------|-------------------|----------------------|----------|
@@ -137,9 +137,9 @@ After rollback, define:
 
 ## References
 
-- Rollback decisions (D16, D17, D18): see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Ownership and approval: see [06 — Ownership and Approvals](06-ownership-and-approvals.md)
-- Automation handling: see [03 — Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- Rollback decisions (D16, D17, D18): see 04 — Rollout Decision Proposals
+- Ownership and approval: see 06 — Ownership and Approvals
+- Automation handling: see 03 — Proposed Release Automation Flow
 
 ---
 

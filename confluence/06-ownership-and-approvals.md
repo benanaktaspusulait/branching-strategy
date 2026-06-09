@@ -1,20 +1,20 @@
 # Ownership and Approvals
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: ownership, raci, governance, cerberus, release-engineering
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | ownership, raci, governance, cerberus, release-engineering |
 
 ---
 
-## Executive Summary
+## Summary
 
 Automation cannot replace accountability. Without named owners, decisions are delayed and escalation is unclear. This page identifies ownership gaps, defines the repositories and change types needing classification, provides an ownership matrix template, outlines the environment readiness checklist and maps the approval points in the release lifecycle.
 
-Open scope and ownership decisions are tracked under D20 and D21 in [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md).
+Open scope and ownership decisions are tracked under D20 and D21 in 04 — Rollout Decision Proposals.
 
 ---
 
@@ -132,9 +132,9 @@ The team should decide which points are mandatory and which can be automated.
 
 ## References
 
-- Decision register (D20, D21): see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Hotfix approval flow: see [05 — Hotfix and Rollback](05-hotfix-and-rollback.md)
-- RACI matrix detail: see [07 — Transformation Programme](07-transformation-programme.md)
+- Decision register (D20, D21): see 04 — Rollout Decision Proposals
+- Hotfix approval flow: see 05 — Hotfix and Rollback
+- RACI matrix detail: see 07 - Improvement Path And Maturity Observations
 
 ---
 

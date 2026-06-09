@@ -1,16 +1,16 @@
 # Proposed Release Automation Flow
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: proposal, automation, release-engineering, cerberus, ci-cd
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | proposal, automation, release-engineering, cerberus, ci-cd |
 
 ---
 
-## Executive Summary
+## Summary
 
 This page describes the proposed release automation flow. It replaces manual release preparation (currently taking days per sprint) with automated branch creation, tagging, chart updates, reporting and alerting — all running through Drone.
 
@@ -18,9 +18,9 @@ This remains a proposal until the team confirms rollout timing, branch naming, q
 
 ---
 
-## Target Branch Model
+## Possible Branch Model
 
-| Element | Proposed Behaviour |
+| Element | Possible Behaviour |
 |---------|-------------------|
 | `main` | Represents confirmed production/live state. Created from known production baseline. |
 | `development` | Transitional. Retired after automation pilot and branch protections are ready. |
@@ -87,7 +87,7 @@ This removes most manual chart updates for multi-service changes.
 | Rule | Detail |
 |------|--------|
 | Default | Deploy all changed charts in the release. |
-| Override | Only release owners can exclude a chart; reason must be recorded. |
+| Override | Only release owners can exclude a chart; reason should be recorded. |
 | Detection | Based on release report comparing two tags/versions. |
 
 ---
@@ -109,7 +109,7 @@ CVE and Renovate updates follow the same automation pattern as normal changes:
 
 | Rule | Rationale |
 |------|-----------|
-| Merge commit into release branch must include ticket number + meaningful message. | Release branch history becomes the changelog. |
+| Merge commit into release branch should include ticket number + meaningful message. | Release branch history becomes the changelog. |
 | Squash-style pattern preferred. | Reduces noisy release branch history. |
 | Feature branch commits should also follow ticket/message pattern. | Reports may be generated from long-running branches before merge. |
 
@@ -141,9 +141,9 @@ CVE and Renovate updates follow the same automation pattern as normal changes:
 
 ## References
 
-- Current state: see [02 — Current Release Operating Model](02-current-release-operating-model.md)
-- Decisions to confirm: see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Hotfix detail: see [05 — Hotfix and Rollback](05-hotfix-and-rollback.md)
+- Current state: see 02 — Current Release Operating Model
+- Decisions to confirm: see 04 — Rollout Decision Proposals
+- Hotfix detail: see 05 — Hotfix and Rollback
 
 ---
 

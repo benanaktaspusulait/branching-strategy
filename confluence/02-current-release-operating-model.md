@@ -1,20 +1,20 @@
 # Current Release Operating Model
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: release-model, current-state, cerberus, ci-cd
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | release-model, current-state, cerberus, ci-cd |
 
 ---
 
-## Executive Summary
+## Summary
 
-The current release process follows a GitFlow-style model. It is manual-heavy, with release preparation taking days per sprint. The target direction is to centralise repeatable release work through Drone, auto-update Cerberus charts and produce cross-referenced release reports.
+The current release process follows a GitFlow-style model. It is manual-heavy, with release preparation taking days per sprint. A possible improvement direction is to centralise repeatable release work through Drone, auto-update Cerberus charts and produce cross-referenced release reports.
 
-This page captures the current state — not the target. The key principle is: changing the branch model alone does not make the release safe. Safety comes from tag, artefact, chart, manifest, config, validation and reconciliation all agreeing.
+This page captures the current state, not an agreed target model. The key principle is: changing the branch model alone does not make the release safe. Safety comes from tag, artefact, chart, manifest, config, validation and reconciliation all agreeing.
 
 ---
 
@@ -34,7 +34,7 @@ feature branch → development → release branch → master / production
 | Reconciliation | Release branch merged back to `master` and `development` after release. |
 | Hotfixes | Possible from production state; back-merge not fully standardised. |
 
-**Important:** The proposed target is not "rename `development` to `main`". The target is "`main` represents the confirmed production state". `development` may contain unreleased work.
+**Important:** The possible target is not "rename `development` to `main`". The safer direction may be that "`main` represents the confirmed production state". `development` may contain unreleased work.
 
 ---
 
@@ -127,9 +127,9 @@ Creating a tag on the release branch triggers:
 
 ## References
 
-- Proposed target flow: see [03 — Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
-- Hotfix and rollback: see [05 — Hotfix and Rollback](05-hotfix-and-rollback.md)
-- Decisions to confirm: see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
+- Possible target flow: see 03 - Proposed Release Automation Flow
+- Hotfix and rollback: see 05 — Hotfix and Rollback
+- Decisions to confirm: see 04 — Rollout Decision Proposals
 
 ---
 

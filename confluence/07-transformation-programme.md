@@ -1,18 +1,18 @@
-# Transformation Programme
+# Improvement Path And Maturity Observations
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: transformation, roadmap, maturity, cerberus, release-engineering, proposal
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | improvement-notes, roadmap, maturity, cerberus, release-engineering |
 
 ---
 
-## Executive Summary
+## Summary
 
-The release process currently scores 2.3/5 across ten maturity areas. The target is 4.3/5. This page provides the root cause analysis, risk assessment, maturity scorecard, eight working principles, current vs target state, phased roadmap (Phase 0–5), RACI matrix, success metrics, cost/benefit analysis and the top 10 improvement recommendations.
+The release process currently appears to score around 2.3/5 across ten maturity areas, based on the current notes. A possible target maturity is around 4.3/5, but this needs team validation and baseline measurement. This page captures root cause notes, risk observations, a maturity scorecard, working principles, a possible phased path, potential metrics and improvement areas for discussion.
 
 The approach is: invest in release governance, environment standardisation and deployment automation rather than immediate branching model replacement.
 
@@ -37,7 +37,7 @@ The approach is: invest in release governance, environment standardisation and d
 |---|------|------------|--------|----------|------------|
 | R1 | Production outage from wrong artefact | Medium | Critical | P1 | Strict tag/manifest validation; fail on mismatch. |
 | R2 | Extended incident — no rollback process | Medium | Critical | P1 | Document and test rollback; define time budget. |
-| R3 | Release delays from manual coordination | High | Medium | P2 | Automation pilot; Drone as release path. |
+| R3 | Release delays from manual coordination | High | Medium | P2 | Automation pilot; Drone as agreed release path once proven. |
 | R4 | Partial release (missing secrets/config/DB) | High | High | P1 | Explicit release scope checklist per release. |
 | R5 | Audit failure from weak release trail | Medium | High | P2 | Pipeline-generated reports; immutable artefacts. |
 | R6 | Environment failure at deploy time | Medium | Medium | P3 | Explicit environment readiness gate. |
@@ -46,9 +46,9 @@ The approach is: invest in release governance, environment standardisation and d
 
 ---
 
-## Maturity Scorecard
+## Maturity Observations
 
-| Area | Current | Target | Gap Summary |
+| Area | Current | Possible Target | Gap Summary |
 |------|---------|--------|-------------|
 | Source control and branching | 3.0 | 4.5 | Reconciliation and automation incomplete. |
 | CI/CD pipeline | 3.0 | 4.5 | Release steps still local/manual. |
@@ -61,11 +61,11 @@ The approach is: invest in release governance, environment standardisation and d
 | Secrets and config management | 2.5 | 4.0 | Onboarding and rotation are heavy. |
 | Release reporting and audit | 2.0 | 4.5 | Not pipeline-driven or mandatory. |
 
-**Overall: 2.3 → 4.3**
+**Overall: 2.3 -> possible target 4.3**
 
 ---
 
-## Transformation Principles
+## Working Improvement Principles
 
 1. Stabilise the release operating model before changing branches.
 2. Standardise release metadata (commit → production traceability).
@@ -78,19 +78,21 @@ The approach is: invest in release governance, environment standardisation and d
 
 ---
 
-## Target State (Current vs Target)
+## Possible Target Shape
 
-| Current State | Target State |
+| Current State | Possible Future Shape |
 |---------------|--------------|
 | Manual branch/tag/chart coordination | Automated release branch + tag + chart |
-| Local script execution | Drone pipeline as single release path |
+| Local script execution | Drone pipeline as agreed release path |
 | Permissive validation | Strict fail-fast validation |
 | Unnamed ownership | Named RACI per release activity |
 | No tested rollback | Tested rollback with decision guide |
 
 ---
 
-## Roadmap
+## Possible Phased Improvement Path
+
+The timing below is indicative only. It should not be read as a committed delivery plan.
 
 | Phase | Timeframe | Focus | Key Deliverables |
 |-------|-----------|-------|------------------|
@@ -124,9 +126,11 @@ R = Responsible, A = Accountable, C = Consulted, I = Informed. Named individuals
 
 ---
 
-## Success Metrics
+## Potential Metrics To Baseline
 
-| Metric | Current (Est.) | Phase 2 Target | Phase 4 Target |
+The values below are estimates and need actual baseline measurement before becoming targets.
+
+| Metric | Current Estimate | Possible Phase 2 Target | Possible Phase 4 Target |
 |--------|----------------|----------------|----------------|
 | Deployment frequency | Monthly | Fortnightly | Weekly |
 | Lead time (commit → prod) | 10–15 days | 5–7 days | 2–3 days |
@@ -152,7 +156,7 @@ R = Responsible, A = Accountable, C = Consulted, I = Informed. Named individuals
 
 ---
 
-## Top 10 Recommendations
+## Top 10 Improvement Areas For Discussion
 
 | # | Improvement | Phase |
 |---|-------------|-------|
@@ -171,10 +175,10 @@ R = Responsible, A = Accountable, C = Consulted, I = Informed. Named individuals
 
 ## References
 
-- Findings and actions: see [01 — CI/CD Findings and Actions](01-cicd-findings-and-actions.md)
-- Decisions: see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Ownership: see [06 — Ownership and Approvals](06-ownership-and-approvals.md)
-- Future platform vision: see [08 — Platform and Knowledge Graph](08-platform-and-knowledge-graph.md)
+- Findings and actions: see 01 — CI/CD Findings and Actions
+- Decisions: see 04 — Rollout Decision Proposals
+- Ownership: see 06 — Ownership and Approvals
+- Future platform topics: see 08 - Future Platform Topics
 
 ---
 

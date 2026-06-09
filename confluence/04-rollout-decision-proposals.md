@@ -1,18 +1,18 @@
 # Rollout Decision Proposals
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: decisions, proposal, release-engineering, cerberus, governance
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | decisions, proposal, release-engineering, cerberus, governance |
 
 ---
 
-## Executive Summary
+## Summary
 
-There are 23 open decisions that need release/process-owner confirmation before the rollout can proceed. This page consolidates the decision summary, highlights the highest-risk items and defines the cutover guardrails and approval checklist.
+There are 23 open decisions that need release/process-owner confirmation before rollout behaviour changes. This page consolidates the decision summary, highlights the highest-risk items and defines the cutover guardrails and confirmation checklist.
 
 No decision is confirmed until the accountable owner signs off. Confirmation status is tracked per decision.
 
@@ -85,7 +85,7 @@ Do not cut over to `main = production` until:
 
 ---
 
-## Approval Checklist
+## Confirmation Checklist
 
 Before rollout, confirm or amend:
 
@@ -109,8 +109,8 @@ Before rollout, confirm or amend:
 
 - Full decision register with evidence requirements: source `docs/release-decision-register.md`
 - Detailed rationale: source `docs/reference/rollout-decision-proposals-detailed.md`
-- Ownership model: see [06 — Ownership and Approvals](06-ownership-and-approvals.md)
-- Automation detail: see [03 — Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- Ownership model: see 06 — Ownership and Approvals
+- Automation detail: see 03 — Proposed Release Automation Flow
 
 ---
 

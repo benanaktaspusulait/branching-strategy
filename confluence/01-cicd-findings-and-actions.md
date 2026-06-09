@@ -1,16 +1,16 @@
 # CI/CD Findings and Actions
 
-```
-Owner: Benan Aktas
-Status: In Review
-Created: 2026-06-09
-Last updated: 2026-06-09
-Labels: ci-cd, findings, release-engineering, cerberus, proposal
-```
+| Field | Value |
+| --- | --- |
+| Owner | Benan Aktas |
+| Status | In Review |
+| Created | 2026-06-09 |
+| Last updated | 2026-06-09 |
+| Labels | ci-cd, findings, release-engineering, cerberus, proposal |
 
 ---
 
-## Executive Summary
+## Summary
 
 The release challenge is broader than the branching model. CI/CD and deployment depend on service tags, Helm artefacts, manifests, configuration, secrets, feature flags, environment access and ownership. This page identifies eight problem areas, proposes ten actions and prioritises them by effort and impact.
 
@@ -105,10 +105,10 @@ The approach is: stabilise the release operating model before changing the branc
 
 ## References
 
-- Current release operating model: see [02 — Current Release Operating Model](02-current-release-operating-model.md)
-- Proposed automation: see [03 — Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
-- Rollout decisions: see [04 — Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Ownership: see [06 — Ownership and Approvals](06-ownership-and-approvals.md)
+- Current release operating model: see 02 — Current Release Operating Model
+- Proposed automation: see 03 — Proposed Release Automation Flow
+- Rollout decisions: see 04 — Rollout Decision Proposals
+- Ownership: see 06 — Ownership and Approvals
 
 ---
 
