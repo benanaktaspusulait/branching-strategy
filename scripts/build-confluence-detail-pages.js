@@ -89,6 +89,129 @@ const pageMappings = [
   },
 ];
 
+const pageTitles = new Map([
+  ['confluence/00-parent-release-engineering-assessment.md', 'Main Assessment And Reading Order'],
+  ['confluence/01-cicd-findings-and-actions.md', 'CI/CD Findings And Actions'],
+  ['confluence/02-current-release-operating-model.md', 'Current Release Operating Model'],
+  ['confluence/03-proposed-release-automation-flow.md', 'Proposed Release Automation Flow'],
+  ['confluence/04-rollout-decision-proposals.md', 'Rollout Decision Proposals'],
+  ['confluence/05-hotfix-and-rollback.md', 'Hotfix And Rollback'],
+  ['confluence/06-ownership-and-approvals.md', 'Ownership And Approvals'],
+  ['confluence/07-transformation-programme.md', 'Improvement Path And Maturity Observations'],
+  ['confluence/08-platform-and-knowledge-graph.md', 'Future Platform Topics'],
+  ['confluence/09-source-coverage-index.md', 'Source Coverage Index'],
+]);
+
+const relatedPages = new Map([
+  [
+    'confluence/00-parent-release-engineering-assessment.md',
+    [
+      'confluence/01-cicd-findings-and-actions.md',
+      'confluence/02-current-release-operating-model.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/06-ownership-and-approvals.md',
+      'confluence/07-transformation-programme.md',
+      'confluence/08-platform-and-knowledge-graph.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/01-cicd-findings-and-actions.md',
+    [
+      'confluence/00-parent-release-engineering-assessment.md',
+      'confluence/02-current-release-operating-model.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/02-current-release-operating-model.md',
+    [
+      'confluence/00-parent-release-engineering-assessment.md',
+      'confluence/01-cicd-findings-and-actions.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/06-ownership-and-approvals.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/03-proposed-release-automation-flow.md',
+    [
+      'confluence/01-cicd-findings-and-actions.md',
+      'confluence/02-current-release-operating-model.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/06-ownership-and-approvals.md',
+    ],
+  ],
+  [
+    'confluence/04-rollout-decision-proposals.md',
+    [
+      'confluence/02-current-release-operating-model.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/06-ownership-and-approvals.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/05-hotfix-and-rollback.md',
+    [
+      'confluence/01-cicd-findings-and-actions.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/06-ownership-and-approvals.md',
+    ],
+  ],
+  [
+    'confluence/06-ownership-and-approvals.md',
+    [
+      'confluence/02-current-release-operating-model.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/07-transformation-programme.md',
+    ],
+  ],
+  [
+    'confluence/07-transformation-programme.md',
+    [
+      'confluence/00-parent-release-engineering-assessment.md',
+      'confluence/02-current-release-operating-model.md',
+      'confluence/06-ownership-and-approvals.md',
+      'confluence/08-platform-and-knowledge-graph.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/08-platform-and-knowledge-graph.md',
+    [
+      'confluence/00-parent-release-engineering-assessment.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/07-transformation-programme.md',
+      'confluence/09-source-coverage-index.md',
+    ],
+  ],
+  [
+    'confluence/09-source-coverage-index.md',
+    [
+      'confluence/00-parent-release-engineering-assessment.md',
+      'confluence/01-cicd-findings-and-actions.md',
+      'confluence/02-current-release-operating-model.md',
+      'confluence/03-proposed-release-automation-flow.md',
+      'confluence/04-rollout-decision-proposals.md',
+      'confluence/05-hotfix-and-rollback.md',
+      'confluence/06-ownership-and-approvals.md',
+      'confluence/07-transformation-programme.md',
+      'confluence/08-platform-and-knowledge-graph.md',
+    ],
+  ],
+]);
+
 function read(file) {
   return fs.readFileSync(path.join(root, file), 'utf8').trimEnd();
 }
@@ -169,24 +292,45 @@ function detailedSourceSection(sources) {
     '',
     'This section preserves the detailed repository content used during the Confluence conversion. It is intentionally longer than the summary above so technical detail is not lost.',
     '',
-    ...sections,
-  ].join('\n\n');
+    sections.join('\n\n'),
+  ].join('\n');
+}
+
+function pageLink(page) {
+  return `[${pageTitles.get(page) ?? path.basename(page, '.md')}](${path.basename(page)})`;
+}
+
+function relatedPagesSection(page) {
+  const links = relatedPages.get(page) ?? [];
+
+  return [
+    '---',
+    '',
+    '## Related Pages',
+    '',
+    ...links.map((relatedPage) => `- ${pageLink(relatedPage)}`),
+  ].join('\n');
 }
 
 function stripExistingDetail(pageMarkdown) {
-  return pageMarkdown.replace(/\n+---\n\n## Detailed Source Material\n[\s\S]*$/m, '').trimEnd();
+  return pageMarkdown.replace(/\n+---\n+(?:[ \t]*\n+)*## Detailed Source Material\b[\s\S]*$/m, '').trimEnd();
+}
+
+function stripExistingRelatedPages(pageMarkdown) {
+  return pageMarkdown.replace(/\n+---\n+(?:[ \t]*\n+)*## Related Pages\b[\s\S]*$/m, '').trimEnd();
 }
 
 function updatePage(mapping) {
   const pagePath = path.join(root, mapping.page);
   const pageMarkdown = fs.readFileSync(pagePath, 'utf8');
-  const next = `${stripExistingDetail(pageMarkdown)}\n\n${detailedSourceSection(mapping.sources)}\n`;
+  const base = stripExistingRelatedPages(stripExistingDetail(pageMarkdown));
+  const next = `${base}\n\n${relatedPagesSection(mapping.page)}\n\n${detailedSourceSection(mapping.sources)}\n`;
   fs.writeFileSync(pagePath, next);
 }
 
 function writeCoverageIndex() {
   const rows = pageMappings.flatMap((mapping) =>
-    mapping.sources.map((source) => `| \`${source}\` | ${path.basename(mapping.page, '.md')} |`),
+    mapping.sources.map((source) => `| \`${source}\` | ${pageLink(mapping.page)} |`),
   );
 
   const content = [
@@ -205,6 +349,8 @@ function writeCoverageIndex() {
     '## Summary',
     '',
     'This page shows which repository source files are preserved in each Confluence conversion page. The overview pages remain readable, while their detailed source material sections retain the original technical content.',
+    '',
+    relatedPagesSection('confluence/09-source-coverage-index.md'),
     '',
     '---',
     '',

@@ -16,47 +16,61 @@ This page shows which repository source files are preserved in each Confluence c
 
 ---
 
+## Related Pages
+
+- [Main Assessment And Reading Order](00-parent-release-engineering-assessment.md)
+- [CI/CD Findings And Actions](01-cicd-findings-and-actions.md)
+- [Current Release Operating Model](02-current-release-operating-model.md)
+- [Proposed Release Automation Flow](03-proposed-release-automation-flow.md)
+- [Rollout Decision Proposals](04-rollout-decision-proposals.md)
+- [Hotfix And Rollback](05-hotfix-and-rollback.md)
+- [Ownership And Approvals](06-ownership-and-approvals.md)
+- [Improvement Path And Maturity Observations](07-transformation-programme.md)
+- [Future Platform Topics](08-platform-and-knowledge-graph.md)
+
+---
+
 ## Coverage Mapping
 
 | Source File | Confluence Page |
 | --- | --- |
-| `README.md` | 00-parent-release-engineering-assessment |
-| `docs/cicd-deployment-findings-and-actions.md` | 01-cicd-findings-and-actions |
-| `docs/deployment-and-release-findings.md` | 01-cicd-findings-and-actions |
-| `docs/current-release-operating-model.md` | 02-current-release-operating-model |
-| `docs/branching-options.md` | 02-current-release-operating-model |
-| `docs/squad-briefing-summary.md` | 02-current-release-operating-model |
-| `docs/proposed-release-automation-flow.md` | 03-proposed-release-automation-flow |
-| `docs/automation-and-validation.md` | 03-proposed-release-automation-flow |
-| `docs/rollout-decision-proposals.md` | 04-rollout-decision-proposals |
-| `docs/release-decision-register.md` | 04-rollout-decision-proposals |
-| `docs/reference/rollout-decision-proposals-detailed.md` | 04-rollout-decision-proposals |
-| `docs/hotfix-and-rollback.md` | 05-hotfix-and-rollback |
-| `docs/scope-ownership-approvals.md` | 06-ownership-and-approvals |
-| `docs/architecture-review/operating-model-raci.md` | 06-ownership-and-approvals |
-| `docs/system-state-problems-solutions.md` | 07-transformation-programme |
-| `docs/reference/system-state-problems-solutions-detailed.md` | 07-transformation-programme |
-| `docs/reference/detailed-problems.md` | 07-transformation-programme |
-| `docs/reference/detailed-solutions.md` | 07-transformation-programme |
-| `docs/transformation-programme.md` | 07-transformation-programme |
-| `docs/transformation-programme-delivery.md` | 07-transformation-programme |
-| `docs/release-engineering-best-practices.md` | 07-transformation-programme |
-| `docs/platform-engineering-strategy.md` | 08-platform-and-knowledge-graph |
-| `docs/platform-engineering-strategy-advanced.md` | 08-platform-and-knowledge-graph |
-| `docs/advanced-architecture-sections.md` | 08-platform-and-knowledge-graph |
-| `docs/deployment-knowledge-graph-design.md` | 08-platform-and-knowledge-graph |
-| `docs/deployment-knowledge-graph-implementation.md` | 08-platform-and-knowledge-graph |
-| `docs/deployment-knowledge-graph-operations.md` | 08-platform-and-knowledge-graph |
-| `docs/deployment-knowledge-graph-business-case.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/index.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/alignment-and-enterprise-architecture-review.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/review-criteria.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/recommendation-inventory.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/source-document-list.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/executive-and-quality-review.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/arb-package.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/business-case-and-roadmap.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/architecture-diagrams.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/criticality-challenge-review.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/missing-enterprise-concerns.md` | 08-platform-and-knowledge-graph |
-| `docs/architecture-review/final-scorecard-and-verdict.md` | 08-platform-and-knowledge-graph |
+| `README.md` | [Main Assessment And Reading Order](00-parent-release-engineering-assessment.md) |
+| `docs/cicd-deployment-findings-and-actions.md` | [CI/CD Findings And Actions](01-cicd-findings-and-actions.md) |
+| `docs/deployment-and-release-findings.md` | [CI/CD Findings And Actions](01-cicd-findings-and-actions.md) |
+| `docs/current-release-operating-model.md` | [Current Release Operating Model](02-current-release-operating-model.md) |
+| `docs/branching-options.md` | [Current Release Operating Model](02-current-release-operating-model.md) |
+| `docs/squad-briefing-summary.md` | [Current Release Operating Model](02-current-release-operating-model.md) |
+| `docs/proposed-release-automation-flow.md` | [Proposed Release Automation Flow](03-proposed-release-automation-flow.md) |
+| `docs/automation-and-validation.md` | [Proposed Release Automation Flow](03-proposed-release-automation-flow.md) |
+| `docs/rollout-decision-proposals.md` | [Rollout Decision Proposals](04-rollout-decision-proposals.md) |
+| `docs/release-decision-register.md` | [Rollout Decision Proposals](04-rollout-decision-proposals.md) |
+| `docs/reference/rollout-decision-proposals-detailed.md` | [Rollout Decision Proposals](04-rollout-decision-proposals.md) |
+| `docs/hotfix-and-rollback.md` | [Hotfix And Rollback](05-hotfix-and-rollback.md) |
+| `docs/scope-ownership-approvals.md` | [Ownership And Approvals](06-ownership-and-approvals.md) |
+| `docs/architecture-review/operating-model-raci.md` | [Ownership And Approvals](06-ownership-and-approvals.md) |
+| `docs/system-state-problems-solutions.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/reference/system-state-problems-solutions-detailed.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/reference/detailed-problems.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/reference/detailed-solutions.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/transformation-programme.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/transformation-programme-delivery.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/release-engineering-best-practices.md` | [Improvement Path And Maturity Observations](07-transformation-programme.md) |
+| `docs/platform-engineering-strategy.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/platform-engineering-strategy-advanced.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/advanced-architecture-sections.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/deployment-knowledge-graph-design.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/deployment-knowledge-graph-implementation.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/deployment-knowledge-graph-operations.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/deployment-knowledge-graph-business-case.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/index.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/alignment-and-enterprise-architecture-review.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/review-criteria.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/recommendation-inventory.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/source-document-list.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/executive-and-quality-review.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/arb-package.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/business-case-and-roadmap.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/architecture-diagrams.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/criticality-challenge-review.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/missing-enterprise-concerns.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
+| `docs/architecture-review/final-scorecard-and-verdict.md` | [Future Platform Topics](08-platform-and-knowledge-graph.md) |
