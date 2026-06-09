@@ -48,6 +48,8 @@ The approach is: invest in release governance, environment standardisation and d
 
 ## Maturity Observations
 
+> **Note:** These scores and targets are working estimates only. They should not be treated as measured baselines until validated with release management and platform teams. Actual baseline measurement should begin in Phase 1.
+
 | Area | Current | Possible Target | Gap Summary |
 |------|---------|--------|-------------|
 | Source control and branching | 3.0 | 4.5 | Reconciliation and automation incomplete. |
