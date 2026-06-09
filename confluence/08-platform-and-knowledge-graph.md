@@ -10,7 +10,7 @@
 
 This page keeps the longer future-platform reference material that came out of the Confluence page set.
 
-Important: this is not part of the current Phase 0-4 release-process improvement scope. The immediate priority remains release operating model maturity: visible release state, strict validation, named ownership, Drone automation, rollback readiness, environment readiness and audit evidence.
+> **Important: This page is NOT part of the current release-process improvement scope (Phase 0–4).** The immediate focus remains release operating model maturity: visible release state, strict validation, named ownership, Drone automation, rollback readiness, environment readiness and audit evidence. Future platform topics documented here should not block, delay or distract from near-term release-process improvements. They are recorded for future evaluation only.
 
 ---
 
