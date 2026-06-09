@@ -196,7 +196,7 @@ flowchart LR
 ### Possible Actions
 
 1. Keep the current-state flow in [current release operating model](02-current-release-operating-model.md) as the baseline view.
-2. Use [deployment and release findings](01-cicd-findings-and-actions.md) as the detailed source for deployment scripts, secrets, manifests and tag validation.
+2. Use [deployment and release findings](01-cicd-findings-and-actions.md) as the detailed page for deployment scripts, secrets, manifests and tag validation.
 3. Move local/manual release automation into Drone once the configuration-service pilot is green.
 4. Define strict validation for wrong tags, missing tags, manifest/tag mismatch, invalid ticket status and `do not deploy` markers.
 5. Confirm repository scope for service code, Helm charts, deployment management, secrets/config, Liquibase and runbooks.

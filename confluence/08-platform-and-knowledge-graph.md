@@ -214,7 +214,7 @@ Without ownership, support and adoption planning, a future platform risks becomi
 
 - Immediate priorities: see 07 - Improvement Path And Maturity Observations.
 - Current automation proposal: see 03 - Proposed Release Automation Flow.
-- Source architecture detail, if needed later: [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md).
+- Architecture detail, if needed later: [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md), [Future Platform Topics](08-platform-and-knowledge-graph.md).
 
 ---
 
@@ -2355,7 +2355,7 @@ The strongest immediate improvement areas appear to be release metadata standard
 
 Status: Optional review note / working reference.
 
-Review purpose: identify the document set that could support a later formal review or border-security criticality discussion.
+Review purpose: identify the Confluence page set that could support a later formal review or border-security criticality discussion.
 
 ### Review Scope Note
 

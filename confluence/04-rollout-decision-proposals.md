@@ -107,8 +107,8 @@ Before rollout, confirm or amend:
 
 ## References
 
-- Full decision register with evidence requirements: source [Rollout Decision Proposals](04-rollout-decision-proposals.md)
-- Detailed rationale: source [Rollout Decision Proposals](04-rollout-decision-proposals.md)
+- Full decision register with evidence requirements: [Rollout Decision Proposals](04-rollout-decision-proposals.md)
+- Detailed rationale: [Rollout Decision Proposals](04-rollout-decision-proposals.md)
 - Ownership model: see 06 — Ownership and Approvals
 - Automation detail: see 03 — Proposed Release Automation Flow
 
