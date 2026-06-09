@@ -1,4 +1,4 @@
-# Future Platform Topics - Detailed Reference
+# Future Platform Topics — Reference Only / Not Current Scope
 
 | Field | Value |
 | --- | --- |
@@ -233,7 +233,19 @@ Feedback or questions? Contact the page owner or comment below.
 
 ## Detailed Supporting Material
 
-This section keeps the detailed supporting content for readers who need more than the summary above.
+> **Reminder:** All content below is future evaluation material (Phase 5+). It should not block Phase 0–4 release-process improvements.
+
+### Sections On This Page
+
+- Platform Engineering Strategy (environment promotion, deployment strategy, observability)
+- GitOps Readiness
+- SBOM and Supply Chain Security
+- Unified Deployment Control Plane
+- Knowledge Graph / Release Intelligence
+- Architecture Review Considerations
+- Summary Assessment and Open Risks
+
+---
 
 ### Platform Engineering Strategy
 
@@ -438,7 +450,7 @@ The release report should include a link to the observability dashboard filtered
 
 > **This section is not a blocker for the initial release automation rollout.** All items below are medium-term or long-term improvements.
 
-See [platform engineering strategy](08-platform-and-knowledge-graph.md) for environment promotion, deployment strategies and observability gates.
+See platform engineering section above for environment promotion, deployment strategies and observability gates.
 
 ### 4. GitOps Readiness
 
@@ -1037,10 +1049,10 @@ The suggested next step is not to build everything, but to validate the operatin
 > **Relationship to Unified Control Plane:** The Knowledge Graph is a future data and intelligence layer. The related control-plane idea is now only a short note under [Possible Future Topics - Not In Current Scope](07-transformation-programme.md).
 
 This document is split into four parts:
-- Part 1: [Design and Domain Model](08-platform-and-knowledge-graph.md) (you are here)
-- Part 2: [Implementation and Workflows](08-platform-and-knowledge-graph.md)
-- Part 3: [Operations and Technology](08-platform-and-knowledge-graph.md)
-- Part 4: [Strategic Value, Business Case and Governance](08-platform-and-knowledge-graph.md)
+- Part 1: Design and Domain Model (see below) (you are here)
+- Part 2: Implementation and Workflows (see below)
+- Part 3: Operations and Technology (see below)
+- Part 4: Strategic Value and Governance (see below)
 
 ---
 
@@ -1270,7 +1282,7 @@ Relationships:
 
 ### Deployment Knowledge Graph — Implementation And Workflows
 
-> Part 2 of 3. See [Part 1: Design](08-platform-and-knowledge-graph.md) for context.
+> Part 2 of 3. See Part 1: Design (above) for context.
 
 ### 8. Event-Driven Architecture
 
@@ -1635,7 +1647,7 @@ sequenceDiagram
 
 ### Deployment Knowledge Graph — Operations And Technology
 
-> Part 3 of 3. See [Part 1: Design](08-platform-and-knowledge-graph.md) for context.
+> Part 3 of 3. See Part 1: Design (above) for context.
 
 ### 16. Security And RBAC Model
 
@@ -1837,7 +1849,7 @@ Note: Knowledge Graph Phase 1 (Month 9-12) overlaps with Transformation Phase 5 
 | **Adopt Backstage + custom plugins** | Open-source; extensible; community support; developer portal benefits. | Still requires custom plugins for graph queries; not a graph database. | Recommended as UI layer on top of custom graph. |
 | **Hybrid: Custom graph + Backstage UI + managed graph DB** | Best of both; focused effort on domain logic; managed infrastructure. | Integration complexity; multiple vendors. | Recommended target architecture. |
 
-**Recommended approach:** Build the graph model and ingestion layer custom (it is domain-specific). Use managed infrastructure (Neo4j Aura or Amazon Neptune) to reduce operational burden. Use Backstage or custom UI for the presentation layer.
+**Candidate approach:** Build the graph model and ingestion layer custom (it is domain-specific). Use managed infrastructure (Neo4j Aura or Amazon Neptune) to reduce operational burden. Use Backstage or custom UI for the presentation layer.
 
 ---
 
@@ -1897,7 +1909,7 @@ It should be built incrementally, starting only after the immediate release auto
 
 This page provides the strategic justification, governance model and organisational benefits for the Deployment Knowledge Graph. It is intended for non-technical decision-makers who need to understand why this investment could be justified and what the expected return would be.
 
-For technical architecture, see [design](08-platform-and-knowledge-graph.md), [implementation](08-platform-and-knowledge-graph.md) and [operations](08-platform-and-knowledge-graph.md).
+For technical architecture, see design section above, implementation section above and operations section above.
 
 ---
 
@@ -2106,7 +2118,7 @@ These should be defined before build starts and validated during each implementa
 | Target state | Future option — earliest feasible start is Month 9-12 of the transformation roadmap. |
 | Prerequisites | Release automation stable in Drone; metadata standardisation complete; named platform owner assigned. |
 | Alternatives considered | (1) Do nothing — continue manual investigation. (2) Buy a platform product. (3) Build custom. |
-| Recommended approach | Hybrid: build custom graph and ingestion layer; use managed infrastructure; use Backstage or custom UI. |
+| Candidate approach | Hybrid: build custom graph and ingestion layer; use managed infrastructure; use Backstage or custom UI. |
 | Review date | To be set after Phase 2 of the transformation is complete. |
 
 ### Related Pages
@@ -2130,7 +2142,7 @@ These notes are not an ARB submission, approval request or final architecture po
 | Potential future architecture review considerations | see ARB Package section below |
 | Potential benefits and roadmap notes | see Business Case section below |
 | Operating model and RACI notes | [operating-model-raci](06-ownership-and-approvals.md) |
-| Architecture diagrams | [architecture-diagrams](08-platform-and-knowledge-graph.md) |
+| Architecture diagrams | architecture diagrams section below |
 | Criticality challenge notes | see Criticality section below |
 | Additional enterprise concerns to confirm | see Enterprise Concerns section below |
 | Summary assessment and open risks | see Scorecard section below |
@@ -2518,7 +2530,7 @@ A safer near-term focus may be neither "change the branch model" nor "build a pl
 
 - see Architecture Review Notes section below
 - see Architecture Review section below
-- [Potential Benefits And Roadmap Notes](08-platform-and-knowledge-graph.md)
+- Benefits and Roadmap section below
 - see Summary Assessment section below
 
 ### Potential Future Architecture Review Considerations
@@ -2611,8 +2623,8 @@ If this were reviewed formally, reviewers would likely want confirmation of:
 ### Related Pages
 
 - see Architecture Review Notes section below
-- [Current Understanding And Architecture Quality Observations](08-platform-and-knowledge-graph.md)
-- [Potential Benefits And Roadmap Notes](08-platform-and-knowledge-graph.md)
+- Quality Observations section above
+- Benefits and Roadmap section below
 - see Summary Assessment section below
 
 ### Potential Benefits And Roadmap Notes
@@ -2719,7 +2731,7 @@ flowchart TD
 ### Related Pages
 
 - see Architecture Review Notes section below
-- [Architecture Alignment Considerations](08-platform-and-knowledge-graph.md)
+- Alignment section above
 - see Criticality section below
 
 ### Criticality Challenge Notes
@@ -2786,7 +2798,7 @@ Scores: 1 poor, 5 excellent.
 
 - see Architecture Review Notes section below
 - see Improvement Area Inventory section below
-- [Additional Enterprise Concerns To Confirm](08-platform-and-knowledge-graph.md)
+- Enterprise Concerns section above
 - see Summary Assessment section below
 
 ### Additional Enterprise Concerns To Confirm
@@ -2924,6 +2936,6 @@ Given the criticality and scale of the platform, any change should prefer contro
 ### Related Pages
 
 - see Architecture Review Notes section below
-- [Current Understanding And Architecture Quality Observations](08-platform-and-knowledge-graph.md)
+- Quality Observations section above
 - see Criticality section below
 - see Architecture Review section below

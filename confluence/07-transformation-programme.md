@@ -796,7 +796,7 @@ Root cause:
 
 - Release state is not represented by one system.
 
-Recommendation:
+Proposed action:
 
 - Treat branching as one part of the release operating model.
 
@@ -815,7 +815,7 @@ Root cause:
 
 - Automation exists, but it is not yet the mandatory central path.
 
-Recommendation:
+Proposed action:
 
 - Move repeatable release tasks into Drone and make pipeline output the audit source.
 
@@ -833,7 +833,7 @@ Root cause:
 
 - Tag creation rules and validation gates are not fully formalised.
 
-Recommendation:
+Proposed action:
 
 - Enforce tag timing, tag ownership and tag-to-commit validation in the release pipeline.
 
@@ -858,7 +858,7 @@ Impact:
 - Automation may include too much, too little or the wrong thing.
 - Config, secret or database changes may be missed.
 
-Recommendation:
+Proposed action:
 
 - Create a repository and change-type scope list before scaling automation.
 
@@ -872,7 +872,7 @@ Impact:
 - Wrong service versions can be promoted.
 - Release reports can become misleading.
 
-Recommendation:
+Proposed action:
 
 ```text
 Wrong tag -> fail
@@ -892,7 +892,7 @@ Impact:
 - An unchanged chart can be deployed unnecessarily.
 - Umbrella-chart blast radius can be misunderstood.
 
-Recommendation:
+Proposed action:
 
 - Use changed-chart deployment by default only after detection has been reviewed against real releases.
 - Keep mass diff review mandatory early in rollout.
@@ -907,7 +907,7 @@ Impact:
 - Rollback can leave source control and deployment-management inconsistent.
 - Liquibase and config changes can make rollback unsafe.
 
-Recommendation:
+Proposed action:
 
 - Make hotfix and rollback runbooks production gates.
 
@@ -920,7 +920,7 @@ Impact:
 - An environment can appear available but fail deployment.
 - Pre-prod approval can create false confidence if parity is poor.
 
-Recommendation:
+Proposed action:
 
 - Create an environment readiness checklist and require it before rollout.
 
@@ -934,7 +934,7 @@ Impact:
 - Rotation becomes harder.
 - Secret exposure response is more expensive.
 
-Recommendation:
+Proposed action:
 
 - Keep the current approach short term.
 - Evaluate External Secrets Operator, Sealed Secrets or a central secret manager after release automation stabilises.
@@ -948,7 +948,7 @@ Impact:
 - Incomplete work may be harder to isolate.
 - Turning a feature off may require redeployment.
 
-Recommendation:
+Proposed action:
 
 - Move toward trunk-based development only after feature flag, testing, monitoring and rollback maturity improve.
 
@@ -962,7 +962,7 @@ Impact:
 - Overrides become unclear.
 - Rollback decisions are delayed.
 
-Recommendation:
+Proposed action:
 
 - Use a RACI model with one accountable owner per critical activity.
 
@@ -975,7 +975,7 @@ Impact:
 - Artefacts may exist while chart updates or reports are missing.
 - Manual edits may conflict with reruns.
 
-Recommendation:
+Proposed action:
 
 - Define alert content, alert channels, alert owners and safe rerun criteria before production rollout.
 

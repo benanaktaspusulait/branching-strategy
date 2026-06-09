@@ -130,7 +130,7 @@ Feedback or questions? Contact the page owner or comment below.
 
 ## Detailed Rationale
 
-Full rationale for each decision (D01–D23) is available in the source repository under `docs/reference/rollout-decision-proposals-detailed.md`. This will be migrated to a Confluence child page if the decision register is adopted.
+Full rationale for each decision (D01–D23) is available in the Detailed Rationale child page (to be created if the decision register is adopted).
 
 ---
 

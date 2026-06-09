@@ -194,7 +194,6 @@ Validate the current-state assumptions and proposed sequencing with Gareth, Achi
 ## 13. References
 
 - Detailed decision register: see [Rollout Decision Proposals](04-rollout-decision-proposals.md).
-- Source material: `branching-strategy` repository (requires GitLab access).
 
 ---
 
