@@ -128,9 +128,33 @@ Feedback or questions? Contact the page owner or comment below.
 
 ---
 
+## Decision Status Legend
+
+| Status | Meaning |
+|--------|---------|
+| Proposed | Initial suggestion documented; no owner assigned yet. |
+| Needs confirmation | Owner identified but decision not yet formally confirmed. |
+| Needs owner | Decision cannot progress until an accountable owner is assigned. |
+| Confirmed | Decision formally confirmed by accountable owner with evidence. |
+| Rejected | Decision reviewed and explicitly rejected with documented reason. |
+
+---
+
+## Decisions To Close First
+
+The following closure order is suggested to unblock the release process safely:
+
+1. **D20, D21** — Scope and ownership must be known first.
+2. **D13, D14, D15** — Validation rules must be agreed before strict enforcement.
+3. **D16, D17, D18** — Hotfix and rollback must be confirmed before production rollout.
+4. **D01, D02, D05** — Branch cutover only after the above are stable.
+5. **D08, D09, D22** — Automation behaviour before Drone becomes the normal path.
+
+---
+
 ## Detailed Rationale
 
-Full rationale for each decision (D01–D23) is available in the Detailed Rationale child page (to be created if the decision register is adopted).
+Full rationale for each decision (D01–D23) is available in the [Decision Register Detailed Rationale](04.1-decision-register-detailed-rationale.md) page.
 
 ---
 
