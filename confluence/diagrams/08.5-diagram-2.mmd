@@ -1,0 +1,14 @@
+flowchart TD
+  DEV["Engineering Teams"] --> GIT["Git branches / tags"]
+  DEV --> JIRA["Jira tickets / release metadata"]
+  GIT --> DRONE["Drone CI/CD"]
+  DRONE --> IMG["Container images"]
+  DRONE --> HELM["Helm packages"]
+  HELM --> DM["Deployment Management manifests"]
+  DM --> K8S["Kubernetes environments"]
+  JIRA --> REPORT["Release reports / changelog"]
+  SECRETS["Git-crypt / Drone secrets"] --> K8S
+  LIQ["Liquibase changes"] --> DB["Databases"]
+  RUNBOOK["Manual runbooks"] --> K8S
+  OBS["Observability tools"] --> OPS["Release / incident decisions"]
+  K8S --> OBS

@@ -1,0 +1,12 @@
+flowchart TD
+  REL["Release"] --> TICKETS["Jira tickets"]
+  REL --> TAGS["Git tags"]
+  TAGS --> BUILDS["Drone builds"]
+  BUILDS --> ARTEFACTS["Images / Helm charts"]
+  ARTEFACTS --> MANIFEST["Deployment manifest"]
+  MANIFEST --> ENV["Environment state"]
+  ENV --> HEALTH["Health signals"]
+  REL --> APPROVALS["Approvals / overrides"]
+  REL --> REPORT["Release report"]
+  HEALTH --> REPORT
+  APPROVALS --> REPORT

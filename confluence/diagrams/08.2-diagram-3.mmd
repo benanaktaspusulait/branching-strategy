@@ -1,0 +1,29 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart LR
+  subgraph NOW["Now (Phase 1)"]
+    N1["✅ Release automation in Drone"]:::now
+    N2["✅ Strict tag/manifest validation"]:::now
+    N3["✅ Document promotion model"]:::now
+    N4["✅ SBOM generation (Trivy flag)"]:::now
+  end
+
+  subgraph NEXT["Next (Phase 2)"]
+    X1["🔜 Blue-green for critical services"]:::next
+    X2["🔜 Pipeline observability query"]:::next
+    X3["🔜 Image signing (Cosign)"]:::next
+    X4["🔜 ArgoCD in non-prod"]:::next
+  end
+
+  subgraph FUTURE["Future (Phase 3)"]
+    F1["🎯 Canary / Argo Rollouts"]:::future
+    F2["🎯 SLO-based auto-promotion"]:::future
+    F3["🎯 Admission policy (reject unsigned)"]:::future
+    F4["🎯 ArgoCD in production"]:::future
+  end
+
+  NOW --> NEXT --> FUTURE
+
+  classDef now fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
+  classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef future fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold

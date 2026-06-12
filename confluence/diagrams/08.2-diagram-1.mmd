@@ -1,0 +1,20 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart LR
+  DEPLOY["🚀 Deploy to environment"]:::deploy
+  BAKE["⏱️ Bake time\n(5-15 min)"]:::wait
+  CHECK["📊 Observability gate"]:::gate
+  PASS{"SLOs met?"}:::decision
+  PROMOTE["✅ Promote to next env"]:::pass
+  ROLLBACK["⏪ Alert or manual rollback"]:::fail
+
+  DEPLOY --> BAKE --> CHECK --> PASS
+  PASS -->|Yes| PROMOTE
+  PASS -->|No| ROLLBACK
+
+  classDef deploy fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef wait fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef gate fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef decision fill:#f9a825,stroke:#f57f17,color:#000,font-weight:bold
+  classDef pass fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
+  classDef fail fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold

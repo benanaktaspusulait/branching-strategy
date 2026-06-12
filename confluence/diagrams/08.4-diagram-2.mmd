@@ -1,0 +1,35 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+erDiagram
+    RELEASE ||--o{ SERVICE_VERSION : includes
+    RELEASE ||--o{ APPROVAL : requires
+    RELEASE ||--o{ RELEASE_REPORT : generates
+    RELEASE }|--|| RELEASE_BRANCH : "tracked by"
+
+    SERVICE_VERSION ||--|| COMMIT : "built from"
+    SERVICE_VERSION ||--|| IMAGE : produces
+    SERVICE_VERSION ||--|| HELM_CHART_VERSION : "packaged as"
+    SERVICE_VERSION }|--|| REPOSITORY : "belongs to"
+    SERVICE_VERSION }|--|| SQUAD : "owned by"
+
+    COMMIT ||--o{ JIRA_TICKET : references
+    COMMIT ||--o{ LIQUIBASE_CHANGESET : includes
+
+    DEPLOYMENT ||--|| SERVICE_VERSION : deploys
+    DEPLOYMENT }|--|| ENVIRONMENT : "targets"
+    DEPLOYMENT ||--o{ HEALTH_SIGNAL : produces
+    DEPLOYMENT }|--|| DRONE_JOB : "executed by"
+    DEPLOYMENT ||--o{ CONFIG_CHANGE : applies
+
+    ENVIRONMENT ||--o{ SECRET_STATE : has
+    ENVIRONMENT ||--o{ VALUES_FILE : configured_by
+    ENVIRONMENT ||--o{ FEATURE_FLAG_STATE : has
+
+    INCIDENT }|--|| DEPLOYMENT : "caused by"
+    INCIDENT ||--o{ ROLLBACK : "resolved by"
+
+    ROLLBACK }|--|| DEPLOYMENT : "reverts to"
+    ROLLBACK ||--o{ RECONCILIATION_TASK : creates
+
+    APPROVAL }|--|| PERSON : "given by"
+    APPROVAL }|--|| APPROVAL_TYPE : "of type"

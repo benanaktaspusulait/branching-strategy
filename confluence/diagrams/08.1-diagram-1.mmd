@@ -1,0 +1,16 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  DEV["🧪 Squad Dev/Test\n──────────\nDeveloper deploys\nFeature branch artefact\nNo gate required"]:::dev
+  SHARED["🔗 Shared Dev\n──────────\nRelease branch artefact\nIntegration testing\nGate: pipeline green"]:::shared
+  SIT["📋 SIT\n──────────\nRelease branch artefact\nFunctional validation\nGate: release owner approval"]:::sit
+  PREPROD["🔒 Pre-prod / B.Val\n──────────\nSame artefact as SIT\nProduction-like validation\nGate: QAT approval"]:::preprod
+  PROD["🏁 Production\n──────────\nSame artefact\nFinal promotion\nGate: release + QAT approval\n+ rollback plan confirmed"]:::prod
+
+  DEV --> SHARED --> SIT --> PREPROD --> PROD
+
+  classDef dev fill:#43a047,stroke:#2e7d32,color:#fff,font-weight:bold
+  classDef shared fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef sit fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef preprod fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef prod fill:#c62828,stroke:#b71c1c,color:#fff,font-weight:bold

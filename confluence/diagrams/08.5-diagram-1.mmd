@@ -1,0 +1,41 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  subgraph SOURCES["Existing Cerberus Systems (Sources of Truth)"]
+    GL["GitLab"]:::source
+    JR["Jira"]:::source
+    DR["Drone CI/CD"]:::source
+    HM["Helm"]:::source
+    DM["Deployment\nManagement"]:::source
+    K8["Kubernetes"]:::source
+    KF["Kafka"]:::source
+    EL["Elastic /\nOpenSearch"]:::source
+    LQ["Liquibase"]:::source
+    SEC["Secrets"]:::source
+    OBS["Observability"]:::source
+  end
+
+  subgraph INTELLIGENCE["Future Intelligence Layer"]
+    KG["Knowledge Graph\n(relationship intelligence)"]:::graph
+    CP["Unified Control Plane\n(operational interface)"]:::platform
+    API["GraphQL / REST APIs"]:::api
+  end
+
+  subgraph CONSUMERS["Consumers"]
+    DASH["Release Dashboard"]:::consumer
+    INC["Incident Investigation"]:::consumer
+    AUDIT["Audit / Compliance"]:::consumer
+  end
+
+  GL & JR & DR & HM & DM & K8 --> KF
+  KF --> KG
+  EL & LQ & SEC & OBS --> KG
+  KG --> API
+  API --> CP
+  CP --> DASH & INC & AUDIT
+
+  classDef source fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef graph fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
+  classDef platform fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef api fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef consumer fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold

@@ -1,0 +1,20 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  subgraph CURRENT["Current: Rolling Update"]
+    R1["Replace pods sequentially"]:::current
+    R2["Health check gates"]:::current
+    R3["Full rollout or manual rollback"]:::current
+    R1 --> R2 --> R3
+  end
+
+  subgraph NEXT["Near-term: Blue-Green"]
+    B1["Deploy new version alongside old"]:::next
+    B2["Validate new version (no traffic)"]:::next
+    B3["Switch traffic atomically"]:::next
+    B4["Instant rollback: switch back"]:::next
+    B1 --> B2 --> B3 --> B4
+  end
+
+  classDef current fill:#455a64,stroke:#37474f,color:#fff,font-weight:bold
+  classDef next fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold

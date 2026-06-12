@@ -1,0 +1,15 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart LR
+  BUILD["🔨 Build"]:::build
+  SBOM["📋 Generate SBOM\n(Syft / Trivy)"]:::security
+  SCAN["🔍 Scan SBOM for CVEs"]:::security
+  SIGN["🔏 Sign image\n(Cosign / Notation)"]:::security
+  ATTEST["📜 Provenance attestation\n(SLSA / in-toto)"]:::security
+  VERIFY["✅ Verify at deploy time"]:::verify
+
+  BUILD --> SBOM --> SCAN --> SIGN --> ATTEST --> VERIFY
+
+  classDef build fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef security fill:#7b1fa2,stroke:#4a148c,color:#fff,font-weight:bold
+  classDef verify fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold

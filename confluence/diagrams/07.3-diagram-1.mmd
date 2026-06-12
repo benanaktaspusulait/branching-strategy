@@ -1,0 +1,37 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+gantt
+  title Release Process Improvement Roadmap
+  dateFormat YYYY-MM-DD
+  axisFormat %b %Y
+
+  section Phase 0
+    Confirm decisions and ownership :done, p0a, 2026-06-09, 14d
+    Publish exit criteria :done, p0b, after p0a, 7d
+
+  section Phase 1
+    Pre-commit hook :p1a, 2026-06-23, 14d
+    Strict validation dry-run :p1b, 2026-06-23, 21d
+    Environment readiness checklist :p1c, 2026-06-30, 14d
+    Rollback documentation :p1d, 2026-06-30, 21d
+
+  section Phase 2
+    Drone pilot (config service) :p2a, 2026-07-14, 42d
+    Auto branch/tag/chart :p2b, 2026-07-28, 28d
+    Release reporting :p2c, 2026-08-11, 21d
+    Alerting :p2d, 2026-08-11, 14d
+
+  section Phase 3
+    Main = production cutover :p3a, 2026-08-25, 21d
+    Branch protections :p3b, 2026-08-25, 14d
+    Forward-merge rules :p3c, 2026-09-08, 14d
+
+  section Phase 4
+    Changed-chart deployment :p4a, 2026-09-22, 42d
+    Shared dev auto-deploy :p4b, 2026-10-06, 28d
+    Full RACI enforcement :p4c, 2026-10-20, 21d
+
+  section Phase 5
+    Feature flags evaluation :p5a, 2026-11-17, 56d
+    Secrets modernisation :p5b, 2026-12-01, 56d
+    Observability gates :p5c, 2027-01-12, 42d

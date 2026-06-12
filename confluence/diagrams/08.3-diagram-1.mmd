@@ -1,0 +1,29 @@
+%%{init: {'theme': 'base', 'themeVariables': {'lineColor': '#5f6368'}}}%%
+
+flowchart TD
+  subgraph CI["CI Pipeline (Build)"]
+    CODE["🔨 Code change"]:::ci
+    BUILD["📦 Build + test + scan"]:::ci
+    PUSH["📤 Push image to registry"]:::ci
+    CODE --> BUILD --> PUSH
+  end
+
+  subgraph CD["CD Pipeline (GitOps)"]
+    UPDATE["📝 Update chart version\nin deployment repo"]:::cd
+    COMMIT["💾 Commit to deployment repo"]:::cd
+    UPDATE --> COMMIT
+  end
+
+  subgraph CLUSTER["Cluster (Pull-Based)"]
+    ARGO["🔄 ArgoCD / Flux\ndetects change"]:::gitops
+    SYNC["⚙️ Sync desired state\nto cluster"]:::gitops
+    HEALTH["✅ Health check\n+ drift detection"]:::gitops
+    ARGO --> SYNC --> HEALTH
+  end
+
+  PUSH --> UPDATE
+  COMMIT --> ARGO
+
+  classDef ci fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
+  classDef cd fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
+  classDef gitops fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
