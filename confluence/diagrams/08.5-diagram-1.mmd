@@ -16,7 +16,7 @@ flowchart TD
   end
 
   subgraph INTELLIGENCE["Future Intelligence Layer"]
-    KG["Knowledge Graph\n(relationship intelligence)"]:::graph
+    KG["Knowledge Graph\n(relationship intelligence)"]:::graphdb
     CP["Unified Control Plane\n(operational interface)"]:::platform
     API["GraphQL / REST APIs"]:::api
   end
@@ -35,7 +35,7 @@ flowchart TD
   CP --> DASH & INC & AUDIT
 
   classDef source fill:#1565c0,stroke:#0d47a1,color:#fff,font-weight:bold
-  classDef graph fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
+  classDef graphdb fill:#00695c,stroke:#004d40,color:#fff,font-weight:bold
   classDef platform fill:#6a1b9a,stroke:#4a148c,color:#fff,font-weight:bold
   classDef api fill:#f57c00,stroke:#e65100,color:#fff,font-weight:bold
   classDef consumer fill:#2e7d32,stroke:#1b5e20,color:#fff,font-weight:bold
